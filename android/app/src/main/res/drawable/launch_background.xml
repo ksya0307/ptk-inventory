@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Modify this file to customize your launch splash screen -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@android:color/white" />
+
+    <item android:gravity="center" android:bottom="80dp">
+    <bitmap android:src="@drawable/ptk_inventory_logo"/>
+    </item>
+    <item android:gravity="center" android:top="230dp">
+        <bitmap android:src="@drawable/ptk_inventory_name"/>
+    </item>
+</layer-list>

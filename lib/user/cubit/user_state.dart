@@ -1,10 +1,9 @@
 part of 'user_cubit.dart';
 
 enum UserStatus { initial, loading, success, failure }
-enum AuthenticationStatus {  authenticated, unauthenticated }
+enum AuthenticationStatus { authenticated, unauthenticated }
 
 extension AuthenticationStatusX on AuthenticationStatus {
-
   bool get isAuthenticated => this == AuthenticationStatus.authenticated;
 
   bool get isUnauthenticated => this == AuthenticationStatus.unauthenticated;

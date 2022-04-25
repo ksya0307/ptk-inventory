@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/user/models/user.dart';
 import 'package:user_repository/user_repository.dart' show UserRepository;
 
@@ -13,11 +14,11 @@ class UserCubit extends HydratedCubit<UserState> {
 
   UserCubit(this._userRepository) : super(UserState());
 
-  Future<void> fetchUser(String? username, String? password) async {
+  Future<void> fetchUser(String username,String password) async {
     emit(state.copyWith(status: UserStatus.loading));
     try {
       final user = User.fromRepository(
-          await _userRepository.getUser(username!, password!));
+          await _userRepository.getUser(username: username, password: password));
       emit(state.copyWith(
           status: UserStatus.success,
           user: user.copyWith(
@@ -28,6 +29,10 @@ class UserCubit extends HydratedCubit<UserState> {
     } on Exception {
       emit(state.copyWith(status: UserStatus.failure, authenticationStatus: AuthenticationStatus.unauthenticated));
     }
+  }
+
+  void logOut(){
+    emit(state.copyWith(authenticationStatus: AuthenticationStatus.unauthenticated));
   }
 
   @override

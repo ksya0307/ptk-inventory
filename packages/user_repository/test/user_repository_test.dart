@@ -34,7 +34,7 @@ void main() {
 
       test('calls SignIn with correct user data', () async {
         try {
-          await userRepository.getUser(username, password);
+          await userRepository.getUser(username : username, password: password);
         } catch (_) {}
         verify(() => userApiClient.signIn(username, password)).called(1);
       });
@@ -43,7 +43,7 @@ void main() {
         final exception = Exception('oops');
         when(() => userApiClient.signIn(any(), any())).thenThrow(exception);
         expect(
-          () async => await userRepository.getUser(username, password),
+          () async => await userRepository.getUser(username : username, password: password),
           throwsA(exception),
         );
       });
@@ -55,7 +55,7 @@ void main() {
           (_) async => data,
         );
         try {
-          await userRepository.getUser(username, password);
+          await userRepository.getUser(username : username, password: password);
           verify(() => userApiClient.getUser(accessToken, userId)).called(1);
         } catch (_) {}
       });
@@ -68,7 +68,7 @@ void main() {
             .thenAnswer((_) async => data);
         when(() => userApiClient.getUser(any(), any())).thenThrow(exception);
          try {
-          await userRepository.getUser(username, password);
+          await userRepository.getUser(username : username, password: password);
         } catch (_) {
           throwsA(exception);
         }

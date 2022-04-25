@@ -55,28 +55,29 @@ class _AppViewState extends State<AppView> {
     return MaterialApp(
       navigatorKey: _navigatorKey,
       builder: (context, child) {
-        return FlowBuilder<AuthenticationStatus>(
-          state: context.select((value) => ),
+        return BlocListener<UserCubit, UserState>(
+          // FlowBuilder<AuthenticationStatus>(
+          // state: context.select((value) => ),
           //чтоб понять какой статус и зависимо от него куда будем переходить
-          // listener: (context, state) {
-          //   switch (state.authenticationStatus) {
-          //     case AuthenticationStatus.authenticated:
-          //       _navigator.pushAndRemoveUntil<void>(
-          //           InventoryPage.route(), (route) => false);
-          //       break;
-          //     case AuthenticationStatus.unauthenticated:
-          //       _navigator.pushAndRemoveUntil<void>(
-          //           LoginPage.route(), (route) => false);
-          //       break;
-          //     default:
-          //       break;
-          //   }
-          //   if (state == AuthenticationStatus.authenticated) {
-          //   } else {
-          //     log('неправильный логин или пароль');
-          //   }
-          // },
-          // child: child,
+          listener: (context, state) {
+            switch (state.authenticationStatus) {
+              case AuthenticationStatus.authenticated:
+                _navigator.pushAndRemoveUntil<void>(
+                    InventoryPage.route(), (route) => false);
+                break;
+              case AuthenticationStatus.unauthenticated:
+                _navigator.pushAndRemoveUntil<void>(
+                    LoginPage.route(), (route) => false);
+                break;
+              default:
+                break;
+            }
+            if (state == AuthenticationStatus.authenticated) {
+            } else {
+              log('неправильный логин или пароль');
+            }
+          },
+          child: child,
         );
       },
       onGenerateRoute: (_) => LoginPage.route(),

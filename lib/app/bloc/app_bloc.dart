@@ -2,14 +2,37 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:user_repository/user_repository.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
-  AppBloc() : super(AppInitial()) {
-    on<AppEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+  AppBloc({required UserRepository userRepository})
+      : _userRepository = userRepository,
+        super(const AppState.unauthenticated())
+       {
+    on<AppUserChanged>(_onUserChanged);
+    on<AppLogoutRequested>(_onLogoutRequested);
+    // _userSubscription = _userRepository..listen(
+    //       (user) => add(AppUserChanged(user)),
+    // );
   }
+
+  final UserRepository _userRepository;
+  late final StreamSubscription<User> _userSubscription;
 }
+
+void _onUserChanged(AppUserChanged event, Emitter<AppState> emit) {
+  emit(
+    event.user.isNotEmpty
+        ? AppState.authenticated(event.user)
+        : const AppState.unauthenticated(),
+  );
+}
+
+void _onLogoutRequested(AppLogoutRequested event, Emitter<AppState> emit) {
+  // unawaited();
+}
+
+

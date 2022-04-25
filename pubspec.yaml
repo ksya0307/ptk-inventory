@@ -23,6 +23,8 @@ dependencies:
   # для получения данных о нашем пользователе
   user_repository:
     path: packages/user_repository
+  authentication_repository:
+    path: packages/authentication_repository
 
 dev_dependencies:
   flutter_test:

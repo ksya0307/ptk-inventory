@@ -7,8 +7,9 @@ abstract class LoginEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
 ///событие, которое говорит bloc что username был изменен
-class LoginUsernameChanged extends LoginEvent{
+class LoginUsernameChanged extends LoginEvent {
   final String username;
 
   const LoginUsernameChanged(this.username);
@@ -16,8 +17,9 @@ class LoginUsernameChanged extends LoginEvent{
   @override
   List<Object> get props => [username];
 }
+
 ///событие, которое говорит bloc что password был изменен
-class LoginPasswordChanged extends LoginEvent{
+class LoginPasswordChanged extends LoginEvent {
   final String password;
 
   const LoginPasswordChanged(this.password);
@@ -27,7 +29,6 @@ class LoginPasswordChanged extends LoginEvent{
 }
 
 ///говорит bloc что форма подтверждена
-class LoginSubmitted extends LoginEvent{
+class LoginSubmitted extends LoginEvent {
   const LoginSubmitted();
 }
-

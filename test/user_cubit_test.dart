@@ -32,7 +32,7 @@ void main() {
       when(() => user.patronymic).thenReturn(patronymic);
       when(() => user.username).thenReturn(username);
       when(
-        () => userRepository.getUser(any(), any()),
+        () => userRepository.getUser(username: any(),password: any()),
       ).thenAnswer((_) async => user);
       userCubit = await mockHydratedStorage(() => UserCubit(userRepository));
     });
@@ -62,7 +62,7 @@ void main() {
         build: () => mockHydratedStorage(() => UserCubit(userRepository)),
         act: (cubit) => cubit.fetchUser(username, password),
         verify: (_) {
-          verify(() => userRepository.getUser(username, password)).called(1);
+          verify(() => userRepository.getUser(username : username, password: password)).called(1);
         },
       );
 
@@ -70,7 +70,7 @@ void main() {
         'emits [loading, failure] when getUser throws',
         setUp: () {
           when(
-            () => userRepository.getUser(any(), any()),
+            () => userRepository.getUser(username: any(),password: any()),
           ).thenThrow(Exception('oops'));
         },
         build: () => mockHydratedStorage(() => UserCubit(userRepository)),
@@ -112,10 +112,11 @@ void main() {
             name: name,
             patronymic: patronymic,
             username: username,
+            role: user.role
           ),
         ),
         verify: (_) {
-          verifyNever(() => userRepository.getUser(username, password));
+          verifyNever(() => userRepository.getUser(username: username, password: password));
         },
       );
 
@@ -123,7 +124,7 @@ void main() {
         'emits nothing when exception is thrown',
         setUp: () {
           when(
-                () => userRepository.getUser(any(),any()),
+                () => userRepository.getUser(username: any(),password:any()),
           ).thenThrow(Exception('oops'));
         },
         build: () => mockHydratedStorage(() => UserCubit(userRepository)),
@@ -134,6 +135,7 @@ void main() {
             name: name,
             patronymic: patronymic,
             username: username,
+            role: user.role
           ),
         ),
         expect: () => <UserState>[],

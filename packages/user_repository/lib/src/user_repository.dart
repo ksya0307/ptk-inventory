@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:user_api/user_api.dart' hide User;
 import 'package:user_repository/user_repository.dart';
 
+
+
 class UserFailure implements Exception {}
 
 //Цель репозитория это обеспечить интерфейс, который абстрагирует наши запросы к апи
@@ -13,9 +15,10 @@ class UserRepository {
 
   final UserApiClient _userApiClient;
 
+
   //тут мы делаем запрос к нашему Data Provider, в котором запросы к апи
   //с ним взаимодействует Bloc Layer
-  Future<User> getUser(String username, String password) async {
+  Future<User> getUser({required String username, required String password}) async {
     final data = await _userApiClient.signIn(username, password);
     final accessToken = data.accessToken;
     final refreshToken = data.refreshToken;
@@ -33,6 +36,8 @@ class UserRepository {
     );
   }
 }
+
+
 extension on UserRole{
   Role get toRole{
     switch(this){

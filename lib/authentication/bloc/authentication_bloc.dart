@@ -3,7 +3,6 @@
 // import 'package:authentication_repository/authentication_repository.dart';
 // import 'package:bloc/bloc.dart';
 // import 'package:equatable/equatable.dart';
-// import 'package:ptk_inventory/user/models/user.dart';
 // import 'package:user_repository/user_repository.dart';
 //
 // part 'authentication_event.dart';
@@ -24,7 +23,7 @@
 //     required UserRepository userRepository}) :
 //         _authenticationRepository = authenticationRepository,
 //         _userRepository = userRepository,
-//   super(const AuthenticationState.unknown()){
+//   super(const AuthenticationState.unauthenticated()){
 //
 //     on<AuthenticationStatusChanged>(_onAuthenticationStatusChanged);
 //     on<AuthenticationLogoutRequested>(_onAuthenticationLogoutRequested);
@@ -47,12 +46,10 @@
 //       case AuthenticationStatus.unauthenticated:
 //         return emit(const AuthenticationState.unauthenticated());
 //       case AuthenticationStatus.authenticated:
-//         final user = await _tryGetUser(state.user.username, state.user.p);
+//         final user = await _tryGetUser(state.user.username, state.user.password);
 //         return emit(user != null
 //             ? AuthenticationState.authenticated(user)
 //             :const AuthenticationState.unauthenticated());
-//       default:
-//         return emit(const AuthenticationState.unknown());
 //     }
 //   }
 //

@@ -11,33 +11,41 @@ enum Role { MODERATOR, READER }
 class User extends Equatable {
   const User(
       {required this.id,
-      this.surname,
-      this.name,
-      this.patronymic,
-      this.username,
-      this.role,
-      this.accessToken,
-      this.refreshToken});
+      required this.surname,
+      required this.name,
+      required this.patronymic,
+      required this.username,
+      required this.role,
+      required this.accessToken,
+      required this.refreshToken});
 
-  final String? accessToken;
-  final String? refreshToken;
+  final String accessToken;
+  final String refreshToken;
 
   ///текущий id пользователя
   final int id;
 
   ///текущее ФИО
-  final String? surname;
-  final String? name;
-  final String? patronymic;
+  final String surname;
+  final String name;
+  final String patronymic;
 
   ///текущий username
-  final String? username;
+  final String username;
 
   ///текущая роль
-  final Role? role;
+  final Role role;
 
   /// Empty user which represents an unauthenticated user.
-  static const empty = User(id: 0);
+  static const empty = User(
+      id: 0,
+      surname: '',
+      name: '',
+      patronymic: '',
+      username: '',
+      role: Role.READER,
+      accessToken: '',
+      refreshToken: '');
 
   //It's useful to define a static empty User so that we don't have to handle null Users and can always work with a concrete User object.
   ///Удобный геттер для определения того, пуст ли текущий пользователь.

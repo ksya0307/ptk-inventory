@@ -4,6 +4,8 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:user_repository/user_repository.dart' as user_repository;
 
+import '../user.dart';
+
 part 'user.g.dart';
 
 @JsonSerializable()
@@ -12,12 +14,14 @@ class User extends Equatable {
       {required this.surname,
       required this.name,
       required this.patronymic,
-      required this.username});
+      required this.username,
+      required this.role});
 
   final String surname;
   final String name;
   final String patronymic;
   final String username;
+  final Role role;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
@@ -26,18 +30,23 @@ class User extends Equatable {
         surname: user.surname,
         name: user.name,
         patronymic: user.patronymic,
-        username: user.username);
+        username: user.username,
+        role: user.role);
   }
 
-  static const empty =
-      User(surname: '-', name: '-', patronymic: '-', username: '-');
+  static const empty = User(
+      surname: '-',
+      name: '-',
+      patronymic: '-',
+      username: '-',
+      role: Role.READER);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
   ///Пустой пользователь, который представляет неаутентифицированного пользователя.
 
   @override
-  List<Object> get props => [surname, name, patronymic, username];
+  List<Object> get props => [surname, name, patronymic, username, role];
 
   User copyWith(
       {String? surname, String? name, String? patronymic, String? username}) {
@@ -45,6 +54,7 @@ class User extends Equatable {
         surname: surname ?? this.surname,
         name: name ?? this.name,
         patronymic: patronymic ?? this.patronymic,
-        username: username ?? this.username);
+        username: username ?? this.username,
+        role: role);
   }
 }

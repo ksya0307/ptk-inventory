@@ -24,7 +24,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   //(модифицированный вариант, тоесть не '') вариант Username model
   // и обновляет статус формы через Formz.validate
   void _onUsernameChanged(
-      LoginUsernameChanged event, Emitter<LoginState> emit) {
+      LoginUsernameChanged event,
+      Emitter<LoginState> emit) {
     final username = Username.dirty(event.username);
     emit(state.copyWith(
       username: username,
@@ -33,7 +34,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void _onPasswordChanged(
-      LoginPasswordChanged event, Emitter<LoginState> emit) {
+      LoginPasswordChanged event,
+      Emitter<LoginState> emit) {
     final password = Password.dirty(event.password);
     emit(state.copyWith(
       password: password,
@@ -50,8 +52,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       try {
         await _userRepository.getUser(
-          state.username.value,
-          state.password.value,
+          username: state.username.value,
+          password: state.password.value,
         );
 
         emit(state.copyWith(status: FormzStatus.submissionSuccess));

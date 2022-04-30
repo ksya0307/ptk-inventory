@@ -5,8 +5,8 @@ class MainLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    precacheImage(new AssetImage('images/logo.png'), context);
-    return Image(
+    precacheImage(const AssetImage('images/logo.png'), context);
+    return const Image(
       image: AssetImage('images/logo.png'),
     );
   }

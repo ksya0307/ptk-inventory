@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'choose_inventory_number_label_widget.dart';
-import 'inventory_number.dart';
+import 'package:ptk_inventory/ui/widgets/inventory_stepper_widget/step_one_widgets/choose_inventory_number_label_widget.dart';
+import 'package:ptk_inventory/ui/widgets/inventory_stepper_widget/step_one_widgets/inventory_number.dart';
 
 class FirtsProperty extends StatelessWidget {
   const FirtsProperty({Key? key}) : super(key: key);
@@ -10,7 +10,7 @@ class FirtsProperty extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [ChooseInventoryNumber(), InventoryNumber()],
+      children: const [ChooseInventoryNumber(), InventoryNumber()],
     );
   }
 }

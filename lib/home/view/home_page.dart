@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 
 class HomePage extends StatelessWidget {
   static Route route() {
@@ -11,6 +9,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
+        child: Text('Reader'),
         // child: Column(
         //   mainAxisSize: MainAxisSize.min,
         //   children: <Widget>[

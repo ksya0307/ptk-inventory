@@ -1,18 +1,18 @@
 
-import 'package:json_annotation/json_annotation.dart';
-import 'package:user_api/user_api.dart';
+// import 'package:json_annotation/json_annotation.dart';
+// import 'package:user_api/user_api.dart';
 
-part 'classroom.g.dart';
+// part 'classroom.g.dart';
 
-@JsonSerializable()
-class Classroom{
-  final String number;
-  final User user;
+// @JsonSerializable()
+// class Classroom{
+//   final String number;
+//   final User user;
 
-  Classroom({required this.number, required this.user});
+//   Classroom({required this.number, required this.user});
 
-  factory Classroom.fromJson(Map<String, dynamic> json) => _$ClassroomFromJson(json);
+//   factory Classroom.fromJson(Map<String, dynamic> json) => _$ClassroomFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ClassroomToJson(this);
+//   Map<String, dynamic> toJson() => _$ClassroomToJson(this);
 
-}
+// }

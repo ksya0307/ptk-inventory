@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:ptk_inventory/inventory/custom_stepper.dart' as c_s;
 import 'package:ptk_inventory/ui/palette.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class InventoryForm extends StatefulWidget {
   @override
@@ -469,16 +469,22 @@ class InventoryFormState extends State<InventoryForm> {
                   children: [
                     Icon(
                       Icons.keyboard_arrow_left_rounded,
-                      color: currentStep == 0 ? Color.fromRGBO(117, 117, 117, 1.0) : Palette.customGreen,
+                      color: currentStep == 0
+                          ? Color.fromRGBO(117, 117, 117, 1.0)
+                          : Palette.customGreen,
                     ),
                     TextButton(
                         onPressed: controls.onStepCancel,
-                        child: Text("Назад",
-                            style: GoogleFonts.rubik(
-                                textStyle: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 16,
-                                color: currentStep == 0 ? Color.fromRGBO(117, 117, 117, 1.0) : Palette.customGreen)
-                            ),))
+                        child: Text(
+                          "Назад",
+                          style: GoogleFonts.rubik(
+                              textStyle: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  color: currentStep == 0
+                                      ? Color.fromRGBO(117, 117, 117, 1.0)
+                                      : Palette.customGreen)),
+                        ))
                   ],
                 ),
               ),
@@ -492,8 +498,7 @@ class InventoryFormState extends State<InventoryForm> {
                           "Продолжить",
                           style: GoogleFonts.rubik(
                               textStyle: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 16)
-                          ),
+                                  fontWeight: FontWeight.w500, fontSize: 16)),
                         )),
                     Icon(
                       Icons.keyboard_arrow_right_rounded,

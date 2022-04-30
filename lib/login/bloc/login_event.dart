@@ -28,7 +28,7 @@ class LoginPasswordChanged extends LoginEvent {
   List<Object> get props => [password];
 }
 
-///говорит bloc что форма подтверждена
+//говорит bloc что форма подтверждена
 class LoginSubmitted extends LoginEvent {
   const LoginSubmitted();
 }

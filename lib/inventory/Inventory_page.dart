@@ -10,7 +10,10 @@ class InventoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios_rounded), onPressed: () {  },),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_rounded),
+          onPressed: () {},
+        ),
         title: const Text('Добавление'),
         centerTitle: true,
       ),

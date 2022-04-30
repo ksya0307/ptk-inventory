@@ -5,13 +5,14 @@ class ChooseInventoryNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       'Выберите инвентарный номер',
       style: TextStyle(
-          color: Color.fromRGBO(37, 37, 37, 1.0),
-          fontFamily: 'PT Sans',
-          fontWeight: FontWeight.bold,
-          fontSize: 18),
+        color: Color.fromRGBO(37, 37, 37, 1.0),
+        fontFamily: 'PT Sans',
+        fontWeight: FontWeight.bold,
+        fontSize: 18,
+      ),
     );
   }
 }

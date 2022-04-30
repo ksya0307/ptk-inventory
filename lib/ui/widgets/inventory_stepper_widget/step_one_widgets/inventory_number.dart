@@ -13,7 +13,7 @@ class _InventoryNumberState extends State<InventoryNumber> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: [
+        children: const [
           Chip(label: Text('101340003428')),
           SizedBox(
             width: 8,

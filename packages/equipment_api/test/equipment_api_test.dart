@@ -1,12 +1,7 @@
-import 'dart:io';
-
 import 'package:http/http.dart' as http;
-import 'package:equipment_api/equipment_api_client.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-
-import 'equipment_api_test.mocks.dart';
 
 class MockHttpClient extends Mock implements http.Client {}
 //
@@ -16,8 +11,7 @@ class MockHttpClient extends Mock implements http.Client {}
 
 @GenerateMocks([http.Client])
 void main() {
-
-  group('fetchEquipment', (){
+  group('fetchEquipment', () {
     // test('return [Equipments] if the http call completes successfully', () async{
     //   final client = MockClient();
     //

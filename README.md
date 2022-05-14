@@ -1,6 +1,6 @@
 # ptk_inventory
 
-Equipment Inventory At PTK NovSU
+Equipment Inventory Managament At PTK NovSU
 
 ## Getting Started
 

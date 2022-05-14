@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:ptk_inventory/common/model/requests/login.dart';
 import 'package:ptk_inventory/common/repository/authentication_repository.dart';
-import 'package:ptk_inventory/common/repository/user_repository.dart';
 import 'package:ptk_inventory/login/login.dart';
 import 'package:ptk_inventory/login/models/models.dart';
 
@@ -58,18 +57,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
     if (state.formStatus.isValidated) {
-      try {
-        print("api call");
-        await _authenticationRepository.login(
-          LoginModelRequest(
-            username: state.username.value,
-            password: state.password.value,
-          ),
-        );
-
-        emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
-      } catch (_) {
+      final waiting = await _authenticationRepository.login(
+        LoginModelRequest(
+          username: state.username.value,
+          password: state.password.value,
+        ),
+      );
+      print("Waiting $waiting");
+      if (waiting != null && waiting == LoginStatus.unverified) {
         emit(state.copyWith(formStatus: FormzStatus.submissionFailure));
+      } else {
+        emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
       }
     }
   }

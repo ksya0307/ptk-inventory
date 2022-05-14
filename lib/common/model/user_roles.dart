@@ -5,13 +5,13 @@ extension UserRoleExtension on UserRole {
   String get userRoleToString {
     switch (this) {
       case UserRole.moderator:
-        return 'MODERATOR';
+        return 'moderator';
       case UserRole.reader:
-        return 'READER';
+        return 'reader';
       case UserRole.admin:
-        return 'ADMIN';
+        return 'admin';
       default:
-        return 'COMMON';
+        return 'common';
     }
   }
 }

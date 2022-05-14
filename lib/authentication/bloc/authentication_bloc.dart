@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:ptk_inventory/common/model/user.dart';
 import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 import 'package:ptk_inventory/common/repository/user_repository.dart';
@@ -44,13 +45,15 @@ class AuthenticationBloc
     switch (event.status) {
       case AuthenticationStatus.authenticated:
         final user = await _tryGetUser();
+
         return emit(
           user != null
               ? AuthenticationState.authenticated(user)
               : const AuthenticationState.unauthenticated(),
         );
       case AuthenticationStatus.unauthenticated:
-      default:
+        return emit(const AuthenticationState.unauthenticated());
+      case AuthenticationStatus.unknown:
         return emit(const AuthenticationState.unknown());
     }
   }

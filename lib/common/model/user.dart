@@ -16,12 +16,12 @@ class User extends Equatable {
     required this.patronymic,
     required this.username,
     required this.role,
-    required this.accessToken,
-    required this.refreshToken,
+    this.accessToken,
+    this.refreshToken,
   });
 
-  final String accessToken;
-  final String refreshToken;
+  final String? accessToken;
+  final String? refreshToken;
 
   ///текущий id пользователя
   final int id;

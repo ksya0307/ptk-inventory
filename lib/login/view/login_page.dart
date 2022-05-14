@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
+import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
+import 'package:ptk_inventory/common/component/snackbar_message.dart';
 import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 import 'package:ptk_inventory/login/bloc/login_bloc.dart';
 import 'package:ptk_inventory/login/view/landscape.dart';
@@ -17,49 +20,32 @@ class LoginPage extends StatelessWidget {
         authenticationRepository:
             RepositoryProvider.of<AuthenticationRepository>(context),
       ),
-      child: BlocConsumer<LoginBloc, LoginState>(
-        listener: (context, state) {
-          if (state.screenStatus == LoginStatus.unverified) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                const SnackBar(
-                  content: Text('Неверное имя пользователя или пароль'),
-                ),
-              );
-          }
-        },
-        builder: (context, state) {
-          return Scaffold(
-            body: OrientationBuilder(
-              builder: (context, orientation) =>
-                  orientation == Orientation.portrait
-                      ? Portrait()
-                      : Landscape(),
-            ),
-          );
-        },
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              if (state.status == AuthenticationStatus.unauthenticated) {
+                print("25 ${state.status}");
+                snackbarMessage(context, "Неверный логин или пароль");
+              }
+            },
+          ),
+          BlocListener<LoginBloc, LoginState>(
+            listener: (context, state) {
+              print("Form ${state.formStatus}");
+              if (state.formStatus == FormzStatus.submissionFailure) {
+                snackbarMessage(context, "Неверный логин или пароль");
+              }
+            },
+          ),
+        ],
+        child: Scaffold(
+          body: OrientationBuilder(
+            builder: (context, orientation) =>
+                orientation == Orientation.portrait ? Portrait() : Landscape(),
+          ),
+        ),
       ),
     );
   }
 }
-
-    // BlocListener<LoginBloc, LoginState>(
-    //   listener: (context, state) {
-    //     if (state.loginStatus == LoginStatus.verified) {
-    //       Navigator.popAndPushNamed(context, RouteName.inventoryPage);
-    //     }
-    //   },
-    //   child: Scaffold(
-    //     body: BlocProvider(
-    //       create: (context) => LoginBloc(
-    //         userRepository: RepositoryProvider.of<UserRepository>(context),
-    //       ),
-    //       //children могут иметь доступ к LoginBloc
-    //       child: OrientationBuilder(
-    //         builder: (context, orientation) =>
-    //             orientation == Orientation.portrait ? Portrait() : Landscape(),
-    //       ),
-    //     ),
-    //   ),
-    // );

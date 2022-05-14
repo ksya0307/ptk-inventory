@@ -1,19 +1,20 @@
 class UserDataModelRequest {
   String accessToken;
-  int user_id;
+  int userId;
 
-  UserDataModelRequest({required this.accessToken, required this.user_id});
+  UserDataModelRequest({required this.accessToken, required this.userId});
 
-    UserDataModelRequest copyWith({String? accessToken, int? user_id}) {
+  UserDataModelRequest copyWith({String? accessToken, int? userId}) {
     return UserDataModelRequest(
-        accessToken: accessToken ?? this.accessToken,
-        user_id: user_id ?? this.user_id);
+      accessToken: accessToken ?? this.accessToken,
+      userId: userId ?? this.userId,
+    );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'accessToken': accessToken,
-      'user_id': user_id,
+      'user_id': userId,
     };
   }
 }

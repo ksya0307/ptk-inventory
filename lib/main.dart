@@ -6,8 +6,6 @@ import 'package:ptk_inventory/common/model/hive_model.dart';
 import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 import 'package:ptk_inventory/common/repository/user_repository.dart';
 
-// Package imports:
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();

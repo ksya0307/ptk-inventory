@@ -8,8 +8,6 @@ environment:
 dependencies:
     http: ^0.13.0
     json_annotation: ^4.4.0
-    user_api:
-      path: ../user_api
 
 
 dev_dependencies:

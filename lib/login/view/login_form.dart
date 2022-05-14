@@ -1,24 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:ptk_inventory/config/theme/colors.dart';
 import 'package:ptk_inventory/login/bloc/login_bloc.dart';
 import 'package:ptk_inventory/login/login.dart';
+import 'package:ptk_inventory/sign_up/view/sign_up_page.dart';
 
 class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginBloc, LoginState>(
-      listener: (context, state) {
-        if (state.formStatus.isSubmissionFailure) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              const SnackBar(content: Text('Authentication Failure')),
-            );
-        }
-      },
-      child: _loginForm(),
-    );
+    return _loginForm();
   }
 
   Widget _loginForm() {
@@ -26,13 +17,41 @@ class LoginForm extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const SizedBox(height: 30),
           const _UsernameInput(),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           _PasswordInput(),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           _LoginButton(),
-          const SizedBox(height: 16),
+          const SizedBox(height: 24),
         ],
+      ),
+    );
+  }
+}
+
+class _SignUpLabel extends StatelessWidget {
+  const _SignUpLabel({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(SignUpPage.route());
+      },
+      child: Container(
+        height: 48,
+        width: 160,
+        child: const Text(
+          "Создать профиль",
+          style: TextStyle(
+            color: blueCustom,
+            fontFamily: 'Rubik',
+            fontSize: 18,
+            decoration: TextDecoration.underline,
+          ),
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }
@@ -58,32 +77,39 @@ class _UsernameInputState extends State<_UsernameInput> {
           cursorColor: Theme.of(context).primaryColor,
           minLines: 1,
           style: const TextStyle(
-            fontFamily: 'PT Sans Caption',
+            fontFamily: 'Rubik',
             fontSize: 18,
-            color: Color.fromRGBO(68, 68, 68, 1.0),
+            color: blackInput,
           ),
           decoration: InputDecoration(
+            labelStyle: TextStyle(fontFamily: 'Rubik', fontSize: 18),
+            errorStyle: const TextStyle(
+              color: redCustom,
+              fontFamily: 'Rubik',
+            ),
             labelText: 'Логин',
             errorText:
                 state.username.invalid ? 'Логин не может быть пустым' : null,
             suffixIcon: const Icon(
               Icons.login_rounded,
-              color: Color.fromRGBO(156, 156, 156, 1.0),
+              color: greyDark,
             ),
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
             hintStyle: const TextStyle(
-              fontFamily: 'PT Sans Caption',
+              fontFamily: 'Rubik',
               fontSize: 18,
-              color: Color.fromRGBO(150, 150, 150, 1.0),
             ),
             border: const OutlineInputBorder(),
             focusedErrorBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.red, width: 1.5),
+              borderSide: const BorderSide(
+                color: redCustom,
+                width: 1.5,
+              ),
               borderRadius: BorderRadius.circular(7.0),
             ),
             errorBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.red, width: 1.5),
+              borderSide: const BorderSide(color: redCustom, width: 1.5),
               borderRadius: BorderRadius.circular(7.0),
             ),
             focusedBorder: OutlineInputBorder(
@@ -136,16 +162,21 @@ class PasswordInput extends State<_PasswordInput> {
           minLines: 1,
           obscureText: _obscureText,
           style: const TextStyle(
-            fontFamily: 'PT Sans Caption',
+            fontFamily: 'Rubik',
             fontSize: 18,
-            color: Color.fromRGBO(68, 68, 68, 1.0),
+            color: blackInput,
           ),
           decoration: InputDecoration(
+            labelStyle: TextStyle(fontFamily: 'Rubik', fontSize: 18),
+            errorStyle: const TextStyle(
+              color: redCustom,
+              fontFamily: 'Rubik',
+            ),
             labelText: 'Пароль',
             errorText:
                 state.password.invalid ? 'Пароль не может быть пустым' : null,
             suffixIcon: IconButton(
-              color: const Color.fromRGBO(156, 156, 156, 1.0),
+              color: greyDark,
               onPressed: _passwordVisibility,
               icon: Icon(
                 !_obscureText
@@ -156,17 +187,17 @@ class PasswordInput extends State<_PasswordInput> {
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
             hintStyle: const TextStyle(
-              fontFamily: 'PT Sans Caption',
+              fontFamily: 'Rubik',
               fontSize: 18,
               color: Color.fromRGBO(150, 150, 150, 1.0),
             ),
             border: const OutlineInputBorder(),
             focusedErrorBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.red, width: 1.5),
+              borderSide: const BorderSide(color: redCustom, width: 1.5),
               borderRadius: BorderRadius.circular(7.0),
             ),
             errorBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.red, width: 1.5),
+              borderSide: const BorderSide(color: redCustom, width: 1.5),
               borderRadius: BorderRadius.circular(7.0),
             ),
             focusedBorder: OutlineInputBorder(
@@ -199,52 +230,63 @@ class _LoginButton extends StatelessWidget {
       builder: (context, state) {
         return state.formStatus.isSubmissionInProgress
             ? const CircularProgressIndicator()
-            : ConstrainedBox(
-                constraints: BoxConstraints(
-                  minWidth: MediaQuery.of(context).size.width,
-                ),
-                child: ElevatedButton(
-                  key: const Key('loginForm_continue_raisedButton'),
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7.0),
+            : Column(
+                children: [
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: MediaQuery.of(context).size.width,
+                    ),
+                    child: ElevatedButton(
+                      key: const Key('loginForm_continue_raisedButton'),
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7.0),
+                          ),
+                        ),
+                        elevation: MaterialStateProperty.all(0),
+                        foregroundColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          if (states.contains(MaterialState.disabled)) {
+                            return const Color.fromRGBO(255, 255, 255, 0.65);
+                          }
+                          return Colors.white;
+                        }),
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          if (states.contains(MaterialState.disabled)) {
+                            return const Color.fromRGBO(0, 47, 167, 0.65);
+                          }
+                          return const Color.fromRGBO(0, 47, 167, 1.0);
+                        }),
+                      ),
+                      onPressed: state.formStatus.isValidated
+                          ? () {
+                              print("aa");
+                              context
+                                  .read<LoginBloc>()
+                                  .add(const LoginSubmitted());
+                            }
+                          : null,
+                      child: const Padding(
+                        padding: EdgeInsets.fromLTRB(0, 12 + 1, 0, 12 + 1),
+                        child: Text(
+                          "Войти",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontFamily: 'Rubik',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
                     ),
-                    elevation: MaterialStateProperty.all(0),
-                    foregroundColor:
-                        MaterialStateProperty.resolveWith((states) {
-                      if (states.contains(MaterialState.disabled)) {
-                        return const Color.fromRGBO(255, 255, 255, 0.65);
-                      }
-                      return Colors.white;
-                    }),
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith((states) {
-                      if (states.contains(MaterialState.disabled)) {
-                        return const Color.fromRGBO(0, 47, 167, 0.65);
-                      }
-                      return const Color.fromRGBO(0, 47, 167, 1.0);
-                    }),
                   ),
-                  onPressed: state.formStatus.isValidated
-                      ? () {
-                          context.read<LoginBloc>().add(const LoginSubmitted());
-                        }
-                      : null,
-                  child: const Padding(
-                    padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
-                    child: Text(
-                      "Войти",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontFamily: 'PT Sans',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                  const SizedBox(
+                    height: 12,
                   ),
-                ),
+                  const _SignUpLabel(),
+                ],
               );
       },
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/inventory/view/inventory_form.dart';
+import 'package:ptk_inventory/moderator_user/view/home_page.dart';
 
 class InventoryPage extends StatelessWidget {
   static Route route() {
@@ -12,7 +13,9 @@ class InventoryPage extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_rounded),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop(ModeratorPage.route());
+          },
         ),
         title: const Text('Добавление'),
         centerTitle: true,

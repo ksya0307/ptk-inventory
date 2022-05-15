@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
 import 'package:ptk_inventory/inventory/view/custom_stepper.dart' as c_s;
@@ -449,9 +448,10 @@ class InventoryFormState extends State<InventoryForm> {
   Widget _SearchInventoryContainer() {
     return Theme(
       data: ThemeData(
-          primarySwatch: Palette.customBlue,
-          textSelectionTheme:
-              const TextSelectionThemeData(selectionColor: blueCustom)),
+        primarySwatch: Palette.customBlue,
+        textSelectionTheme:
+            const TextSelectionThemeData(selectionColor: blueCustom),
+      ),
       child: Padding(
         padding: EdgeInsets.zero,
         child: Container(

@@ -5,9 +5,8 @@ import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 import 'package:ptk_inventory/common/repository/user_repository.dart';
-import 'package:ptk_inventory/common_user/view.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
-import 'package:ptk_inventory/inventory/view/Inventory_page.dart';
+import 'package:ptk_inventory/inventory/view/inventory_page.dart';
 import 'package:ptk_inventory/login/view/login_page.dart';
 import 'package:ptk_inventory/moderator_user/view/home_page.dart';
 import 'package:ptk_inventory/palette.dart';
@@ -66,7 +65,7 @@ class _AppViewState extends State<AppView> {
         textTheme: const TextTheme(
           headline6: TextStyle(
             fontSize: 18.0,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
             fontFamily: 'Rubik',
           ),
         ),

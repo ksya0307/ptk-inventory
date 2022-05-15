@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
-import 'package:ptk_inventory/user/view/my_profile.dart';
+import 'package:ptk_inventory/reader_user/view/landscape_home_page.dart';
+import 'package:ptk_inventory/reader_user/view/portrait_home_page.dart';
 
 class ReaderPage extends StatelessWidget {
   static Route route() {
@@ -10,172 +10,11 @@ class ReaderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints view) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: view.minWidth,
-                ),
-                child: UserProfileView(context),
-              ),
-            );
-          },
-        ),
+      body: OrientationBuilder(
+        builder: (context, orientation) => orientation == Orientation.portrait
+            ? PortraitReaderPage()
+            : LandscapeReaderPage(),
       ),
     );
   }
-}
-
-Widget UserProfileView(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 24, left: 10, right: 10),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2, vertical: 16),
-                  child: Text(
-                    "Меню",
-                    style: TextStyle(
-                      color: blackLabels,
-                      fontFamily: 'Rubik',
-                      fontSize: 22,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                ProfileCard(context),
-                RepairCard(context),
-              ],
-            ),
-            Column(
-              children: [
-                const SizedBox(
-                  height: 54 + 4,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                  ),
-                ),
-                MyEquipmentCard(context),
-              ],
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
-}
-
-Widget ProfileCard(BuildContext context) {
-  return GestureDetector(
-    onTap: () => Navigator.of(context).push(UserProfilePage.route()),
-    child: SizedBox(
-      width: MediaQuery.of(context).size.width * 0.47,
-      height: MediaQuery.of(context).size.height * 0.25,
-      child: const Card(
-        color: Color.fromRGBO(63, 138, 251, 1.0),
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-          child: Text(
-            "Профиль",
-            style: TextStyle(
-              fontFamily: 'Rubik',
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-Widget RepairCard(BuildContext context) {
-  return SizedBox(
-    width: MediaQuery.of(context).size.width * 0.47,
-    height: MediaQuery.of(context).size.height * 0.25,
-    child: Card(
-      color: const Color.fromRGBO(109, 18, 175, 1.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-            child: Text(
-              "Ремонт",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: 'Rubik',
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-            child: Text(
-              "Составление акта приема-передачи оборудования в ремонт",
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontFamily: 'Rubik',
-                fontSize: 14,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget MyEquipmentCard(BuildContext context) {
-  return SizedBox(
-    width: MediaQuery.of(context).size.width * 0.47,
-    height: MediaQuery.of(context).size.height * 0.5,
-    child: Card(
-      color: const Color.fromRGBO(227, 50, 69, 1.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-            child: Text(
-              "Моё оборудование",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: 'Rubik',
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-            child: Text(
-              "Все оборудование по аудиториям и его характеристики",
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontFamily: 'Rubik',
-                fontSize: 14,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
 }

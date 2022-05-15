@@ -82,7 +82,7 @@ class _UsernameInputState extends State<_UsernameInput> {
             color: blackInput,
           ),
           decoration: InputDecoration(
-            labelStyle: TextStyle(fontFamily: 'Rubik', fontSize: 18),
+            labelStyle: const TextStyle(fontFamily: 'Rubik', fontSize: 18),
             errorStyle: const TextStyle(
               color: redCustom,
               fontFamily: 'Rubik',
@@ -167,7 +167,7 @@ class PasswordInput extends State<_PasswordInput> {
             color: blackInput,
           ),
           decoration: InputDecoration(
-            labelStyle: TextStyle(fontFamily: 'Rubik', fontSize: 18),
+            labelStyle: const TextStyle(fontFamily: 'Rubik', fontSize: 18),
             errorStyle: const TextStyle(
               color: redCustom,
               fontFamily: 'Rubik',

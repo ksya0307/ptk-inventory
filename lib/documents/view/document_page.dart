@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ptk_inventory/documents/view/add_document_page.dart';
 import 'package:ptk_inventory/ifo/view/add_ifo_page.dart';
 
 class DocumentsPage extends StatelessWidget {
@@ -10,6 +11,17 @@ class DocumentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          tooltip: "Назад",
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        elevation: 0,
         centerTitle: true,
         title: const Text(
           "Документы",
@@ -51,7 +63,7 @@ Widget documentForm(BuildContext context) {
   return Column(
     children: [
       GestureDetector(
-        onTap: () => Navigator.of(context).push(AddIfoPage.route()),
+        onTap: () => Navigator.of(context).push(AddDocumentPage.route()),
         child: const Text("documents"),
       )
     ],

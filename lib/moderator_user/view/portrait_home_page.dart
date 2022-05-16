@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ptk_inventory/category/view/category_page.dart';
 import 'package:ptk_inventory/classrooms/classrooms_page.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/equipment_classrooms/view/equipment_classrooms_page.dart';
 import 'package:ptk_inventory/user/view/my_profile.dart';
 
 class PortraitModeratorPage extends StatelessWidget {
@@ -69,6 +71,7 @@ Widget userProfileView(BuildContext context) {
                 ),
                 profileCard(context),
                 classroomsCard(context),
+                categoryCard(context),
               ],
             ),
           ],
@@ -198,6 +201,35 @@ Widget profileCard(BuildContext context) {
   );
 }
 
+Widget categoryCard(BuildContext context) {
+  return GestureDetector(
+    onTap: () => Navigator.of(context).push(CategoryPage.route()),
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.47,
+      height: MediaQuery.of(context).size.height * 0.12,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7.0),
+        ),
+        elevation: 2.0,
+        color: purpleCustom,
+        child: const Padding(
+          padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+          child: Text(
+            "Категории оборудования",
+            style: TextStyle(
+              fontFamily: 'Rubik',
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 Widget inventoryManagementCard(BuildContext context) {
   return GestureDetector(
     onTap: () {},
@@ -228,44 +260,47 @@ Widget inventoryManagementCard(BuildContext context) {
 }
 
 Widget equipmentCard(BuildContext context) {
-  return SizedBox(
-    width: MediaQuery.of(context).size.width * 0.47,
-    height: MediaQuery.of(context).size.height * 0.16,
-    child: Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(7.0),
-      ),
-      elevation: 2.0,
-      color: redCustom,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-            child: Text(
-              "Оборудование",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: 'Rubik',
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
+  return GestureDetector(
+    onTap: () => Navigator.of(context).push(EquipmentClassroomsPage.route()),
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.47,
+      height: MediaQuery.of(context).size.height * 0.16,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7.0),
+        ),
+        elevation: 2.0,
+        color: redCustom,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+              child: Text(
+                "Оборудование",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-            child: Text(
-              "Все оборудование в колледже",
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontFamily: 'Rubik',
-                fontSize: 14,
-                color: Colors.white,
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: Text(
+                "Все оборудование в колледже",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     ),
   );

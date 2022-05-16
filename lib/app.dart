@@ -58,6 +58,7 @@ class _AppViewState extends State<AppView> {
       navigatorKey: _navigatorKey,
       title: 'PTK Inventory',
       theme: ThemeData(
+        canvasColor: Colors.transparent,
         primarySwatch: Palette.customBlue,
         primaryColor: primaryBlue,
         brightness: Brightness.light,
@@ -79,10 +80,8 @@ class _AppViewState extends State<AppView> {
       builder: (context, child) {
         return BlocListener<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
-            print('state: ${state.user}');
             switch (state.status) {
               case AuthenticationStatus.authenticated:
-                print(state.user.role);
                 if (state.user.role == UserRole.reader) {
                   _navigator.pushAndRemoveUntil<void>(
                     ReaderPage.route(),

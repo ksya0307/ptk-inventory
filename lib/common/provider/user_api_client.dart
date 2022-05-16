@@ -13,7 +13,7 @@ extension ResponseExtension on http.Response? {
     if (this == null) {
       return null;
     }
-    Map<String, dynamic> _responseMap = {};
+    final Map<String, dynamic> _responseMap = {};
 
     _responseMap['statusCode'] = this!.statusCode;
     return _responseMap;
@@ -59,7 +59,6 @@ class UserProvider {
       body: jsonEncode(login),
     );
     if (response.statusCode != 200) {
-      print("R ${response.statusCode}");
       final Map<String, dynamic>? answer = response.asMap();
       throw LogInRequestFailure;
     }

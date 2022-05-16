@@ -29,16 +29,37 @@ class InventoryFormState extends State<InventoryForm> {
     }
   }
 
-  Widget _FirstProperty() {
+  Widget propertyLabel(
+    String property,
+    double paddingLeft,
+    double paddingBottom,
+    double fontSize,
+    FontWeight fontWeight,
+  ) {
+    return Padding(
+      padding: EdgeInsets.only(left: paddingLeft, bottom: paddingBottom),
+      child: Text(
+        property,
+        style: TextStyle(
+          color: blackLabels,
+          fontFamily: 'Rubik',
+          fontWeight: fontWeight,
+          fontSize: fontSize,
+        ),
+      ),
+    );
+  }
+
+  Widget firstProperty() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _BoldLabel("Выберите инвентарный номер"),
+        propertyLabel("Выберите инвентарный номер", 16, 4, 18, FontWeight.w500),
         // _ChooseInventoryNumber(),
-        _InventoryNumberChips(),
-        Align(alignment: Alignment.centerRight, child: _ShowLabel()),
-        _SearchLabel(),
-        _SearchAddContainer(),
+        inventoryNumberChips(),
+        Align(alignment: Alignment.centerRight, child: showLabel()),
+        propertyLabel("или найдите", 16, 0, 16, FontWeight.w400),
+        searchAddContainer(),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Divider(
@@ -46,10 +67,10 @@ class InventoryFormState extends State<InventoryForm> {
             thickness: .75,
           ),
         ),
-        _DateTaken(),
+        propertyLabel("Дата принятия к учету", 16, 8, 18, FontWeight.w500),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-          child: _ChooseDate(),
+          child: chooseDate(),
         ),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -58,8 +79,8 @@ class InventoryFormState extends State<InventoryForm> {
             thickness: .75,
           ),
         ),
-        _BoldLabel("Закуплено для аудитории"),
-        _ClassroomsChips(),
+        propertyLabel("Закуплено для аудитории", 16, 4, 18, FontWeight.w500),
+        classroomsChips(),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Divider(
@@ -67,23 +88,23 @@ class InventoryFormState extends State<InventoryForm> {
             thickness: .75,
           ),
         ),
-        _GivenLabel(),
+        propertyLabel("Выдано", 16, 8, 18, FontWeight.w500),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 0, 0, 16),
-          child: _GivenToggle(),
+          child: givenToggle(),
         )
       ],
     );
   }
 
-  Widget _SecondProperty() {
+  Widget secondProperty() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _DocumentLabel(),
-        _SearchFieldDocument(),
-        _ListOfDocuments(),
-        _SearchIfo(),
+        documentLabel(),
+        searchFieldDocument(),
+        listOfDocuments(),
+        searchIfo(),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Divider(
@@ -91,16 +112,16 @@ class InventoryFormState extends State<InventoryForm> {
             thickness: .75,
           ),
         ),
-        _ByRequestLabel(),
+        byRequestLabel(),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 0, 0, 16),
-          child: _ByRequestToggle(),
+          child: byRequestToggle(),
         )
       ],
     );
   }
 
-  Widget _ThirdProperty() {
+  Widget thirdProperty() {
     return Column(
       children: [
         ElevatedButton(
@@ -164,7 +185,7 @@ class InventoryFormState extends State<InventoryForm> {
     );
   }
 
-  Widget _DocumentLabel() {
+  Widget documentLabel() {
     return const Padding(
       padding: EdgeInsets.only(left: 16, bottom: 8),
       child: Text(
@@ -193,11 +214,10 @@ class InventoryFormState extends State<InventoryForm> {
 
       return docsTitle.contains(input);
     }).toList();
-    print(query);
     setState(() => documents = suggestions);
   }
 
-  Widget _SearchFieldDocument() {
+  Widget searchFieldDocument() {
     TextEditingController editingController = TextEditingController();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -242,7 +262,7 @@ class InventoryFormState extends State<InventoryForm> {
     );
   }
 
-  Widget _SearchIfo() {
+  Widget searchIfo() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Container(
@@ -284,7 +304,7 @@ class InventoryFormState extends State<InventoryForm> {
     );
   }
 
-  Widget _ByRequestLabel() {
+  Widget byRequestLabel() {
     return const Padding(
       padding: EdgeInsets.only(left: 16, bottom: 8),
       child: Text(
@@ -299,14 +319,12 @@ class InventoryFormState extends State<InventoryForm> {
     );
   }
 
-  Widget _ByRequestToggle() {
+  Widget byRequestToggle() {
     return ToggleSwitch(
       totalSwitches: 2,
       cornerRadius: 7,
       labels: const ['Нет', 'Да'],
-      onToggle: (index) {
-        print('$index');
-      },
+      onToggle: (index) {},
       borderWidth: 2,
       borderColor: const [secondaryGreen],
       activeBgColor: const [secondaryGreen],
@@ -316,7 +334,7 @@ class InventoryFormState extends State<InventoryForm> {
     );
   }
 
-  Widget _ListOfDocuments() {
+  Widget listOfDocuments() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SizedBox(
@@ -334,27 +352,12 @@ class InventoryFormState extends State<InventoryForm> {
     );
   }
 
-  Widget _ChooseInventoryNumber() {
+  Widget chooseInventoryNumber() {
     return const Padding(
       padding: EdgeInsets.only(left: 16, bottom: 5),
       child: Text(
         'Выберите инвентарный номер',
         style: TextStyle(
-          color: blackLabels,
-          fontFamily: 'Rubik',
-          fontWeight: FontWeight.w500,
-          fontSize: 18,
-        ),
-      ),
-    );
-  }
-
-  Widget _BoldLabel(String label) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, bottom: 4),
-      child: Text(
-        label,
-        style: const TextStyle(
           color: blackLabels,
           fontFamily: 'Rubik',
           fontWeight: FontWeight.w500,
@@ -372,7 +375,7 @@ class InventoryFormState extends State<InventoryForm> {
     '101340003428'
   ];
 
-  Widget _InventoryNumberChips() {
+  Widget inventoryNumberChips() {
     int selected = 0;
     bool _isSelected = false;
     return SingleChildScrollView(
@@ -415,7 +418,7 @@ class InventoryFormState extends State<InventoryForm> {
     );
   }
 
-  Widget _ShowLabel() {
+  Widget showLabel() {
     return const Padding(
       padding: EdgeInsets.fromLTRB(0, 4, 16, 8),
       child: Text(
@@ -431,21 +434,7 @@ class InventoryFormState extends State<InventoryForm> {
     );
   }
 
-  Widget _SearchLabel() {
-    return const Padding(
-      padding: EdgeInsets.only(left: 16),
-      child: Text(
-        'или найдите',
-        style: TextStyle(
-          color: blackLabels,
-          fontSize: 16,
-          fontFamily: 'Rubik',
-        ),
-      ),
-    );
-  }
-
-  Widget _SearchInventoryContainer() {
+  Widget searchInventoryContainer() {
     return Theme(
       data: ThemeData(
         primarySwatch: Palette.customBlue,
@@ -530,7 +519,7 @@ class InventoryFormState extends State<InventoryForm> {
     );
   }
 
-  Widget _AddEquipmentContainer() {
+  Widget addEquipmentContainer() {
     return ElevatedButton(
       style: ButtonStyle(
         overlayColor: MaterialStateProperty.all(blueOverlay),
@@ -574,7 +563,7 @@ class InventoryFormState extends State<InventoryForm> {
     );
   }
 
-  Widget _SearchAddContainer() {
+  Widget searchAddContainer() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 0, 0),
       child: Container(
@@ -591,7 +580,7 @@ class InventoryFormState extends State<InventoryForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(child: _SearchInventoryContainer()),
+              Expanded(child: searchInventoryContainer()),
               SizedBox(
                 height: 1,
                 child: Container(
@@ -600,7 +589,7 @@ class InventoryFormState extends State<InventoryForm> {
                   ),
                 ),
               ),
-              Expanded(child: _AddEquipmentContainer())
+              Expanded(child: addEquipmentContainer())
             ],
           ),
         ),
@@ -608,22 +597,7 @@ class InventoryFormState extends State<InventoryForm> {
     );
   }
 
-  Widget _DateTaken() {
-    return const Padding(
-      padding: EdgeInsets.only(left: 16, bottom: 8),
-      child: Text(
-        "Дата принятия к учету",
-        style: TextStyle(
-          color: blackLabels,
-          fontFamily: 'Rubik',
-          fontWeight: FontWeight.w500,
-          fontSize: 18,
-        ),
-      ),
-    );
-  }
-
-  Widget _ChooseDate() {
+  Widget chooseDate() {
     return ElevatedButton(
       style: ButtonStyle(
         overlayColor: MaterialStateProperty.all(
@@ -698,7 +672,7 @@ class InventoryFormState extends State<InventoryForm> {
     '419'
   ];
 
-  Widget _ClassroomsChips() {
+  Widget classroomsChips() {
     int selected = 0;
     // var doneIcon = null;
     bool _isSelected = false;
@@ -723,7 +697,7 @@ class InventoryFormState extends State<InventoryForm> {
                 ),
                 label: Text(
                   _choiceListClassrooms[index],
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Rubik',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -749,31 +723,13 @@ class InventoryFormState extends State<InventoryForm> {
     );
   }
 
-  Widget _GivenLabel() {
-    return const Padding(
-      padding: EdgeInsets.only(left: 16, bottom: 8),
-      child: Text(
-        "Выдано",
-        style: TextStyle(
-          color: blackLabels,
-          fontFamily: 'Rubik',
-          fontWeight: FontWeight.w500,
-          fontSize: 18,
-        ),
-      ),
-    );
-  }
-
   bool isSwitched = false;
 
-  Widget _GivenToggle() {
+  Widget givenToggle() {
     return ToggleSwitch(
       totalSwitches: 2,
       cornerRadius: 7,
       labels: const ['Нет', 'Да'],
-      onToggle: (index) {
-        print('$index');
-      },
       borderWidth: 2,
       borderColor: const [secondaryGreen],
       activeBgColor: const [secondaryGreen],
@@ -811,22 +767,33 @@ class InventoryFormState extends State<InventoryForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 12),
+                padding: const EdgeInsets.only(left: 4),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.keyboard_arrow_left_rounded,
-                      color: currentStep == 0 ? greySteps : secondaryGreen,
-                    ),
                     TextButton(
                       onPressed: controls.onStepCancel,
-                      child: Text(
-                        "Назад",
-                        style: TextStyle(
-                          fontFamily: 'Rubik',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: currentStep == 0 ? greySteps : secondaryGreen,
+                      child: SizedBox(
+                        height: 48,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.keyboard_arrow_left_rounded,
+                              color:
+                                  currentStep == 0 ? greySteps : secondaryGreen,
+                            ),
+                            Text(
+                              "Назад",
+                              style: TextStyle(
+                                fontFamily: 'Rubik',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: currentStep == 0
+                                    ? greySteps
+                                    : secondaryGreen,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     )
@@ -834,29 +801,37 @@ class InventoryFormState extends State<InventoryForm> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 12),
+                padding: currentStep != 2
+                    ? const EdgeInsets.only(right: 2)
+                    : const EdgeInsets.only(right: 10),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: currentStep == 2
-                          ? () {
-                              print("comment");
-                            }
-                          : controls.onStepContinue,
-                      child: Text(
-                        currentStep == 2 ? "Сохранить" : "Продолжить",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          fontFamily: 'Rubik',
+                      onPressed:
+                          currentStep == 2 ? () {} : controls.onStepContinue,
+                      child: SizedBox(
+                        height: 48,
+                        child: Row(
+                          children: [
+                            Text(
+                              currentStep == 2 ? "Принять" : "Продолжить",
+                              textAlign: TextAlign.end,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                fontFamily: 'Rubik',
+                              ),
+                            ),
+                            if (currentStep != 2)
+                              const Icon(
+                                Icons.keyboard_arrow_right_rounded,
+                                color: secondaryGreen,
+                              ),
+                          ],
                         ),
                       ),
                     ),
-                    if (currentStep != 2)
-                      const Icon(
-                        Icons.keyboard_arrow_right_rounded,
-                        color: secondaryGreen,
-                      )
                   ],
                 ),
               ),
@@ -895,7 +870,7 @@ class InventoryFormState extends State<InventoryForm> {
                     ),
                   )
                 : const Text(""),
-            content: _FirstProperty(),
+            content: firstProperty(),
           ),
           c_s.Step(
             state: currentStep <= 1
@@ -926,7 +901,7 @@ class InventoryFormState extends State<InventoryForm> {
                     ),
                   )
                 : const Text(""),
-            content: _SecondProperty(),
+            content: secondProperty(),
           ),
           c_s.Step(
             state: currentStep <= 2
@@ -957,7 +932,7 @@ class InventoryFormState extends State<InventoryForm> {
                     ),
                   )
                 : const Text(""),
-            content: _ThirdProperty(),
+            content: thirdProperty(),
           ),
         ],
       ),

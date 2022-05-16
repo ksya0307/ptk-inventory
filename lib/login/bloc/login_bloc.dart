@@ -63,7 +63,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           password: state.password.value,
         ),
       );
-      print("Waiting $waiting");
       if (waiting != null && waiting == LoginStatus.unverified) {
         emit(state.copyWith(formStatus: FormzStatus.submissionFailure));
       } else {

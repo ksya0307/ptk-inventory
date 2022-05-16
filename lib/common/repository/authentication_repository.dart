@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:ptk_inventory/common/model/hive_model.dart';
 import 'package:ptk_inventory/common/model/requests/auth_header.dart';
-import 'package:ptk_inventory/common/model/requests/change_password_request.dart';
 import 'package:ptk_inventory/common/model/requests/login.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/common/provider/hive/hive_provider.dart';
@@ -38,7 +37,6 @@ class AuthenticationRepository {
   ) async {
     try {
       final data = await _userProvider.signIn(loginModelRequest.toMap());
-      print("Da $data");
 
       final userModel = await _userProvider.getUser(
         header: HeaderModel(token: data.accessToken).toMap(),
@@ -59,9 +57,9 @@ class AuthenticationRepository {
       );
       await addUserProfile(userHiveModel: userHiveModel);
       _controller.add(AuthenticationStatus.authenticated);
+      return LoginStatus.verified;
     } catch (e) {
       _controller.add(AuthenticationStatus.unauthenticated);
-      print("inside catch");
       return LoginStatus.unverified;
     }
   }

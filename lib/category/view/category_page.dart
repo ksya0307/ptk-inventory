@@ -11,6 +11,17 @@ class CategoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          tooltip: "Назад",
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        elevation: 0,
         centerTitle: true,
         title: const Text(
           "Категории",
@@ -148,7 +159,7 @@ class _CategoryTableState extends State<CategoryTable> {
         ),
         DataColumn(
           label: Text(
-            'Фамилия И.О',
+            'Название',
             style: TextStyle(
               fontWeight: FontWeight.w500,
               fontFamily: 'Rubik',
@@ -218,14 +229,16 @@ class _CategoryTableState extends State<CategoryTable> {
                 '3',
               ),
             ),
-            DataCell(Text(
-              'Телевизор',
-              style: TextStyle(
-                fontFamily: 'Rubik',
-                fontSize: 16,
-                color: blackLabels,
+            DataCell(
+              Text(
+                'Телевизор',
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 16,
+                  color: blackLabels,
+                ),
               ),
-            )),
+            ),
             DataCell(
               Icon(
                 Icons.open_in_new_rounded,

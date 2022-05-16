@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/equipment_classrooms/view/equipment_classrooms_page.dart';
 import 'package:ptk_inventory/user/view/my_profile.dart';
 
 class PortraitReaderPage extends StatelessWidget {
@@ -145,43 +146,46 @@ Widget repairCard(BuildContext context) {
 }
 
 Widget myEquipmentCard(BuildContext context) {
-  return SizedBox(
-    width: MediaQuery.of(context).size.width * 0.47,
-    height: MediaQuery.of(context).size.height * 0.2,
-    child: Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(7.0),
-      ),
-      color: const Color.fromRGBO(227, 50, 69, 1.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-            child: Text(
-              "Моё оборудование",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: 'Rubik',
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
+  return GestureDetector(
+    onTap: () => Navigator.of(context).push(EquipmentClassroomsPage.route()),
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.47,
+      height: MediaQuery.of(context).size.height * 0.2,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7.0),
+        ),
+        color: redCustom,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+              child: Text(
+                "Моё оборудование",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-            child: Text(
-              "Все оборудование по аудиториям и его характеристики",
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontFamily: 'Rubik',
-                fontSize: 14,
-                color: Colors.white,
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: Text(
+                "Все оборудование по аудиториям и его характеристики",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     ),
   );

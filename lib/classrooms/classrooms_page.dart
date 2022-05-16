@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
-import 'package:ptk_inventory/moderator_user/view/home_page.dart';
-import 'package:ptk_inventory/palette.dart';
 
 class ClassroomsPage extends StatelessWidget {
   static Route route() {
@@ -14,11 +11,16 @@ class ClassroomsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded),
+          tooltip: "Назад",
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+          ),
           onPressed: () {
-            Navigator.of(context).pop(ModeratorPage.route());
+            Navigator.of(context).pop();
           },
         ),
+        elevation: 0,
         title: const Text(
           'Аудитории',
           style: TextStyle(
@@ -69,6 +71,10 @@ class _ClassroomTeacherSearchState extends State<ClassroomTeacherSearch> {
           color: blackInput,
         ),
         decoration: const InputDecoration(
+          prefixIcon: Icon(
+            Icons.search_rounded,
+            color: primaryBlue,
+          ),
           labelStyle: TextStyle(fontFamily: 'Rubik', fontSize: 18),
           errorStyle: TextStyle(
             color: redCustom,

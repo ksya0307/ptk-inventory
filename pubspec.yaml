@@ -22,17 +22,18 @@ dependencies:
   # позволит нам сохранять состояние приложения при его закрытии и повторном открытии
   hydrated_bloc: ^8.1.0
   json_annotation: ^4.4.0
-  toggle_switch: ^2.0.1
   path_provider: ^2.0.8
+  toggle_switch: ^2.0.1
   responsive_grid: ^2.1.0
+  mask_text_input_formatter: ^2.3.0
 
 
 
 dev_dependencies:
+  bloc_test: ^9.0.2
   flutter_test:
     sdk: flutter
   # позволяет нам легко подготовить наши блоки к тестированию, обрабатывать изменения состояния и проверять результаты последовательным образом.
-  bloc_test: ^9.0.2
   json_serializable: ^6.0.0
   build_runner: ^2.1.10
   mocktail: ^0.2.0

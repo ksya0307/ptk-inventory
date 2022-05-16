@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/inventory/view/inventory_form.dart';
-import 'package:ptk_inventory/moderator_user/view/home_page.dart';
 
 class InventoryPage extends StatelessWidget {
   static Route route() {
@@ -12,12 +11,25 @@ class InventoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded),
+          tooltip: "Назад",
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+          ),
           onPressed: () {
-            Navigator.of(context).pop(ModeratorPage.route());
+            Navigator.of(context).pop();
           },
         ),
-        title: const Text('Добавление'),
+        elevation: 0,
+        title: const Text(
+          'Принять к учету',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'Rubik',
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         centerTitle: true,
       ),
       body: InventoryForm(),

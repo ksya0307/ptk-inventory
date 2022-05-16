@@ -73,7 +73,9 @@ class ControlsDetails {
 }
 
 typedef ControlsWidgetBuilder = Widget Function(
-    BuildContext context, ControlsDetails details);
+  BuildContext context,
+  ControlsDetails details,
+);
 
 const TextStyle _kStepStyle = TextStyle(
   fontSize: 12.0,
@@ -196,8 +198,9 @@ class _StepperState extends State<CustomStepper> with TickerProviderStateMixin {
       (int i) => GlobalKey(),
     );
 
-    for (int i = 0; i < widget.steps.length; i += 1)
+    for (int i = 0; i < widget.steps.length; i += 1) {
       _oldStates[i] = widget.steps[i].state;
+    }
   }
 
   @override
@@ -205,8 +208,9 @@ class _StepperState extends State<CustomStepper> with TickerProviderStateMixin {
     super.didUpdateWidget(oldWidget);
     assert(widget.steps.length == oldWidget.steps.length);
 
-    for (int i = 0; i < oldWidget.steps.length; i += 1)
+    for (int i = 0; i < oldWidget.steps.length; i += 1) {
       _oldStates[i] = oldWidget.steps[i].state;
+    }
   }
 
   bool _isFirst(int index) {
@@ -291,7 +295,9 @@ class _StepperState extends State<CustomStepper> with TickerProviderStateMixin {
         ),
         child: Center(
           child: _buildCircleChild(
-              index, oldState && widget.steps[index].state == StepState.error),
+            index,
+            oldState && widget.steps[index].state == StepState.error,
+          ),
         ),
       ),
     );
@@ -313,9 +319,13 @@ class _StepperState extends State<CustomStepper> with TickerProviderStateMixin {
             ),
             child: Align(
               alignment: const Alignment(
-                  0.0, 0.8), // 0.8 looks better than the geometrical 0.33.
-              child: _buildCircleChild(index,
-                  oldState && widget.steps[index].state != StepState.error),
+                0.0,
+                0.8,
+              ), // 0.8 looks better than the geometrical 0.33.
+              child: _buildCircleChild(
+                index,
+                oldState && widget.steps[index].state != StepState.error,
+              ),
             ),
           ),
         ),
@@ -337,15 +347,16 @@ class _StepperState extends State<CustomStepper> with TickerProviderStateMixin {
         duration: kThemeAnimationDuration,
       );
     } else {
-      if (widget.steps[index].state != StepState.error)
+      if (widget.steps[index].state != StepState.error) {
         return _buildCircle(index, false);
-      else
+      } else {
         return _buildTriangle(index, false);
+      }
     }
   }
 
   Widget _buildVerticalControls(int stepIndex) {
-    if (widget.controlsBuilder != null)
+    if (widget.controlsBuilder != null) {
       return widget.controlsBuilder!(
         context,
         ControlsDetails(
@@ -355,6 +366,7 @@ class _StepperState extends State<CustomStepper> with TickerProviderStateMixin {
           stepIndex: stepIndex,
         ),
       );
+    }
 
     final Color cancelColor;
     switch (Theme.of(context).brightness) {
@@ -372,7 +384,8 @@ class _StepperState extends State<CustomStepper> with TickerProviderStateMixin {
         MaterialLocalizations.of(context);
 
     const OutlinedBorder buttonShape = RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(2)));
+      borderRadius: BorderRadius.all(Radius.circular(2)),
+    );
     const EdgeInsets buttonPadding = EdgeInsets.symmetric(horizontal: 16.0);
 
     return Container(
@@ -402,7 +415,8 @@ class _StepperState extends State<CustomStepper> with TickerProviderStateMixin {
                       : colorScheme.primary;
                 }),
                 padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                    buttonPadding),
+                  buttonPadding,
+                ),
                 shape: MaterialStateProperty.all<OutlinedBorder>(buttonShape),
               ),
               child: Text(localizations.continueButtonLabel),
@@ -664,8 +678,9 @@ class _StepperState extends State<CustomStepper> with TickerProviderStateMixin {
                 curve: Curves.fastOutSlowIn,
                 duration: kThemeAnimationDuration,
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: stepPanels),
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: stepPanels,
+                ),
               ),
               _buildVerticalControls(widget.currentStep),
             ],
@@ -680,13 +695,14 @@ class _StepperState extends State<CustomStepper> with TickerProviderStateMixin {
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasMaterialLocalizations(context));
     assert(() {
-      if (context.findAncestorWidgetOfExactType<Stepper>() != null)
+      if (context.findAncestorWidgetOfExactType<Stepper>() != null) {
         throw FlutterError(
           'Steppers must not be nested.\n'
           'The material specification advises that one should avoid embedding '
           'steppers within steppers. '
           'https://material.io/archive/guidelines/components/steppers.html#steppers-usage',
         );
+      }
       return true;
     }());
     assert(widget.type != null);

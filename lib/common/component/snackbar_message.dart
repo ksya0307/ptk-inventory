@@ -15,10 +15,9 @@ ScaffoldFeatureController snackbarMessage(
       backgroundColor: greyCard,
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 0),
+            padding: EdgeInsets.zero,
             child: Text(
               message,
               style: const TextStyle(
@@ -34,7 +33,7 @@ ScaffoldFeatureController snackbarMessage(
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
             },
             child: const Padding(
-              padding: EdgeInsets.only(right: 0),
+              padding: EdgeInsets.zero,
               child: Icon(
                 Icons.close_rounded,
                 color: primaryBlue,

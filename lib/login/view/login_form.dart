@@ -39,10 +39,10 @@ class _SignUpLabel extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(SignUpPage.route());
       },
-      child: Container(
+      child: const SizedBox(
         height: 48,
         width: 160,
-        child: const Text(
+        child: Text(
           "Создать профиль",
           style: TextStyle(
             color: blueCustom,
@@ -262,7 +262,6 @@ class _LoginButton extends StatelessWidget {
                       ),
                       onPressed: state.formStatus.isValidated
                           ? () {
-                              print("aa");
                               context
                                   .read<LoginBloc>()
                                   .add(const LoginSubmitted());

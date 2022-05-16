@@ -10,6 +10,17 @@ class AddDocumentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          tooltip: "Назад",
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        elevation: 0,
         centerTitle: true,
         title: const Text(
           "Добавление документа",
@@ -104,7 +115,7 @@ class DocNameState extends State<DocName> {
           color: redCustom,
           fontFamily: 'Rubik',
         ),
-        hintText: 'Грант А',
+        hintText: 'Договор № 1',
         contentPadding: const EdgeInsets.fromLTRB(12, 19 - 4, 12, 19 - 4),
         hintStyle: const TextStyle(
           fontFamily: 'Rubik',

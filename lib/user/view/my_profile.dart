@@ -54,14 +54,14 @@ class UserProfileView extends StatelessWidget {
                 child: const Icon(
                   Icons.arrow_back_rounded,
                   size: 40,
-                  color: Color.fromRGBO(68, 68, 68, 1.0),
+                  color: blackLabels,
                 ),
               ),
             ),
             const UserFullName(),
-            _UsernameLabel(),
+            propertyLabel('Логин', 24, 16),
             const UsernameField(),
-            _ChangePasswordLabel(),
+            propertyLabel('Изменить пароль', 16, 16),
             const _ChangePasswordField(),
             const _SavePassword()
           ],
@@ -263,46 +263,35 @@ class _UserFullNameState extends State<UserFullName> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (context, state) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 16, left: 16),
-        child: Text(
-          "${state.user.surname} ${state.user.name} ${state.user.patronymic}",
-          style: const TextStyle(
-            fontFamily: 'Rubik',
-            fontSize: 22,
-            color: Color.fromRGBO(68, 68, 68, 1.0),
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.only(top: 16, left: 16),
+          child: Text(
+            "${state.user.surname} ${state.user.name} ${state.user.patronymic}",
+            style: const TextStyle(
+              fontFamily: 'Rubik',
+              fontSize: 22,
+              fontWeight: FontWeight.w500,
+              color: blackLabels,
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
-Widget _UsernameLabel() {
-  return const Padding(
-    padding: EdgeInsets.only(top: 24, left: 16),
+Widget propertyLabel(String property, double paddingTop, double paddingLeft) {
+  return Padding(
+    padding: EdgeInsets.only(top: paddingTop, left: paddingLeft),
     child: Text(
-      "Логин",
-      style: TextStyle(
-          fontFamily: 'Rubik',
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
-          color: Color.fromRGBO(68, 68, 68, 1.0)),
-    ),
-  );
-}
-
-Widget _ChangePasswordLabel() {
-  return const Padding(
-    padding: EdgeInsets.only(top: 16, left: 16),
-    child: Text(
-      "Изменить пароль",
-      style: TextStyle(
-          fontFamily: 'Rubik',
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
-          color: Color.fromRGBO(68, 68, 68, 1.0)),
+      property,
+      style: const TextStyle(
+        fontFamily: 'Rubik',
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+        color: blackLabels,
+      ),
     ),
   );
 }

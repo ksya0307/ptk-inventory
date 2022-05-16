@@ -25,14 +25,12 @@ class LoginPage extends StatelessWidget {
           BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
               if (state.status == AuthenticationStatus.unauthenticated) {
-                print("25 ${state.status}");
                 snackbarMessage(context, "Неверный логин или пароль");
               }
             },
           ),
           BlocListener<LoginBloc, LoginState>(
             listener: (context, state) {
-              print("Form ${state.formStatus}");
               if (state.formStatus == FormzStatus.submissionFailure) {
                 snackbarMessage(context, "Неверный логин или пароль");
               }

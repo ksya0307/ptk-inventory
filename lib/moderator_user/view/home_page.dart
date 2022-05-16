@@ -12,6 +12,8 @@ class ModeratorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        tooltip: "Принять к учету",
+        child: const Icon(Icons.add_rounded),
         onPressed: () => Navigator.of(context).push(InventoryPage.route()),
       ),
       body: OrientationBuilder(

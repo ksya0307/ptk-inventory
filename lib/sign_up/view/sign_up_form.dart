@@ -277,12 +277,6 @@ class PatronymicInput extends StatelessWidget {
 
 class UsernameInput extends StatelessWidget {
   const UsernameInput({Key? key}) : super(key: key);
-
-  @override
-  State<UsernameInput> createState() => _UsernameInputState();
-}
-
-class _UsernameInputState extends State<UsernameInput> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignUpBloc, SignUpState>(

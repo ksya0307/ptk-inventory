@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/category/view/category_page.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
 import 'package:ptk_inventory/documents/view/document_page.dart';
@@ -267,7 +269,16 @@ Widget profileCard(BuildContext context) {
 
 Widget equipmentCard(BuildContext context) {
   return GestureDetector(
-    onTap: () => Navigator.of(context).push(EquipmentClassroomsPage.route()),
+    onTap: () => Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return BlocProvider.value(
+            value: context.read<AuthenticationBloc>(),
+            child: EquipmentClassroomsPage(),
+          );
+        },
+      ),
+    ),
     child: SizedBox(
       width: MediaQuery.of(context).size.width * 0.47,
       height: MediaQuery.of(context).size.height * 0.16,

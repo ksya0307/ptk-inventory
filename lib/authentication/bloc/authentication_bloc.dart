@@ -24,10 +24,18 @@ class AuthenticationBloc
         super(const AuthenticationState.unknown()) {
     on<AuthenticationStatusChanged>(_onAuthenticationStatusChanged);
     on<AuthenticationLogoutRequested>(_onAuthenticationLogoutRequested);
+    on<DummyTesting>(_dummyFunc);
 
     _authenticationStatusSubscription = _authenticationRepository.status.listen(
       (status) => add(AuthenticationStatusChanged(status)),
     );
+  }
+
+  void _dummyFunc(
+    DummyTesting event,
+    Emitter<AuthenticationState> emit,
+  ) {
+    emit(state.copyWith(ourDummy: "New Dummy"));
   }
 
   @override
@@ -47,7 +55,7 @@ class AuthenticationBloc
 
         return emit(
           user != null
-              ? AuthenticationState.authenticated(user)
+              ? AuthenticationState.authenticated(user, "old dummy")
               : const AuthenticationState.unauthenticated(),
         );
       case AuthenticationStatus.unauthenticated:

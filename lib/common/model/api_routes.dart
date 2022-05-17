@@ -6,4 +6,5 @@ class ApiRoutes {
   static const refresh = 'refresh';
   static const changePassword = 'change-password';
   static const allCategories = 'categories';
+  static const signUp = 'sign_up';
 }

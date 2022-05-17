@@ -6,7 +6,7 @@ import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
 import 'package:ptk_inventory/equipment_classrooms/add_equipment/view/add_equipment_page.dart';
 
-class EquipmentClassroomsPage extends StatelessWidget {
+class EquipmentClassroomsPage extends StatefulWidget {
   static Route route() {
     return MaterialPageRoute<void>(
       builder: (_) => EquipmentClassroomsPage(),
@@ -14,63 +14,79 @@ class EquipmentClassroomsPage extends StatelessWidget {
   }
 
   @override
+  State<EquipmentClassroomsPage> createState() =>
+      _EquipmentClassroomsPageState();
+}
+
+class _EquipmentClassroomsPageState extends State<EquipmentClassroomsPage> {
+  @override
   Widget build(BuildContext context) {
     var title = "";
-    return BlocListener<AuthenticationBloc, AuthenticationState>(
-      listener: (context, state) {
-        switch (state.status) {
-          case AuthenticationStatus.authenticated:
-            if (state.user.role == UserRole.reader) {
-              title = "Моё оборудование";
-            }
-            if (state.user.role == UserRole.admin) title = "Оборудование";
-            if (state.user.role == UserRole.moderator) title = "Оборудование";
-            break;
-          case AuthenticationStatus.unauthenticated:
-            break;
-          default:
-            break;
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            tooltip: "Назад",
-            icon: const Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          elevation: 0,
-          title: const Text(
-            "Оборудование",
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Rubik',
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          centerTitle: true,
-        ),
-        body: SafeArea(
-          child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints view) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: view.minWidth,
+
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+      builder: (context, state) {
+        print("ROLE 1 $state");
+        return BlocListener<AuthenticationBloc, AuthenticationState>(
+          listener: (context, state) {
+            print("ROLE 2 $state");
+            // switch (state.status) {
+            //   case AuthenticationStatus.authenticated:
+            //     if (state.user.role == UserRole.reader) {
+            //       title = "Моё оборудование";
+            //     }
+            //     if (state.user.role == UserRole.admin) title = "Оборудование";
+            //     if (state.user.role == UserRole.moderator) title = "Оборудование";
+            //     break;
+            //   case AuthenticationStatus.unauthenticated:
+            //     break;
+            //   default:
+            //     break;
+            // }
+          },
+          child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+              builder: (context, state) {
+            return Scaffold(
+              appBar: AppBar(
+                leading: IconButton(
+                  tooltip: "Назад",
+                  icon: const Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.white,
                   ),
-                  child: equipmentClassrooms(context),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
-              );
-            },
-          ),
-        ),
-      ),
+                elevation: 0,
+                title: Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Rubik',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                centerTitle: true,
+              ),
+              body: SafeArea(
+                child: LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints view) {
+                    return SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: view.minWidth,
+                        ),
+                        child: equipmentClassrooms(context),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            );
+          }),
+        );
+      },
     );
   }
 }
@@ -81,7 +97,12 @@ Widget equipmentClassrooms(BuildContext context) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Classroom(),
+        GestureDetector(
+          child: Classroom(),
+          onTap: () => context.read<AuthenticationBloc>().add(
+                DummyTesting("dummyString"),
+              ),
+        ),
         const Equipment(),
         const EquipmentSearch(),
         addEquipmentLabel(context)

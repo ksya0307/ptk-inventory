@@ -30,14 +30,20 @@ class LoginForm extends StatelessWidget {
   }
 }
 
-class _SignUpLabel extends StatelessWidget {
-  const _SignUpLabel({Key? key}) : super(key: key);
+class SignUpLabel extends StatelessWidget {
+  const SignUpLabel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(SignUpPage.route());
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return SignUpPage();
+            },
+          ),
+        );
       },
       child: const SizedBox(
         height: 48,
@@ -284,7 +290,7 @@ class _LoginButton extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
-                  const _SignUpLabel(),
+                  const SignUpLabel(),
                 ],
               );
       },

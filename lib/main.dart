@@ -5,7 +5,7 @@ import 'package:ptk_inventory/app.dart';
 import 'package:ptk_inventory/common/model/hive_model.dart';
 import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 import 'package:ptk_inventory/common/repository/user_repository.dart';
-
+import 'package:ptk_inventory/sign_up/repository/sign_up_repository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +16,7 @@ Future<void> main() async {
     App(
       authenticationRepository: AuthenticationRepository(),
       userRepository: UserRepository(),
+      signUpRepository: SignUpRepository(),
     ),
   );
 }

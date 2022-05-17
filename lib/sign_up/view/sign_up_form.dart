@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
 import 'package:ptk_inventory/login/login.dart';
 import 'package:ptk_inventory/sign_up/bloc/sign_up_bloc.dart';
@@ -89,7 +90,6 @@ class _SurnameInputState extends State<SurnameInput> {
     return BlocBuilder<SignUpBloc, SignUpState>(
       buildWhen: (previous, current) => previous.surname != current.surname,
       builder: (context, state) {
-        print("object $state");
         return TextFormField(
           onChanged: (surname) =>
               context.read<SignUpBloc>().add(SignUpSurnameChanged(surname)),
@@ -157,6 +157,8 @@ class NameInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.name != current.name,
       builder: (context, state) {
         return TextFormField(
+          onChanged: (name) =>
+              context.read<SignUpBloc>().add(SignUpNameChanged(name)),
           key: const Key('signUpForm_nameInput_textField'),
           cursorColor: Theme.of(context).primaryColor,
           minLines: 1,
@@ -167,6 +169,8 @@ class NameInput extends StatelessWidget {
           ),
           decoration: InputDecoration(
             labelStyle: const TextStyle(fontFamily: 'Rubik', fontSize: 18),
+            errorText:
+                state.surname.invalid ? 'Имя не может быть пустым' : null,
             errorStyle: const TextStyle(
               color: redCustom,
               fontFamily: 'Rubik',
@@ -221,6 +225,9 @@ class PatronymicInput extends StatelessWidget {
           previous.patronymic != current.patronymic,
       builder: (context, state) {
         return TextFormField(
+          onChanged: (patronymic) => context
+              .read<SignUpBloc>()
+              .add(SignUpPatronymicChanged(patronymic)),
           key: const Key('signUpForm_patronymicInput_textField'),
           cursorColor: Theme.of(context).primaryColor,
           minLines: 1,
@@ -283,6 +290,8 @@ class UsernameInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.username != current.username,
       builder: (context, state) {
         return TextFormField(
+          onChanged: (username) =>
+              context.read<SignUpBloc>().add(SignUpUsernameChanged(username)),
           key: const Key('signUpForm_usernameInput_textField'),
           cursorColor: Theme.of(context).primaryColor,
           minLines: 1,
@@ -293,6 +302,8 @@ class UsernameInput extends StatelessWidget {
           ),
           decoration: InputDecoration(
             labelStyle: const TextStyle(fontFamily: 'Rubik', fontSize: 18),
+            errorText:
+                state.username.invalid ? 'Логин не может быть пустым' : null,
             errorStyle: const TextStyle(
               color: redCustom,
               fontFamily: 'Rubik',
@@ -357,6 +368,8 @@ class _PasswordInput extends State<PasswordInput> {
         buildWhen: (previous, current) => previous.password != current.password,
         builder: (context, state) {
           return TextFormField(
+            onChanged: (password) =>
+                context.read<SignUpBloc>().add(SignUpPasswordChanged(password)),
             key: const Key('signUpForm_passwordInput_textField'),
             cursorColor: Theme.of(context).primaryColor,
             minLines: 1,
@@ -368,6 +381,9 @@ class _PasswordInput extends State<PasswordInput> {
             ),
             decoration: InputDecoration(
               labelStyle: const TextStyle(fontFamily: 'Rubik', fontSize: 18),
+              errorText: state.password.invalid
+                  ? 'Длина должна быть не менее 8 символов'
+                  : null,
               errorStyle: const TextStyle(
                 color: redCustom,
                 fontFamily: 'Rubik',
@@ -420,38 +436,52 @@ class _PasswordInput extends State<PasswordInput> {
 class SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        minWidth: MediaQuery.of(context).size.width,
-      ),
-      child: ElevatedButton(
-        key: const Key('signUpForm_signUp_raisedButton'),
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(7.0),
-            ),
-          ),
-          elevation: MaterialStateProperty.all(0),
-          foregroundColor: MaterialStateProperty.all(Colors.white),
-          backgroundColor: MaterialStateProperty.all(
-            primaryBlue,
-          ),
-        ),
-        onPressed: () {},
-        child: const Padding(
-          padding: EdgeInsets.fromLTRB(0, 12 + 1, 0, 12 + 1),
-          child: Text(
-            "Создать",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 22,
-              fontFamily: 'Rubik',
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-      ),
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) =>
+          previous.formStatus != current.formStatus,
+      builder: (context, state) {
+        return state.formStatus.isSubmissionInProgress
+            ? const Center(child: CircularProgressIndicator())
+            : ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: MediaQuery.of(context).size.width,
+                ),
+                child: ElevatedButton(
+                  key: const Key('signUpForm_signUp_raisedButton'),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.0),
+                      ),
+                    ),
+                    elevation: MaterialStateProperty.all(0),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    backgroundColor: MaterialStateProperty.all(
+                      primaryBlue,
+                    ),
+                  ),
+                  onPressed: state.formStatus.isValidated
+                      ? () {
+                          context
+                              .read<SignUpBloc>()
+                              .add(const SignUpSubmitted());
+                        }
+                      : null,
+                  child: const Padding(
+                    padding: EdgeInsets.fromLTRB(0, 12 + 1, 0, 12 + 1),
+                    child: Text(
+                      "Создать",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: 'Rubik',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+      },
     );
   }
 }

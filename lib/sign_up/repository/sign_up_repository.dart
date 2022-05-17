@@ -2,7 +2,7 @@ import 'package:ptk_inventory/sign_up/models/request/sign_up_request.dart';
 import 'package:ptk_inventory/sign_up/models/response/sign_up_response.dart';
 import 'package:ptk_inventory/sign_up/provider/sign_up_api.dart';
 
-enum SignUpStatus { signed, unsigned }
+enum SignUpStatus { initial, signed, unsigned }
 
 class SignUpRepository {
   final SignUpProvider _signUpProvider;

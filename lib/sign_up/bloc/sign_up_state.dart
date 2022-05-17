@@ -4,7 +4,7 @@ class SignUpState extends Equatable {
   final FormzStatus formStatus;
   final Surname surname;
   final Name name;
-  final Patronymic patronymic;
+  final String? patronymic;
   final Username username;
   final Password password;
 
@@ -12,20 +12,20 @@ class SignUpState extends Equatable {
     this.formStatus = FormzStatus.pure,
     this.surname = const Surname.pure(),
     this.name = const Name.pure(),
-    this.patronymic = const Patronymic.pure(),
+    this.patronymic,
     this.username = const Username.pure(),
     this.password = const Password.pure(),
   });
 
   @override
-  List<Object> get props =>
+  List<Object?> get props =>
       [formStatus, surname, name, patronymic, username, password];
 
   SignUpState copyWith({
     FormzStatus? formStatus,
     Surname? surname,
     Name? name,
-    Patronymic? patronymic,
+    String? patronymic,
     Username? username,
     Password? password,
   }) {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
-import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
 import 'package:ptk_inventory/equipment_classrooms/add_equipment/view/add_equipment_page.dart';
 
@@ -21,94 +20,73 @@ class EquipmentClassroomsPage extends StatefulWidget {
 class _EquipmentClassroomsPageState extends State<EquipmentClassroomsPage> {
   @override
   Widget build(BuildContext context) {
-    var title = "";
-
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
-        print("ROLE 1 $state");
-        return BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {
-            print("ROLE 2 $state");
-            // switch (state.status) {
-            //   case AuthenticationStatus.authenticated:
-            //     if (state.user.role == UserRole.reader) {
-            //       title = "Моё оборудование";
-            //     }
-            //     if (state.user.role == UserRole.admin) title = "Оборудование";
-            //     if (state.user.role == UserRole.moderator) title = "Оборудование";
-            //     break;
-            //   case AuthenticationStatus.unauthenticated:
-            //     break;
-            //   default:
-            //     break;
-            // }
-          },
-          child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-              builder: (context, state) {
-            return Scaffold(
-              appBar: AppBar(
-                leading: IconButton(
-                  tooltip: "Назад",
-                  icon: const Icon(
-                    Icons.arrow_back_rounded,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                elevation: 0,
-                title: Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Rubik',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                centerTitle: true,
+        return Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              tooltip: "Назад",
+              icon: const Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.white,
               ),
-              body: SafeArea(
-                child: LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints view) {
-                    return SingleChildScrollView(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          minHeight: view.minWidth,
-                        ),
-                        child: equipmentClassrooms(context),
-                      ),
-                    );
-                  },
-                ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            elevation: 0,
+            title: Text(
+              state.user.role == UserRole.admin ||
+                      state.user.role == UserRole.moderator
+                  ? "Оборудование"
+                  : "Моё оборудование",
+              style: const TextStyle(
+                color: Colors.white,
+                fontFamily: 'Rubik',
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
               ),
-            );
-          }),
+            ),
+            centerTitle: true,
+          ),
+          body: SafeArea(
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints view) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: view.minWidth,
+                    ),
+                    child: EquipmentClassrooms(),
+                  ),
+                );
+              },
+            ),
+          ),
         );
       },
     );
   }
 }
 
-Widget equipmentClassrooms(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 24),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GestureDetector(
-          child: Classroom(),
-          onTap: () => context.read<AuthenticationBloc>().add(
-                DummyTesting("dummyString"),
-              ),
-        ),
-        const Equipment(),
-        const EquipmentSearch(),
-        addEquipmentLabel(context)
-      ],
-    ),
-  );
+class EquipmentClassrooms extends StatelessWidget {
+  const EquipmentClassrooms({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Classroom(),
+          const Equipment(),
+          const EquipmentSearch(),
+          addEquipmentLabel(context)
+        ],
+      ),
+    );
+  }
 }
 
 Widget addEquipmentLabel(BuildContext context) {

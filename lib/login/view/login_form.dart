@@ -243,7 +243,7 @@ class _LoginButton extends StatelessWidget {
                       minWidth: MediaQuery.of(context).size.width,
                     ),
                     child: ElevatedButton(
-                      key: const Key('loginForm_continue_raisedButton'),
+                      key: const Key('loginForm_logIn_elevatedButton'),
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all(
                           RoundedRectangleBorder(

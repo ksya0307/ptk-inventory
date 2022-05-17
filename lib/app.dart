@@ -5,6 +5,7 @@ import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 import 'package:ptk_inventory/common/repository/user_repository.dart';
+import 'package:ptk_inventory/common_user/view.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
 import 'package:ptk_inventory/inventory/view/inventory_page.dart';
 import 'package:ptk_inventory/login/view/login_page.dart';
@@ -106,7 +107,7 @@ class _AppViewState extends State<AppView> {
                 if (state.user.role == UserRole.common) {
                   //if role == UserRole.common
                   _navigator.pushAndRemoveUntil<void>(
-                    InventoryPage.route(),
+                    CommonPage.route(),
                     (route) => false,
                   );
                 }

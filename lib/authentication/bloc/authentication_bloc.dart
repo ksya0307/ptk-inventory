@@ -35,6 +35,7 @@ class AuthenticationBloc
     DummyTesting event,
     Emitter<AuthenticationState> emit,
   ) {
+    print("${event.dummyString}");
     emit(state.copyWith(ourDummy: "New Dummy"));
   }
 

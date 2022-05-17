@@ -4,7 +4,6 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:ptk_inventory/category/view/add_category_page.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
 import 'package:ptk_inventory/equipment_classrooms/equipment_specs/view/equipment_specs_page.dart';
-import 'package:ptk_inventory/equipment_classrooms/view/equipment_classrooms_page.dart';
 
 class AddEquipmentPage extends StatelessWidget {
   static Route route() {

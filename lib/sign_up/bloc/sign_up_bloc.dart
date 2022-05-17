@@ -30,13 +30,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     emit(
       state.copyWith(
         surname: surname,
-        formStatus: Formz.validate([
-          surname,
-          state.name,
-          state.patronymic,
-          state.username,
-          state.password
-        ]),
+        formStatus: Formz.validate(
+          [
+            surname,
+            state.name,
+            state.username,
+            state.password,
+          ],
+        ),
       ),
     );
   }
@@ -49,13 +50,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     emit(
       state.copyWith(
         name: name,
-        formStatus: Formz.validate([
-          state.surname,
-          name,
-          state.patronymic,
-          state.username,
-          state.password
-        ]),
+        formStatus: Formz.validate(
+          [
+            state.surname,
+            name,
+            state.username,
+            state.password,
+          ],
+        ),
       ),
     );
   }
@@ -64,17 +66,17 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     SignUpPatronymicChanged event,
     Emitter<SignUpState> emit,
   ) {
-    final patronymic = Patronymic.dirty(event.patronymic);
     emit(
       state.copyWith(
-        patronymic: patronymic,
-        formStatus: Formz.validate([
-          state.surname,
-          state.name,
-          patronymic,
-          state.username,
-          state.password
-        ]),
+        patronymic: event.patronymic,
+        formStatus: Formz.validate(
+          [
+            state.surname,
+            state.name,
+            state.username,
+            state.password,
+          ],
+        ),
       ),
     );
   }
@@ -90,9 +92,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         formStatus: Formz.validate([
           state.surname,
           state.name,
-          state.patronymic,
           username,
-          state.password
+          state.password,
         ]),
       ),
     );
@@ -106,13 +107,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     emit(
       state.copyWith(
         password: password,
-        formStatus: Formz.validate([
-          state.surname,
-          state.name,
-          state.patronymic,
-          state.username,
-          password
-        ]),
+        formStatus: Formz.validate(
+          [
+            state.surname,
+            state.name,
+            state.username,
+            password,
+          ],
+        ),
       ),
     );
   }
@@ -127,11 +129,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         SignUpModelRequest(
           surname: state.surname.value,
           name: state.name.value,
+          patronymic: state.patronymic,
           username: state.username.value,
           password: state.password.value,
         ),
       );
-      if (waiting != null && waiting == SignUpStatus.unsigned) {
+      if (waiting == SignUpStatus.unsigned) {
         emit(state.copyWith(formStatus: FormzStatus.submissionFailure));
       } else {
         emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));

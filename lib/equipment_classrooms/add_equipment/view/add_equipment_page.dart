@@ -36,9 +36,73 @@ class AddEquipmentPage extends StatelessWidget {
             ),
             onPressed: () {
               showModalBottomSheet<void>(
+                isScrollControlled: true,
                 context: context,
-                builder: (BuildContext context) {
-                  return const FilterBottomSheet();
+                backgroundColor: Colors.white,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(20.0),
+                  ),
+                ),
+                builder: (_) {
+                  return DraggableScrollableSheet(
+                    expand: false,
+                    builder: (context, controller) => ListView.builder(
+                      controller: controller,
+                      itemCount: 1,
+                      itemBuilder: (_, index) => Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+                        child: Flex(
+                          direction: Axis.vertical,
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Flex(
+                                  direction: Axis.horizontal,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () => Navigator.of(context).pop(),
+                                      child: const Icon(
+                                        Icons.arrow_back_rounded,
+                                        color: primaryBlue,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Flex(
+                                        direction: Axis.horizontal,
+                                        children: const [
+                                          Spacer(),
+                                          Text(
+                                            "Категория",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: primaryBlue,
+                                              fontFamily: 'Rubik',
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                          Spacer(),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const CategorySearch(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [addCategory(context)],
+                            ),
+                            const ApplyFilter()
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
                 },
               );
             },
@@ -60,7 +124,7 @@ class AddEquipmentPage extends StatelessWidget {
             return SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                  minHeight: view.minWidth,
+                  minHeight: view.maxHeight,
                 ),
                 child: addEquipmentForm(context),
               ),
@@ -68,78 +132,6 @@ class AddEquipmentPage extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-}
-
-class FilterBottomSheet extends StatefulWidget {
-  const FilterBottomSheet({Key? key}) : super(key: key);
-
-  @override
-  State<FilterBottomSheet> createState() => _FilterBottomSheetState();
-}
-
-class _FilterBottomSheetState extends State<FilterBottomSheet> {
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints view) {
-        return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: view.minWidth,
-            ),
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Icon(
-                          Icons.arrow_back_rounded,
-                          color: primaryBlue,
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: const Center(
-                            child: Text(
-                              "Категория",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: primaryBlue,
-                                fontFamily: 'Rubik',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    const CategorySearch(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [addCategory(context)],
-                    ),
-                    const ApplyFilter()
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }

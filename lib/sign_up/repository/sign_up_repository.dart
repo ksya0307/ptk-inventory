@@ -1,8 +1,7 @@
 import 'package:ptk_inventory/sign_up/models/request/sign_up_request.dart';
-import 'package:ptk_inventory/sign_up/models/response/sign_up_response.dart';
 import 'package:ptk_inventory/sign_up/provider/sign_up_api.dart';
 
-enum SignUpStatus { initial, signed, unsigned }
+enum SignUpStatus { signed, unsigned }
 
 class SignUpRepository {
   final SignUpProvider _signUpProvider;
@@ -14,7 +13,7 @@ class SignUpRepository {
     SignUpModelRequest signUpModelRequest,
   ) async {
     try {
-      final data = await _signUpProvider.signUp(signUpModelRequest.toMap());
+      await _signUpProvider.signUp(signUpModelRequest.toMap());
       return SignUpStatus.signed;
     } catch (e) {
       return SignUpStatus.unsigned;

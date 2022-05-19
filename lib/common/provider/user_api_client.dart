@@ -4,8 +4,8 @@ import 'dart:convert';
 // Package imports:
 import 'package:http/http.dart' as http;
 import 'package:ptk_inventory/common/model/api_routes.dart';
-import 'package:ptk_inventory/common/model/auth_response.dart';
-import 'package:ptk_inventory/common/model/http_response.dart';
+import 'package:ptk_inventory/common/model/responses/auth_response.dart';
+import 'package:ptk_inventory/common/model/responses/general_model_response.dart';
 import 'package:ptk_inventory/common/model/user.dart';
 
 extension ResponseExtension on http.Response? {
@@ -40,6 +40,21 @@ class GetNewPairOfTokensFailure implements Exception {}
 
 ///Exception thrown when [changePassword] fails
 class ChangePasswordFailure implements Exception {}
+
+///Exception thrown when [changePassword] unauthorized
+class ChangePasswordUnauthorized implements Exception {}
+
+///Exception thrown when [changeUserData] fails
+class ChangeUserDataFailure implements Exception {}
+
+///Exception thrown when [changeUserData] unauthorized
+class ChangeUserDataUnauthorized implements Exception {}
+
+///Exception thrown when [deleteUser] fails
+class DeleteUserFailure implements Exception {}
+
+///Exception thrown when [deleteUser] unauthorized
+class DeleteUserUnauthorized implements Exception {}
 
 ///Класс для создания http запросов
 //Слой Data Provider, самый низший
@@ -107,26 +122,77 @@ class UserProvider {
     }
   }
 
-  Future<HttpResponse> changePassword({
+  Future<GeneralModelResponse> changePassword({
     required Map<String, String> header,
-    required Map<String, dynamic> newPassword,
+    required Map<String, dynamic> body,
   }) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
-      ApiRoutes.apiRoute + ApiRoutes.changePassword,
+      ApiRoutes.apiRoute + ApiRoutes.users + ApiRoutes.changePassword,
     );
     final response = await _httpClient.put(
       request,
       headers: header,
-      body: jsonEncode(newPassword),
+      body: jsonEncode(body),
     );
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonAnswer =
-          jsonDecode(response.body) as Map<String, dynamic>;
-      return HttpResponse.fromJson(jsonAnswer);
-    } else {
+    if (response.statusCode != 200 && response.statusCode != 401) {
       throw ChangePasswordFailure();
+    } else if (response.statusCode == 401) {
+      throw ChangePasswordUnauthorized();
     }
+    return GeneralModelResponse(
+      response.body,
+      response.statusCode,
+    );
+  }
+
+  Future<GeneralModelResponse> changeUserData({
+    required Map<String, String> header,
+    required Map<String, dynamic> body,
+  }) async {
+    final request = Uri.https(
+      ApiRoutes.baseUrl,
+      ApiRoutes.apiRoute + ApiRoutes.users,
+    );
+    final response = await _httpClient.put(
+      request,
+      headers: header,
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 401) {
+      throw ChangeUserDataFailure();
+    } else if (response.statusCode == 401) {
+      throw ChangeUserDataUnauthorized();
+    }
+    return GeneralModelResponse(
+      response.body,
+      response.statusCode,
+    );
+  }
+
+  Future<GeneralModelResponse> deleteUser({
+    required Map<String, String> header,
+    required int userId,
+  }) async {
+    final request = Uri.https(
+      ApiRoutes.baseUrl,
+      "${ApiRoutes.apiRoute}${ApiRoutes.users}?id=$userId",
+    );
+    final response = await _httpClient.put(
+      request,
+      headers: header,
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 401) {
+      throw DeleteUserFailure();
+    } else if (response.statusCode == 401) {
+      throw DeleteUserUnauthorized();
+    }
+    return GeneralModelResponse(
+      response.body,
+      response.statusCode,
+    );
   }
 }

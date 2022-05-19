@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/equipment_classrooms/add_equipment/view/add_equipment_page.dart';
 import 'package:ptk_inventory/inventory/view/custom_stepper.dart' as c_s;
 import 'package:ptk_inventory/palette.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -537,7 +538,7 @@ class InventoryFormState extends State<InventoryForm> {
         ),
         elevation: MaterialStateProperty.all(0),
       ),
-      onPressed: () {},
+      onPressed: () => Navigator.of(context).push(AddEquipmentPage.route()),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: const [

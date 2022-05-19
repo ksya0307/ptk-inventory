@@ -21,7 +21,7 @@ class AuthenticationRepository {
     if (userHiveModel != null) {
       //  if the diffrence between the userHiveModel lastUpdate and now is greater than 15 min then call refreshToken()
       if (userHiveModel.lastTimeUpdated.difference(DateTime.now()).inMinutes >
-          15) {
+          2) {
         await refreshToken(userHiveModel);
       }
       yield AuthenticationStatus.authenticated;
@@ -39,7 +39,7 @@ class AuthenticationRepository {
       final data = await _userProvider.signIn(loginModelRequest.toMap());
 
       final userModel = await _userProvider.getUser(
-        header: HeaderModel(token: data.accessToken).toMap(),
+        header: HeaderModel(data.accessToken).toMap(),
         accessToken: data.accessToken,
         refreshToken: data.refreshToken,
         userId: data.userId,
@@ -66,8 +66,9 @@ class AuthenticationRepository {
 
   Future<void> refreshToken(UserHiveModel userHiveModel) async {
     try {
-      final HeaderModel header = HeaderModel(token: userHiveModel.refreshToken);
+      final HeaderModel header = HeaderModel(userHiveModel.refreshToken);
       final data = await _userProvider.getNewPairOfTokens(header.toMap());
+      print("NEW ${data.accessToken}, \n ${data.refreshToken}");
       await editUserProfile(
         accessToken: data.accessToken,
         refreshToken: data.refreshToken,
@@ -89,8 +90,4 @@ class AuthenticationRepository {
 
   // close the stream
   void dispose() => _controller.close();
-
-  // Future<void> changePassword(ChangePasswordModelRequest changePasswordModelRequest) async {
-  //   final data = await _userProvider.changePassword(header: header, )
-  // }
 }

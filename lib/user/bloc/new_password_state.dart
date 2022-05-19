@@ -3,22 +3,22 @@ part of 'new_password_bloc.dart';
 class NewPasswordState extends Equatable {
   const NewPasswordState({
     this.formStatus = FormzStatus.pure,
-    this.password = const Password.pure(),
+    this.newPassword = const NewPassword.pure(),
   });
 
   final FormzStatus formStatus;
-  final Password password;
+  final NewPassword newPassword;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [formStatus, newPassword];
 
   NewPasswordState copyWith({
     FormzStatus? formStatus,
-    Password? password,
+    NewPassword? newPassword,
   }) {
     return NewPasswordState(
       formStatus: formStatus ?? this.formStatus,
-      password: password ?? this.password,
+      newPassword: newPassword ?? this.newPassword,
     );
   }
 }

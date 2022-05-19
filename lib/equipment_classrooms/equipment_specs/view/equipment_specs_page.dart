@@ -39,7 +39,7 @@ class EquipmentSpecsPage extends StatelessWidget {
             return SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                  minHeight: view.minWidth,
+                  minHeight: view.maxHeight,
                 ),
                 child: addSpecsForm(context),
               ),

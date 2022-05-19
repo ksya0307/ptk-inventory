@@ -16,7 +16,7 @@ class LandscapeReaderPage extends StatelessWidget {
           return SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: view.minWidth,
+                minHeight: view.maxHeight,
               ),
               child: userProfileView(context),
             ),

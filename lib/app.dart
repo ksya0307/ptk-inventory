@@ -84,6 +84,7 @@ class _AppViewState extends State<AppView> {
       builder: (context, child) {
         return BlocListener<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
+            print("User $state");
             switch (state.status) {
               case AuthenticationStatus.authenticated:
                 if (state.user.role == UserRole.reader) {

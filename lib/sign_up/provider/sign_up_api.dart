@@ -4,9 +4,8 @@ import 'dart:convert';
 // Package imports:
 import 'package:http/http.dart' as http;
 import 'package:ptk_inventory/common/model/api_routes.dart';
+import 'package:ptk_inventory/common/model/responses/general_model_response.dart';
 import 'package:ptk_inventory/common/provider/user_api_client.dart';
-import 'package:ptk_inventory/sign_up/models/request/sign_up_request.dart';
-import 'package:ptk_inventory/sign_up/models/response/sign_up_response.dart';
 
 class SignUpRequestFailure implements Exception {}
 
@@ -16,7 +15,7 @@ class SignUpProvider {
 
   final http.Client _httpClient;
 
-  Future<SignUpModelResponse> signUp(Map<String, dynamic> signUp) async {
+  Future<GeneralModelResponse> signUp(Map<String, dynamic> signUp) async {
     final request =
         Uri.https(ApiRoutes.baseUrl, ApiRoutes.apiRoute + ApiRoutes.signUp);
     final response = await _httpClient.post(
@@ -29,6 +28,9 @@ class SignUpProvider {
       final Map<String, dynamic>? answer = response.asMap();
       throw SignUpRequestFailure;
     }
-    return SignUpModelResponse(message: response.body);
+    return GeneralModelResponse(
+      response.body,
+      response.statusCode,
+    );
   }
 }

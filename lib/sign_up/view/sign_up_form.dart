@@ -441,7 +441,42 @@ class SignUpButton extends StatelessWidget {
           previous.formStatus != current.formStatus,
       builder: (context, state) {
         return state.formStatus.isSubmissionInProgress
-            ? const Center(child: CircularProgressIndicator())
+            ? ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: MediaQuery.of(context).size.width,
+                ),
+                child: ElevatedButton.icon(
+                  onPressed: null,
+                  icon: const CircularProgressIndicator(color: primaryBlue),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith((states) {
+                      if (states.contains(MaterialState.disabled)) {
+                        return const Color.fromRGBO(0, 47, 167, 0.65);
+                      }
+                      return const Color.fromRGBO(0, 47, 167, 1.0);
+                    }),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.0),
+                      ),
+                    ),
+                  ),
+                  label: const Padding(
+                    padding: EdgeInsets.fromLTRB(0, 12 + 3, 0, 12 + 3),
+                    child: Text(
+                      "Регистрация...",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'Rubik',
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromRGBO(255, 255, 255, 0.65),
+                      ),
+                    ),
+                  ),
+                ),
+              )
             : ConstrainedBox(
                 constraints: BoxConstraints(
                   minWidth: MediaQuery.of(context).size.width,

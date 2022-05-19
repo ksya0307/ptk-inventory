@@ -74,7 +74,11 @@ class _CommonView extends StatelessWidget {
             ),
             onPressed: () {
               Navigator.of(context).push(
-                UserProfilePage.route(),
+                MaterialPageRoute(
+                  builder: (_) {
+                    return UserProfilePage();
+                  },
+                ),
               );
             },
             child: const Padding(

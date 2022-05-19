@@ -1,1 +1,1 @@
-export 'password.dart';
+export 'new_password.dart';

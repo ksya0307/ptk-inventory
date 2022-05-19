@@ -55,9 +55,9 @@ class _EquipmentClassroomsPageState extends State<EquipmentClassroomsPage> {
                 return SingleChildScrollView(
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
-                      minHeight: view.minWidth,
+                      minHeight: view.maxHeight,
                     ),
-                    child: EquipmentClassrooms(),
+                    child: const EquipmentClassrooms(),
                   ),
                 );
               },

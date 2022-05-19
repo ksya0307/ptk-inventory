@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:ptk_inventory/common/component/snackbar_message.dart';
-import 'package:ptk_inventory/login/login.dart';
 import 'package:ptk_inventory/sign_up/bloc/sign_up_bloc.dart';
 import 'package:ptk_inventory/sign_up/repository/sign_up_repository.dart';
 import 'package:ptk_inventory/sign_up/view/sign_up_form.dart';

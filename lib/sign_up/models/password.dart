@@ -1,6 +1,6 @@
 import 'package:formz/formz.dart';
 
-enum PasswordValidationError { empty, notLong }
+enum PasswordValidationError { empty, short }
 
 class Password extends FormzInput<String, PasswordValidationError> {
   const Password.pure() : super.pure('');
@@ -12,7 +12,7 @@ class Password extends FormzInput<String, PasswordValidationError> {
     if (value?.isEmpty == true) {
       return PasswordValidationError.empty;
     } else if (value!.length < 8) {
-      return PasswordValidationError.notLong;
+      return PasswordValidationError.short;
     }
     return null;
   }

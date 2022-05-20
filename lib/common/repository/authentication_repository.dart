@@ -68,7 +68,7 @@ class AuthenticationRepository {
     try {
       final HeaderModel header = HeaderModel(userHiveModel.refreshToken);
       final data = await _userProvider.getNewPairOfTokens(header.toMap());
-      print("NEW ${data.accessToken}, \n ${data.refreshToken}");
+      // print("NEW ${data.accessToken}, \n ${data.refreshToken}");
       await editUserProfile(
         accessToken: data.accessToken,
         refreshToken: data.refreshToken,

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
+import 'package:ptk_inventory/category/model/category.dart';
 import 'package:ptk_inventory/category/repository/category_repository.dart';
 import 'package:ptk_inventory/category/view/add_category_page.dart';
-import 'package:ptk_inventory/category/view/update_category_page.dart';
+import 'package:ptk_inventory/category/view/update_category/update_category_page.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
 
 class CategoryPage extends StatelessWidget {
@@ -18,61 +19,66 @@ class CategoryPage extends StatelessWidget {
       create: (context) =>
           CategoryBloc(categoryRepository: CategoryRepository())
             ..add(const CategoryLoadList()),
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          tooltip: "Добавить категорию",
-          child: const Icon(Icons.add_rounded),
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (_) => BlocProvider.value(
-                value: context.read<CategoryBloc>(),
-                child: AddCategoryPage(),
+      child: BlocListener<CategoryBloc, CategoryState>(
+        listener: (context, state) {
+          print("Category Page ${state.selectedCategory}");
+        },
+        child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            tooltip: "Добавить категорию",
+            child: const Icon(Icons.add_rounded),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => BlocProvider.value(
+                  value: context.read<CategoryBloc>(),
+                  child: AddCategoryPage(),
+                ),
               ),
             ),
           ),
-        ),
-        appBar: AppBar(
-          leading: IconButton(
-            tooltip: "Назад",
-            icon: const Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
+          appBar: AppBar(
+            leading: IconButton(
+              tooltip: "Назад",
+              icon: const Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          elevation: 0,
-          centerTitle: true,
-          title: const Text(
-            "Категории",
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Rubik',
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
+            elevation: 0,
+            centerTitle: true,
+            title: const Text(
+              "Категории",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'Rubik',
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
-        ),
-        body: SafeArea(
-          child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints view) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: view.maxHeight,
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: Column(
-                      children: const [
-                        CategoryForm(),
-                      ],
+          body: SafeArea(
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints view) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: view.maxHeight,
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                      child: Column(
+                        children: const [
+                          CategoryForm(),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -306,14 +312,24 @@ class CategoriesList extends StatelessWidget {
               itemCount: categories.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => BlocProvider.value(
-                        value: context.read<CategoryBloc>(),
-                        child: UpdateCategoryPage(),
+                  onTap: () {
+                    context.read<CategoryBloc>().add(
+                          CategorySelected(
+                            Category(
+                              id: categories[index].id,
+                              name: categories[index].name,
+                            ),
+                          ),
+                        );
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => BlocProvider.value(
+                          value: context.read<CategoryBloc>(),
+                          child: UpdateCategoryPage(),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                   child: CategoryRow(
                     id: categories[index].id.toString(),
                     category: categories[index].name,

@@ -19,9 +19,18 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<CategorySaved>(_onSaved);
     on<CategorySearch>(_onSearch);
     on<CategoryDeleted>(_onDeleted);
+    on<CategorySelected>(_onSelected);
   }
 
   final CategoryRepository _categoryRepository;
+
+  void _onSelected(
+    CategorySelected event,
+    Emitter<CategoryState> emit,
+  ) {
+    emit(state.copyWith(selectedCategory: event.selectedCategory));
+    print("32 ${event.selectedCategory}");
+  }
 
   void _onSearch(
     CategorySearch event,

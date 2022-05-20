@@ -26,7 +26,6 @@ class AuthenticationState extends Equatable {
     AuthenticationStatus? status,
     String? ourDummy,
   }) {
-    print("our $ourDummy");
     return AuthenticationState.authenticated(
       ourUser ?? user,
       ourDummy ?? dummy,

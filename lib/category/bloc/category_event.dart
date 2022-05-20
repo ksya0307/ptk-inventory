@@ -37,3 +37,9 @@ class CategorySearch extends CategoryEvent {
 class CategoryDeleted extends CategoryEvent {
   const CategoryDeleted();
 }
+
+class CategorySelected extends CategoryEvent {
+  final Category? selectedCategory;
+
+  const CategorySelected(this.selectedCategory);
+}

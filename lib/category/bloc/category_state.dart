@@ -1,6 +1,6 @@
 part of 'category_bloc.dart';
 
-enum CategoryListStatus {
+enum CategoryLoadingStatus {
   pure,
   loadingInProgress,
   loadingFailed,
@@ -11,14 +11,14 @@ class CategoryState extends Equatable {
   final FormzStatus formStatus;
   final Name name;
   final Category? selectedCategory;
-  final CategoryListStatus categoryListStatus;
+  final CategoryLoadingStatus categoryLoadingStatus;
   final List<Category> globalCategories;
   final List<Category> visibleList;
 
   const CategoryState({
     this.formStatus = FormzStatus.pure,
     this.name = const Name.pure(),
-    this.categoryListStatus = CategoryListStatus.pure,
+    this.categoryLoadingStatus = CategoryLoadingStatus.pure,
     this.selectedCategory,
     this.globalCategories = const [],
     this.visibleList = const [],
@@ -28,7 +28,7 @@ class CategoryState extends Equatable {
   List<Object?> get props => [
         formStatus,
         name,
-        categoryListStatus,
+        categoryLoadingStatus,
         selectedCategory,
         globalCategories,
         visibleList
@@ -38,7 +38,7 @@ class CategoryState extends Equatable {
     FormzStatus? formStatus,
     Name? name,
     Category? selectedCategory,
-    CategoryListStatus? categoryListStatus,
+    CategoryLoadingStatus? categoryLoadingStatus,
     List<Category>? globalCategories,
     List<Category>? visibleList,
   }) {
@@ -46,7 +46,8 @@ class CategoryState extends Equatable {
       formStatus: formStatus ?? this.formStatus,
       name: name ?? this.name,
       selectedCategory: selectedCategory ?? this.selectedCategory,
-      categoryListStatus: categoryListStatus ?? this.categoryListStatus,
+      categoryLoadingStatus:
+          categoryLoadingStatus ?? this.categoryLoadingStatus,
       globalCategories: globalCategories ?? this.globalCategories,
       visibleList: visibleList ?? this.visibleList,
     );

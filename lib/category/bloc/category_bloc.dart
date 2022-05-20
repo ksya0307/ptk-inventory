@@ -18,6 +18,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<CategorySubmitted>(_onSubmitted);
     on<CategorySaved>(_onSaved);
     on<CategorySearch>(_onSearch);
+    on<CategoryDeleted>(_onDeleted);
   }
 
   final CategoryRepository _categoryRepository;
@@ -38,13 +39,39 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     );
   }
 
+  Future<void> _onDeleted(
+    CategoryDeleted event,
+    Emitter<CategoryState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        categoryLoadingStatus: CategoryLoadingStatus.loadingInProgress,
+      ),
+    );
+    final waiting =
+        await _categoryRepository.deleteCategory(state.selectedCategory!.id);
+    if (waiting == CategoryStatus.deleted) {
+      emit(
+        state.copyWith(
+          categoryLoadingStatus: CategoryLoadingStatus.loadingSuccess,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          categoryLoadingStatus: CategoryLoadingStatus.loadingFailed,
+        ),
+      );
+    }
+  }
+
   Future<void> _onCategoryLoadList(
     CategoryLoadList event,
     Emitter<CategoryState> emit,
   ) async {
     emit(
       state.copyWith(
-        categoryListStatus: CategoryListStatus.loadingInProgress,
+        categoryLoadingStatus: CategoryLoadingStatus.loadingInProgress,
       ),
     );
     final waiting = await _categoryRepository.categories();
@@ -56,7 +83,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     emit(
       state.copyWith(
         globalCategories: waiting,
-        categoryListStatus: CategoryListStatus.loadingSuccess,
+        categoryLoadingStatus: CategoryLoadingStatus.loadingSuccess,
       ),
     );
   }
@@ -97,19 +124,17 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     CategorySaved event,
     Emitter<CategoryState> emit,
   ) async {
-    // emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
-    // if (state.formStatus.isValidated) {
-    //   final waiting = await _categoryRepository.changeCategory(
-    //     state.id,
-    //     CategoryModelRequest(
-    //       name: state.name.value,
-    //     ),
-    //   );
-    //   if (waiting == CategoryStatus.unchanged) {
-    //     emit(state.copyWith(formStatus: FormzStatus.submissionFailure));
-    //   } else {
-    //     emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
-    //   }
-    // }
+    emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
+    if (state.formStatus.isValidated) {
+      final waiting = await _categoryRepository.changeCategory(
+        state.selectedCategory!.id,
+        GeneralModelRequest(name: state.selectedCategory!.name),
+      );
+      if (waiting == CategoryStatus.unchanged) {
+        emit(state.copyWith(formStatus: FormzStatus.submissionFailure));
+      } else {
+        emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
+      }
+    }
   }
 }

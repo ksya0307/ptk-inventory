@@ -95,8 +95,8 @@ class CategoryForm extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8),
             child: BlocBuilder<CategoryBloc, CategoryState>(
               builder: (context, state) {
-                if (state.categoryListStatus ==
-                    CategoryListStatus.loadingInProgress) {
+                if (state.categoryLoadingStatus ==
+                    CategoryLoadingStatus.loadingInProgress) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -125,13 +125,13 @@ class CategoryForm extends StatelessWidget {
                     ],
                   );
                 }
-                if (state.categoryListStatus ==
-                        CategoryListStatus.loadingSuccess &&
+                if (state.categoryLoadingStatus ==
+                        CategoryLoadingStatus.loadingSuccess &&
                     state.globalCategories.isNotEmpty) {
                   return const CategoriesList();
                 }
-                if (state.categoryListStatus ==
-                        CategoryListStatus.loadingSuccess &&
+                if (state.categoryLoadingStatus ==
+                        CategoryLoadingStatus.loadingSuccess &&
                     state.globalCategories.isEmpty) {
                   return const Text("Список категорий пуст");
                 }

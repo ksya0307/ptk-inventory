@@ -33,3 +33,7 @@ class CategorySearch extends CategoryEvent {
   });
   final String matchingWord;
 }
+
+class CategoryDeleted extends CategoryEvent {
+  const CategoryDeleted();
+}

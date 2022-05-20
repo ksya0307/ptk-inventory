@@ -50,7 +50,7 @@ class DocumentRepository {
     }
   }
 
-  Future<DocumentStatus> createCategory(
+  Future<DocumentStatus> createDocument(
     GeneralModelRequest categoryModelRequest,
   ) async {
     try {
@@ -74,7 +74,7 @@ class DocumentRepository {
     }
   }
 
-  Future<DocumentStatus> changeCategory(
+  Future<DocumentStatus> changeDocument(
     int documentId,
     GeneralModelRequest updateDocument,
   ) async {
@@ -101,7 +101,7 @@ class DocumentRepository {
     }
   }
 
-  Future<DocumentStatus> deleteCategory(int documentId) async {
+  Future<DocumentStatus> deleteDocument(int documentId) async {
     try {
       await _documentProvider.deleteDocument(
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),

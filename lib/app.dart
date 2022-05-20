@@ -7,7 +7,6 @@ import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 import 'package:ptk_inventory/common/repository/user_repository.dart';
 import 'package:ptk_inventory/common_user/view.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
-import 'package:ptk_inventory/inventory/view/inventory_page.dart';
 import 'package:ptk_inventory/login/view/login_page.dart';
 import 'package:ptk_inventory/moderator_user/view/home_page.dart';
 import 'package:ptk_inventory/palette.dart';

@@ -74,7 +74,7 @@ class UserProvider {
       body: jsonEncode(login),
     );
     if (response.statusCode != 200) {
-      final Map<String, dynamic>? answer = response.asMap();
+      //final Map<String, dynamic>? answer = response.asMap();
       throw LogInRequestFailure;
     }
     final Map<String, dynamic> jsonAnswer =

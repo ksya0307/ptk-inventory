@@ -29,7 +29,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     Emitter<CategoryState> emit,
   ) {
     emit(state.copyWith(selectedCategory: event.selectedCategory));
-    print("32 ${event.selectedCategory}");
   }
 
   void _onSearch(

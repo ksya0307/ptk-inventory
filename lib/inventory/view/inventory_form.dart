@@ -219,7 +219,7 @@ class InventoryFormState extends State<InventoryForm> {
   }
 
   Widget searchFieldDocument() {
-    TextEditingController editingController = TextEditingController();
+    final TextEditingController editingController = TextEditingController();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Container(
@@ -377,7 +377,7 @@ class InventoryFormState extends State<InventoryForm> {
   ];
 
   Widget inventoryNumberChips() {
-    int selected = 0;
+    const int selected = 0;
     bool _isSelected = false;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -674,7 +674,7 @@ class InventoryFormState extends State<InventoryForm> {
   ];
 
   Widget classroomsChips() {
-    int selected = 0;
+    const int selected = 0;
     // var doneIcon = null;
     bool _isSelected = false;
     return SingleChildScrollView(

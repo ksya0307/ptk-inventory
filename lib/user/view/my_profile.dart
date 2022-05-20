@@ -104,7 +104,7 @@ class _SavePasswordButton extends StatelessWidget {
       builder: (context, state) {
         return state.formStatus.isSubmissionInProgress
             ? Padding(
-                padding: EdgeInsets.only(left: 16, top: 8),
+                padding: const EdgeInsets.only(left: 16, top: 8),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
                     minWidth: MediaQuery.of(context).size.width * 0.5,

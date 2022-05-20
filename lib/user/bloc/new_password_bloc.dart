@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:ptk_inventory/common/model/requests/change_password_request.dart';
 import 'package:ptk_inventory/common/repository/user_repository.dart';
-import 'package:ptk_inventory/login/login.dart';
 import 'package:ptk_inventory/user/models/new_password.dart';
 
 part 'new_password_event.dart';

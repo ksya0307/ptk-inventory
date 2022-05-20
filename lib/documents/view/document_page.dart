@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
-import 'package:ptk_inventory/documents/view/add_document_page.dart';
-import 'package:ptk_inventory/ifo/view/add_ifo_page.dart';
 
 class DocumentsPage extends StatelessWidget {
   static Route route() {
@@ -46,7 +44,7 @@ class DocumentsPage extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       DocumentForm(),
                     ],
                   ),
@@ -67,9 +65,12 @@ class DocumentForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        SearchDocument(),
-      ]),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          SearchDocument(),
+        ],
+      ),
     );
   }
 }

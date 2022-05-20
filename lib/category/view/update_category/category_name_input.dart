@@ -12,9 +12,7 @@ class CategoryName extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.selectedCategory != current.selectedCategory,
       builder: (context, state) {
-        print("14 ${state.selectedCategory}");
         if (state.selectedCategory != null) {
-          print("What is here ${state.selectedCategory}");
           return TextFormField(
             onChanged: (name) =>
                 context.read<CategoryBloc>().add(CategoryNameChanged(name)),
@@ -72,7 +70,7 @@ class CategoryName extends StatelessWidget {
             ),
           );
         }
-        return Text("null");
+        return const Text("Категория не выбрана");
       },
     );
   }

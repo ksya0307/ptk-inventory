@@ -42,7 +42,6 @@ class CategoryState extends Equatable {
     List<Category>? globalCategories,
     List<Category>? visibleList,
   }) {
-    print("Copy With $selectedCategory");
     return CategoryState(
       formStatus: formStatus ?? this.formStatus,
       name: name ?? this.name,

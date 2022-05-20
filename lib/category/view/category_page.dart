@@ -19,66 +19,61 @@ class CategoryPage extends StatelessWidget {
       create: (context) =>
           CategoryBloc(categoryRepository: CategoryRepository())
             ..add(const CategoryLoadList()),
-      child: BlocListener<CategoryBloc, CategoryState>(
-        listener: (context, state) {
-          print("Category Page ${state.selectedCategory}");
-        },
-        child: Scaffold(
-          floatingActionButton: FloatingActionButton(
-            tooltip: "Добавить категорию",
-            child: const Icon(Icons.add_rounded),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute<void>(
-                builder: (_) => BlocProvider.value(
-                  value: context.read<CategoryBloc>(),
-                  child: AddCategoryPage(),
-                ),
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          tooltip: "Добавить категорию",
+          child: const Icon(Icons.add_rounded),
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) => BlocProvider.value(
+                value: context.read<CategoryBloc>(),
+                child: AddCategoryPage(),
               ),
             ),
           ),
-          appBar: AppBar(
-            leading: IconButton(
-              tooltip: "Назад",
-              icon: const Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+        ),
+        appBar: AppBar(
+          leading: IconButton(
+            tooltip: "Назад",
+            icon: const Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.white,
             ),
-            elevation: 0,
-            centerTitle: true,
-            title: const Text(
-              "Категории",
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Rubik',
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          elevation: 0,
+          centerTitle: true,
+          title: const Text(
+            "Категории",
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Rubik',
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          body: SafeArea(
-            child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints view) {
-                return SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: view.maxHeight,
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                      child: Column(
-                        children: const [
-                          CategoryForm(),
-                        ],
-                      ),
+        ),
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints view) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: view.maxHeight,
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: Column(
+                      children: const [
+                        CategoryForm(),
+                      ],
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),
@@ -107,27 +102,28 @@ class CategoryForm extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.7,
-                          width: MediaQuery.of(context).size.width,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                CircularProgressIndicator(),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 16),
-                                  child: Text(
-                                    "Загрузка категорий...",
-                                    style: TextStyle(
-                                      color: greyDark,
-                                      fontFamily: 'Rubik',
-                                      fontSize: 14,
-                                    ),
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        width: MediaQuery.of(context).size.width,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              CircularProgressIndicator(),
+                              Padding(
+                                padding: EdgeInsets.only(top: 16),
+                                child: Text(
+                                  "Загрузка категорий...",
+                                  style: TextStyle(
+                                    color: greyDark,
+                                    fontFamily: 'Rubik',
+                                    fontSize: 14,
                                   ),
-                                )
-                              ],
-                            ),
-                          )),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   );
                 }

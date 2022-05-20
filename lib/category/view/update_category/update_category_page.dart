@@ -14,56 +14,51 @@ class UpdateCategoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CategoryBloc, CategoryState>(
-      listener: (context, state) {
-        print("Upd Page ${state.selectedCategory}");
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            tooltip: "Назад",
-            icon: const Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-              context.read<CategoryBloc>().add(const CategorySelected(null));
-            },
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          tooltip: "Назад",
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
           ),
-          elevation: 0,
-          centerTitle: true,
-          title: const Text(
-            "Изменение категории",
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Rubik',
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
+          onPressed: () {
+            Navigator.of(context).pop();
+            context.read<CategoryBloc>().add(const CategorySelected(null));
+          },
+        ),
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          "Изменение категории",
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'Rubik',
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
           ),
         ),
-        body: SafeArea(
-          child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints view) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: view.maxHeight,
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        UpdateCategoryForm(),
-                      ],
-                    ),
+      ),
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints view) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: view.maxHeight,
+                ),
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      UpdateCategoryForm(),
+                    ],
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

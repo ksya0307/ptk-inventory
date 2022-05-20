@@ -32,16 +32,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       SignUpBloc(signUpRepository: SignUpRepository()),
                   child: BlocListener<SignUpBloc, SignUpState>(
                     listener: (context, state) {
-                      print("state $state");
                       if (state.formStatus == FormzStatus.submissionSuccess) {
                         snackbarMessage(
                           context,
                           "Вы успешно зарегистировались!",
                         );
                         Navigator.of(context).pop();
-                        // Navigator.of(context).replace(
-                        //     oldRoute: SignUpPage.route(),
-                        //     newRoute: LoginPage.route());
                       } else if (state.formStatus ==
                           FormzStatus.submissionFailure) {
                         snackbarMessage(

@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:ptk_inventory/category/view/add_category_page.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
 import 'package:ptk_inventory/equipment_classrooms/add_equipment/view/add_category_text_button.dart';
 import 'package:ptk_inventory/equipment_classrooms/add_equipment/view/add_equipment_form.dart';
-import 'package:ptk_inventory/equipment_classrooms/add_equipment/view/add_specs_label.dart';
 import 'package:ptk_inventory/equipment_classrooms/add_equipment/view/apply_filter.dart';
-import 'package:ptk_inventory/equipment_classrooms/equipment_specs/view/equipment_specs_page.dart';
 
 class AddEquipmentPage extends StatelessWidget {
   static Route route() {

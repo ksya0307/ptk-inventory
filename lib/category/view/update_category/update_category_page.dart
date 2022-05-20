@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
+import 'package:ptk_inventory/category/view/common/category_name_label.dart';
 import 'package:ptk_inventory/category/view/update_category/category_name_input.dart';
+import 'package:ptk_inventory/category/view/update_category/delete_category_button.dart';
 import 'package:ptk_inventory/category/view/update_category/save_category_button.dart';
 import 'package:ptk_inventory/common/component/snackbar_message.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
 
 class UpdateCategoryPage extends StatelessWidget {
   static Route route() {
@@ -49,12 +50,7 @@ class UpdateCategoryPage extends StatelessWidget {
                 ),
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      UpdateCategoryForm(),
-                    ],
-                  ),
+                  child: const UpdateCategoryForm(),
                 ),
               ),
             );
@@ -80,35 +76,26 @@ class UpdateCategoryForm extends StatelessWidget {
           snackbarMessage(context, "Данные не удалось сохранить");
         }
       },
-      child: Form(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            categoryName(),
-            const CategoryName(),
-            const Padding(
-              padding: EdgeInsets.only(top: 8),
-              child: SaveCategoryButton(),
-            )
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              CategoryNameLabel(),
+              CategoryName(),
+              Padding(
+                padding: EdgeInsets.only(top: 8),
+                child: SaveCategoryButton(),
+              ),
+            ],
+          ),
+          Column(
+            children: const [DeleteCategoryButton()],
+          )
+        ],
       ),
     );
   }
-}
-
-Widget categoryName() {
-  return const Padding(
-    padding: EdgeInsets.only(bottom: 8),
-    child: Text(
-      'Название',
-      style: TextStyle(
-        color: blackLabels,
-        fontFamily: 'Rubik',
-        fontWeight: FontWeight.w500,
-        fontSize: 18,
-      ),
-    ),
-  );
 }

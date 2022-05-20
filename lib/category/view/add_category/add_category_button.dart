@@ -4,8 +4,8 @@ import 'package:formz/formz.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/config/theme/colors.dart';
 
-class SaveCategoryButton extends StatelessWidget {
-  const SaveCategoryButton({Key? key}) : super(key: key);
+class AddCategoryButton extends StatelessWidget {
+  const AddCategoryButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class SaveCategoryButton extends StatelessWidget {
                   label: const Padding(
                     padding: EdgeInsets.fromLTRB(0, 12 + 3, 0, 12 + 3),
                     child: Text(
-                      "Сохранение...",
+                      "Добавление...",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18,
@@ -82,13 +82,13 @@ class SaveCategoryButton extends StatelessWidget {
                       ? () {
                           context
                               .read<CategoryBloc>()
-                              .add(const CategorySaved());
+                              .add(const CategorySubmitted());
                         }
                       : null,
                   child: const Padding(
                     padding: EdgeInsets.fromLTRB(0, 12 + 3, 0, 12 + 3),
                     child: Text(
-                      "Сохранить",
+                      "Добавить",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18,

@@ -1,39 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
-import 'package:ptk_inventory/category/repository/category_repository.dart';
-import 'package:ptk_inventory/category/view/add_category_page.dart';
-import 'package:ptk_inventory/category/view/category_form.dart';
+import 'package:ptk_inventory/category/view/add_category/add_category_form.dart';
 
-class CategoryPage extends StatelessWidget {
+class AddCategoryPage extends StatelessWidget {
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => CategoryPage());
+    return MaterialPageRoute<void>(builder: (_) => AddCategoryPage());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          CategoryBloc(categoryRepository: CategoryRepository())
-            ..add(const CategoryLoadList()),
+    return BlocListener<CategoryBloc, CategoryState>(
+      listener: (context, state) {
+        print(state);
+      },
       child: Scaffold(
-        floatingActionButton: BlocBuilder<CategoryBloc, CategoryState>(
-          builder: (context, state) {
-            return FloatingActionButton(
-              tooltip: "Добавить категорию",
-              child: const Icon(Icons.add_rounded),
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => BlocProvider<CategoryBloc>.value(
-                    value: context.read<CategoryBloc>(),
-                    child: AddCategoryPage(),
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
         appBar: AppBar(
           leading: IconButton(
             tooltip: "Назад",
@@ -48,7 +29,7 @@ class CategoryPage extends StatelessWidget {
           elevation: 0,
           centerTitle: true,
           title: const Text(
-            "Категории",
+            "Добавление категории",
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'Rubik',
@@ -66,10 +47,11 @@ class CategoryPage extends StatelessWidget {
                     minHeight: view.maxHeight,
                   ),
                   child: Container(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
-                        CategoryForm(),
+                        AddCategoryForm(),
                       ],
                     ),
                   ),

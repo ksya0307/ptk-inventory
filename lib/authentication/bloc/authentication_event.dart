@@ -17,9 +17,3 @@ class AuthenticationStatusChanged extends AuthenticationEvent {
 }
 
 class AuthenticationLogoutRequested extends AuthenticationEvent {}
-
-class DummyTesting extends AuthenticationEvent {
-  final String dummyString;
-
-  const DummyTesting(this.dummyString);
-}

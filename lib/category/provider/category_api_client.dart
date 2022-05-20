@@ -103,7 +103,7 @@ class CategoryProvider {
     final response = await _httpClient.put(
       request,
       headers: header,
-      body: name,
+      body: jsonEncode(name),
     );
     if (response.statusCode != 200 && response.statusCode != 401) {
       throw ChangeCategoryRequestFailure();

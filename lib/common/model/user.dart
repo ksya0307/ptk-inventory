@@ -13,7 +13,7 @@ class User extends Equatable {
     required this.id,
     required this.surname,
     required this.name,
-    required this.patronymic,
+    this.patronymic,
     required this.username,
     required this.role,
     this.accessToken,
@@ -29,7 +29,7 @@ class User extends Equatable {
   ///текущее ФИО
   final String surname;
   final String name;
-  final String patronymic;
+  final String? patronymic;
 
   ///текущий username
   final String username;

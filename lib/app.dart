@@ -82,7 +82,7 @@ class _AppViewState extends State<AppView> {
           listener: (context, state) {
             switch (state.status) {
               case AuthenticationStatus.authenticated:
-                if (state.user.role == UserRole.reader) {
+                if (state.user.role == UserRole.teacher) {
                   _navigator.pushAndRemoveUntil<void>(
                     ReaderPage.route(),
                     (route) => false,
@@ -101,7 +101,6 @@ class _AppViewState extends State<AppView> {
                   );
                 }
                 if (state.user.role == UserRole.common) {
-                  //if role == UserRole.common
                   _navigator.pushAndRemoveUntil<void>(
                     CommonPage.route(),
                     (route) => false,

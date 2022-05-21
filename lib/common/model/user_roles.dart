@@ -1,4 +1,4 @@
-enum UserRole { admin, moderator, reader, common }
+enum UserRole { admin, moderator, teacher, common }
 
 // create extension on UserRole to get the string representation of the role name in the enum class
 extension UserRoleExtension on UserRole {
@@ -6,8 +6,8 @@ extension UserRoleExtension on UserRole {
     switch (this) {
       case UserRole.moderator:
         return 'moderator';
-      case UserRole.reader:
-        return 'reader';
+      case UserRole.teacher:
+        return 'teacher';
       case UserRole.admin:
         return 'admin';
       default:

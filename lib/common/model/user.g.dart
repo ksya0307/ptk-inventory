@@ -10,7 +10,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       id: json['id'] as int,
       surname: json['surname'] as String,
       name: json['name'] as String,
-      patronymic: json['patronymic'] as String,
+      patronymic: json['patronymic'] as String?,
       username: json['username'] as String,
       role: $enumDecode(_$UserRoleEnumMap, json['role']),
       accessToken: json['accessToken'] as String?,
@@ -31,6 +31,6 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
 const _$UserRoleEnumMap = {
   UserRole.admin: 'admin',
   UserRole.moderator: 'moderator',
-  UserRole.reader: 'reader',
+  UserRole.teacher: 'teacher',
   UserRole.common: 'common',
 };

@@ -348,10 +348,11 @@ class _UserFullNameState extends State<UserFullName> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
+        final String patronymic = state.user.patronymic ?? '';
         return Padding(
           padding: const EdgeInsets.only(top: 16, left: 16),
           child: Text(
-            "${state.user.surname} ${state.user.name} ${state.user.patronymic}",
+            "${state.user.surname} ${state.user.name} $patronymic",
             style: const TextStyle(
               fontFamily: 'Rubik',
               fontSize: 22,

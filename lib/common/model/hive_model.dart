@@ -15,7 +15,7 @@ class UserHiveModel extends Equatable {
   @HiveField(2)
   final String name;
   @HiveField(3)
-  final String patronymic;
+  final String? patronymic;
   @HiveField(4)
   final String username;
   @HiveField(5)
@@ -31,7 +31,7 @@ class UserHiveModel extends Equatable {
     required this.id,
     required this.surname,
     required this.name,
-    required this.patronymic,
+    this.patronymic,
     required this.username,
     required this.userRole,
     required this.accessToken,

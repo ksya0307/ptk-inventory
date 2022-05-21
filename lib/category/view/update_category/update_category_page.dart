@@ -6,7 +6,7 @@ import 'package:ptk_inventory/category/view/common/category_name_label.dart';
 import 'package:ptk_inventory/category/view/update_category/category_name_input.dart';
 import 'package:ptk_inventory/category/view/update_category/delete_category_button.dart';
 import 'package:ptk_inventory/category/view/update_category/save_category_button.dart';
-import 'package:ptk_inventory/common/component/snackbar_message.dart';
+import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 
 class UpdateCategoryPage extends StatelessWidget {
   static Route route() {

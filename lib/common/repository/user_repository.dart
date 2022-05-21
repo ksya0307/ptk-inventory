@@ -5,8 +5,10 @@ import 'package:ptk_inventory/common/model/user.dart';
 import 'package:ptk_inventory/common/provider/hive/hive_provider.dart';
 import 'package:ptk_inventory/common/provider/user_api_client.dart';
 import 'package:ptk_inventory/common/repository/authentication_repository.dart';
+import 'package:ptk_inventory/sign_up/models/request/sign_up_request.dart';
 
 enum ChangePasswordStatus { changed, unchanged }
+enum SignUpStatus { signed, unsigned }
 
 class UserRepository {
   final UserProvider _userProvider;
@@ -48,6 +50,17 @@ class UserRepository {
       return ChangePasswordStatus.changed;
     } on ChangePasswordFailure {
       return ChangePasswordStatus.unchanged;
+    }
+  }
+
+  Future<SignUpStatus> userSignUp(
+    SignUpModelRequest signUpModelRequest,
+  ) async {
+    try {
+      await _userProvider.signUp(signUpModelRequest.toMap());
+      return SignUpStatus.signed;
+    } catch (e) {
+      return SignUpStatus.unsigned;
     }
   }
 }

@@ -56,6 +56,9 @@ class DeleteUserFailure implements Exception {}
 ///Exception thrown when [deleteUser] unauthorized
 class DeleteUserUnauthorized implements Exception {}
 
+///Exception thrown when [signUp] fails
+class SignUpRequestFailure implements Exception {}
+
 ///Класс для создания http запросов
 //Слой Data Provider, самый низший
 class UserProvider {
@@ -86,26 +89,24 @@ class UserProvider {
   ///Получение [User] по заданному [user_id] и [accessToken]
   Future<User> getUser({
     required Map<String, String> header,
-    required int userId,
     required String accessToken,
     required String refreshToken,
   }) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
-      ApiRoutes.apiRoute + ApiRoutes.users + userId.toString(),
+      ApiRoutes.apiRoute + ApiRoutes.users,
     );
     final response = await _httpClient.get(request, headers: header);
     if (response.statusCode != 200) {
       throw const GetUserRequestFailure("Get User Failed");
-    } else {
-      final Map<String, dynamic> userJson =
-          jsonDecode(response.body) as Map<String, dynamic>;
-
-      userJson["accessToken"] = accessToken;
-      userJson["refreshToken"] = refreshToken;
-
-      return User.fromJson(userJson);
     }
+    final Map<String, dynamic> userJson =
+        jsonDecode(response.body) as Map<String, dynamic>;
+
+    userJson["accessToken"] = accessToken;
+    userJson["refreshToken"] = refreshToken;
+
+    return User.fromJson(userJson);
   }
 
   Future<AuthResponse> getNewPairOfTokens(Map<String, String> header) async {
@@ -189,6 +190,25 @@ class UserProvider {
       throw DeleteUserFailure();
     } else if (response.statusCode == 401) {
       throw DeleteUserUnauthorized();
+    }
+    return GeneralModelResponse(
+      response.body,
+      response.statusCode,
+    );
+  }
+
+  Future<GeneralModelResponse> signUp(Map<String, dynamic> signUp) async {
+    final request =
+        Uri.https(ApiRoutes.baseUrl, ApiRoutes.apiRoute + ApiRoutes.signUp);
+    final response = await _httpClient.post(
+      request,
+      headers: {"Content-type": "application/json"},
+      body: jsonEncode(signUp),
+    );
+
+    if (response.statusCode != 200) {
+      //final Map<String, dynamic>? answer = response.asMap();
+      throw SignUpRequestFailure;
     }
     return GeneralModelResponse(
       response.body,

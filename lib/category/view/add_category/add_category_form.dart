@@ -5,7 +5,7 @@ import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/view/add_category/add_category_button.dart';
 import 'package:ptk_inventory/category/view/add_category/category_name_input.dart';
 import 'package:ptk_inventory/category/view/common/category_name_label.dart';
-import 'package:ptk_inventory/common/component/snackbar_message.dart';
+import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 
 class AddCategoryForm extends StatelessWidget {
   const AddCategoryForm({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/category/view/update_category/modal_bottom_sheet_delete.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 
 class DeleteCategoryButton extends StatelessWidget {
   const DeleteCategoryButton({Key? key}) : super(key: key);

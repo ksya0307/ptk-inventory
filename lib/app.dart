@@ -6,12 +6,11 @@ import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 import 'package:ptk_inventory/common/repository/user_repository.dart';
 import 'package:ptk_inventory/common_user/view.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/login/view/login_page.dart';
 import 'package:ptk_inventory/moderator_user/view/home_page.dart';
 import 'package:ptk_inventory/palette.dart';
 import 'package:ptk_inventory/reader_user/view/home_page.dart';
-import 'package:ptk_inventory/sign_up/repository/sign_up_repository.dart';
 import 'package:ptk_inventory/splash/splash.dart';
 
 class App extends StatelessWidget {
@@ -19,7 +18,6 @@ class App extends StatelessWidget {
     Key? key,
     required this.userRepository,
     required this.authenticationRepository,
-    required this.signUpRepository,
   }) : super(key: key);
 
   @override
@@ -40,7 +38,6 @@ class App extends StatelessWidget {
 
   final UserRepository userRepository;
   final AuthenticationRepository authenticationRepository;
-  final SignUpRepository signUpRepository;
 }
 
 class AppView extends StatefulWidget {

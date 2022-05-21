@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 
 class ConfirmDeletingBottomSheet extends StatelessWidget {
   const ConfirmDeletingBottomSheet({Key? key}) : super(key: key);

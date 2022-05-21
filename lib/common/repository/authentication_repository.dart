@@ -42,7 +42,6 @@ class AuthenticationRepository {
         header: HeaderModel(data.accessToken).toMap(),
         accessToken: data.accessToken,
         refreshToken: data.refreshToken,
-        userId: data.userId,
       );
       final UserHiveModel userHiveModel = UserHiveModel(
         surname: userModel.surname,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/category/view/category_list.dart';
+import 'package:ptk_inventory/config/colors.dart';
 
 class SearchCategory extends StatefulWidget {
   const SearchCategory({Key? key}) : super(key: key);
@@ -22,6 +23,8 @@ class _SearchCategoryState extends State<SearchCategory> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryBloc, CategoryState>(
+      buildWhen: (previous, current) =>
+          previous.visibleList != current.visibleList,
       builder: (context, state) {
         return Container(
           decoration: const BoxDecoration(
@@ -36,6 +39,11 @@ class _SearchCategoryState extends State<SearchCategory> {
                   const TextSelectionThemeData(selectionColor: blueCustom),
             ),
             child: TextField(
+              onChanged: (query) {
+                context
+                    .read<CategoryBloc>()
+                    .add(CategorySearch(matchingWord: query));
+              },
               controller: _textController,
               style: const TextStyle(
                 fontFamily: 'Rubik',
@@ -43,27 +51,27 @@ class _SearchCategoryState extends State<SearchCategory> {
                 color: blackLabels,
               ),
               cursorColor: Theme.of(context).primaryColor,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.fromLTRB(12, 16, 12, 16),
                 hintText: 'Смартфон',
                 border: InputBorder.none,
-                prefixIcon: const Icon(
+                prefixIcon: Icon(
                   Icons.search_rounded,
                   color: primaryBlue,
                 ),
-                suffixIcon: _textController.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(
-                          Icons.clear_rounded,
-                          color: primaryBlue,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _textController.clear();
-                          });
-                        },
-                      )
-                    : null,
+                // suffixIcon: _textController.text.isNotEmpty
+                //     ? IconButton(
+                //         icon: const Icon(
+                //           Icons.clear_rounded,
+                //           color: primaryBlue,
+                //         ),
+                //         onPressed: () {
+                //           setState(() {
+                //             _textController.clear();
+                //           });
+                //         },
+                //       )
+                //     : null,
               ),
             ),
           ),

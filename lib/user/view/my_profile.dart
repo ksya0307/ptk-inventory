@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
-import 'package:ptk_inventory/common/component/snackbar_message.dart';
+import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 import 'package:ptk_inventory/common/repository/user_repository.dart';
 import 'package:ptk_inventory/common_user/view.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/user/bloc/new_password_bloc.dart';
 
 class UserProfilePage extends StatelessWidget {

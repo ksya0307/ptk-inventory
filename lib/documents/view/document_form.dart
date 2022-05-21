@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ptk_inventory/category/bloc/category_bloc.dart';
-import 'package:ptk_inventory/category/view/category_list.dart';
-import 'package:ptk_inventory/category/view/search_category.dart';
-import 'package:ptk_inventory/category/view/visible_category_list.dart';
 import 'package:ptk_inventory/config/colors.dart';
+import 'package:ptk_inventory/documents/bloc/document_bloc.dart';
+import 'package:ptk_inventory/documents/view/document_list.dart';
+import 'package:ptk_inventory/documents/view/search_document.dart';
 
-class CategoryForm extends StatelessWidget {
-  const CategoryForm({Key? key}) : super(key: key);
+class DocumentForm extends StatelessWidget {
+  const DocumentForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +15,13 @@ class CategoryForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SearchCategory(),
+          const SearchDocument(),
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: BlocBuilder<CategoryBloc, CategoryState>(
+            child: BlocBuilder<DocumentBloc, DocumentState>(
               builder: (context, state) {
-                if (state.categoryLoadingStatus ==
-                    CategoryLoadingStatus.loadingInProgress) {
+                if (state.documentLoadingStatus ==
+                    DocumentLoadingStatus.loadingInProgress) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -37,7 +36,7 @@ class CategoryForm extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.only(top: 16),
                                 child: Text(
-                                  "Загрузка категорий...",
+                                  "Загрузка документов...",
                                   style: TextStyle(
                                     color: greyDark,
                                     fontFamily: 'Rubik',
@@ -52,32 +51,22 @@ class CategoryForm extends StatelessWidget {
                     ],
                   );
                 }
-                if (state.categoryLoadingStatus ==
-                        CategoryLoadingStatus.loadingSuccess &&
-                    state.globalCategories.isNotEmpty) {
-                  // print("${state.visibleList}");
-                  return const CategoriesList();
+                if (state.documentLoadingStatus ==
+                        DocumentLoadingStatus.loadingSuccess &&
+                    state.globalDocuments.isNotEmpty) {
+                  return const DocumentsList();
                 }
-                if (state.categoryLoadingStatus ==
-                        CategoryLoadingStatus.loadingSuccess &&
-                    state.globalCategories.isEmpty) {
-                  return const Text("Список категорий пуст");
+                if (state.documentLoadingStatus ==
+                        DocumentLoadingStatus.loadingSuccess &&
+                    state.globalDocuments.isEmpty) {
+                  return const Text("Список документов пуст");
                 }
-
                 return const Text("Что-то пошло не так");
               },
             ),
-          ),
+          )
         ],
       ),
     );
   }
 }
-
-/*
-
-     if (state.visibleList.isEmpty &&
-                    state.globalCategories.isNotEmpty) {
-                  return 
-                }
- */

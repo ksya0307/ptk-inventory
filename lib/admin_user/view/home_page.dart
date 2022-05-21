@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/admin_user/view/landscape_home_page.dart';
 import 'package:ptk_inventory/admin_user/view/portrait_home_page.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 
 class AdminPage extends StatelessWidget {
   static Route route() {

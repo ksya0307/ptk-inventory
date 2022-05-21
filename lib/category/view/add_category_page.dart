@@ -5,8 +5,8 @@ import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/view/add_category/add_category_button.dart';
 import 'package:ptk_inventory/category/view/add_category/add_category_form.dart';
 import 'package:ptk_inventory/category/view/add_category/category_name_input.dart';
-import 'package:ptk_inventory/common/component/snackbar_message.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
+import 'package:ptk_inventory/config/colors.dart';
 
 class AddCategoryPage extends StatelessWidget {
   static Route route() {

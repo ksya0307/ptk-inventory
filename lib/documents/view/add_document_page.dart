@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 
 class AddDocumentPage extends StatelessWidget {
   static Route route() {

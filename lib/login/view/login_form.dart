@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/login/bloc/login_bloc.dart';
 import 'package:ptk_inventory/login/login.dart';
 import 'package:ptk_inventory/sign_up/view/sign_up_page.dart';

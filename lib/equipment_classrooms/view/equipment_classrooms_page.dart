@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/equipment_classrooms/add_equipment/view/add_equipment_page.dart';
 
 class EquipmentClassroomsPage extends StatefulWidget {

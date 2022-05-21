@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/config/colors.dart';
 
-class CategoryRow extends StatelessWidget {
+class DocumentRow extends StatelessWidget {
   final String id;
-  final String category;
-  const CategoryRow({
+  final String document;
+  const DocumentRow({
     Key? key,
     required this.id,
-    required this.category,
+    required this.document,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class CategoryRow extends StatelessWidget {
               child: Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  category,
+                  document,
                   style: const TextStyle(
                     fontFamily: 'Rubik',
                     fontSize: 16,

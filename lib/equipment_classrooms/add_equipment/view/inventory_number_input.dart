@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 
 class InventoryNumberInput extends StatelessWidget {
   const InventoryNumberInput({Key? key}) : super(key: key);

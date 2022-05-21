@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 
 class AddEquipmentButton extends StatelessWidget {
   const AddEquipmentButton({Key? key}) : super(key: key);

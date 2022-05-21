@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 
 class CategoryNameLabel extends StatelessWidget {
   const CategoryNameLabel({Key? key}) : super(key: key);

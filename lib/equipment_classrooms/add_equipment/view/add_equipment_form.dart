@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/equipment_classrooms/add_equipment/view/add_equipment_button.dart';
 import 'package:ptk_inventory/equipment_classrooms/add_equipment/view/add_equipment_page.dart';
 import 'package:ptk_inventory/equipment_classrooms/add_equipment/view/add_specs_label.dart';

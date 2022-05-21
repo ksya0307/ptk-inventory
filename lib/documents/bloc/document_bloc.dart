@@ -19,9 +19,17 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     on<DocumentSaved>(_onSaved);
     on<DocumentSearch>(_onSearch);
     on<DocumentDeleted>(_onDeleted);
+    on<DocumentSelected>(_onSelected);
   }
 
   final DocumentRepository _documentRepository;
+
+  void _onSelected(
+    DocumentSelected event,
+    Emitter<DocumentState> emit,
+  ) {
+    emit(state.copyWith(selectedDocument: event.selectedDocument));
+  }
 
   Future<void> _onDeleted(
     DocumentDeleted event,

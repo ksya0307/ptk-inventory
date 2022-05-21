@@ -37,12 +37,19 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   ) {
     // filter from gloabl list where name contains event.matchingWord
     // and return that list to the state
-    final filteredList = state.globalCategories
-        .where((category) => category.name.contains(event.matchingWord))
-        .toList();
+    List<Category> finalList = [];
+    if (event.matchingWord.isNotEmpty) {
+      finalList = state.globalCategories
+          .where((category) => category.name
+              .toLowerCase()
+              .contains(event.matchingWord.toLowerCase()))
+          .toList();
+    }
+
     emit(
       state.copyWith(
-        visibleList: filteredList,
+        visibleList: finalList,
+        searchText: event.matchingWord,
       ),
     );
   }

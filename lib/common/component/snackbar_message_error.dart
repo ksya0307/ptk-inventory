@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
 
 // Project imports:
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 
-ScaffoldFeatureController snackbarMessage(
+ScaffoldFeatureController snackbarMessageError(
   BuildContext context,
   String message,
 ) {
@@ -28,7 +28,7 @@ ScaffoldFeatureController snackbarMessage(
               ),
             ),
           ),
-          GestureDetector(
+          InkWell(
             onTap: () {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
             },

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/equipment_classrooms/equipment_specs/view/equipment_specs_page.dart';
 
 class AddSpecsLabel extends StatelessWidget {

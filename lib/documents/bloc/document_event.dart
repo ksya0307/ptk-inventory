@@ -37,3 +37,9 @@ class DocumentSearch extends DocumentEvent {
 class DocumentDeleted extends DocumentEvent {
   const DocumentDeleted();
 }
+
+class DocumentSelected extends DocumentEvent {
+  final Document? selectedDocument;
+
+  const DocumentSelected(this.selectedDocument);
+}

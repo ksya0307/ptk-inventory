@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/category/view/add_category_page.dart';
-import 'package:ptk_inventory/config/theme/colors.dart';
+import 'package:ptk_inventory/config/colors.dart';
 
 class AddCategory extends StatelessWidget {
   const AddCategory({Key? key}) : super(key: key);

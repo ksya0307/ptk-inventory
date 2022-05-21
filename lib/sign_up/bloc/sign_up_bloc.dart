@@ -1,16 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
+import 'package:ptk_inventory/common/repository/user_repository.dart';
 import 'package:ptk_inventory/sign_up/models/models.dart';
 import 'package:ptk_inventory/sign_up/models/request/sign_up_request.dart';
-import 'package:ptk_inventory/sign_up/repository/sign_up_repository.dart';
 
 part 'sign_up_event.dart';
 part 'sign_up_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
-  SignUpBloc({required SignUpRepository signUpRepository})
-      : _signUpRepository = signUpRepository,
+  SignUpBloc({required UserRepository userUpRepository})
+      : _userUpRepository = userUpRepository,
         super(const SignUpState()) {
     on<SignUpSurnameChanged>(_onSurnameChanged);
     on<SignUpNameChanged>(_onNameChanged);
@@ -20,7 +20,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<SignUpSubmitted>(_onSubmitted);
   }
 
-  final SignUpRepository _signUpRepository;
+  final UserRepository _userUpRepository;
 
   void _onSurnameChanged(
     SignUpSurnameChanged event,
@@ -125,7 +125,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   ) async {
     emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
     if (state.formStatus.isValidated) {
-      final waiting = await _signUpRepository.userSignUp(
+      final waiting = await _userUpRepository.userSignUp(
         SignUpModelRequest(
           surname: state.surname.value,
           name: state.name.value,

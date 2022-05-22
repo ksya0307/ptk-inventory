@@ -19,8 +19,8 @@ class CategoryRow extends StatelessWidget {
               flex: 2,
               child: Padding(
                 padding: const EdgeInsets.only(
-                  top: 8,
-                  bottom: 4,
+                  top: 8 + 4,
+                  bottom: 8 + 4,
                   left: 12,
                 ),
                 child: Container(

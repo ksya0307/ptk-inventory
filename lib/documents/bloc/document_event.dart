@@ -35,7 +35,10 @@ class DocumentSearch extends DocumentEvent {
 }
 
 class DocumentDeleted extends DocumentEvent {
-  const DocumentDeleted();
+  final int id;
+  const DocumentDeleted(this.id);
+  @override
+  List<Object> get props => [id];
 }
 
 class DocumentSelected extends DocumentEvent {

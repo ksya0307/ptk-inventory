@@ -4,29 +4,30 @@ import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_error.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 import 'package:ptk_inventory/config/colors.dart';
+import 'package:ptk_inventory/documents/bloc/document_bloc.dart';
 
 class ConfirmDeletingBottomSheet extends StatelessWidget {
   const ConfirmDeletingBottomSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CategoryBloc, CategoryState>(
+    return BlocListener<DocumentBloc, DocumentState>(
       listener: (context, state) {
-        if (state.categoryDeleteStatus == CategoryDeleteStatus.deleted) {
-          snackbarMessage(context, "Категория удалена");
-          context.read<CategoryBloc>().add(const CategorySelected(null));
+        if (state.documentDeleteStatus == DocumentDeleteStatus.deleted) {
+          snackbarMessage(context, "Документ удален");
           Navigator.of(context).pop();
-          context.read<CategoryBloc>().add(const CategoryLoadList());
-        } else if (state.categoryDeleteStatus ==
-            CategoryDeleteStatus.notDeleted) {
-          snackbarMessageError(context, "Категория не может быть удалена");
+          context.read<DocumentBloc>().add(const DocumentSelected(null));
+          context.read<DocumentBloc>().add(const DocumentLoadList());
+        } else if (state.documentDeleteStatus ==
+            DocumentDeleteStatus.notDeleted) {
+          snackbarMessageError(context, "Документ не может быть удален");
         }
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
           Text(
-            "Удалить категорию?",
+            "Удалить документ?",
             style: TextStyle(
               color: blackLabels,
               fontFamily: 'Rubik',
@@ -72,7 +73,7 @@ class DeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CategoryBloc, CategoryState>(
+    return BlocBuilder<DocumentBloc, DocumentState>(
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.only(top: 16, bottom: 16),
@@ -93,8 +94,8 @@ class DeleteButton extends StatelessWidget {
               ),
               onPressed: () {
                 context
-                    .read<CategoryBloc>()
-                    .add(CategoryDeleted(state.selectedCategory!.id));
+                    .read<DocumentBloc>()
+                    .add(DocumentDeleted(state.selectedDocument!.id));
               },
               child: const Padding(
                 padding: EdgeInsets.fromLTRB(0, 12 + 2, 0, 12 + 2),

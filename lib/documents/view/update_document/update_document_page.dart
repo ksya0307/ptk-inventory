@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
-import 'package:ptk_inventory/category/view/update_category/update_document_form.dart';
+
 import 'package:ptk_inventory/common/component/snackbar_message_error.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
+import 'package:ptk_inventory/documents/bloc/document_bloc.dart';
+import 'package:ptk_inventory/documents/view/update_document/update_document_form.dart';
 
-class UpdateCategoryPage extends StatelessWidget {
+class UpdateDocumentPage extends StatelessWidget {
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => UpdateCategoryPage());
+    return MaterialPageRoute<void>(builder: (_) => UpdateDocumentPage());
   }
 
   @override
@@ -29,7 +31,7 @@ class UpdateCategoryPage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: const Text(
-          "Изменение категории",
+          "Изменение документа",
           style: TextStyle(
             color: Colors.white,
             fontFamily: 'Rubik',
@@ -46,26 +48,23 @@ class UpdateCategoryPage extends StatelessWidget {
                 constraints: BoxConstraints(
                   minHeight: view.maxHeight,
                 ),
-                child: BlocListener<CategoryBloc, CategoryState>(
+                child: BlocListener<DocumentBloc, DocumentState>(
                   listener: (context, state) {
-                    print("STATE DELETE ${state.categoryDeleteStatus}");
                     if (state.formStatus == FormzStatus.submissionSuccess) {
-                      snackbarMessage(context, "Категория сохранена");
+                      snackbarMessage(context, "Документ сохранен");
                       context
-                          .read<CategoryBloc>()
-                          .add(const CategorySelected(null));
+                          .read<DocumentBloc>()
+                          .add(const DocumentSelected(null));
                       Navigator.of(context).pop();
-                      context
-                          .read<CategoryBloc>()
-                          .add(const CategoryLoadList());
                     } else if (state.formStatus ==
                         FormzStatus.submissionFailure) {
-                      snackbarMessageError(context, "Категория уже существует");
+                      snackbarMessageError(context, "Документ уже существует");
                     }
+                    print(state.documentDeleteStatus);
                   },
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                    child: const UpdateCategoryForm(),
+                    child: const UpdateDocumentForm(),
                   ),
                 ),
               ),

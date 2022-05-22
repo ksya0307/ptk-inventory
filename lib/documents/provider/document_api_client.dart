@@ -77,7 +77,7 @@ class DocumentProvider {
   ) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
-      "${ApiRoutes.apiRoute}${ApiRoutes.documents}?id=$documentId",
+      "${ApiRoutes.apiRoute}${ApiRoutes.documents}/$documentId",
     );
     final response = await _httpClient.delete(
       request,
@@ -98,13 +98,14 @@ class DocumentProvider {
   ) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
-      "${ApiRoutes.apiRoute}${ApiRoutes.documents}?id=$documentId",
+      "${ApiRoutes.apiRoute}${ApiRoutes.documents}/$documentId",
     );
     final response = await _httpClient.put(
       request,
       headers: header,
-      body: name,
+      body: jsonEncode(name),
     );
+    print(response.statusCode);
     if (response.statusCode != 200 && response.statusCode != 401) {
       throw ChangeDocumentRequestFailure();
     } else if (response.statusCode == 401) {

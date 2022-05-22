@@ -71,12 +71,14 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       emit(
         state.copyWith(
           categoryLoadingStatus: CategoryLoadingStatus.loadingSuccess,
+          categoryDeleteStatus: CategoryDeleteStatus.deleted,
         ),
       );
     } else {
       emit(
         state.copyWith(
           categoryLoadingStatus: CategoryLoadingStatus.loadingFailed,
+          categoryDeleteStatus: CategoryDeleteStatus.notDeleted,
         ),
       );
     }

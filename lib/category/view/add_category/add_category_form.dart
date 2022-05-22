@@ -19,6 +19,7 @@ class AddCategoryForm extends StatelessWidget {
         if (state.formStatus == FormzStatus.submissionSuccess) {
           snackbarMessage(context, "Новая категория добавлена");
           Navigator.of(context).pop();
+          context.read<CategoryBloc>().add(const CategoryLoadList());
         } else if (state.formStatus == FormzStatus.submissionFailure) {
           snackbarMessageCommonError(context, "Такая категория уже существует");
         }

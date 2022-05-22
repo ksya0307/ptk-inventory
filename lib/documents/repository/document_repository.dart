@@ -107,9 +107,9 @@ class DocumentRepository {
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         documentId,
       );
-      return DocumentStatus.changed;
+      return DocumentStatus.deleted;
     } on DeleteDocumentRequestFailure {
-      return DocumentStatus.unchanged;
+      return DocumentStatus.undeleted;
     } on DeleteDocumentRequestUnauthorized {
       final UserHiveModel? userHiveModel = await getUserProfile();
       if (userHiveModel != null) {
@@ -119,7 +119,7 @@ class DocumentRepository {
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         documentId,
       );
-      return DocumentStatus.changed;
+      return DocumentStatus.deleted;
     }
   }
 }

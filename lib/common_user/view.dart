@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/config/colors.dart';
-import 'package:ptk_inventory/user/view/my_profile.dart';
+import 'package:ptk_inventory/user_profile/view/my_profile.dart';
 
 class CommonPage extends StatelessWidget {
   static Route route() {

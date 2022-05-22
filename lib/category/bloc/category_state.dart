@@ -7,7 +7,7 @@ enum CategoryLoadingStatus {
   loadingSuccess,
 }
 
-enum CategoryDeleteStatus { deleted, notDeleted }
+enum CategoryDeleteStatus { pure, deleted, notDeleted }
 
 class CategoryState extends Equatable {
   final FormzStatus formStatus;
@@ -20,7 +20,7 @@ class CategoryState extends Equatable {
   final CategoryDeleteStatus categoryDeleteStatus;
 
   const CategoryState({
-    this.categoryDeleteStatus = CategoryDeleteStatus.notDeleted,
+    this.categoryDeleteStatus = CategoryDeleteStatus.pure,
     this.formStatus = FormzStatus.pure,
     this.name = const Name.pure(),
     this.categoryLoadingStatus = CategoryLoadingStatus.pure,

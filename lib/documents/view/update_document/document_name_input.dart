@@ -1,36 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/config/colors.dart';
+import 'package:ptk_inventory/documents/bloc/document_bloc.dart';
 
-class CategoryNameInput extends StatelessWidget {
-  const CategoryNameInput({Key? key}) : super(key: key);
+class DocumentNameInput extends StatelessWidget {
+  const DocumentNameInput({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CategoryBloc, CategoryState>(
+    return BlocBuilder<DocumentBloc, DocumentState>(
       buildWhen: (previous, current) =>
-          previous.selectedCategory != current.selectedCategory,
+          previous.selectedDocument != current.selectedDocument,
       builder: (context, state) {
-        if (state.selectedCategory != null) {
+        if (state.selectedDocument != null) {
           return TextFormField(
             onChanged: (name) {
-              print(name);
-              context.read<CategoryBloc>().add(CategoryNameChanged(name));
+              context.read<DocumentBloc>().add(DocumentNameChanged(name));
             },
-            key: const Key('addCategoryForm_categoryInput_textField'),
             cursorColor: Theme.of(context).primaryColor,
-            minLines: 1,
+            maxLines: 7,
+            maxLength: 500,
             style: const TextStyle(
               fontFamily: 'Rubik',
               fontSize: 18,
               color: blackInput,
             ),
-            initialValue: state.selectedCategory!.name,
+            initialValue: state.selectedDocument!.name,
             decoration: InputDecoration(
               labelStyle: const TextStyle(fontFamily: 'Rubik', fontSize: 18),
               errorText: state.name.invalid
-                  ? 'Имя категории не может быть пустым'
+                  ? 'Имя документа не может быть пустым'
                   : null,
               errorStyle: const TextStyle(
                 color: redCustom,
@@ -72,7 +71,7 @@ class CategoryNameInput extends StatelessWidget {
             ),
           );
         }
-        return const Text("Категория не выбрана");
+        return const Text("Документ не выбран");
       },
     );
   }

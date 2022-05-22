@@ -46,12 +46,14 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
       emit(
         state.copyWith(
           documentLoadingStatus: DocumentLoadingStatus.loadingSuccess,
+          documentDeleteStatus: DocumentDeleteStatus.deleted,
         ),
       );
     } else {
       emit(
         state.copyWith(
           documentLoadingStatus: DocumentLoadingStatus.loadingFailed,
+          documentDeleteStatus: DocumentDeleteStatus.notDeleted,
         ),
       );
     }
@@ -61,12 +63,21 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     DocumentSearch event,
     Emitter<DocumentState> emit,
   ) {
-    final filteredList = state.globalDocuments
-        .where((document) => document.name.contains(event.matchingWord))
-        .toList();
+    List<Document> finalList = [];
+    if (event.matchingWord.isNotEmpty) {
+      finalList = state.globalDocuments
+          .where(
+            (document) => document.name
+                .toLowerCase()
+                .contains(event.matchingWord.toLowerCase()),
+          )
+          .toList();
+    }
+
     emit(
       state.copyWith(
-        visibleList: filteredList,
+        visibleList: finalList,
+        searchText: event.matchingWord,
       ),
     );
   }
@@ -134,7 +145,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
       final waiting = await _documentRepository.changeDocument(
         state.selectedDocument!.id,
         GeneralModelRequest(
-          name: state.selectedDocument!.name,
+          name: state.name.value,
         ),
       );
       if (waiting == DocumentStatus.unchanged) {

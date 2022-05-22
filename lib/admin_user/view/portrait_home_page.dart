@@ -6,7 +6,7 @@ import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/documents/view/document_page.dart';
 import 'package:ptk_inventory/equipment_classrooms/view/equipment_classrooms_page.dart';
 import 'package:ptk_inventory/ifo/view/ifo_page.dart';
-import 'package:ptk_inventory/user/view/my_profile.dart';
+import 'package:ptk_inventory/user_profile/view/my_profile.dart';
 
 class PortraitAdminPage extends StatelessWidget {
   static Route route() {

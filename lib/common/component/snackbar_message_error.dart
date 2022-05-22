@@ -9,10 +9,11 @@ ScaffoldFeatureController snackbarMessageError(
 ) {
   return ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      duration: const Duration(milliseconds: 3000),
+      margin: const EdgeInsets.only(bottom: 48 + 24 + 16, left: 16, right: 16),
+      duration: const Duration(milliseconds: 2500),
       elevation: 2.0,
       behavior: SnackBarBehavior.floating,
-      backgroundColor: greyCard,
+      backgroundColor: redCustom,
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -21,7 +22,7 @@ ScaffoldFeatureController snackbarMessageError(
             child: Text(
               message,
               style: const TextStyle(
-                color: blackLabels,
+                color: Colors.white,
                 fontFamily: 'Rubik',
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
@@ -36,7 +37,7 @@ ScaffoldFeatureController snackbarMessageError(
               padding: EdgeInsets.zero,
               child: Icon(
                 Icons.close_rounded,
-                color: primaryBlue,
+                color: Colors.white,
               ),
             ),
           )

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/classrooms/classrooms_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
+import 'package:ptk_inventory/documents/view/document_page.dart';
 import 'package:ptk_inventory/equipment_classrooms/view/equipment_classrooms_page.dart';
+import 'package:ptk_inventory/ifo/view/ifo_page.dart';
 import 'package:ptk_inventory/user/view/my_profile.dart';
 
 class LandscapeModeratorPage extends StatelessWidget {
@@ -57,6 +59,8 @@ Widget userProfileView(BuildContext context) {
                 inventoryManagementCard(context),
                 equipmentCard(context),
                 repairCard(context),
+                documentsCard(context),
+                ifosCard(context)
               ],
             ),
             Column(
@@ -75,6 +79,96 @@ Widget userProfileView(BuildContext context) {
           ],
         ),
       ],
+    ),
+  );
+}
+
+Widget ifosCard(BuildContext context) {
+  return GestureDetector(
+    onTap: () => Navigator.of(context).push(IfoPage.route()),
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.47,
+      height: MediaQuery.of(context).size.height * 0.22,
+      child: Card(
+        elevation: 2.0,
+        shadowColor: greyShadow,
+        color: purpleCustom,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+              child: Text(
+                "ИФО",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: Text(
+                "Источники финансового обеспечения",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget documentsCard(BuildContext context) {
+  return GestureDetector(
+    onTap: () => Navigator.of(context).push(DocumentsPage.route()),
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.47,
+      height: MediaQuery.of(context).size.height * 0.22,
+      child: Card(
+        elevation: 2.0,
+        shadowColor: greyShadow,
+        color: greenCustom,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+              child: Text(
+                "Документы",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: Text(
+                "Договора, контракты",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     ),
   );
 }

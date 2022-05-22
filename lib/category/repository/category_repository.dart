@@ -107,9 +107,9 @@ class CategoryRepository {
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         categoryId,
       );
-      return CategoryStatus.changed;
+      return CategoryStatus.deleted;
     } on DeleteCategoryRequestFailure {
-      return CategoryStatus.unchanged;
+      return CategoryStatus.undeleted;
     } on DeleteCategoryRequestUnauthorized {
       final UserHiveModel? userHiveModel = await getUserProfile();
       if (userHiveModel != null) {
@@ -119,7 +119,7 @@ class CategoryRepository {
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         categoryId,
       );
-      return CategoryStatus.changed;
+      return CategoryStatus.deleted;
     }
   }
 }

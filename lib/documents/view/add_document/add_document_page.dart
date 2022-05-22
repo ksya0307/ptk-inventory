@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
-import 'package:ptk_inventory/category/bloc/category_bloc.dart';
-import 'package:ptk_inventory/category/view/add_category/add_category_button.dart';
-import 'package:ptk_inventory/category/view/add_category/add_category_form.dart';
-import 'package:ptk_inventory/category/view/add_category/category_name_input.dart';
-import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
-import 'package:ptk_inventory/config/colors.dart';
+import 'package:ptk_inventory/documents/view/add_document/add_document_form.dart';
 
-class AddCategoryPage extends StatelessWidget {
+class AddDocumentPage extends StatelessWidget {
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => AddCategoryPage());
+    return MaterialPageRoute<void>(builder: (_) => AddDocumentPage());
   }
 
   @override
   Widget build(BuildContext context) {
-    print("15");
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -31,7 +23,7 @@ class AddCategoryPage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: const Text(
-          "Добавление категории",
+          "Добавление документа",
           style: TextStyle(
             color: Colors.white,
             fontFamily: 'Rubik',
@@ -53,7 +45,7 @@ class AddCategoryPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
-                      AddCategoryForm(),
+                      AddDocumentForm(),
                     ],
                   ),
                 ),

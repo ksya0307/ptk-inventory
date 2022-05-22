@@ -14,8 +14,10 @@ class CategoryName extends StatelessWidget {
       builder: (context, state) {
         if (state.selectedCategory != null) {
           return TextFormField(
-            onChanged: (name) =>
-                context.read<CategoryBloc>().add(CategoryNameChanged(name)),
+            onChanged: (name) {
+              print(name);
+              context.read<CategoryBloc>().add(CategoryNameChanged(name));
+            },
             key: const Key('addCategoryForm_categoryInput_textField'),
             cursorColor: Theme.of(context).primaryColor,
             minLines: 1,

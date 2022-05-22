@@ -3,7 +3,7 @@ import "package:flutter/material.dart";
 // Project imports:
 import 'package:ptk_inventory/config/colors.dart';
 
-ScaffoldFeatureController snackbarMessage(
+ScaffoldFeatureController snackbarMessageCommonError(
   BuildContext context,
   String message,
 ) {
@@ -12,7 +12,7 @@ ScaffoldFeatureController snackbarMessage(
       duration: const Duration(milliseconds: 2500),
       elevation: 2.0,
       behavior: SnackBarBehavior.floating,
-      backgroundColor: secondaryGreen,
+      backgroundColor: redCustom,
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

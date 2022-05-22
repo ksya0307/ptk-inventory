@@ -67,146 +67,152 @@ class CategoriesList extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              decoration: const BoxDecoration(
-                color: greyCard,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(7.0),
-                  bottomRight: Radius.circular(7.0),
+            RefreshIndicator(
+              onRefresh: () async => BlocProvider.of<CategoryBloc>(context)
+                ..add(const CategoryLoadList()),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: greyCard,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(7.0),
+                    bottomRight: Radius.circular(7.0),
+                  ),
                 ),
-              ),
-              child: BlocBuilder<CategoryBloc, CategoryState>(
-                builder: (context, state) {
-                  // print("GLOBAL ${state.globalCategories}");
-                  // print("VISIBLE ${state.visibleList}");
+                child: BlocBuilder<CategoryBloc, CategoryState>(
+                  builder: (context, state) {
+                    // print("GLOBAL ${state.globalCategories}");
+                    // print("VISIBLE ${state.visibleList}");
 
-                  if (state.visibleList.isNotEmpty) {
-                    print("1");
-                    return const VisibleCategoryList();
-                  }
-                  if (state.searchText.isNotEmpty &&
-                      state.visibleList.isEmpty) {
-                    return Column(
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              color: Colors.white,
-                              child: SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.3,
-                                width: MediaQuery.of(context).size.width,
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Padding(
-                                        padding: EdgeInsets.only(
-                                          top: 16,
-                                          bottom: 16,
-                                        ),
-                                        child: Text(
-                                          "Категорий не найдено",
-                                          style: TextStyle(
-                                            color: blackLabels,
-                                            fontFamily: 'Rubik',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500,
+                    if (state.visibleList.isNotEmpty) {
+                      print("1");
+                      return const VisibleCategoryList();
+                    }
+                    if (state.searchText.isNotEmpty &&
+                        state.visibleList.isEmpty) {
+                      return Column(
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                color: Colors.white,
+                                child: SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.3,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 16,
+                                            bottom: 16,
+                                          ),
+                                          child: Text(
+                                            "Категорий не найдено",
+                                            style: TextStyle(
+                                              color: blackLabels,
+                                              fontFamily: 'Rubik',
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                        ),
-                                        child: Wrap(
-                                          crossAxisAlignment:
-                                              WrapCrossAlignment.center,
-                                          alignment: WrapAlignment.center,
-                                          // direction: Axis.vertical,
-                                          children: [
-                                            const Text(
-                                              "Используйте",
-                                              style: TextStyle(
-                                                color: blackLabels,
-                                                fontFamily: 'Rubik',
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 8,
-                                              ),
-                                              child: Container(
-                                                width: 35,
-                                                height: 35,
-                                                decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: primaryBlue,
-                                                ),
-                                                child: const Icon(
-                                                  Icons.add_rounded,
-                                                  color: Colors.white,
-                                                  size: 20,
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                          ),
+                                          child: Wrap(
+                                            crossAxisAlignment:
+                                                WrapCrossAlignment.center,
+                                            alignment: WrapAlignment.center,
+                                            // direction: Axis.vertical,
+                                            children: [
+                                              const Text(
+                                                "Используйте",
+                                                style: TextStyle(
+                                                  color: blackLabels,
+                                                  fontFamily: 'Rubik',
+                                                  fontSize: 16,
                                                 ),
                                               ),
-                                            ),
-                                            const Text(
-                                              "для добавления новой категории",
-                                              style: TextStyle(
-                                                color: blackLabels,
-                                                fontFamily: 'Rubik',
-                                                fontSize: 16,
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 8,
+                                                ),
+                                                child: Container(
+                                                  width: 35,
+                                                  height: 35,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: primaryBlue,
+                                                  ),
+                                                  child: const Icon(
+                                                    Icons.add_rounded,
+                                                    color: Colors.white,
+                                                    size: 20,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                              const Text(
+                                                "для добавления новой категории",
+                                                style: TextStyle(
+                                                  color: blackLabels,
+                                                  fontFamily: 'Rubik',
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    );
-                  }
-                  print("2");
-                  return ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: categories.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          context.read<CategoryBloc>().add(
-                                CategorySelected(
-                                  Category(
-                                    id: categories[index].id,
-                                    name: categories[index].name,
-                                  ),
-                                ),
-                              );
-                          Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                              builder: (_) => BlocProvider.value(
-                                value: context.read<CategoryBloc>(),
-                                child: UpdateCategoryPage(),
-                              ),
-                            ),
-                          );
-                        },
-                        child: CategoryRow(
-                          id: categories[index].id.toString(),
-                          category: categories[index].name,
-                        ),
+                              )
+                            ],
+                          )
+                        ],
                       );
-                    },
-                  );
-                },
+                    }
+                    print("2");
+                    return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: categories.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            context.read<CategoryBloc>().add(
+                                  CategorySelected(
+                                    Category(
+                                      id: categories[index].id,
+                                      name: categories[index].name,
+                                    ),
+                                  ),
+                                );
+                            Navigator.of(context).push(
+                              MaterialPageRoute<void>(
+                                builder: (_) => BlocProvider.value(
+                                  value: context.read<CategoryBloc>(),
+                                  child: UpdateCategoryPage(),
+                                ),
+                              ),
+                            );
+                          },
+                          child: CategoryRow(
+                            id: categories[index].id.toString(),
+                            category: categories[index].name,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             )
           ],

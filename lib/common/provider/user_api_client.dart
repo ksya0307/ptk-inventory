@@ -7,6 +7,7 @@ import 'package:ptk_inventory/common/model/api_routes.dart';
 import 'package:ptk_inventory/common/model/responses/auth_response.dart';
 import 'package:ptk_inventory/common/model/responses/general_model_response.dart';
 import 'package:ptk_inventory/common/model/user.dart';
+import 'package:ptk_inventory/common/model/user_result.dart';
 
 extension ResponseExtension on http.Response? {
   Map<String, dynamic>? asMap() {
@@ -58,6 +59,14 @@ class DeleteUserUnauthorized implements Exception {}
 
 ///Exception thrown when [signUp] fails
 class SignUpRequestFailure implements Exception {}
+
+class ExistingUserFailure implements Exception {}
+
+class ExistingUserUnauthorized implements Exception {}
+
+class AllUsersFailure implements Exception {}
+
+class AllUsersUnauthorized implements Exception {}
 
 ///Класс для создания http запросов
 //Слой Data Provider, самый низший
@@ -214,5 +223,37 @@ class UserProvider {
       response.body,
       response.statusCode,
     );
+  }
+
+  Future<GeneralModelResponse> existingUser({
+    required Map<String, String> header,
+    required int userId,
+  }) async {
+    final request = Uri.https(
+      ApiRoutes.baseUrl,
+      "${ApiRoutes.apiRoute}${ApiRoutes.users}${ApiRoutes.existingUser}/$userId",
+    );
+    final response = await _httpClient.get(request, headers: header);
+
+    if (response.statusCode != 200 && response.statusCode != 401) {
+      throw ExistingUserFailure();
+    } else if (response.statusCode == 401) {
+      throw ExistingUserUnauthorized();
+    }
+    return GeneralModelResponse(response.body, response.statusCode);
+  }
+
+  Future<UserResult> allUsers(Map<String, String> header) async {
+    final request = Uri.https(ApiRoutes.baseUrl,
+        ApiRoutes.apiRoute + ApiRoutes.all + ApiRoutes.users);
+    final response = await _httpClient.get(request, headers: header);
+    if (response.statusCode != 200 && response.statusCode != 401) {
+      throw AllUsersFailure();
+    } else if (response.statusCode == 401) {
+      throw AllUsersUnauthorized();
+    }
+    final Map<String, dynamic> jsonAnswer = {};
+    jsonAnswer['result'] = jsonDecode(response.body);
+    return UserResult.fromJson(jsonAnswer);
   }
 }

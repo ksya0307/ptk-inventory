@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:ptk_inventory/common/component/snackbar_message_common_error.dart';
+import 'package:ptk_inventory/common/component/snackbar_message_error.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 import 'package:ptk_inventory/common/repository/user_repository.dart';
 import 'package:ptk_inventory/sign_up/bloc/sign_up_bloc.dart';
@@ -39,7 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         Navigator.of(context).pop();
                       } else if (state.formStatus ==
                           FormzStatus.submissionFailure) {
-                        snackbarMessage(
+                        snackbarMessageCommonError(
                           context,
                           "Такой логин уже существует",
                         );

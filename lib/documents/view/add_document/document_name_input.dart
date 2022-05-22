@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/config/colors.dart';
+import 'package:ptk_inventory/documents/bloc/document_bloc.dart';
 
-class CategoryName extends StatelessWidget {
-  const CategoryName({Key? key}) : super(key: key);
+class DocumentNameInput extends StatelessWidget {
+  const DocumentNameInput({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CategoryBloc, CategoryState>(
+    return BlocBuilder<DocumentBloc, DocumentState>(
       buildWhen: (previous, current) => previous.name != current.name,
       builder: (context, state) {
         return TextFormField(
           onChanged: (name) =>
-              context.read<CategoryBloc>().add(CategoryNameChanged(name)),
+              context.read<DocumentBloc>().add(DocumentNameChanged(name)),
           cursorColor: Theme.of(context).primaryColor,
           minLines: 1,
           style: const TextStyle(
@@ -24,13 +24,13 @@ class CategoryName extends StatelessWidget {
           decoration: InputDecoration(
             labelStyle: const TextStyle(fontFamily: 'Rubik', fontSize: 18),
             errorText: state.name.invalid
-                ? 'Название категории не может быть пустым'
+                ? 'Название документа не может быть пустым'
                 : null,
             errorStyle: const TextStyle(
               color: redCustom,
               fontFamily: 'Rubik',
             ),
-            hintText: 'Смартфон',
+            hintText: 'Договор № 1',
             contentPadding: const EdgeInsets.fromLTRB(12, 19 - 4, 12, 19 - 4),
             hintStyle: const TextStyle(
               fontFamily: 'Rubik',

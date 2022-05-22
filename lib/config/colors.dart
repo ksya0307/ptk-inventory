@@ -17,6 +17,6 @@ const Color blueOverlay = Color(0x1A527CEA);
 
 const Color redCustom = Color(0xFFE33245);
 const Color orangeCustom = Color(0xFFF0963A);
-const Color purpleCustom = Color(0xFF6D12AF);
+const Color purpleCustom = Color(0xB0831DB2);
 const Color secondaryGreen = Color(0xFF48CE66);
 const Color greenCustom = Color(0xB562AF00);

@@ -21,7 +21,7 @@ class AuthenticationRepository {
     if (userHiveModel != null) {
       //  if the diffrence between the userHiveModel lastUpdate and now is greater than 15 min then call refreshToken()
       if (userHiveModel.lastTimeUpdated.difference(DateTime.now()).inMinutes >
-          2) {
+          15) {
         await refreshToken(userHiveModel);
       }
       yield AuthenticationStatus.authenticated;

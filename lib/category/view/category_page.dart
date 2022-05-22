@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/repository/category_repository.dart';
-import 'package:ptk_inventory/category/view/add_category_page.dart';
+import 'package:ptk_inventory/category/view/add_category/add_category_page.dart';
 import 'package:ptk_inventory/category/view/category_form.dart';
 
 class CategoryPage extends StatelessWidget {

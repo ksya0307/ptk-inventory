@@ -40,9 +40,11 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     List<Category> finalList = [];
     if (event.matchingWord.isNotEmpty) {
       finalList = state.globalCategories
-          .where((category) => category.name
-              .toLowerCase()
-              .contains(event.matchingWord.toLowerCase()))
+          .where(
+            (category) => category.name
+                .toLowerCase()
+                .contains(event.matchingWord.toLowerCase()),
+          )
           .toList();
     }
 
@@ -141,9 +143,11 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   ) async {
     emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
     if (state.formStatus.isValidated) {
+      print("146");
+      print(state.name.value);
       final waiting = await _categoryRepository.changeCategory(
         state.selectedCategory!.id,
-        GeneralModelRequest(name: state.selectedCategory!.name),
+        GeneralModelRequest(name: state.name.value),
       );
       if (waiting == CategoryStatus.unchanged) {
         emit(state.copyWith(formStatus: FormzStatus.submissionFailure));

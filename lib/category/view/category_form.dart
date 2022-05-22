@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/view/category_list.dart';
 import 'package:ptk_inventory/category/view/search_category.dart';
-import 'package:ptk_inventory/category/view/visible_category_list.dart';
 import 'package:ptk_inventory/config/colors.dart';
 
 class CategoryForm extends StatelessWidget {
@@ -73,11 +72,3 @@ class CategoryForm extends StatelessWidget {
     );
   }
 }
-
-/*
-
-     if (state.visibleList.isEmpty &&
-                    state.globalCategories.isNotEmpty) {
-                  return 
-                }
- */

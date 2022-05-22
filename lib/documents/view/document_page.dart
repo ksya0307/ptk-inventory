@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/documents/bloc/document_bloc.dart';
 import 'package:ptk_inventory/documents/repository/document_repository.dart';
-import 'package:ptk_inventory/documents/view/add_document_page.dart';
+import 'package:ptk_inventory/documents/view/add_document/add_document_page.dart';
 import 'package:ptk_inventory/documents/view/document_form.dart';
 
 class DocumentsPage extends StatelessWidget {
@@ -21,7 +21,7 @@ class DocumentsPage extends StatelessWidget {
           builder: (context, state) {
             print("STATE ${state.visibleList}");
             return FloatingActionButton(
-              tooltip: "Добавить категорию",
+              tooltip: "Добавить документ",
               child: const Icon(Icons.add_rounded),
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute<void>(
@@ -68,7 +68,6 @@ class DocumentsPage extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         DocumentForm(),
                       ],

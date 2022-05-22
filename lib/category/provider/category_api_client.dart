@@ -77,7 +77,7 @@ class CategoryProvider {
   ) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
-      "${ApiRoutes.apiRoute}${ApiRoutes.categories}?id=$categoryId",
+      "${ApiRoutes.apiRoute}${ApiRoutes.categories}/$categoryId",
     );
     final response = await _httpClient.delete(
       request,
@@ -98,7 +98,7 @@ class CategoryProvider {
   ) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
-      "${ApiRoutes.apiRoute}${ApiRoutes.categories}?id=$categoryId",
+      "${ApiRoutes.apiRoute}${ApiRoutes.categories}/$categoryId",
     );
     final response = await _httpClient.put(
       request,

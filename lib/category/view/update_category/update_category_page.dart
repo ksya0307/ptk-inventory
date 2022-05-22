@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
+import 'package:ptk_inventory/category/view/category_page.dart';
+
 import 'package:ptk_inventory/category/view/common/category_name_label.dart';
 import 'package:ptk_inventory/category/view/update_category/category_name_input.dart';
 import 'package:ptk_inventory/category/view/update_category/delete_category_button.dart';
 import 'package:ptk_inventory/category/view/update_category/save_category_button.dart';
+import 'package:ptk_inventory/common/component/snackbar_message_error.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 
 class UpdateCategoryPage extends StatelessWidget {
@@ -48,9 +51,36 @@ class UpdateCategoryPage extends StatelessWidget {
                 constraints: BoxConstraints(
                   minHeight: view.maxHeight,
                 ),
-                child: Container(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                  child: const UpdateCategoryForm(),
+                child: BlocListener<CategoryBloc, CategoryState>(
+                  listener: (context, state) {
+                    print("STATE DELETE ${state.categoryLoadingStatus}");
+                    if (state.formStatus == FormzStatus.submissionSuccess) {
+                      snackbarMessage(context, "Категория сохранена");
+                      context
+                          .read<CategoryBloc>()
+                          .add(const CategorySelected(null));
+                      Navigator.of(context).pop();
+                    } else if (state.formStatus ==
+                        FormzStatus.submissionFailure) {
+                      snackbarMessageError(context, "Категория уже существует");
+                    }
+                    if (state.categoryLoadingStatus ==
+                        CategoryLoadingStatus.loadingSuccess) {
+                      snackbarMessage(context, "Категория удалена");
+                      context
+                          .read<CategoryBloc>()
+                          .add(const CategorySelected(null));
+                      Navigator.of(context).pop();
+                    } else if (state.categoryLoadingStatus ==
+                        CategoryLoadingStatus.loadingFailed) {
+                      snackbarMessageError(
+                          context, "Категория не может быть удалена");
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                    child: const UpdateCategoryForm(),
+                  ),
                 ),
               ),
             );
@@ -66,36 +96,25 @@ class UpdateCategoryForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CategoryBloc, CategoryState>(
-      listener: (context, state) {
-        if (state.formStatus == FormzStatus.submissionSuccess) {
-          snackbarMessage(context, "Данные сохранены");
-          Navigator.of(context).pop();
-          context.read<CategoryBloc>().add(const CategorySelected(null));
-        } else if (state.formStatus == FormzStatus.submissionFailure) {
-          snackbarMessage(context, "Данные не удалось сохранить");
-        }
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              CategoryNameLabel(),
-              CategoryName(),
-              Padding(
-                padding: EdgeInsets.only(top: 8),
-                child: SaveCategoryButton(),
-              ),
-            ],
-          ),
-          Column(
-            children: const [DeleteCategoryButton()],
-          )
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            CategoryNameLabel(),
+            CategoryName(),
+            Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: SaveCategoryButton(),
+            ),
+          ],
+        ),
+        Column(
+          children: const [DeleteCategoryButton()],
+        )
+      ],
     );
   }
 }

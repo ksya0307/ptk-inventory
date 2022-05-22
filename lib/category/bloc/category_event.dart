@@ -35,7 +35,10 @@ class CategorySearch extends CategoryEvent {
 }
 
 class CategoryDeleted extends CategoryEvent {
-  const CategoryDeleted();
+  final int id;
+  const CategoryDeleted(this.id);
+  @override
+  List<Object> get props => [id];
 }
 
 class CategorySelected extends CategoryEvent {

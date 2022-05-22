@@ -7,6 +7,8 @@ enum CategoryLoadingStatus {
   loadingSuccess,
 }
 
+enum CategoryDeleteStatus { deleted, notDeleted }
+
 class CategoryState extends Equatable {
   final FormzStatus formStatus;
   final Name name;
@@ -15,8 +17,10 @@ class CategoryState extends Equatable {
   final CategoryLoadingStatus categoryLoadingStatus;
   final List<Category> globalCategories;
   final List<Category> visibleList;
+  final CategoryDeleteStatus categoryDeleteStatus;
 
   const CategoryState({
+    this.categoryDeleteStatus = CategoryDeleteStatus.notDeleted,
     this.formStatus = FormzStatus.pure,
     this.name = const Name.pure(),
     this.categoryLoadingStatus = CategoryLoadingStatus.pure,
@@ -28,6 +32,7 @@ class CategoryState extends Equatable {
 
   @override
   List<Object?> get props => [
+        categoryDeleteStatus,
         formStatus,
         name,
         categoryLoadingStatus,
@@ -40,20 +45,23 @@ class CategoryState extends Equatable {
   CategoryState copyWith({
     FormzStatus? formStatus,
     Name? name,
+    String? searchText,
     Category? selectedCategory,
     CategoryLoadingStatus? categoryLoadingStatus,
     List<Category>? globalCategories,
     List<Category>? visibleList,
-    String? searchText,
+    CategoryDeleteStatus? categoryDeleteStatus,
   }) {
     return CategoryState(
-        formStatus: formStatus ?? this.formStatus,
-        name: name ?? this.name,
-        selectedCategory: selectedCategory ?? this.selectedCategory,
-        categoryLoadingStatus:
-            categoryLoadingStatus ?? this.categoryLoadingStatus,
-        globalCategories: globalCategories ?? this.globalCategories,
-        visibleList: visibleList ?? this.visibleList,
-        searchText: searchText ?? this.searchText);
+      formStatus: formStatus ?? this.formStatus,
+      name: name ?? this.name,
+      searchText: searchText ?? this.searchText,
+      selectedCategory: selectedCategory ?? this.selectedCategory,
+      categoryLoadingStatus:
+          categoryLoadingStatus ?? this.categoryLoadingStatus,
+      globalCategories: globalCategories ?? this.globalCategories,
+      visibleList: visibleList ?? this.visibleList,
+      categoryDeleteStatus: categoryDeleteStatus ?? this.categoryDeleteStatus,
+    );
   }
 }

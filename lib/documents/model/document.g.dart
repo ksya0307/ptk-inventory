@@ -6,13 +6,12 @@ part of 'document.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Document _$$_DocumentFromJson(Map<String, dynamic> json) => _$_Document(
+Document _$DocumentFromJson(Map<String, dynamic> json) => Document(
       id: json['id'] as int,
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$$_DocumentToJson(_$_Document instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$DocumentToJson(Document instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
     };

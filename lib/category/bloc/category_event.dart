@@ -46,3 +46,24 @@ class CategorySelected extends CategoryEvent {
 
   const CategorySelected(this.selectedCategory);
 }
+
+class CategoryDeleteFromList extends CategoryEvent {
+  final Category category;
+  const CategoryDeleteFromList({required this.category});
+  @override
+  List<Object> get props => [category];
+}
+
+class CategoryAddToList extends CategoryEvent {
+  final Category category;
+  const CategoryAddToList({required this.category});
+  @override
+  List<Object> get props => [category];
+}
+
+class CategorySaveToList extends CategoryEvent {
+  final Category category;
+  const CategorySaveToList({required this.category});
+  @override
+  List<Object> get props => [category];
+}

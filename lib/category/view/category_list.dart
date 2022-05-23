@@ -80,11 +80,7 @@ class CategoriesList extends StatelessWidget {
                 ),
                 child: BlocBuilder<CategoryBloc, CategoryState>(
                   builder: (context, state) {
-                    // print("GLOBAL ${state.globalCategories}");
-                    // print("VISIBLE ${state.visibleList}");
-
                     if (state.visibleList.isNotEmpty) {
-                      print("1");
                       return const VisibleCategoryList();
                     }
                     if (state.searchText.isNotEmpty &&
@@ -179,7 +175,7 @@ class CategoriesList extends StatelessWidget {
                         ],
                       );
                     }
-                    print("2");
+
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,

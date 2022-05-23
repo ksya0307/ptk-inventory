@@ -34,11 +34,17 @@ class CategoryRepository {
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
       );
       return result.result;
-    } on CategoriesRequestFailure {
+    } on CategoriesRequestFailure catch (e) {
+      print("FAILURE");
+      print(e);
       return [];
-    } on CategoriesRequestUnauthorized {
+    } on CategoriesRequestUnauthorized catch (e) {
+      print("401");
+      print(e);
       final UserHiveModel? userHiveModel = await getUserProfile();
+
       if (userHiveModel != null) {
+        print("categories ${userHiveModel.lastTimeUpdated}");
         await _authenticationRepository.refreshToken(userHiveModel);
       }
       final result = await _categoryProvider.allCategories(
@@ -46,6 +52,7 @@ class CategoryRepository {
           await HeaderModel.getAccessToken(),
         ).toMap(),
       );
+      print(e);
       return result.result;
     }
   }

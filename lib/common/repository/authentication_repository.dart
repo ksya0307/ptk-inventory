@@ -20,7 +20,7 @@ class AuthenticationRepository {
     final UserHiveModel? userHiveModel = await getUserProfile();
     if (userHiveModel != null) {
       //  if the diffrence between the userHiveModel lastUpdate and now is greater than 15 min then call refreshToken()
-      if (userHiveModel.lastTimeUpdated.difference(DateTime.now()).inMinutes >
+      if (DateTime.now().difference(userHiveModel.lastTimeUpdated).inMinutes >
           15) {
         await refreshToken(userHiveModel);
       }
@@ -66,8 +66,8 @@ class AuthenticationRepository {
   Future<void> refreshToken(UserHiveModel userHiveModel) async {
     try {
       final HeaderModel header = HeaderModel(userHiveModel.refreshToken);
+
       final data = await _userProvider.getNewPairOfTokens(header.toMap());
-      // print("NEW ${data.accessToken}, \n ${data.refreshToken}");
       await editUserProfile(
         accessToken: data.accessToken,
         refreshToken: data.refreshToken,

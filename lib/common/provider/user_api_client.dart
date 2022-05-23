@@ -243,7 +243,7 @@ class UserProvider {
     return GeneralModelResponse(response.body, response.statusCode);
   }
 
-  Future<UserResult> allUsers(Map<String, String> header) async {
+  Future<UserResult> allUsers({required Map<String, String> header}) async {
     final request = Uri.https(ApiRoutes.baseUrl,
         ApiRoutes.apiRoute + ApiRoutes.all + ApiRoutes.users);
     final response = await _httpClient.get(request, headers: header);

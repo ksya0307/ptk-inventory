@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ptk_inventory/category/view/category_page.dart';
 import 'package:ptk_inventory/classrooms/classrooms_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/documents/view/document_page.dart';
@@ -74,6 +75,7 @@ Widget userProfileView(BuildContext context) {
                 ),
                 profileCard(context),
                 classroomsCard(context),
+                categoryCard(context)
               ],
             ),
           ],
@@ -295,7 +297,7 @@ Widget profileCard(BuildContext context) {
 
 Widget categoryCard(BuildContext context) {
   return GestureDetector(
-    onTap: () => Navigator.of(context).push(UserProfilePage.route()),
+    onTap: () => Navigator.of(context).push(CategoryPage.route()),
     child: SizedBox(
       width: MediaQuery.of(context).size.width * 0.47,
       height: MediaQuery.of(context).size.height * 0.18,
@@ -304,7 +306,7 @@ Widget categoryCard(BuildContext context) {
           borderRadius: BorderRadius.circular(7.0),
         ),
         elevation: 2.0,
-        color: blueCustom,
+        color: purpleCustom,
         child: const Padding(
           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
           child: Text(

@@ -6,15 +6,14 @@ part of 'document_result.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_DocumentResult _$$_DocumentResultFromJson(Map<String, dynamic> json) =>
-    _$_DocumentResult(
-      result: (json['result'] as List<dynamic>?)
-              ?.map((e) => Document.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
+DocumentResult _$DocumentResultFromJson(Map<String, dynamic> json) =>
+    DocumentResult(
+      (json['result'] as List<dynamic>)
+          .map((e) => Document.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$$_DocumentResultToJson(_$_DocumentResult instance) =>
+Map<String, dynamic> _$DocumentResultToJson(DocumentResult instance) =>
     <String, dynamic>{
       'result': instance.result,
     };

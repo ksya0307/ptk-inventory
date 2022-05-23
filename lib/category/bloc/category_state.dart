@@ -7,7 +7,18 @@ enum CategoryLoadingStatus {
   loadingSuccess,
 }
 
-enum CategoryDeleteStatus { pure, deleted, notDeleted }
+enum CategoryDeleteStatus {
+  pure,
+  deleted,
+  notDeleted,
+  deletedFromGlobal,
+  savedOnGlobal,
+  saved,
+  notSaved,
+  added,
+  notAdded,
+  addedToGlobal,
+}
 
 class CategoryState extends Equatable {
   final FormzStatus formStatus;

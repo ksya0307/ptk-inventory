@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/view/add_category/add_category_button.dart';
 import 'package:ptk_inventory/category/view/add_category/category_name_input.dart';
@@ -16,11 +15,13 @@ class AddCategoryForm extends StatelessWidget {
     print("17");
     return BlocListener<CategoryBloc, CategoryState>(
       listener: (context, state) {
-        if (state.formStatus == FormzStatus.submissionSuccess) {
+        if (state.categoryDeleteStatus == CategoryDeleteStatus.added) {
           snackbarMessage(context, "Новая категория добавлена");
           Navigator.of(context).pop();
-          context.read<CategoryBloc>().add(const CategoryLoadList());
-        } else if (state.formStatus == FormzStatus.submissionFailure) {
+          //context.read<CategoryBloc>().add(const CategoryLoadList());
+        }
+
+        if (state.categoryDeleteStatus == CategoryDeleteStatus.notAdded) {
           snackbarMessageCommonError(context, "Такая категория уже существует");
         }
       },

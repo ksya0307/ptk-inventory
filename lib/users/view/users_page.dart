@@ -5,6 +5,7 @@ import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/repository/category_repository.dart';
 import 'package:ptk_inventory/category/view/add_category/add_category_page.dart';
 import 'package:ptk_inventory/category/view/category_form.dart';
+import 'package:ptk_inventory/sign_up/view/sign_up_page.dart';
 
 class CategoryPage extends StatelessWidget {
   static Route route() {
@@ -21,15 +22,10 @@ class CategoryPage extends StatelessWidget {
         floatingActionButton: BlocBuilder<CategoryBloc, CategoryState>(
           builder: (context, state) {
             return FloatingActionButton(
-              tooltip: "Добавить категорию",
+              tooltip: "Добавить пользователя",
               child: const Icon(Icons.add_rounded),
               onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => BlocProvider<CategoryBloc>.value(
-                    value: context.read<CategoryBloc>(),
-                    child: AddCategoryPage(),
-                  ),
-                ),
+                SignUpPage.route(),
               ),
             );
           },
@@ -48,7 +44,7 @@ class CategoryPage extends StatelessWidget {
           elevation: 0,
           centerTitle: true,
           title: const Text(
-            "Категории",
+            "Пользователи",
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'Rubik',
@@ -69,7 +65,7 @@ class CategoryPage extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: Column(
                       children: const [
-                        CategoryForm(),
+                        //CategoryForm(),
                       ],
                     ),
                   ),

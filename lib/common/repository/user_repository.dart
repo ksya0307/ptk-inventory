@@ -9,6 +9,7 @@ import 'package:ptk_inventory/sign_up/models/request/sign_up_request.dart';
 
 enum ChangePasswordStatus { changed, unchanged }
 enum SignUpStatus { signed, unsigned }
+enum UsersStatus { successfullyGot, unsuccessfullyGot }
 
 class UserRepository {
   final UserProvider _userProvider;
@@ -61,6 +62,26 @@ class UserRepository {
       return SignUpStatus.signed;
     } catch (e) {
       return SignUpStatus.unsigned;
+    }
+  }
+
+  Future<List<User>> allUsers() async {
+    try {
+      final result = await _userProvider.allUsers(
+        header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+      );
+      return result.result;
+    } on AllUsersFailure {
+      return [];
+    } on AllUsersUnauthorized {
+      final UserHiveModel? userHiveModel = await getUserProfile();
+      if (userHiveModel != null) {
+        await _authenticationRepository.refreshToken(userHiveModel);
+      }
+      final result = await _userProvider.allUsers(
+        header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+      );
+      return result.result;
     }
   }
 }

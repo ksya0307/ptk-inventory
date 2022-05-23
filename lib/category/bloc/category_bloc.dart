@@ -20,9 +20,72 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<CategorySearch>(_onSearch);
     on<CategoryDeleted>(_onDeleted);
     on<CategorySelected>(_onSelected);
+    on<CategoryDeleteFromList>(_onDeleteFromList);
+    on<CategoryAddToList>(_onAddToList);
+    on<CategorySaveToList>(_onSaveList);
   }
 
   final CategoryRepository _categoryRepository;
+
+  void _onDeleteFromList(
+    CategoryDeleteFromList event,
+    Emitter<CategoryState> emit,
+  ) {
+    print("start");
+    final newList = state.globalCategories
+        .where((category) => category != event.category)
+        .toList();
+    print("new list");
+    print(newList);
+    emit(
+      state.copyWith(
+        categoryDeleteStatus: CategoryDeleteStatus.deletedFromGlobal,
+        globalCategories: newList,
+      ),
+    );
+    emit(state.copyWith(categoryDeleteStatus: CategoryDeleteStatus.pure));
+  }
+
+  void _onAddToList(
+    CategoryAddToList event,
+    Emitter<CategoryState> emit,
+  ) {
+    final newList = state.globalCategories
+        .where((category) => category != event.category)
+        .toList();
+
+    emit(
+      state.copyWith(
+        categoryDeleteStatus: CategoryDeleteStatus.addedToGlobal,
+        globalCategories: newList,
+      ),
+    );
+    emit(state.copyWith(categoryDeleteStatus: CategoryDeleteStatus.pure));
+  }
+
+  void _onSaveList(
+    CategorySaveToList event,
+    Emitter<CategoryState> emit,
+  ) {
+    final Category category =
+        Category(id: event.category.id, name: state.name.value);
+
+    final newList = state.globalCategories
+        .where((category) => category != event.category)
+        .toList();
+    final categoryIndex = state.globalCategories
+        .indexWhere((element) => element.id == category.id);
+
+    newList[categoryIndex] = category;
+    print("category $category");
+    emit(
+      state.copyWith(
+        categoryDeleteStatus: CategoryDeleteStatus.savedOnGlobal,
+        globalCategories: newList,
+      ),
+    );
+    emit(state.copyWith(categoryDeleteStatus: CategoryDeleteStatus.pure));
+  }
 
   void _onSelected(
     CategorySelected event,
@@ -67,6 +130,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     );
     final waiting =
         await _categoryRepository.deleteCategory(state.selectedCategory!.id);
+    print(waiting);
     if (waiting == CategoryStatus.deleted) {
       emit(
         state.copyWith(
@@ -74,11 +138,21 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
           categoryDeleteStatus: CategoryDeleteStatus.deleted,
         ),
       );
+      emit(
+        state.copyWith(
+          categoryDeleteStatus: CategoryDeleteStatus.pure,
+        ),
+      );
     } else {
       emit(
         state.copyWith(
           categoryLoadingStatus: CategoryLoadingStatus.loadingFailed,
           categoryDeleteStatus: CategoryDeleteStatus.notDeleted,
+        ),
+      );
+      emit(
+        state.copyWith(
+          categoryDeleteStatus: CategoryDeleteStatus.pure,
         ),
       );
     }
@@ -132,9 +206,27 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         GeneralModelRequest(name: state.name.value),
       );
       if (waiting == CategoryStatus.notcreated) {
-        emit(state.copyWith(formStatus: FormzStatus.submissionFailure));
+        emit(state.copyWith(
+          formStatus: FormzStatus.submissionFailure,
+          categoryDeleteStatus: CategoryDeleteStatus.notAdded,
+        ));
+        emit(
+          state.copyWith(
+            categoryDeleteStatus: CategoryDeleteStatus.pure,
+          ),
+        );
       } else {
-        emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionSuccess,
+            categoryDeleteStatus: CategoryDeleteStatus.added,
+          ),
+        );
+        emit(
+          state.copyWith(
+            categoryDeleteStatus: CategoryDeleteStatus.pure,
+          ),
+        );
       }
     }
   }
@@ -145,16 +237,34 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   ) async {
     emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
     if (state.formStatus.isValidated) {
-      print("146");
-      print(state.name.value);
       final waiting = await _categoryRepository.changeCategory(
         state.selectedCategory!.id,
         GeneralModelRequest(name: state.name.value),
       );
       if (waiting == CategoryStatus.unchanged) {
-        emit(state.copyWith(formStatus: FormzStatus.submissionFailure));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            categoryDeleteStatus: CategoryDeleteStatus.notSaved,
+          ),
+        );
+        emit(
+          state.copyWith(
+            categoryDeleteStatus: CategoryDeleteStatus.pure,
+          ),
+        );
       } else {
-        emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionSuccess,
+            categoryDeleteStatus: CategoryDeleteStatus.saved,
+          ),
+        );
+        emit(
+          state.copyWith(
+            categoryDeleteStatus: CategoryDeleteStatus.pure,
+          ),
+        );
       }
     }
   }

@@ -51,6 +51,11 @@ class _SearchCategoryState extends State<SearchCategory> {
               ),
               cursorColor: Theme.of(context).primaryColor,
               decoration: const InputDecoration(
+                hintStyle: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 18,
+                  color: greyDark,
+                ),
                 contentPadding: EdgeInsets.fromLTRB(12, 16, 12, 16),
                 hintText: 'Смартфон',
                 border: InputBorder.none,

@@ -244,8 +244,10 @@ class UserProvider {
   }
 
   Future<UserResult> allUsers({required Map<String, String> header}) async {
-    final request = Uri.https(ApiRoutes.baseUrl,
-        ApiRoutes.apiRoute + ApiRoutes.all + ApiRoutes.users);
+    final request = Uri.https(
+      ApiRoutes.baseUrl,
+      "${ApiRoutes.apiRoute}${ApiRoutes.users}/${ApiRoutes.all}",
+    );
     final response = await _httpClient.get(request, headers: header);
     if (response.statusCode != 200 && response.statusCode != 401) {
       throw AllUsersFailure();

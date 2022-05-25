@@ -12,7 +12,7 @@ class ConfirmDeletingBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<CategoryBloc, CategoryState>(
       listener: (context, state) {
-        if (state.categoryDeleteStatus == CategoryDeleteStatus.deleted) {
+        if (state.categoryActionStatus == CategoryActionStatus.deleted) {
           print("deleted");
           snackbarMessage(context, "Категория удалена");
           // context
@@ -20,11 +20,11 @@ class ConfirmDeletingBottomSheet extends StatelessWidget {
           //     .add(CategoryDeleteFromList(category: state.selectedCategory!));
           // context.read<CategoryBloc>().add(const CategorySelected(null));
         }
-        if (state.categoryDeleteStatus ==
-            CategoryDeleteStatus.deletedFromGlobal) {
+        if (state.categoryActionStatus ==
+            CategoryActionStatus.deletedFromGlobal) {
           Navigator.of(context).pop();
         }
-        if (state.categoryDeleteStatus == CategoryDeleteStatus.notDeleted) {
+        if (state.categoryActionStatus == CategoryActionStatus.notDeleted) {
           snackbarMessageError(context, "Категория не может быть удалена");
         }
       },

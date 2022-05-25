@@ -16,17 +16,17 @@ class UpdateCategoryForm extends StatelessWidget {
     return BlocListener<CategoryBloc, CategoryState>(
       listener: (context, state) {
         //print("GLOBAl ${state.globalCategories}");
-        if (state.categoryDeleteStatus == CategoryDeleteStatus.saved) {
+        if (state.categoryActionStatus == CategoryActionStatus.saved) {
           snackbarMessage(context, "Категория сохранена");
           context
               .read<CategoryBloc>()
               .add(CategorySaveToList(category: state.selectedCategory!));
           context.read<CategoryBloc>().add(const CategorySelected(null));
         }
-        if (state.categoryDeleteStatus == CategoryDeleteStatus.savedOnGlobal) {
+        if (state.categoryActionStatus == CategoryActionStatus.savedOnGlobal) {
           Navigator.of(context).pop();
         }
-        if (state.categoryDeleteStatus == CategoryDeleteStatus.notSaved) {
+        if (state.categoryActionStatus == CategoryActionStatus.notSaved) {
           snackbarMessageError(context, "Такая категория уже существует");
         }
       },

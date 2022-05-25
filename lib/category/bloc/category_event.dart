@@ -28,10 +28,13 @@ class CategorySaved extends CategoryEvent {
 }
 
 class CategorySearch extends CategoryEvent {
+  final String matchingWord;
   const CategorySearch({
     required this.matchingWord,
   });
-  final String matchingWord;
+
+  @override
+  List<Object> get props => [matchingWord];
 }
 
 class CategoryDeleted extends CategoryEvent {

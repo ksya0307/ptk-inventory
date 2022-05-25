@@ -7,7 +7,7 @@ enum CategoryLoadingStatus {
   loadingSuccess,
 }
 
-enum CategoryDeleteStatus {
+enum CategoryActionStatus {
   pure,
   deleted,
   notDeleted,
@@ -28,10 +28,10 @@ class CategoryState extends Equatable {
   final CategoryLoadingStatus categoryLoadingStatus;
   final List<Category> globalCategories;
   final List<Category> visibleList;
-  final CategoryDeleteStatus categoryDeleteStatus;
+  final CategoryActionStatus categoryActionStatus;
 
   const CategoryState({
-    this.categoryDeleteStatus = CategoryDeleteStatus.pure,
+    this.categoryActionStatus = CategoryActionStatus.pure,
     this.formStatus = FormzStatus.pure,
     this.name = const Name.pure(),
     this.categoryLoadingStatus = CategoryLoadingStatus.pure,
@@ -43,7 +43,7 @@ class CategoryState extends Equatable {
 
   @override
   List<Object?> get props => [
-        categoryDeleteStatus,
+        categoryActionStatus,
         formStatus,
         name,
         categoryLoadingStatus,
@@ -61,7 +61,7 @@ class CategoryState extends Equatable {
     CategoryLoadingStatus? categoryLoadingStatus,
     List<Category>? globalCategories,
     List<Category>? visibleList,
-    CategoryDeleteStatus? categoryDeleteStatus,
+    CategoryActionStatus? categoryActionStatus,
   }) {
     return CategoryState(
       formStatus: formStatus ?? this.formStatus,
@@ -72,7 +72,7 @@ class CategoryState extends Equatable {
           categoryLoadingStatus ?? this.categoryLoadingStatus,
       globalCategories: globalCategories ?? this.globalCategories,
       visibleList: visibleList ?? this.visibleList,
-      categoryDeleteStatus: categoryDeleteStatus ?? this.categoryDeleteStatus,
+      categoryActionStatus: categoryActionStatus ?? this.categoryActionStatus,
     );
   }
 }

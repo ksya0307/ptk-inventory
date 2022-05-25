@@ -6,6 +6,7 @@ const Color greyDivider = Color(0xFFCECECE);
 const Color greyBgAdmin = Color(0xFFF1F1F1);
 const Color greyShadow = Color(0x40B5B5B5);
 const Color greySteps = Color(0xFF757575);
+const Color disableButtonWhite = Color(0xA4FFFFFF);
 
 const Color blackInput = Color(0xFF252525);
 const Color blackLabels = Color(0xFF444444);

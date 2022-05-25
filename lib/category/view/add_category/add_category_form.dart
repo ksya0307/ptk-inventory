@@ -15,13 +15,13 @@ class AddCategoryForm extends StatelessWidget {
     print("17");
     return BlocListener<CategoryBloc, CategoryState>(
       listener: (context, state) {
-        if (state.categoryDeleteStatus == CategoryDeleteStatus.added) {
+        if (state.categoryActionStatus == CategoryActionStatus.added) {
           snackbarMessage(context, "Новая категория добавлена");
           Navigator.of(context).pop();
           //context.read<CategoryBloc>().add(const CategoryLoadList());
         }
 
-        if (state.categoryDeleteStatus == CategoryDeleteStatus.notAdded) {
+        if (state.categoryActionStatus == CategoryActionStatus.notAdded) {
           snackbarMessageCommonError(context, "Такая категория уже существует");
         }
       },

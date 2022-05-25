@@ -342,14 +342,9 @@ class LogOutButton extends StatelessWidget {
   }
 }
 
-class UserFullName extends StatefulWidget {
+class UserFullName extends StatelessWidget {
   const UserFullName({Key? key}) : super(key: key);
 
-  @override
-  State<UserFullName> createState() => _UserFullNameState();
-}
-
-class _UserFullNameState extends State<UserFullName> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(

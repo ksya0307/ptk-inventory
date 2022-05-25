@@ -15,22 +15,14 @@ class CustomDropdown extends StatelessWidget {
     return Flex(
       direction: Axis.vertical,
       children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: dropdownLabel(context, labelText: labelText),
-        ),
         Container(
           decoration: BoxDecoration(
             color: greyCard,
             borderRadius: BorderRadius.circular(7.0),
           ),
-          // margin: EdgeInsets.only(top: designValues(context).mainAxisSpacing13),
           child: DropdownButtonHideUnderline(
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal:
-                    0.0145089285714286 * MediaQuery.of(context).size.height,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: dropDownWidget,
             ),
           ),

@@ -7,7 +7,7 @@ import 'package:ptk_inventory/common/provider/user_api_client.dart';
 import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 import 'package:ptk_inventory/sign_up/models/request/sign_up_request.dart';
 
-enum ChangePasswordStatus { changed, unchanged }
+enum ChangeStatus { changed, unchanged }
 enum SignUpStatus { signed, unsigned }
 enum UsersStatus { successfullyGot, unsuccessfullyGot }
 
@@ -30,7 +30,7 @@ class UserRepository {
     return null;
   }
 
-  Future<ChangePasswordStatus> userChangePassword(
+  Future<ChangeStatus> userChangePassword(
     ChangePasswordModelRequest changePasswordModelRequest,
   ) async {
     try {
@@ -38,7 +38,7 @@ class UserRepository {
         header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         body: changePasswordModelRequest.toMap(),
       );
-      return ChangePasswordStatus.changed;
+      return ChangeStatus.changed;
     } on ChangePasswordUnauthorized {
       final UserHiveModel? userHiveModel = await getUserProfile();
       if (userHiveModel != null) {
@@ -48,9 +48,9 @@ class UserRepository {
         header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         body: changePasswordModelRequest.toMap(),
       );
-      return ChangePasswordStatus.changed;
+      return ChangeStatus.changed;
     } on ChangePasswordFailure {
-      return ChangePasswordStatus.unchanged;
+      return ChangeStatus.unchanged;
     }
   }
 
@@ -84,4 +84,6 @@ class UserRepository {
       return result.result;
     }
   }
+
+  Future<void> updateUser() async {}
 }

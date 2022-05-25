@@ -18,11 +18,11 @@ class LoginForm extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 30),
-          const _UsernameInput(),
+          const UsernameInput(),
           const SizedBox(height: 12),
-          _PasswordInput(),
+          const PasswordInput(),
           const SizedBox(height: 12),
-          _LoginButton(),
+          LoginButton(),
           const SizedBox(height: 24),
         ],
       ),
@@ -54,7 +54,6 @@ class SignUpLabel extends StatelessWidget {
             color: blueCustom,
             fontFamily: 'Rubik',
             fontSize: 18,
-            decoration: TextDecoration.underline,
           ),
           textAlign: TextAlign.center,
         ),
@@ -63,14 +62,9 @@ class SignUpLabel extends StatelessWidget {
   }
 }
 
-class _UsernameInput extends StatefulWidget {
-  const _UsernameInput({Key? key}) : super(key: key);
+class UsernameInput extends StatelessWidget {
+  const UsernameInput({Key? key}) : super(key: key);
 
-  @override
-  State<_UsernameInput> createState() => _UsernameInputState();
-}
-
-class _UsernameInputState extends State<_UsernameInput> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
@@ -140,12 +134,14 @@ class _UsernameInputState extends State<_UsernameInput> {
   }
 }
 
-class _PasswordInput extends StatefulWidget {
+class PasswordInput extends StatefulWidget {
+  const PasswordInput({Key? key}) : super(key: key);
+
   @override
-  State<_PasswordInput> createState() => PasswordInput();
+  State<PasswordInput> createState() => _PasswordInputState();
 }
 
-class PasswordInput extends State<_PasswordInput> {
+class _PasswordInputState extends State<PasswordInput> {
   bool _obscureText = true;
 
   void _passwordVisibility() {
@@ -227,7 +223,7 @@ class PasswordInput extends State<_PasswordInput> {
   }
 }
 
-class _LoginButton extends StatelessWidget {
+class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(

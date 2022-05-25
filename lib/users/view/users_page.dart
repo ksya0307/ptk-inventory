@@ -1,31 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:ptk_inventory/category/bloc/category_bloc.dart';
-import 'package:ptk_inventory/category/repository/category_repository.dart';
-import 'package:ptk_inventory/category/view/add_category/add_category_page.dart';
-import 'package:ptk_inventory/category/view/category_form.dart';
+import 'package:ptk_inventory/common/repository/user_repository.dart';
 import 'package:ptk_inventory/sign_up/view/sign_up_page.dart';
+import 'package:ptk_inventory/users/bloc/users_bloc.dart';
+import 'package:ptk_inventory/users/view/add_user/add_user_page.dart';
+import 'package:ptk_inventory/users/view/users_form.dart';
 
-class CategoryPage extends StatelessWidget {
+class UsersPage extends StatelessWidget {
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => CategoryPage());
+    return MaterialPageRoute<void>(builder: (_) => UsersPage());
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          CategoryBloc(categoryRepository: CategoryRepository())
-            ..add(const CategoryLoadList()),
+      create: (context) => UsersBloc(userRepository: UserRepository())
+        ..add(const UsersLoadList()),
       child: Scaffold(
-        floatingActionButton: BlocBuilder<CategoryBloc, CategoryState>(
+        floatingActionButton: BlocBuilder<UsersBloc, UsersState>(
           builder: (context, state) {
             return FloatingActionButton(
               tooltip: "Добавить пользователя",
               child: const Icon(Icons.add_rounded),
               onPressed: () => Navigator.of(context).push(
-                SignUpPage.route(),
+                MaterialPageRoute<void>(
+                  builder: (_) => BlocProvider<UsersBloc>.value(
+                    value: context.read<UsersBloc>(),
+                    child: AddUserPage(),
+                  ),
+                ),
               ),
             );
           },
@@ -65,7 +69,7 @@ class CategoryPage extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: Column(
                       children: const [
-                        //CategoryForm(),
+                        UsersForm(),
                       ],
                     ),
                   ),

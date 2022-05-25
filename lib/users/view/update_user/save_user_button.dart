@@ -15,7 +15,7 @@ class SaveUserButton extends StatelessWidget {
       builder: (context, state) {
         return state.formStatus.isSubmissionInProgress
             ? Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
                     minWidth: MediaQuery.of(context).size.width,
@@ -54,7 +54,7 @@ class SaveUserButton extends StatelessWidget {
                 ),
               )
             : Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
                     minWidth: MediaQuery.of(context).size.width,

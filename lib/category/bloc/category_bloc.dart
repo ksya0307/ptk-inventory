@@ -39,11 +39,11 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     print(newList);
     emit(
       state.copyWith(
-        categoryDeleteStatus: CategoryDeleteStatus.deletedFromGlobal,
+        categoryActionStatus: CategoryActionStatus.deletedFromGlobal,
         globalCategories: newList,
       ),
     );
-    emit(state.copyWith(categoryDeleteStatus: CategoryDeleteStatus.pure));
+    emit(state.copyWith(categoryActionStatus: CategoryActionStatus.pure));
   }
 
   void _onAddToList(
@@ -56,11 +56,11 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
     emit(
       state.copyWith(
-        categoryDeleteStatus: CategoryDeleteStatus.addedToGlobal,
+        categoryActionStatus: CategoryActionStatus.addedToGlobal,
         globalCategories: newList,
       ),
     );
-    emit(state.copyWith(categoryDeleteStatus: CategoryDeleteStatus.pure));
+    emit(state.copyWith(categoryActionStatus: CategoryActionStatus.pure));
   }
 
   void _onSaveList(
@@ -80,11 +80,11 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     print("category $category");
     emit(
       state.copyWith(
-        categoryDeleteStatus: CategoryDeleteStatus.savedOnGlobal,
+        categoryActionStatus: CategoryActionStatus.savedOnGlobal,
         globalCategories: newList,
       ),
     );
-    emit(state.copyWith(categoryDeleteStatus: CategoryDeleteStatus.pure));
+    emit(state.copyWith(categoryActionStatus: CategoryActionStatus.pure));
   }
 
   void _onSelected(
@@ -135,24 +135,24 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       emit(
         state.copyWith(
           categoryLoadingStatus: CategoryLoadingStatus.loadingSuccess,
-          categoryDeleteStatus: CategoryDeleteStatus.deleted,
+          categoryActionStatus: CategoryActionStatus.deleted,
         ),
       );
       emit(
         state.copyWith(
-          categoryDeleteStatus: CategoryDeleteStatus.pure,
+          categoryActionStatus: CategoryActionStatus.pure,
         ),
       );
     } else {
       emit(
         state.copyWith(
           categoryLoadingStatus: CategoryLoadingStatus.loadingFailed,
-          categoryDeleteStatus: CategoryDeleteStatus.notDeleted,
+          categoryActionStatus: CategoryActionStatus.notDeleted,
         ),
       );
       emit(
         state.copyWith(
-          categoryDeleteStatus: CategoryDeleteStatus.pure,
+          categoryActionStatus: CategoryActionStatus.pure,
         ),
       );
     }
@@ -208,23 +208,23 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       if (waiting == CategoryStatus.notcreated) {
         emit(state.copyWith(
           formStatus: FormzStatus.submissionFailure,
-          categoryDeleteStatus: CategoryDeleteStatus.notAdded,
+          categoryActionStatus: CategoryActionStatus.notAdded,
         ));
         emit(
           state.copyWith(
-            categoryDeleteStatus: CategoryDeleteStatus.pure,
+            categoryActionStatus: CategoryActionStatus.pure,
           ),
         );
       } else {
         emit(
           state.copyWith(
             formStatus: FormzStatus.submissionSuccess,
-            categoryDeleteStatus: CategoryDeleteStatus.added,
+            categoryActionStatus: CategoryActionStatus.added,
           ),
         );
         emit(
           state.copyWith(
-            categoryDeleteStatus: CategoryDeleteStatus.pure,
+            categoryActionStatus: CategoryActionStatus.pure,
           ),
         );
       }
@@ -245,24 +245,24 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         emit(
           state.copyWith(
             formStatus: FormzStatus.submissionFailure,
-            categoryDeleteStatus: CategoryDeleteStatus.notSaved,
+            categoryActionStatus: CategoryActionStatus.notSaved,
           ),
         );
         emit(
           state.copyWith(
-            categoryDeleteStatus: CategoryDeleteStatus.pure,
+            categoryActionStatus: CategoryActionStatus.pure,
           ),
         );
       } else {
         emit(
           state.copyWith(
             formStatus: FormzStatus.submissionSuccess,
-            categoryDeleteStatus: CategoryDeleteStatus.saved,
+            categoryActionStatus: CategoryActionStatus.saved,
           ),
         );
         emit(
           state.copyWith(
-            categoryDeleteStatus: CategoryDeleteStatus.pure,
+            categoryActionStatus: CategoryActionStatus.pure,
           ),
         );
       }

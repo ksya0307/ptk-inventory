@@ -77,14 +77,9 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 }
 
-class SurnameInput extends StatefulWidget {
+class SurnameInput extends StatelessWidget {
   const SurnameInput({Key? key}) : super(key: key);
 
-  @override
-  State<SurnameInput> createState() => _SurnameInputState();
-}
-
-class _SurnameInputState extends State<SurnameInput> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignUpBloc, SignUpState>(

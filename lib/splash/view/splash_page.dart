@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ptk_inventory/config/colors.dart';
 
 class SplashPage extends StatelessWidget {
   static Route route() {
@@ -11,13 +12,25 @@ class SplashPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            Image(
-              image: AssetImage('images/logo.png'),
+            Padding(
+              padding: EdgeInsets.only(bottom: 16),
+              child: Image(
+                image: AssetImage('images/logo.png'),
+              ),
             ),
-            Text(
-              'PTK Inventory',
-              style: TextStyle(color: Colors.amber),
+            CircularProgressIndicator(),
+            Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: Text(
+                "Загрузка ресурсов...",
+                style: TextStyle(
+                  color: greyDark,
+                  fontFamily: 'Rubik',
+                  fontSize: 14,
+                ),
+              ),
             )
           ],
         ),

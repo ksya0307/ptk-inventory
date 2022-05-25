@@ -9,6 +9,6 @@
     <item android:gravity="center">
         <!--android:top="230dp"-->
 
-        <bitmap android:src="@drawable/ptk_inventory_name"/>
+        <bitmap android:src="@drawable/ptk_inventory_logo"/>
     </item>
 </layer-list>

@@ -4,7 +4,7 @@
    <application
         android:label="PTK Inventory"
         android:name="${applicationName}"
-        android:icon="@drawable/ptk_inventory_logo">
+        android:icon="@drawable/app_logo">
         <activity
             android:name=".MainActivity"
             android:exported="true"

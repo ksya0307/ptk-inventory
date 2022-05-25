@@ -55,7 +55,7 @@ class _SearchUserState extends State<SearchUser> {
                   color: greyDark,
                 ),
                 contentPadding: EdgeInsets.fromLTRB(12, 16, 12, 16),
-                hintText: 'Петрова',
+                hintText: 'Петрова Елена Ивановна',
                 border: InputBorder.none,
                 prefixIcon: Icon(
                   Icons.search_rounded,

@@ -3,10 +3,10 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@android:color/white" />
 
-    <item android:gravity="center" android:bottom="80dp">
+    <!-- <item android:gravity="center" android:bottom="80dp">
         <bitmap android:src="@drawable/ptk_inventory_logo"/>
-    </item>
-    <item android:gravity="center" android:top="230dp">
-        <bitmap android:src="@drawable/ptk_inventory_name"/>
+    </item> -->
+    <item android:gravity="center">
+        <bitmap android:src="@drawable/ptk_inventory_logo"/>
     </item>
 </layer-list>

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ptk_inventory/reader_user/view/landscape_home_page.dart';
-import 'package:ptk_inventory/reader_user/view/portrait_home_page.dart';
+import 'package:ptk_inventory/teacher_user/view/landscape_home_page.dart';
+import 'package:ptk_inventory/teacher_user/view/portrait_home_page.dart';
 
 class ReaderPage extends StatelessWidget {
   static Route route() {

@@ -24,7 +24,6 @@ class LoginPage extends StatelessWidget {
         listeners: [
           BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
-              print("${state.user}");
               if (state.status == AuthenticationStatus.unauthenticated) {
                 snackbarMessage(context, "Неверный логин или пароль");
               }

@@ -1,15 +1,17 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:ptk_inventory/ifo/model/ifo.dart';
 
 part 'ifo_result.g.dart';
-part 'ifo_result.freezed.dart';
 
-@freezed
-class IfoResult with _$IfoResult {
-  factory IfoResult({
-    @Default([]) List<Ifo> result,
-  }) = _IfoResult;
+@JsonSerializable()
+class IfoResult extends Equatable {
+  final List<Ifo> result;
+  const IfoResult({required this.result});
 
   factory IfoResult.fromJson(Map<String, dynamic> json) =>
       _$IfoResultFromJson(json);
+
+  @override
+  List<Object?> get props => [result];
 }

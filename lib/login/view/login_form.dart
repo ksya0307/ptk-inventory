@@ -82,7 +82,10 @@ class UsernameInput extends StatelessWidget {
             color: blackInput,
           ),
           decoration: InputDecoration(
-            labelStyle: const TextStyle(fontFamily: 'Rubik', fontSize: 18),
+            labelStyle: const TextStyle(
+              fontFamily: 'Rubik',
+              fontSize: 18,
+            ),
             errorStyle: const TextStyle(
               color: redCustom,
               fontFamily: 'Rubik',
@@ -96,10 +99,7 @@ class UsernameInput extends StatelessWidget {
             ),
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-            hintStyle: const TextStyle(
-              fontFamily: 'Rubik',
-              fontSize: 18,
-            ),
+
             border: const OutlineInputBorder(),
             focusedErrorBorder: OutlineInputBorder(
               borderSide: const BorderSide(
@@ -114,7 +114,7 @@ class UsernameInput extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                color: Color.fromRGBO(24, 81, 227, 0.75),
+                color: blueInputFocuced,
                 width: 1.5,
               ),
               borderRadius: BorderRadius.circular(7.0),
@@ -169,7 +169,10 @@ class _PasswordInputState extends State<PasswordInput> {
             color: blackInput,
           ),
           decoration: InputDecoration(
-            labelStyle: const TextStyle(fontFamily: 'Rubik', fontSize: 18),
+            labelStyle: const TextStyle(
+              fontFamily: 'Rubik',
+              fontSize: 18,
+            ),
             errorStyle: const TextStyle(
               color: redCustom,
               fontFamily: 'Rubik',
@@ -188,11 +191,6 @@ class _PasswordInputState extends State<PasswordInput> {
             ),
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-            hintStyle: const TextStyle(
-              fontFamily: 'Rubik',
-              fontSize: 18,
-              color: Color.fromRGBO(150, 150, 150, 1.0),
-            ),
             border: const OutlineInputBorder(),
             focusedErrorBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: redCustom, width: 1.5),
@@ -204,7 +202,7 @@ class _PasswordInputState extends State<PasswordInput> {
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                color: Color.fromRGBO(24, 81, 227, 0.75),
+                color: blueInputFocuced,
                 width: 1.5,
               ),
               borderRadius: BorderRadius.circular(7.0),

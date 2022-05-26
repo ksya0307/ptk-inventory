@@ -56,7 +56,7 @@ class DocumentNameInput extends StatelessWidget {
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
-                  color: blueCustom,
+                  color: blueInputFocuced,
                   width: 1.5,
                 ),
                 borderRadius: BorderRadius.circular(7.0),

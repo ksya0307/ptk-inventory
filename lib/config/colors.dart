@@ -13,6 +13,7 @@ const Color blackLabels = Color(0xFF444444);
 
 const Color primaryBlue = Color(0xFF002FA7);
 const Color blueCustom = Color(0xFF3F8AFB);
+const Color blueInputFocuced = Color(0xBF1851E3);
 const Color blueDisabled = Color(0xFFA0B3E3);
 const Color blueOverlay = Color(0x1A527CEA);
 

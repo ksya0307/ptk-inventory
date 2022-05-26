@@ -19,7 +19,6 @@ class DocumentsPage extends StatelessWidget {
       child: Scaffold(
         floatingActionButton: BlocBuilder<DocumentBloc, DocumentState>(
           builder: (context, state) {
-            print("STATE ${state.visibleList}");
             return FloatingActionButton(
               tooltip: "Добавить документ",
               child: const Icon(Icons.add_rounded),

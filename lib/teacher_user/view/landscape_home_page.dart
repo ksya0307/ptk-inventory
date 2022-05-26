@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/equipment_classrooms/view/equipment_classrooms_page.dart';
+import 'package:ptk_inventory/repair/view/add_repair/add_repair_page.dart';
 import 'package:ptk_inventory/user_profile/view/my_profile.dart';
 
-class PortraitReaderPage extends StatelessWidget {
+class LandscapeReaderPage extends StatelessWidget {
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => PortraitReaderPage());
+    return MaterialPageRoute<void>(builder: (_) => LandscapeReaderPage());
   }
 
   @override
@@ -79,7 +80,7 @@ Widget profileCard(BuildContext context) {
     onTap: () => Navigator.of(context).push(UserProfilePage.route()),
     child: SizedBox(
       width: MediaQuery.of(context).size.width * 0.47,
-      height: MediaQuery.of(context).size.height * 0.1,
+      height: MediaQuery.of(context).size.height * 0.18,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.0),
@@ -103,43 +104,46 @@ Widget profileCard(BuildContext context) {
 }
 
 Widget repairCard(BuildContext context) {
-  return SizedBox(
-    width: MediaQuery.of(context).size.width * 0.47,
-    height: MediaQuery.of(context).size.height * 0.2,
-    child: Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(7.0),
-      ),
-      color: orangeCustom,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-            child: Text(
-              "Ремонт",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: 'Rubik',
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
+  return GestureDetector(
+    onTap: () => Navigator.of(context).push(AddRepairPage.route()),
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.47,
+      height: MediaQuery.of(context).size.height * 0.26,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7.0),
+        ),
+        color: orangeCustom,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+              child: Text(
+                "Ремонт",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-            child: Text(
-              "Составление акта приема-передачи оборудования в ремонт",
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontFamily: 'Rubik',
-                fontSize: 14,
-                color: Colors.white,
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+              child: Text(
+                "Составление акта приема-передачи оборудования в ремонт",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     ),
   );
@@ -150,7 +154,7 @@ Widget myEquipmentCard(BuildContext context) {
     onTap: () => Navigator.of(context).push(EquipmentClassroomsPage.route()),
     child: SizedBox(
       width: MediaQuery.of(context).size.width * 0.47,
-      height: MediaQuery.of(context).size.height * 0.2,
+      height: MediaQuery.of(context).size.height * 0.26,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.0),

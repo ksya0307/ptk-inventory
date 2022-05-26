@@ -60,7 +60,6 @@ class UpdateDocumentPage extends StatelessWidget {
                         FormzStatus.submissionFailure) {
                       snackbarMessageError(context, "Документ уже существует");
                     }
-                    print(state.documentDeleteStatus);
                   },
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),

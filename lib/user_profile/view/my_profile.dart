@@ -276,14 +276,14 @@ class _ChangePasswordFieldState extends State<ChangePasswordField> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
-                  color: Color.fromRGBO(24, 81, 227, 0.75),
+                  color: blueInputFocuced,
                   width: 1.5,
                 ),
                 borderRadius: BorderRadius.circular(7.0),
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
-                  color: Color.fromRGBO(150, 150, 150, 1.0),
+                  color: greyDark,
                   width: 1.5,
                 ),
                 borderRadius: BorderRadius.circular(7.0),

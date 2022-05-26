@@ -4,10 +4,8 @@ import 'package:ptk_inventory/config/colors.dart';
 class CustomDropdown extends StatelessWidget {
   const CustomDropdown({
     Key? key,
-    required this.labelText,
     required this.dropDownWidget,
   }) : super(key: key);
-  final String labelText;
   final Widget dropDownWidget;
 
   @override

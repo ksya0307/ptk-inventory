@@ -105,7 +105,6 @@ class DocumentProvider {
       headers: header,
       body: jsonEncode(name),
     );
-    print(response.statusCode);
     if (response.statusCode != 200 && response.statusCode != 401) {
       throw ChangeDocumentRequestFailure();
     } else if (response.statusCode == 401) {

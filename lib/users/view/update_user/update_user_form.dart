@@ -5,7 +5,7 @@ import 'package:ptk_inventory/common/component/snackbar_message_common_error.dar
 import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 import 'package:ptk_inventory/users/bloc/users_bloc.dart';
 import 'package:ptk_inventory/users/view/update_user/role_dropmenu.dart';
-import 'package:ptk_inventory/users/view/common/name_label.dart';
+import 'package:ptk_inventory/users/view/common/property_label.dart';
 import 'package:ptk_inventory/users/view/update_user/delete_user_button.dart';
 import 'package:ptk_inventory/users/view/update_user/name_input.dart';
 import 'package:ptk_inventory/users/view/update_user/password_input.dart';

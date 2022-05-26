@@ -125,7 +125,7 @@ class SurnameInput extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                color: blueCustom,
+                color: blueInputFocuced,
                 width: 1.5,
               ),
               borderRadius: BorderRadius.circular(7.0),
@@ -191,7 +191,7 @@ class NameInput extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                color: blueCustom,
+                color: blueInputFocuced,
                 width: 1.5,
               ),
               borderRadius: BorderRadius.circular(7.0),
@@ -258,7 +258,7 @@ class PatronymicInput extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                color: blueCustom,
+                color: blueInputFocuced,
                 width: 1.5,
               ),
               borderRadius: BorderRadius.circular(7.0),
@@ -324,7 +324,7 @@ class UsernameInput extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                color: blueCustom,
+                color: blueInputFocuced,
                 width: 1.5,
               ),
               borderRadius: BorderRadius.circular(7.0),
@@ -410,7 +410,7 @@ class _PasswordInput extends State<PasswordInput> {
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                color: blueCustom,
+                color: blueInputFocuced,
                 width: 1.5,
               ),
               borderRadius: BorderRadius.circular(7.0),

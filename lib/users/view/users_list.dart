@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/common/model/user.dart';
-import 'package:ptk_inventory/common/model/user_roles.dart';
-
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/users/bloc/users_bloc.dart';
 import 'package:ptk_inventory/users/view/update_user/update_user_page.dart';
@@ -188,17 +186,16 @@ class UsersList extends StatelessWidget {
                                 : "";
                         return InkWell(
                           onTap: () {
-                            print(UserRole.values);
                             context.read<UsersBloc>().add(
                                   UsersSelected(
                                     User(
-                                        id: users[index].id,
-                                        name: users[index].name,
-                                        role: users[index].role,
-                                        surname: users[index].surname,
-                                        username: users[index].username,
-                                        patronymic:
-                                            users[index].patronymic ?? ''),
+                                      id: users[index].id,
+                                      name: users[index].name,
+                                      role: users[index].role,
+                                      surname: users[index].surname,
+                                      username: users[index].username,
+                                      patronymic: users[index].patronymic ?? '',
+                                    ),
                                   ),
                                 );
                             Navigator.of(context).push(

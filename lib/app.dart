@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:ptk_inventory/admin_user/view/home_page.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
@@ -10,8 +11,8 @@ import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/login/view/login_page.dart';
 import 'package:ptk_inventory/moderator_user/view/home_page.dart';
 import 'package:ptk_inventory/palette.dart';
-import 'package:ptk_inventory/reader_user/view/home_page.dart';
 import 'package:ptk_inventory/splash/splash.dart';
+import 'package:ptk_inventory/teacher_user/view/home_page.dart';
 
 class App extends StatelessWidget {
   const App({

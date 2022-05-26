@@ -31,12 +31,9 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     CategoryDeleteFromList event,
     Emitter<CategoryState> emit,
   ) {
-    print("start");
     final newList = state.globalCategories
         .where((category) => category != event.category)
         .toList();
-    print("new list");
-    print(newList);
     emit(
       state.copyWith(
         categoryActionStatus: CategoryActionStatus.deletedFromGlobal,
@@ -77,7 +74,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         .indexWhere((element) => element.id == category.id);
 
     newList[categoryIndex] = category;
-    print("category $category");
     emit(
       state.copyWith(
         categoryActionStatus: CategoryActionStatus.savedOnGlobal,
@@ -130,7 +126,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     );
     final waiting =
         await _categoryRepository.deleteCategory(state.selectedCategory!.id);
-    print(waiting);
     if (waiting == CategoryStatus.deleted) {
       emit(
         state.copyWith(
@@ -206,10 +201,12 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         GeneralModelRequest(name: state.name.value),
       );
       if (waiting == CategoryStatus.notcreated) {
-        emit(state.copyWith(
-          formStatus: FormzStatus.submissionFailure,
-          categoryActionStatus: CategoryActionStatus.notAdded,
-        ));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            categoryActionStatus: CategoryActionStatus.notAdded,
+          ),
+        );
         emit(
           state.copyWith(
             categoryActionStatus: CategoryActionStatus.pure,

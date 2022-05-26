@@ -39,6 +39,7 @@ class InternalEquipmentNumberInput extends StatelessWidget {
             hintStyle: const TextStyle(
               fontFamily: 'Rubik',
               fontSize: 18,
+              color: greyDark,
             ),
             border: const OutlineInputBorder(),
             focusedErrorBorder: OutlineInputBorder(
@@ -54,7 +55,7 @@ class InternalEquipmentNumberInput extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                color: blueCustom,
+                color: blueInputFocuced,
                 width: 1.5,
               ),
               borderRadius: BorderRadius.circular(7.0),

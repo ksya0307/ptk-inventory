@@ -29,39 +29,42 @@ class _RoleDropDownState extends State<RoleDropDown> {
   Widget build(BuildContext context) {
     return BlocBuilder<UsersBloc, UsersState>(
       builder: (context, state) {
-        return SizedBox(
-          width: MediaQuery.of(context).size.width * 0.5,
-          child: CustomDropdown(
-            dropDownWidget: Theme(
-              data: Theme.of(context).copyWith(canvasColor: greyCard),
-              child: DropdownButton<String>(
-                isExpanded: true,
-                icon: const Icon(
-                  Icons.arrow_drop_down_rounded,
-                  color: primaryBlue,
-                ),
-                value: role ?? state.selectedUser!.role.userRoleToString,
-                onChanged: (String? value) {
-                  setState(() {
-                    role = value ?? "";
-                  });
-                },
-                items: roles.map((role) {
-                  return DropdownMenuItem<String>(
-                    value: role,
-                    child: Text(
-                      role,
-                      style: const TextStyle(
-                        color: blackInput,
-                        fontFamily: 'Rubik',
-                        fontSize: 16,
+        return Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.5,
+            child: CustomDropdown(
+              dropDownWidget: Theme(
+                data: Theme.of(context).copyWith(canvasColor: greyCard),
+                child: DropdownButton<String>(
+                  hint: const Text("Выберите роль"),
+                  isExpanded: true,
+                  icon: const Icon(
+                    Icons.arrow_drop_down_rounded,
+                    color: primaryBlue,
+                  ),
+                  value: role == "" ? "" : role,
+                  onChanged: (String? value) {
+                    setState(() {
+                      role = value ?? "";
+                    });
+                  },
+                  items: roles.map((role) {
+                    return DropdownMenuItem<String>(
+                      value: role,
+                      child: Text(
+                        role,
+                        style: const TextStyle(
+                          color: blackInput,
+                          fontFamily: 'Rubik',
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                  );
-                }).toList(),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
-            labelText: "Выберите роль",
           ),
         );
       },

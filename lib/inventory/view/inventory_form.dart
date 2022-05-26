@@ -245,7 +245,10 @@ class InventoryFormState extends State<InventoryForm> {
             cursorColor: Theme.of(context).primaryColor,
             decoration: const InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(12, 16, 12, 16),
-              hintStyle: TextStyle(fontFamily: 'Rubik'),
+              hintStyle: TextStyle(
+                fontFamily: 'Rubik',
+                color: greyDark,
+              ),
               hintText: 'Договор № 100...',
               border: InputBorder.none,
               prefixIcon: Icon(
@@ -498,7 +501,7 @@ class InventoryFormState extends State<InventoryForm> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: greyCard,
+                        color: blueInputFocuced,
                         width: 0,
                       ),
                       // borderRadius: BorderRadius.circular(7)

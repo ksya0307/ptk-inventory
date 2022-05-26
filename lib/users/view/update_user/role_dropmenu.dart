@@ -61,7 +61,6 @@ class _RoleDropDownState extends State<RoleDropDown> {
                 }).toList(),
               ),
             ),
-            labelText: "Выберите роль",
           ),
         );
       },

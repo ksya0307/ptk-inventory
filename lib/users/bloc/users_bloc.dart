@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-import 'package:ptk_inventory/common/model/requests/general_request.dart';
 import 'package:ptk_inventory/common/model/user.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/common/repository/user_repository.dart';
@@ -310,10 +309,12 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
         ),
       );
       if (waiting == SignUpStatus.unsigned) {
-        emit(state.copyWith(
-          formStatus: FormzStatus.submissionFailure,
-          userActionStatus: UserActionStatus.notAdded,
-        ));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            userActionStatus: UserActionStatus.notAdded,
+          ),
+        );
         emit(
           state.copyWith(
             userActionStatus: UserActionStatus.pure,

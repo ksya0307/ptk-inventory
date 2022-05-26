@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/users/bloc/users_bloc.dart';
 import 'package:ptk_inventory/users/view/update_user/update_user_form.dart';
 
 class UpdateUserPage extends StatelessWidget {
@@ -18,6 +20,7 @@ class UpdateUserPage extends StatelessWidget {
           ),
           onPressed: () {
             Navigator.of(context).pop();
+            context.read<UsersBloc>().add(const UsersSelected(null));
           },
         ),
         elevation: 0,

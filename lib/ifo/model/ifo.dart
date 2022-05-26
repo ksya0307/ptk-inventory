@@ -1,11 +1,16 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'ifo.g.dart';
-part 'ifo.freezed.dart';
 
-@freezed
-class Ifo with _$Ifo {
-  factory Ifo({required int id, required String name}) = _Ifo;
+@JsonSerializable()
+class Ifo extends Equatable {
+  final int id;
+  final String name;
+  const Ifo({required this.id, required this.name});
 
   factory Ifo.fromJson(Map<String, dynamic> json) => _$IfoFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name];
 }

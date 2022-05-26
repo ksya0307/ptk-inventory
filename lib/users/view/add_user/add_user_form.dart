@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:ptk_inventory/common/component/snackbar_message_common_error.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 import 'package:ptk_inventory/users/bloc/users_bloc.dart';
 import 'package:ptk_inventory/users/view/add_user/add_user_button.dart';
 import 'package:ptk_inventory/users/view/add_user/name_input.dart';
+import 'package:ptk_inventory/users/view/add_user/password_input.dart';
 import 'package:ptk_inventory/users/view/add_user/patronymic_input.dart';
+import 'package:ptk_inventory/users/view/add_user/role_dropmenu.dart';
 import 'package:ptk_inventory/users/view/add_user/surname_input.dart';
 import 'package:ptk_inventory/users/view/add_user/username_input.dart';
-import 'package:ptk_inventory/users/view/add_user/password_input.dart';
-import 'package:ptk_inventory/users/view/common/name_label.dart';
 
 class AddUserForm extends StatelessWidget {
   const AddUserForm({Key? key}) : super(key: key);
@@ -41,6 +42,7 @@ class AddUserForm extends StatelessWidget {
             const PatronymicInput(),
             const UsernameInput(),
             PasswordInput(),
+            const RoleDropDown(),
             AddUserButton()
           ],
         ),

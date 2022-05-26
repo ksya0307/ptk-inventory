@@ -13,7 +13,6 @@ class ConfirmDeletingBottomSheet extends StatelessWidget {
     return BlocListener<CategoryBloc, CategoryState>(
       listener: (context, state) {
         if (state.categoryActionStatus == CategoryActionStatus.deleted) {
-          print("deleted");
           snackbarMessage(context, "Категория удалена");
           // context
           //     .read<CategoryBloc>()

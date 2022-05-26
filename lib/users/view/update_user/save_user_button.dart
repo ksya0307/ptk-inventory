@@ -60,7 +60,6 @@ class SaveUserButton extends StatelessWidget {
                     minWidth: MediaQuery.of(context).size.width,
                   ),
                   child: ElevatedButton(
-                    key: const Key('addCategoryForm_category_raisedButton'),
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(

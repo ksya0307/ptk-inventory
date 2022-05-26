@@ -12,7 +12,6 @@ class AddCategoryForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("17");
     return BlocListener<CategoryBloc, CategoryState>(
       listener: (context, state) {
         if (state.categoryActionStatus == CategoryActionStatus.added) {

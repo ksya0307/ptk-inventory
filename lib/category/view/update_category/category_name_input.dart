@@ -15,7 +15,6 @@ class CategoryNameInput extends StatelessWidget {
         if (state.selectedCategory != null) {
           return TextFormField(
             onChanged: (name) {
-              print(name);
               context.read<CategoryBloc>().add(CategoryNameChanged(name));
             },
             key: const Key('addCategoryForm_categoryInput_textField'),
@@ -57,7 +56,7 @@ class CategoryNameInput extends StatelessWidget {
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
-                  color: blueCustom,
+                  color: blueInputFocuced,
                   width: 1.5,
                 ),
                 borderRadius: BorderRadius.circular(7.0),

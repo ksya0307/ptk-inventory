@@ -99,7 +99,10 @@ Widget specsField(BuildContext context) {
             color: blackInput,
           ),
           decoration: const InputDecoration(
-            hintStyle: TextStyle(fontFamily: 'Rubik'),
+            hintStyle: TextStyle(
+              fontFamily: 'Rubik',
+              color: greyDark,
+            ),
             border: InputBorder.none,
             contentPadding: EdgeInsets.only(
               left: 12,

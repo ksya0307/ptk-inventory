@@ -43,27 +43,22 @@ class ClassroomEquipmentRow extends StatelessWidget {
               child: Row(
                 children: [
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          inventoryNumber,
-                          style: const TextStyle(
-                            fontFamily: 'Rubik',
-                            fontSize: 16,
-                            color: blackLabels,
-                          ),
+                      Text(
+                        inventoryNumber,
+                        style: const TextStyle(
+                          fontFamily: 'Rubik',
+                          fontSize: 16,
+                          color: blackLabels,
                         ),
                       ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          category,
-                          style: const TextStyle(
-                            fontFamily: 'Rubik',
-                            fontSize: 14,
-                            color: greyDark,
-                          ),
+                      Text(
+                        category,
+                        style: const TextStyle(
+                          fontFamily: 'Rubik',
+                          fontSize: 14,
+                          color: greyDark,
                         ),
                       ),
                     ],

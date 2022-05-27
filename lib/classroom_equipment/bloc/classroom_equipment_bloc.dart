@@ -31,8 +31,11 @@ class ClassroomEquipmentBloc
     );
     final waiting = await _classroomEquipmentRepository.userEquipments();
     if (waiting.isNotEmpty) {
-      waiting
-          .sort((a, b) => a.numberInClassroom.compareTo(b.numberInClassroom));
+      waiting.sort(
+        (a, b) => a.equipment.category.name.compareTo(
+          b.equipment.category.name,
+        ),
+      );
     }
     emit(
       state.copyWith(

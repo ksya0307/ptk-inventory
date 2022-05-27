@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
+import 'package:ptk_inventory/classroom_equipment/model/classroom_equipment.dart';
+import 'package:ptk_inventory/classroom_equipment/view/show_equipment_details/equipement_details_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_equipment/classroom_equipment_row.dart';
+import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_equipment/visible_list.dart';
 
 class ClassroomEquipmentList extends StatelessWidget {
   const ClassroomEquipmentList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final equipments =
+    final equipment =
         BlocProvider.of<ClassroomEquipmentBloc>(context).state.globalEquipments;
     return Padding(
       padding: const EdgeInsets.only(bottom: 24),
@@ -72,7 +75,9 @@ class ClassroomEquipmentList extends StatelessWidget {
             ),
             child: BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
               builder: (context, state) {
-                if (state.visibleList.isNotEmpty) {}
+                if (state.visibleList.isNotEmpty) {
+                  return const VisibleClassroomEquipmentList();
+                }
                 if (state.searchText.isNotEmpty && state.visibleList.isEmpty) {
                   return Column(
                     children: [
@@ -116,16 +121,40 @@ class ClassroomEquipmentList extends StatelessWidget {
                 return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: equipments.length,
+                    itemCount: equipment.length,
                     itemBuilder: (context, index) {
                       return InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          context.read<ClassroomEquipmentBloc>().add(
+                                ClassroomEquipmentUserSelected(
+                                  ClassroomEquipment(
+                                    id: equipment[index].id,
+                                    inventoryNumber:
+                                        equipment[index].inventoryNumber,
+                                    classroom: equipment[index].classroom,
+                                    equipment: equipment[index].equipment,
+                                    numberInClassroom:
+                                        equipment[index].numberInClassroom,
+                                    equipmentType:
+                                        equipment[index].equipmentType,
+                                  ),
+                                ),
+                              );
+
+                          Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) => BlocProvider.value(
+                                value: context.read<ClassroomEquipmentBloc>(),
+                                child: EquipmentDetailsPage(),
+                              ),
+                            ),
+                          );
+                        },
                         child: ClassroomEquipmentRow(
                           inventoryNumber:
-                              equipments[index].inventoryNumber.toString(),
-                          numberInClassroom:
-                              equipments[index].numberInClassroom,
-                          category: equipments[index].equipment.category.name,
+                              equipment[index].inventoryNumber.toString(),
+                          numberInClassroom: equipment[index].numberInClassroom,
+                          category: equipment[index].equipment.category.name,
                         ),
                       );
                     });

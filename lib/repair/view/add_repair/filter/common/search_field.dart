@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:ptk_inventory/config/colors.dart';
 
-class SearchClassroom extends StatelessWidget {
-  const SearchClassroom({Key? key}) : super(key: key);
+class SearchField extends StatelessWidget {
+  final String hintText;
+  final TextInputType keyboardType;
+  final List<TextInputFormatter> inputFormatters;
+  final void Function(String) onChange;
+  const SearchField({
+    Key? key,
+    required this.hintText,
+    required this.keyboardType,
+    required this.inputFormatters,
+    required this.onChange,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,22 +31,25 @@ class SearchClassroom extends StatelessWidget {
               const TextSelectionThemeData(selectionColor: blueCustom),
         ),
         child: TextField(
+          onChanged: onChange,
+          keyboardType: keyboardType,
+          inputFormatters: inputFormatters,
           style: const TextStyle(
             fontFamily: 'Rubik',
             fontSize: 16,
             color: blackLabels,
           ),
           cursorColor: Theme.of(context).primaryColor,
-          decoration: const InputDecoration(
-            hintStyle: TextStyle(
+          decoration: InputDecoration(
+            hintStyle: const TextStyle(
               fontFamily: 'Rubik',
               fontSize: 18,
               color: greyDark,
             ),
-            contentPadding: EdgeInsets.fromLTRB(12, 16, 12, 16),
-            hintText: '120',
+            contentPadding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
+            hintText: hintText,
             border: InputBorder.none,
-            prefixIcon: Icon(
+            prefixIcon: const Icon(
               Icons.search_rounded,
               color: primaryBlue,
             ),

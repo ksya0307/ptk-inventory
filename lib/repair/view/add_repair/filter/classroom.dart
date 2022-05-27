@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_filter/apply_filter_button.dart';
-import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_filter/search_classroom.dart';
+import 'package:ptk_inventory/repair/view/add_repair/filter/common/search_field.dart';
 import 'package:ptk_inventory/repair/view/common/property_label.dart';
 import 'package:ptk_inventory/repair/view/common/show_all_label.dart';
 
@@ -76,7 +77,12 @@ class ChooseClassroom extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SearchClassroom(),
+                      SearchField(
+                        hintText: '120',
+                        keyboardType: TextInputType.text,
+                        inputFormatters: [],
+                        onChange: (classroom) => {},
+                      ),
                       const ApplyFilter()
                     ],
                   ),

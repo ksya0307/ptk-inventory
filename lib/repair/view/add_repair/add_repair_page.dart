@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/repository/classroom_equipment_repository.dart';
@@ -8,7 +9,7 @@ import 'package:ptk_inventory/repair/view/add_repair/filter/apply_filter_button.
 import 'package:ptk_inventory/repair/view/add_repair/filter/category.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_equipment/classroom_equipment_form.dart';
-import 'package:ptk_inventory/repair/view/add_repair/filter/search_inventory_number.dart';
+import 'package:ptk_inventory/repair/view/add_repair/filter/common/search_field.dart';
 
 class AddRepairPage extends StatelessWidget {
   static Route route() {
@@ -69,7 +70,7 @@ class AddRepairPage extends StatelessWidget {
                             child: DraggableScrollableSheet(
                               initialChildSize: 0.7,
                               minChildSize: 0.5,
-                              maxChildSize: 1,
+                              maxChildSize: 0.95,
                               builder: (_, controller) {
                                 return Container(
                                   decoration: const BoxDecoration(
@@ -155,7 +156,35 @@ class AddRepairPage extends StatelessWidget {
                                             const SizedBox(
                                               height: 8,
                                             ),
-                                            const SearchInventoryNumber(),
+                                            BlocBuilder<ClassroomEquipmentBloc,
+                                                ClassroomEquipmentState>(
+                                              buildWhen: (previous, current) =>
+                                                  previous.visibleList !=
+                                                  current.visibleList,
+                                              builder: (context, state) {
+                                                return SearchField(
+                                                  hintText: '101340003313',
+                                                  keyboardType:
+                                                      TextInputType.text,
+                                                  inputFormatters: <
+                                                      TextInputFormatter>[
+                                                    FilteringTextInputFormatter
+                                                        .digitsOnly
+                                                  ],
+                                                  onChange: (inventoryNumber) =>
+                                                      {
+                                                    context
+                                                        .read<
+                                                            ClassroomEquipmentBloc>()
+                                                        .add(
+                                                          ClassroomEquipmentSearch(
+                                                            inventoryNumber,
+                                                          ),
+                                                        ),
+                                                  },
+                                                );
+                                              },
+                                            ),
                                             const ClassroomEquipmentForm(),
                                             const ApplyFilter()
                                           ],

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/category_filter/apply_filter_button.dart';
-import 'package:ptk_inventory/repair/view/add_repair/filter/category_filter/search_category.dart';
+import 'package:ptk_inventory/repair/view/add_repair/filter/common/search_field.dart';
 import 'package:ptk_inventory/repair/view/common/property_label.dart';
 import 'package:ptk_inventory/repair/view/common/show_all_label.dart';
 
@@ -75,7 +76,12 @@ class ChooseCategory extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SearchCategory(),
+                      SearchField(
+                        hintText: 'Смартфон',
+                        keyboardType: TextInputType.text,
+                        inputFormatters: const [],
+                        onChange: (category) => {},
+                      ),
                       const ApplyFilter()
                     ],
                   ),

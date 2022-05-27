@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/config/colors.dart';
 
-class EquipmentSpecsPage extends StatelessWidget {
+class AddEquipmentSpecsPage extends StatelessWidget {
   static Route route() {
     return MaterialPageRoute<void>(
-      builder: (_) => EquipmentSpecsPage(),
+      builder: (_) => AddEquipmentSpecsPage(),
     );
   }
 

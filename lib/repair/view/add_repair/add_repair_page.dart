@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
+import 'package:ptk_inventory/classroom_equipment/repository/classroom_equipment_repository.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/view/add_repair/add_repair_form.dart';
+import 'package:ptk_inventory/repair/view/add_repair/filter/apply_filter_button.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/category.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom.dart';
+import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_equipment/classroom_equipment_form.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/search_inventory_number.dart';
 
 class AddRepairPage extends StatelessWidget {
@@ -12,141 +17,196 @@ class AddRepairPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          tooltip: "Назад",
-          icon: const Icon(
-            Icons.arrow_back_rounded,
-            color: primaryBlue,
+    Widget makeDismissible({required Widget child}) => GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => Navigator.of(context).pop(),
+          child: GestureDetector(
+            onTap: () {},
+            child: child,
           ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        elevation: 0,
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.filter_alt_rounded,
-              color: primaryBlue,
-            ),
-            onPressed: () {
-              showModalBottomSheet<void>(
-                isScrollControlled: true,
-                context: context,
-                backgroundColor: Colors.white,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(20.0),
-                  ),
+        );
+
+    return BlocProvider(
+      create: (context) => ClassroomEquipmentBloc(
+        classroomEquipmentRepository: ClassroomEquipmentRepository(),
+      ),
+      child: BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              leading: IconButton(
+                tooltip: "Назад",
+                icon: const Icon(
+                  Icons.arrow_back_rounded,
+                  color: primaryBlue,
                 ),
-                builder: (_) {
-                  return DraggableScrollableSheet(
-                    expand: false,
-                    builder: (context, controller) => ListView.builder(
-                      controller: controller,
-                      itemCount: 1,
-                      itemBuilder: (_, index) => Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                        child: Flex(
-                          direction: Axis.vertical,
-                          children: [
-                            SizedBox(
-                              width: double.infinity,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 24),
-                                  child: Flex(
-                                    direction: Axis.horizontal,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              elevation: 0,
+              centerTitle: true,
+              actions: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.filter_alt_rounded,
+                    color: primaryBlue,
+                  ),
+                  onPressed: () {
+                    showModalBottomSheet<void>(
+                      isScrollControlled: true,
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) {
+                        return BlocProvider<ClassroomEquipmentBloc>.value(
+                          value: BlocProvider.of<ClassroomEquipmentBloc>(
+                            context,
+                          )..add(
+                              const ClassroomEquipmentLoadUserEquipmentsList(),
+                            ),
+                          child: makeDismissible(
+                            child: DraggableScrollableSheet(
+                              initialChildSize: 0.7,
+                              minChildSize: 0.5,
+                              maxChildSize: 1,
+                              builder: (_, controller) {
+                                return Container(
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(20.0),
+                                    ),
+                                  ),
+                                  child: ListView(
+                                    shrinkWrap: true,
+                                    controller: controller,
                                     children: [
-                                      GestureDetector(
-                                        onTap: () =>
-                                            Navigator.of(context).pop(),
-                                        child: const Icon(
-                                          Icons.arrow_back_rounded,
-                                          color: primaryBlue,
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                          16,
+                                          24,
+                                          16,
+                                          24,
                                         ),
-                                      ),
-                                      Expanded(
                                         child: Flex(
-                                          direction: Axis.horizontal,
-                                          children: const [
-                                            Spacer(),
-                                            Text(
-                                              "Фильтр",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: primaryBlue,
-                                                fontFamily: 'Rubik',
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 18,
+                                          mainAxisSize: MainAxisSize.min,
+                                          direction: Axis.vertical,
+                                          children: [
+                                            SizedBox(
+                                              width: double.infinity,
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                    bottom: 24,
+                                                  ),
+                                                  child: Flex(
+                                                    direction: Axis.horizontal,
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () =>
+                                                            Navigator.of(
+                                                          context,
+                                                        ).pop(),
+                                                        child: const Icon(
+                                                          Icons
+                                                              .arrow_back_rounded,
+                                                          color: primaryBlue,
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Flex(
+                                                          direction:
+                                                              Axis.horizontal,
+                                                          children: const [
+                                                            Spacer(),
+                                                            Text(
+                                                              "Фильтр",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                color:
+                                                                    primaryBlue,
+                                                                fontFamily:
+                                                                    'Rubik',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontSize: 18,
+                                                              ),
+                                                            ),
+                                                            Spacer(),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                            Spacer(),
+                                            const ChooseClassroom(),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            const ChooseCategory(),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            const SearchInventoryNumber(),
+                                            const ClassroomEquipmentForm(),
+                                            const ApplyFilter()
                                           ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ),
+                                );
+                              },
                             ),
-                            const ChooseClassroom(),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            const ChooseCategory(),
-                            const SearchInventoryNumber()
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.end,
-                            //   children: const [AddCategory()],
-                            // ),
-                            // const ApplyFilter()
+                          ),
+                        );
+                      },
+                    );
+                  },
+                )
+              ],
+              title: const Text(
+                "Акт приема-передачи",
+                style: TextStyle(
+                  color: primaryBlue,
+                  fontFamily: 'Rubik',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            body: SafeArea(
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints view) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: view.maxHeight,
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            AddRepairForm(),
                           ],
                         ),
                       ),
                     ),
                   );
                 },
-              );
-            },
-          )
-        ],
-        title: const Text(
-          "Акт приема-передачи",
-          style: TextStyle(
-            color: primaryBlue,
-            fontFamily: 'Rubik',
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints view) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: view.maxHeight,
-                ),
-                child: Container(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      AddRepairForm(),
-                    ],
-                  ),
-                ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

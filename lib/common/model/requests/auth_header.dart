@@ -16,9 +16,4 @@ class HeaderModel {
 
     return data!.accessToken;
   }
-
-  static Future<String> getRefreshToken() async {
-    final data = await getUserProfile();
-    return data!.refreshToken;
-  }
 }

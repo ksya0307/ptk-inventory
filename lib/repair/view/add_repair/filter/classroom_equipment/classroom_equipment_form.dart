@@ -9,64 +9,61 @@ class ClassroomEquipmentForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const NeverScrollableScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
-              builder: (context, state) {
-                if (state.classroomEquipmentLoadingStatus ==
-                    ClassroomEquipmentLoadingStatus.loadingInProgress) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.7,
-                        width: MediaQuery.of(context).size.width,
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              CircularProgressIndicator(),
-                              Padding(
-                                padding: EdgeInsets.only(top: 16),
-                                child: Text(
-                                  "Загрузка оборудования...",
-                                  style: TextStyle(
-                                    color: greyDark,
-                                    fontFamily: 'Rubik',
-                                    fontSize: 14,
-                                  ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
+            builder: (context, state) {
+              if (state.classroomEquipmentLoadingStatus ==
+                  ClassroomEquipmentLoadingStatus.loadingInProgress) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      width: MediaQuery.of(context).size.width,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            CircularProgressIndicator(),
+                            Padding(
+                              padding: EdgeInsets.only(top: 16),
+                              child: Text(
+                                "Загрузка оборудования...",
+                                style: TextStyle(
+                                  color: greyDark,
+                                  fontFamily: 'Rubik',
+                                  fontSize: 14,
                                 ),
-                              )
-                            ],
-                          ),
+                              ),
+                            )
+                          ],
                         ),
                       ),
-                    ],
-                  );
-                }
-                if (state.classroomEquipmentLoadingStatus ==
-                        ClassroomEquipmentLoadingStatus.loadingSuccess &&
-                    state.globalEquipments.isNotEmpty) {
-                  // print("${state.visibleList}");
-                  return const ClassroomEquipmentList();
-                }
-                if (state.classroomEquipmentLoadingStatus ==
-                        ClassroomEquipmentLoadingStatus.loadingSuccess &&
-                    state.globalEquipments.isEmpty) {
-                  return const Text("Список оборудования пуст");
-                }
+                    ),
+                  ],
+                );
+              }
+              if (state.classroomEquipmentLoadingStatus ==
+                      ClassroomEquipmentLoadingStatus.loadingSuccess &&
+                  state.globalEquipments.isNotEmpty) {
+                // print("${state.visibleList}");
+                return const ClassroomEquipmentList();
+              }
+              if (state.classroomEquipmentLoadingStatus ==
+                      ClassroomEquipmentLoadingStatus.loadingSuccess &&
+                  state.globalEquipments.isEmpty) {
+                return const Text("Список оборудования пуст");
+              }
 
-                return const Text("Что-то пошло не так");
-              },
-            ),
+              return const Text("Что-то пошло не так");
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

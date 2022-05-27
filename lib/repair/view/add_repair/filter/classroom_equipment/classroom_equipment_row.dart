@@ -38,37 +38,38 @@ class ClassroomEquipmentRow extends StatelessWidget {
                 ),
               ),
             ),
-            Column(
-              children: [
-                Flexible(
-                  flex: 5,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      inventoryNumber,
-                      style: const TextStyle(
-                        fontFamily: 'Rubik',
-                        fontSize: 16,
-                        color: blackLabels,
+            Flexible(
+              flex: 5,
+              child: Row(
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          inventoryNumber,
+                          style: const TextStyle(
+                            fontFamily: 'Rubik',
+                            fontSize: 16,
+                            color: blackLabels,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-                Flexible(
-                  flex: 5,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      category,
-                      style: const TextStyle(
-                        fontFamily: 'Rubik',
-                        fontSize: 14,
-                        color: greyDark,
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          category,
+                          style: const TextStyle(
+                            fontFamily: 'Rubik',
+                            fontSize: 14,
+                            color: greyDark,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

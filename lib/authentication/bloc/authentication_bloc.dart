@@ -44,7 +44,6 @@ class AuthenticationBloc
     switch (event.status) {
       case AuthenticationStatus.authenticated:
         final user = await _tryGetUser();
-
         return emit(
           user != null
               ? AuthenticationState.authenticated(user)
@@ -68,7 +67,7 @@ class AuthenticationBloc
     try {
       final user = await _userRepository.getUser();
       return user;
-    } catch (_) {
+    } catch (e) {
       return null;
     }
   }

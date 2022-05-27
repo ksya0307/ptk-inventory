@@ -23,7 +23,6 @@ class UserRepository {
 
   Future<User?> getUser() async {
     final UserHiveModel? userHiveModel = await getUserProfile();
-
     if (userHiveModel != null) {
       return User.fromHiveToUser(userHiveModel);
     }

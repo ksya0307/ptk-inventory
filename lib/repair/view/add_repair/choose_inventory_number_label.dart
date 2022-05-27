@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/config/colors.dart';
-import 'package:ptk_inventory/repair/common/property_label.dart';
+import 'package:ptk_inventory/repair/view/common/property_label.dart';
 
 class ChooseInventoryNumberLabel extends StatelessWidget {
   const ChooseInventoryNumberLabel({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:ptk_inventory/classroom_equipment/model/classroom_equipment.dart';
 
-import 'package:ptk_inventory/equipment_classrooms/model/classroom_equipment.dart';
 import 'package:ptk_inventory/repair/model/repair.dart';
 
 part 'repair_equipment.g.dart';

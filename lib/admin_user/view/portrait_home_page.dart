@@ -4,7 +4,7 @@ import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/category/view/category_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/documents/view/document_page.dart';
-import 'package:ptk_inventory/equipment_classrooms/view/equipment_classrooms_page.dart';
+import 'package:ptk_inventory/classroom_equipment/view/equipment_classrooms_page.dart';
 import 'package:ptk_inventory/ifo/view/ifo_page.dart';
 import 'package:ptk_inventory/user_profile/view/my_profile.dart';
 import 'package:ptk_inventory/users/view/users_page.dart';
@@ -275,7 +275,7 @@ Widget equipmentCard(BuildContext context) {
         builder: (_) {
           return BlocProvider.value(
             value: context.read<AuthenticationBloc>(),
-            child: EquipmentClassroomsPage(),
+            child: ClassroomsEquipmentPage(),
           );
         },
       ),

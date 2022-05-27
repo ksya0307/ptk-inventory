@@ -30,18 +30,16 @@ class DocumentState extends Equatable {
   });
 
   @override
-  List<Object?> get props {
-    return [
-      documentDeleteStatus,
-      formStatus,
-      name,
-      documentLoadingStatus,
-      selectedDocument,
-      globalDocuments,
-      visibleList,
-      searchText
-    ];
-  }
+  List<Object?> get props => [
+        documentDeleteStatus,
+        formStatus,
+        name,
+        documentLoadingStatus,
+        selectedDocument,
+        globalDocuments,
+        visibleList,
+        searchText
+      ];
 
   DocumentState copyWith({
     DocumentDeleteStatus? documentDeleteStatus,

@@ -13,7 +13,9 @@ class ApiRoutes {
   static const categories = 'categories';
 
   static const classroomEquipment = 'classroom-equipment';
+  static const equipmentInUserClassroom = 'equipment-in-users-classrooms';
   static const classrooms = 'classrooms';
+
   static const comments = 'comments';
   static const documents = 'documents';
   static const equipment = 'equipment';

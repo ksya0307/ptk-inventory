@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/category/view/category_page.dart';
 import 'package:ptk_inventory/classroom_equipment/view/equipment_classrooms_page.dart';
-import 'package:ptk_inventory/classrooms/classrooms_page.dart';
+import 'package:ptk_inventory/classrooms/view/classroom_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/documents/view/document_page.dart';
 import 'package:ptk_inventory/ifo/view/ifo_page.dart';

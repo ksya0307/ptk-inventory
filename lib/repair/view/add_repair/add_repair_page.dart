@@ -3,9 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/repository/classroom_equipment_repository.dart';
+import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
+import 'package:ptk_inventory/classrooms/repository/classroom_repository.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/view/add_repair/add_repair_form.dart';
-import 'package:ptk_inventory/repair/view/add_repair/filter/apply_filter_button.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/category.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_equipment/classroom_equipment_form.dart';
@@ -28,10 +29,18 @@ class AddRepairPage extends StatelessWidget {
           ),
         );
 
-    return BlocProvider(
-      create: (context) => ClassroomEquipmentBloc(
-        classroomEquipmentRepository: ClassroomEquipmentRepository(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ClassroomEquipmentBloc(
+            classroomEquipmentRepository: ClassroomEquipmentRepository(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) =>
+              ClassroomBloc(classroomRepository: ClassroomRepository()),
+        ),
+      ],
       child: BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
         builder: (context, state) {
           return Scaffold(
@@ -149,7 +158,11 @@ class AddRepairPage extends StatelessWidget {
                                                 ),
                                               ),
                                             ),
-                                            const ChooseClassroom(),
+                                            BlocProvider.value(
+                                              value:
+                                                  context.read<ClassroomBloc>(),
+                                              child: const ChooseClassroom(),
+                                            ),
                                             const SizedBox(
                                               height: 8,
                                             ),

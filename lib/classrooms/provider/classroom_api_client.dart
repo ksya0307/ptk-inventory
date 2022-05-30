@@ -96,7 +96,7 @@ class ClassroomProvider {
   ) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
-      "${ApiRoutes.apiRoute}${ApiRoutes.classrooms}${ApiRoutes.userClassrooms}",
+      "${ApiRoutes.apiRoute}${ApiRoutes.classrooms}/${ApiRoutes.userClassrooms}",
     );
     final response = await _httpClient.get(
       request,

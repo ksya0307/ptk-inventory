@@ -9,6 +9,7 @@ import 'package:ptk_inventory/repair/view/add_repair/filter/apply_filter_button.
 import 'package:ptk_inventory/repair/view/add_repair/filter/category.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_equipment/classroom_equipment_form.dart';
+import 'package:ptk_inventory/repair/view/add_repair/filter/common/apply_filter_label.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/common/search_field.dart';
 
 class AddRepairPage extends StatelessWidget {
@@ -86,7 +87,7 @@ class AddRepairPage extends StatelessWidget {
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                           16,
-                                          24,
+                                          16,
                                           16,
                                           24,
                                         ),
@@ -185,8 +186,25 @@ class AddRepairPage extends StatelessWidget {
                                                 );
                                               },
                                             ),
+                                            const SizedBox(
+                                              height: 12,
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: const [
+                                                  ApplyFilterLabel(),
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 12,
+                                            ),
                                             const ClassroomEquipmentForm(),
-                                            const ApplyFilter()
                                           ],
                                         ),
                                       ),

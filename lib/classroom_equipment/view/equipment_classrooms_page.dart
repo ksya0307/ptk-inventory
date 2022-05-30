@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
+import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/view/add_equipment/add_equipment_page.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/config/colors.dart';
@@ -74,17 +75,24 @@ class EquipmentClassrooms extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Classroom(),
-          const Equipment(),
-          const EquipmentSearch(),
-          addEquipmentLabel(context)
-        ],
-      ),
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+      builder: (context, state) {
+        return Padding(
+          padding:
+              const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Classroom(),
+              const Equipment(),
+              const EquipmentSearch(),
+              if (state.user.role == UserRole.moderator ||
+                  state.user.role == UserRole.admin)
+                addEquipmentLabel(context)
+            ],
+          ),
+        );
+      },
     );
   }
 }

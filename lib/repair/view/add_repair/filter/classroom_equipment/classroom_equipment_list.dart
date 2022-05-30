@@ -99,7 +99,7 @@ class ClassroomEquipmentList extends StatelessWidget {
                                         bottom: 16,
                                       ),
                                       child: Text(
-                                        "Оборудования не найдено",
+                                        "Оборудование не найдено",
                                         style: TextStyle(
                                           color: blackLabels,
                                           fontFamily: 'Rubik',

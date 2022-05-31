@@ -71,7 +71,7 @@ class ClassroomList extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: classrooms.length,
                     itemBuilder: (context, index) {
-                      final String pastronymic =
+                      final String patronymic =
                           classrooms[index].user.patronymic != null
                               ? "${classrooms[index].user.patronymic![0]}."
                               : "";
@@ -98,6 +98,7 @@ class ClassroomList extends StatelessWidget {
                         child: ClassroomRow(
                           number: classrooms[index].number,
                           user: classrooms[index].user.patronymic ?? '',
+                          last: index == classrooms.length - 1,
                         ),
                       );
                     },

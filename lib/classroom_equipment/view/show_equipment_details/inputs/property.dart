@@ -17,7 +17,8 @@ class Property extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * screenConstraint),
+        maxWidth: MediaQuery.of(context).size.width * screenConstraint,
+      ),
       child: TextFormField(
         minLines: 1,
         maxLines: maxLines,

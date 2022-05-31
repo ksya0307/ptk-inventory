@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/category/bloc/category_bloc.dart';
+import 'package:ptk_inventory/category/repository/category_repository.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/repository/classroom_equipment_repository.dart';
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
 import 'package:ptk_inventory/classrooms/repository/classroom_repository.dart';
+import 'package:ptk_inventory/common/component/apply_filter_label.dart';
+import 'package:ptk_inventory/common/component/filter_scrollable_sheet.dart';
+import 'package:ptk_inventory/common/component/search_field.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/view/add_repair/add_repair_form.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/category.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_equipment/classroom_equipment_form.dart';
-import 'package:ptk_inventory/repair/view/add_repair/filter/common/apply_filter_label.dart';
-import 'package:ptk_inventory/repair/view/add_repair/filter/common/search_field.dart';
 
 class AddRepairPage extends StatelessWidget {
   static Route route() {
@@ -20,15 +23,6 @@ class AddRepairPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget makeDismissible({required Widget child}) => GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () => Navigator.of(context).pop(),
-          child: GestureDetector(
-            onTap: () {},
-            child: child,
-          ),
-        );
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -40,6 +34,10 @@ class AddRepairPage extends StatelessWidget {
           create: (context) =>
               ClassroomBloc(classroomRepository: ClassroomRepository()),
         ),
+        BlocProvider(
+          create: (context) =>
+              CategoryBloc(categoryRepository: CategoryRepository()),
+        )
       ],
       child: BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
         builder: (context, state) {
@@ -76,89 +74,118 @@ class AddRepairPage extends StatelessWidget {
                           )..add(
                               const ClassroomEquipmentLoadUserEquipmentsList(),
                             ),
-                          child: makeDismissible(
-                            child: DraggableScrollableSheet(
-                              initialChildSize: 0.7,
-                              minChildSize: 0.5,
-                              maxChildSize: 0.95,
-                              builder: (_, controller) {
-                                return Container(
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(20.0),
-                                    ),
-                                  ),
-                                  child: ListView(
-                                    shrinkWrap: true,
-                                    controller: controller,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                          16,
-                                          16,
-                                          16,
-                                          24,
-                                        ),
-                                        child: Flex(
-                                          mainAxisSize: MainAxisSize.min,
-                                          direction: Axis.vertical,
-                                          children: [
-                                            SizedBox(
-                                              width: double.infinity,
-                                              child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    bottom: 24,
-                                                  ),
-                                                  child: Flex(
-                                                    direction: Axis.horizontal,
-                                                    children: [
-                                                      GestureDetector(
-                                                        onTap: () =>
-                                                            Navigator.of(
-                                                          context,
-                                                        ).pop(),
-                                                        child: const Icon(
-                                                          Icons
-                                                              .arrow_back_rounded,
-                                                          color: primaryBlue,
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: Flex(
-                                                          direction:
-                                                              Axis.horizontal,
-                                                          children: const [
-                                                            Spacer(),
-                                                            Text(
-                                                              "Фильтр",
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: TextStyle(
-                                                                color:
-                                                                    primaryBlue,
-                                                                fontFamily:
-                                                                    'Rubik',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontSize: 18,
-                                                              ),
-                                                            ),
-                                                            Spacer(),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
+                          child: EquipmentFilterSheet(
+                            widget: Column(
+                              children: [
+                                BlocProvider.value(
+                                  value: context.read<ClassroomBloc>(),
+                                  child: const ChooseClassroom(),
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                BlocProvider.value(
+                                  value: context.read<CategoryBloc>(),
+                                  child: const ChooseCategory(),
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                BlocBuilder<ClassroomEquipmentBloc,
+                                    ClassroomEquipmentState>(
+                                  buildWhen: (previous, current) =>
+                                      previous.visibleList !=
+                                      current.visibleList,
+                                  builder: (context, state) {
+                                    return SearchField(
+                                      hintText: '101340003313',
+                                      keyboardType: TextInputType.text,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      onChange: (inventoryNumber) => {
+                                        context
+                                            .read<ClassroomEquipmentBloc>()
+                                            .add(
+                                              ClassroomEquipmentSearch(
+                                                inventoryNumber,
                                               ),
                                             ),
-                                            BlocProvider.value(
+                                      },
+                                    );
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: const [
+                                      ApplyFilterLabel(),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                const ClassroomEquipmentForm(),
+                              ],
+                            ),
+                            title: 'Фильтр',
+                          ),
+                        );
+                      },
+                    );
+                  },
+                )
+              ],
+              title: const Text(
+                "Акт приема-передачи",
+                style: TextStyle(
+                  color: primaryBlue,
+                  fontFamily: 'Rubik',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            body: SafeArea(
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints view) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: view.maxHeight,
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            AddRepairForm(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+
+/*
+
+ BlocProvider.value(
                                               value:
                                                   context.read<ClassroomBloc>(),
                                               child: const ChooseClassroom(),
@@ -166,7 +193,11 @@ class AddRepairPage extends StatelessWidget {
                                             const SizedBox(
                                               height: 8,
                                             ),
-                                            const ChooseCategory(),
+                                            BlocProvider.value(
+                                              value:
+                                                  context.read<CategoryBloc>(),
+                                              child: const ChooseCategory(),
+                                            ),
                                             const SizedBox(
                                               height: 8,
                                             ),
@@ -218,56 +249,4 @@ class AddRepairPage extends StatelessWidget {
                                               height: 12,
                                             ),
                                             const ClassroomEquipmentForm(),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                )
-              ],
-              title: const Text(
-                "Акт приема-передачи",
-                style: TextStyle(
-                  color: primaryBlue,
-                  fontFamily: 'Rubik',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            body: SafeArea(
-              child: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints view) {
-                  return SingleChildScrollView(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: view.maxHeight,
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            AddRepairForm(),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
+                                            */

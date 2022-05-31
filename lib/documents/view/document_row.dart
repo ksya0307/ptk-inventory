@@ -4,11 +4,10 @@ import 'package:ptk_inventory/config/colors.dart';
 class DocumentRow extends StatelessWidget {
   final String id;
   final String document;
-  const DocumentRow({
-    Key? key,
-    required this.id,
-    required this.document,
-  }) : super(key: key);
+  final bool last;
+  const DocumentRow(
+      {Key? key, required this.id, required this.document, required this.last})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -52,13 +51,16 @@ class DocumentRow extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12),
-          child: Divider(
-            color: greyDivider,
-            thickness: .75,
-          ),
-        ),
+        if (!last)
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Divider(
+              color: greyDivider,
+              thickness: .75,
+            ),
+          )
+        else
+          const Padding(padding: EdgeInsets.only(bottom: 12)),
       ],
     );
   }

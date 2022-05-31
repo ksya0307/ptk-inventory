@@ -23,11 +23,36 @@ class ChangeCategoryRequestFailure implements Exception {}
 
 class ChangeCategoryRequestUnauthorized implements Exception {}
 
+class UserCategoryRequestFailure implements Exception {}
+
+class UserCategoryRequestUnauthorized implements Exception {}
+
 class CategoryProvider {
   CategoryProvider({http.Client? httpClient})
       : _httpClient = httpClient ?? http.Client();
 
   final http.Client _httpClient;
+
+  Future<CategoryResult> userClassroomCategories(
+    Map<String, String> header,
+  ) async {
+    final request = Uri.https(
+      ApiRoutes.baseUrl,
+      ApiRoutes.apiRoute +
+          ApiRoutes.categories +
+          ApiRoutes.categoriesInClassroom,
+    );
+    final response = await _httpClient.get(request, headers: header);
+
+    if (response.statusCode != 200 && response.statusCode != 401) {
+      throw UserCategoryRequestFailure();
+    } else if (response.statusCode == 401) {
+      throw UserCategoryRequestUnauthorized();
+    }
+    final Map<String, dynamic> jsonAnswer = {};
+    jsonAnswer['result'] = jsonDecode(response.body);
+    return CategoryResult.fromJson(jsonAnswer);
+  }
 
   Future<CategoryResult> allCategories(
     Map<String, String> header,

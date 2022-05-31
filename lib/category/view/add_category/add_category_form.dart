@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/view/add_category/add_category_button.dart';
 import 'package:ptk_inventory/category/view/add_category/category_name_input.dart';
-import 'package:ptk_inventory/category/view/common/category_name_label.dart';
+import 'package:ptk_inventory/common/component/property_label.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_common_error.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 
@@ -29,7 +29,7 @@ class AddCategoryForm extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           children: const [
-            CategoryNameLabel(),
+            PropertyLabel(property: 'Название', bottomPadding: 8),
             CategoryName(),
             Padding(
               padding: EdgeInsets.only(top: 8),

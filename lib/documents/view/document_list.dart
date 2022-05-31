@@ -192,6 +192,7 @@ class DocumentsList extends StatelessWidget {
                       child: DocumentRow(
                         id: documents[index].id.toString(),
                         document: documents[index].name,
+                        last: index == documents.length - 1,
                       ),
                     );
                   },

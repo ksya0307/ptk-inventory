@@ -180,7 +180,7 @@ class UsersList extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: users.length,
                       itemBuilder: (context, index) {
-                        final String pastronymic =
+                        final String patronymic =
                             users[index].patronymic != null
                                 ? "${users[index].patronymic![0]}."
                                 : "";
@@ -210,7 +210,8 @@ class UsersList extends StatelessWidget {
                           child: UsersRow(
                             id: users[index].id.toString(),
                             fullName:
-                                "${users[index].surname} ${users[index].name[0]}. $pastronymic",
+                                "${users[index].surname} ${users[index].name[0]}. $patronymic",
+                            last: index == users.length - 1,
                           ),
                         );
                       },

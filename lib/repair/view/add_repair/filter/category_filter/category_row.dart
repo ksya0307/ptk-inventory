@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/config/colors.dart';
 
-class UsersRow extends StatelessWidget {
-  final String id;
-  final String fullName;
+class CategoryRow extends StatelessWidget {
+  final String category;
   final bool last;
-  const UsersRow({
+  final int currentValue;
+  final void Function(int) onChange;
+  const CategoryRow({
     Key? key,
-    required this.id,
-    required this.fullName,
+    required this.category,
     required this.last,
+    required this.currentValue,
+    required this.onChange,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -21,33 +23,39 @@ class UsersRow extends StatelessWidget {
               flex: 2,
               child: Padding(
                 padding: const EdgeInsets.only(
-                  top: 8 + 4,
-                  bottom: 8 + 4,
+                  top: 8,
+                  bottom: 8,
                   left: 12,
+                  right: 12,
                 ),
                 child: Container(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    id,
-                    style: const TextStyle(
-                      fontFamily: 'Rubik',
-                      fontSize: 16,
-                      color: blackLabels,
-                    ),
+                  child: RadioListTile(
+                    value: currentValue,
+                    onChanged: (category) => onChange,
+                    groupValue: category,
                   ),
                 ),
               ),
             ),
             Flexible(
               flex: 5,
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  fullName,
-                  style: const TextStyle(
-                    fontFamily: 'Rubik',
-                    fontSize: 16,
-                    color: blackLabels,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 8,
+                  bottom: 8,
+                  left: 12,
+                  right: 12,
+                ),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    category,
+                    style: const TextStyle(
+                      fontFamily: 'Rubik',
+                      fontSize: 16,
+                      color: blackLabels,
+                    ),
                   ),
                 ),
               ),

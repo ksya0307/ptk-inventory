@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/common/component/property_label.dart';
 
 import 'package:ptk_inventory/common/component/snackbar_message_common_error.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 import 'package:ptk_inventory/users/bloc/users_bloc.dart';
 import 'package:ptk_inventory/users/view/update_user/role_dropmenu.dart';
-import 'package:ptk_inventory/users/view/common/property_label.dart';
 import 'package:ptk_inventory/users/view/update_user/delete_user_button.dart';
 import 'package:ptk_inventory/users/view/update_user/name_input.dart';
 import 'package:ptk_inventory/users/view/update_user/password_input.dart';
@@ -42,17 +42,17 @@ class UpdateUserForm extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const PropertyLabel(property: 'Фамилия'),
+                const PropertyLabel(property: 'Фамилия', bottomPadding: 8),
                 const SurnameInput(),
-                const PropertyLabel(property: 'Имя'),
+                const PropertyLabel(property: 'Имя', bottomPadding: 8),
                 const NameInput(),
-                const PropertyLabel(property: 'Отчество'),
+                const PropertyLabel(property: 'Отчество', bottomPadding: 8),
                 const PatronymicInput(),
-                const PropertyLabel(property: 'Логин'),
+                const PropertyLabel(property: 'Логин', bottomPadding: 8),
                 const UsernameInput(),
-                const PropertyLabel(property: 'Пароль'),
+                const PropertyLabel(property: 'Пароль', bottomPadding: 8),
                 PasswordInput(),
-                const PropertyLabel(property: 'Роль'),
+                const PropertyLabel(property: 'Роль', bottomPadding: 8),
                 const RoleDropDown(),
                 const SaveUserButton(),
               ],

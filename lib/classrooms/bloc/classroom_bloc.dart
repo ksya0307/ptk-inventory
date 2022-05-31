@@ -50,12 +50,6 @@ class ClassroomBloc extends Bloc<ClassroomEvent, ClassroomState> {
         classroomLoadingStatus: ClassroomLoadingStatus.loadingSuccess,
       ),
     );
-    emit(
-      state.copyWith(
-        globalClassrooms: waiting,
-        classroomLoadingStatus: ClassroomLoadingStatus.loadingSuccess,
-      ),
-    );
   }
 
   void _onDeleteFromList(
@@ -118,6 +112,8 @@ class ClassroomBloc extends Bloc<ClassroomEvent, ClassroomState> {
     ClassroomSelected event,
     Emitter<ClassroomState> emit,
   ) {
+    print("bloc");
+    print(event.selectedClassroom);
     emit(state.copyWith(selectedClassroom: event.selectedClassroom));
   }
 
@@ -188,6 +184,7 @@ class ClassroomBloc extends Bloc<ClassroomEvent, ClassroomState> {
     ClassroomLoadList event,
     Emitter<ClassroomState> emit,
   ) async {
+    print("call");
     emit(
       state.copyWith(
         classroomLoadingStatus: ClassroomLoadingStatus.loadingInProgress,

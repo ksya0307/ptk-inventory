@@ -28,6 +28,27 @@ class CategoryRepository {
         _authenticationRepository =
             authenticationRepository ?? AuthenticationRepository();
 
+  Future<List<Category>> userClassroomCategories() async {
+    try {
+      final result = await _categoryProvider.userClassroomCategories(
+        HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+      );
+      return result.result;
+    } on UserCategoryRequestFailure {
+      return [];
+    } on UserCategoryRequestUnauthorized {
+      final UserHiveModel? userHiveModel = await getUserProfile();
+
+      if (userHiveModel != null) {
+        await _authenticationRepository.refreshToken(userHiveModel);
+      }
+      final result = await _categoryProvider.userClassroomCategories(
+        HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+      );
+      return result.result;
+    }
+  }
+
   Future<List<Category>> categories() async {
     try {
       final result = await _categoryProvider.allCategories(

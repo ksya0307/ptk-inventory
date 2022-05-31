@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/category/bloc/category_bloc.dart';
+import 'package:ptk_inventory/common/component/apply_filter_label.dart';
+import 'package:ptk_inventory/common/component/filter_scrollable_sheet.dart';
+import 'package:ptk_inventory/common/component/property_label.dart';
+import 'package:ptk_inventory/common/component/search_field.dart';
+import 'package:ptk_inventory/common/component/show_all_label.dart';
 
 import 'package:ptk_inventory/config/colors.dart';
-import 'package:ptk_inventory/repair/view/add_repair/filter/common/apply_filter_label.dart';
-import 'package:ptk_inventory/repair/view/add_repair/filter/common/search_field.dart';
-import 'package:ptk_inventory/repair/view/common/property_label.dart';
-import 'package:ptk_inventory/repair/view/common/show_all_label.dart';
+import 'package:ptk_inventory/repair/view/add_repair/filter/category_filter/category_form.dart';
 
 class ChooseCategory extends StatelessWidget {
   const ChooseCategory({Key? key}) : super(key: key);
@@ -41,101 +44,51 @@ class ChooseCategory extends StatelessWidget {
             context: context,
             backgroundColor: Colors.transparent,
             builder: (_) {
-              return makeDismissible(
-                child: DraggableScrollableSheet(
-                  initialChildSize: 0.7,
-                  minChildSize: 0.5,
-                  maxChildSize: 0.95,
-                  builder: (_, controller) {
-                    return Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20.0),
-                        ),
-                      ),
-                      child: ListView(
-                        controller: controller,
-                        shrinkWrap: true,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                            child: Flex(
-                              direction: Axis.vertical,
-                              children: [
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        bottom: 24,
-                                      ),
-                                      child: Flex(
-                                        direction: Axis.horizontal,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () =>
-                                                Navigator.of(context).pop(),
-                                            child: const Icon(
-                                              Icons.arrow_back_rounded,
-                                              color: primaryBlue,
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Flex(
-                                              direction: Axis.horizontal,
-                                              children: const [
-                                                Spacer(),
-                                                Text(
-                                                  "Все категории",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color: primaryBlue,
-                                                    fontFamily: 'Rubik',
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 18,
-                                                  ),
-                                                ),
-                                                Spacer(),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+              return BlocProvider.value(
+                value: BlocProvider.of<CategoryBloc>(context)
+                  ..add(const CategoryUserClassrooms()),
+                child: EquipmentFilterSheet(
+                  title: 'Все категории',
+                  widget: Column(
+                    children: [
+                      BlocBuilder<CategoryBloc, CategoryState>(
+                        buildWhen: (previous, current) =>
+                            previous.visibleList != current.visibleList,
+                        builder: (context, state) {
+                          return SearchField(
+                            hintText: 'Смартфон',
+                            keyboardType: TextInputType.text,
+                            inputFormatters: const [],
+                            onChange: (category) => {
+                              context.read<CategoryBloc>().add(
+                                    CategorySearch(
+                                      matchingWord: category,
                                     ),
                                   ),
-                                ),
-                                SearchField(
-                                  hintText: 'Смартфон',
-                                  keyboardType: TextInputType.text,
-                                  inputFormatters: const [],
-                                  onChange: (classroom) => {},
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
-                                      ApplyFilterLabel(),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                            },
+                          );
+                        },
                       ),
-                    );
-                  },
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: const [
+                            ApplyFilterLabel(),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      const CategoryForm(),
+                    ],
+                  ),
                 ),
               );
             },

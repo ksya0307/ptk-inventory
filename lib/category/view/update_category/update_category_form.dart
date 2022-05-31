@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
-import 'package:ptk_inventory/category/view/common/category_name_label.dart';
 import 'package:ptk_inventory/category/view/update_category/category_name_input.dart';
 import 'package:ptk_inventory/category/view/update_category/delete_category_button.dart';
 import 'package:ptk_inventory/category/view/update_category/save_category_button.dart';
+import 'package:ptk_inventory/common/component/property_label.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_error.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 
@@ -37,7 +37,7 @@ class UpdateCategoryForm extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              CategoryNameLabel(),
+              PropertyLabel(property: 'Название', bottomPadding: 8),
               CategoryNameInput(),
               Padding(
                 padding: EdgeInsets.only(top: 8),

@@ -3,11 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
 
 import 'package:ptk_inventory/config/colors.dart';
-import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_filter/classroom_row.dart';
 
-class ClassroomList extends StatelessWidget {
+class ClassroomList extends StatefulWidget {
   const ClassroomList({Key? key}) : super(key: key);
 
+  @override
+  State<ClassroomList> createState() => _ClassroomListState();
+}
+
+class _ClassroomListState extends State<ClassroomList> {
   @override
   Widget build(BuildContext context) {
     final classrooms =
@@ -17,74 +21,76 @@ class ClassroomList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BlocBuilder<ClassroomBloc, ClassroomState>(
-            builder: (context, state) {
-              if (state.visibleList.isNotEmpty) {
-                //return const VisibleClassroomEquipmentList();
-              }
-              if (state.searchText.isNotEmpty && state.visibleList.isEmpty) {
-                return Column(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          color: Colors.white,
-                          child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.3,
-                            width: MediaQuery.of(context).size.width,
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      top: 16,
-                                      bottom: 16,
-                                    ),
-                                    child: Text(
-                                      "Аудитории не найдены",
-                                      style: TextStyle(
-                                        color: blackLabels,
-                                        fontFamily: 'Rubik',
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+          BlocListener<ClassroomBloc, ClassroomState>(
+            listener: (context, state) {},
+            child: BlocBuilder<ClassroomBloc, ClassroomState>(
+              builder: (context, state) {
+                //Color _color = secondaryGreen;
+                return Align(
+                  alignment: Alignment.centerLeft,
+                  child: Wrap(
+                    runSpacing: 8,
+                    spacing: 8,
+                    children: List.generate(
+                      classrooms.length,
+                      (index) {
+                        return ChipTheme(
+                          data: ChipTheme.of(context).copyWith(
+                            elevation: 0,
+                            pressElevation: 0,
+                            selectedColor: secondaryGreen,
+                            backgroundColor: greyCard,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(7),
                               ),
                             ),
                           ),
-                        )
-                      ],
-                    )
-                  ],
-                );
-              }
+                          child: ChoiceChip(
+                            avatar: state.selectedClassroom != null &&
+                                    classrooms[index].number ==
+                                        state.selectedClassroom!.number
+                                ? const Icon(
+                                    Icons.done_rounded,
+                                    color: Colors.white,
+                                  )
+                                : null,
+                            label: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text(
+                                classrooms[index].number,
+                                style: TextStyle(
+                                  fontFamily: 'Rubik',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: state.selectedClassroom != null &&
+                                          classrooms[index].number ==
+                                              state.selectedClassroom!.number
+                                      ? Colors.white
+                                      : blackLabels,
+                                ),
+                              ),
+                            ),
+                            selected: state.selectedClassroom != null &&
+                                classrooms[index].number ==
+                                    state.selectedClassroom!.number,
+                            onSelected: (selected) {
+                              setState(() {
+                                selected = !selected;
+                              });
 
-              return Align(
-                alignment: Alignment.centerLeft,
-                child: Wrap(
-                  runSpacing: 8,
-                  spacing: 8,
-                  children: List.generate(
-                    classrooms.length,
-                    (index) {
-                      return ClassroomRow(
-                        label: classrooms[index].number,
-                        onSelect: (bool selected) {
-                          print("Press ${classrooms[index]}");
-                          context
-                              .read<ClassroomBloc>()
-                              .add(ClassroomSelected(classrooms[index]));
-                        },
-                      );
-                    },
+                              context
+                                  .read<ClassroomBloc>()
+                                  .add(ClassroomSelected(classrooms[index]));
+                            },
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           )
         ],
       ),

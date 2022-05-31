@@ -14,7 +14,10 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       : _categoryRepository = categoryRepository,
         super(const CategoryState()) {
     on<CategoryNameChanged>(_onNameChanged);
+
     on<CategoryLoadList>(_onCategoryLoadList);
+    on<CategoryUserClassrooms>(_onCategoryUserClassrooms);
+
     on<CategorySubmitted>(_onSubmitted);
     on<CategorySaved>(_onSaved);
     on<CategorySearch>(_onSearch);
@@ -26,6 +29,28 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   final CategoryRepository _categoryRepository;
+
+  Future<void> _onCategoryUserClassrooms(
+    CategoryUserClassrooms event,
+    Emitter<CategoryState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        categoryLoadingStatus: CategoryLoadingStatus.loadingInProgress,
+      ),
+    );
+    final waiting = await _categoryRepository.userClassroomCategories();
+    if (waiting.isNotEmpty) {
+      waiting.sort((a, b) => a.name.compareTo(b.name));
+    }
+
+    emit(
+      state.copyWith(
+        globalCategories: waiting,
+        categoryLoadingStatus: CategoryLoadingStatus.loadingSuccess,
+      ),
+    );
+  }
 
   void _onDeleteFromList(
     CategoryDeleteFromList event,

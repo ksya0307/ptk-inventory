@@ -4,6 +4,7 @@ import 'package:ptk_inventory/config/colors.dart';
 class CategoryRow extends StatelessWidget {
   final String id;
   final String category;
+
   const CategoryRow({
     Key? key,
     required this.id,

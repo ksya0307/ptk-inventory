@@ -11,6 +11,7 @@ class ApiRoutes {
   static const existingUser = 'existing-user';
 
   static const categories = 'categories';
+  static const categoriesInClassroom = '/categories-in-classroom';
 
   static const classroomEquipment = 'classroom-equipment';
   static const equipmentInUserClassroom = 'equipment-in-users-classrooms';

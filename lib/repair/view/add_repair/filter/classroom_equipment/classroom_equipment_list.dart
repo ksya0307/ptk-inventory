@@ -119,45 +119,46 @@ class ClassroomEquipmentList extends StatelessWidget {
                   );
                 }
                 return ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: equipment.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          context.read<ClassroomEquipmentBloc>().add(
-                                ClassroomEquipmentUserSelected(
-                                  ClassroomEquipment(
-                                    id: equipment[index].id,
-                                    inventoryNumber:
-                                        equipment[index].inventoryNumber,
-                                    classroom: equipment[index].classroom,
-                                    equipment: equipment[index].equipment,
-                                    numberInClassroom:
-                                        equipment[index].numberInClassroom,
-                                    equipmentType:
-                                        equipment[index].equipmentType,
-                                  ),
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: equipment.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        context.read<ClassroomEquipmentBloc>().add(
+                              ClassroomEquipmentUserSelected(
+                                ClassroomEquipment(
+                                  id: equipment[index].id,
+                                  inventoryNumber:
+                                      equipment[index].inventoryNumber,
+                                  classroom: equipment[index].classroom,
+                                  equipment: equipment[index].equipment,
+                                  numberInClassroom:
+                                      equipment[index].numberInClassroom,
+                                  equipmentType: equipment[index].equipmentType,
                                 ),
-                              );
-
-                          Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                              builder: (_) => BlocProvider.value(
-                                value: context.read<ClassroomEquipmentBloc>(),
-                                child: EquipmentDetailsPage(),
                               ),
+                            );
+
+                        Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (_) => BlocProvider.value(
+                              value: context.read<ClassroomEquipmentBloc>(),
+                              child: EquipmentDetailsPage(),
                             ),
-                          );
-                        },
-                        child: ClassroomEquipmentRow(
-                          inventoryNumber:
-                              equipment[index].inventoryNumber.toString(),
-                          numberInClassroom: equipment[index].numberInClassroom,
-                          category: equipment[index].equipment.category.name,
-                        ),
-                      );
-                    });
+                          ),
+                        );
+                      },
+                      child: ClassroomEquipmentRow(
+                        inventoryNumber:
+                            equipment[index].inventoryNumber.toString(),
+                        numberInClassroom: equipment[index].numberInClassroom,
+                        category: equipment[index].equipment.category.name,
+                        last: index == equipment.length - 1,
+                      ),
+                    );
+                  },
+                );
               },
             ),
           )

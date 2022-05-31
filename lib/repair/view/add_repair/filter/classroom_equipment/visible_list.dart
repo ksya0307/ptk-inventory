@@ -64,6 +64,7 @@ class VisibleClassroomEquipmentList extends StatelessWidget {
                               equipment[index].inventoryNumber.toString(),
                           numberInClassroom: equipment[index].numberInClassroom,
                           category: equipment[index].equipment.category.name,
+                          last: index == equipment.length - 1,
                         ),
                       );
                     },

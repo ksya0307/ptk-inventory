@@ -70,3 +70,7 @@ class CategorySaveToList extends CategoryEvent {
   @override
   List<Object> get props => [category];
 }
+
+class CategoryUserClassrooms extends CategoryEvent {
+  const CategoryUserClassrooms();
+}

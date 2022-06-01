@@ -97,14 +97,18 @@ class IfoBloc extends Bloc<IfoEvent, IfoState> {
       emit(
         state.copyWith(
           ifoLoadingStatus: IfoLoadingStatus.loadingSuccess,
+          ifoActionStatus: IfoActionStatus.deleted,
         ),
       );
+      emit(state.copyWith(ifoActionStatus: IfoActionStatus.pure));
     } else {
       emit(
         state.copyWith(
           ifoLoadingStatus: IfoLoadingStatus.loadingFailed,
+          ifoActionStatus: IfoActionStatus.notDeleted,
         ),
       );
+      emit(state.copyWith(ifoActionStatus: IfoActionStatus.pure));
     }
   }
 
@@ -206,13 +210,25 @@ class IfoBloc extends Bloc<IfoEvent, IfoState> {
       final waiting = await _ifoRepository.changeIfo(
         state.selectedIfo!.id,
         GeneralModelRequest(
-          name: state.selectedIfo!.name,
+          name: state.name.value,
         ),
       );
       if (waiting == IfoStatus.unchanged) {
-        emit(state.copyWith(formStatus: FormzStatus.submissionFailure));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            ifoActionStatus: IfoActionStatus.notSaved,
+          ),
+        );
+        emit(state.copyWith(ifoActionStatus: IfoActionStatus.pure));
       } else {
-        emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionSuccess,
+            ifoActionStatus: IfoActionStatus.saved,
+          ),
+        );
+        emit(state.copyWith(ifoActionStatus: IfoActionStatus.pure));
       }
     }
   }

@@ -151,11 +151,12 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     );
     final waiting =
         await _categoryRepository.deleteCategory(state.selectedCategory!.id);
-    if (waiting == CategoryStatus.deleted) {
+    if (waiting == CategoryStatus.undeleted) {
+      print("bloc 1");
       emit(
         state.copyWith(
-          categoryLoadingStatus: CategoryLoadingStatus.loadingSuccess,
-          categoryActionStatus: CategoryActionStatus.deleted,
+          categoryLoadingStatus: CategoryLoadingStatus.loadingFailed,
+          categoryActionStatus: CategoryActionStatus.notDeleted,
         ),
       );
       emit(
@@ -164,10 +165,11 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         ),
       );
     } else {
+      print("bloc 2");
       emit(
         state.copyWith(
-          categoryLoadingStatus: CategoryLoadingStatus.loadingFailed,
-          categoryActionStatus: CategoryActionStatus.notDeleted,
+          categoryLoadingStatus: CategoryLoadingStatus.loadingSuccess,
+          categoryActionStatus: CategoryActionStatus.deleted,
         ),
       );
       emit(

@@ -77,7 +77,7 @@ class IfoProvider {
   ) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
-      "${ApiRoutes.apiRoute}${ApiRoutes.ifo}?id=$ifoId",
+      "${ApiRoutes.apiRoute}${ApiRoutes.ifo}/$ifoId",
     );
     final response = await _httpClient.delete(
       request,
@@ -98,12 +98,14 @@ class IfoProvider {
   ) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
-      "${ApiRoutes.apiRoute}${ApiRoutes.ifo}?id=$ifoId",
+      "${ApiRoutes.apiRoute}${ApiRoutes.ifo}/$ifoId",
     );
     final response = await _httpClient.put(
       request,
       headers: header,
-      body: name,
+      body: jsonEncode(
+        name,
+      ),
     );
     if (response.statusCode != 200 && response.statusCode != 401) {
       throw ChangeIfoRequestFailure();

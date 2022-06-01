@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:ptk_inventory/common/component/add_common_button.dart';
+import 'package:ptk_inventory/common/component/common_button.dart';
 import 'package:ptk_inventory/common/component/button_in_progress.dart';
 import 'package:ptk_inventory/common/component/property_input.dart';
 import 'package:ptk_inventory/common/component/property_label.dart';
@@ -57,7 +57,8 @@ class AddIfoForm extends StatelessWidget {
                       ? const InProgress(
                           inProgressText: "Добавление...",
                         )
-                      : AddCommonButton(
+                      : CommonButton(
+                          buttonText: "Добавить",
                           onPress: () {
                             context.read<IfoBloc>().add(const IfoSubmitted());
                           },

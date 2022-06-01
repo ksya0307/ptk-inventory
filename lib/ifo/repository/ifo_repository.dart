@@ -107,9 +107,9 @@ class IfoRepository {
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         ifoId,
       );
-      return IfoStatus.changed;
+      return IfoStatus.deleted;
     } on DeleteIfoRequestFailure {
-      return IfoStatus.unchanged;
+      return IfoStatus.undeleted;
     } on DeleteIfoRequestUnauthorized {
       final UserHiveModel? userHiveModel = await getUserProfile();
       if (userHiveModel != null) {
@@ -119,7 +119,7 @@ class IfoRepository {
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         ifoId,
       );
-      return IfoStatus.changed;
+      return IfoStatus.deleted;
     }
   }
 }

@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
-import 'package:ptk_inventory/category/model/category.dart';
-import 'package:ptk_inventory/category/view/category_row.dart';
-import 'package:ptk_inventory/category/view/update_category/update_category_page.dart';
-import 'package:ptk_inventory/category/view/visible_category_list.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/ifo/bloc/ifo_bloc.dart';
 import 'package:ptk_inventory/ifo/model/ifo.dart';
 import 'package:ptk_inventory/ifo/view/ifo_row.dart';
+import 'package:ptk_inventory/ifo/view/update_ifo/update_ifo_page.dart';
 
 class IfosList extends StatelessWidget {
   const IfosList({Key? key}) : super(key: key);
@@ -196,8 +193,8 @@ class IfosList extends StatelessWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute<void>(
                                 builder: (_) => BlocProvider.value(
-                                  value: context.read<CategoryBloc>(),
-                                  child: UpdateCategoryPage(),
+                                  value: context.read<IfoBloc>(),
+                                  child: UpdateIfoPage(),
                                 ),
                               ),
                             );

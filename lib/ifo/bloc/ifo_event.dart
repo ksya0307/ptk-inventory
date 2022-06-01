@@ -35,7 +35,10 @@ class IfoSearch extends IfoEvent {
 }
 
 class IfoDeleted extends IfoEvent {
-  const IfoDeleted();
+  final int id;
+  const IfoDeleted(this.id);
+  @override
+  List<Object> get props => [id];
 }
 
 class IfoSelected extends IfoEvent {

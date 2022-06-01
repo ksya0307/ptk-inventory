@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/common/component/property_input.dart';
 
 import 'package:ptk_inventory/common/component/property_label.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_common_error.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 import 'package:ptk_inventory/users/bloc/users_bloc.dart';
-import 'package:ptk_inventory/users/view/input/name_input.dart';
-import 'package:ptk_inventory/users/view/input/password_input.dart';
 import 'package:ptk_inventory/users/view/update_user/delete_user_button.dart';
+import 'package:ptk_inventory/users/view/update_user/input/password_input.dart';
 import 'package:ptk_inventory/users/view/update_user/role_dropmenu.dart';
 import 'package:ptk_inventory/users/view/update_user/save_user_button.dart';
 

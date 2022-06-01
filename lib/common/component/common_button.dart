@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-class AddCommonButton extends StatelessWidget {
-  const AddCommonButton({
+class CommonButton extends StatelessWidget {
+  const CommonButton({
     Key? key,
     required this.formValidated,
     this.onPress,
+    required this.buttonText,
   }) : super(key: key);
   final bool formValidated;
   final void Function()? onPress;
+  final String buttonText;
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
@@ -36,12 +38,12 @@ class AddCommonButton extends StatelessWidget {
           }),
         ),
         onPressed: formValidated ? onPress : null,
-        child: const Padding(
-          padding: EdgeInsets.fromLTRB(0, 12 + 3, 0, 12 + 3),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 12 + 3, 0, 12 + 3),
           child: Text(
-            "Добавить",
+            buttonText,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontFamily: 'Rubik',
               fontWeight: FontWeight.w500,

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/config/colors.dart';
 
-class CategoryRow extends StatelessWidget {
+class IfoRow extends StatelessWidget {
   final String id;
-  final String category;
+  final String ifo;
   final bool last;
-  const CategoryRow({
+  const IfoRow({
     Key? key,
     required this.id,
-    required this.category,
+    required this.ifo,
     required this.last,
   }) : super(key: key);
   @override
@@ -43,7 +43,7 @@ class CategoryRow extends StatelessWidget {
               child: Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  category,
+                  ifo,
                   style: const TextStyle(
                     fontFamily: 'Rubik',
                     fontSize: 16,

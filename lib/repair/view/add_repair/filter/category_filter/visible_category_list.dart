@@ -43,7 +43,8 @@ class VisibleCategoryList extends StatelessWidget {
                               );
                         },
                         child: CategoryRow(
-                          currentValue: index,
+                          value: categories[index].id,
+                          groupValue: categories[index].id,
                           onChange: (category) {},
                           category: categories[index].name,
                           last: index == categories.length - 1,

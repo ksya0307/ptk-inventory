@@ -7,9 +7,14 @@ import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_equipment/classroom_equipment_row.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_equipment/visible_list.dart';
 
-class ClassroomEquipmentList extends StatelessWidget {
+class ClassroomEquipmentList extends StatefulWidget {
   const ClassroomEquipmentList({Key? key}) : super(key: key);
 
+  @override
+  State<ClassroomEquipmentList> createState() => _ClassroomEquipmentListState();
+}
+
+class _ClassroomEquipmentListState extends State<ClassroomEquipmentList> {
   @override
   Widget build(BuildContext context) {
     final equipment =
@@ -29,10 +34,19 @@ class ClassroomEquipmentList extends StatelessWidget {
             child: Row(
               children: [
                 Flexible(
-                  flex: 2,
                   child: Padding(
                     padding:
                         const EdgeInsets.only(left: 12, top: 16, bottom: 16),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 18, top: 16, bottom: 16),
                     child: Container(
                       alignment: Alignment.centerLeft,
                       child: const Text(
@@ -123,7 +137,8 @@ class ClassroomEquipmentList extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: equipment.length,
                   itemBuilder: (context, index) {
-                    return InkWell(
+                    int? _selected = equipment[0].id;
+                    return ClassroomEquipmentRow(
                       onTap: () {
                         context.read<ClassroomEquipmentBloc>().add(
                               ClassroomEquipmentUserSelected(
@@ -149,13 +164,18 @@ class ClassroomEquipmentList extends StatelessWidget {
                           ),
                         );
                       },
-                      child: ClassroomEquipmentRow(
-                        inventoryNumber:
-                            equipment[index].inventoryNumber.toString(),
-                        numberInClassroom: equipment[index].numberInClassroom,
-                        category: equipment[index].equipment.category.name,
-                        last: index == equipment.length - 1,
-                      ),
+                      inventoryNumber:
+                          equipment[index].inventoryNumber.toString(),
+                      numberInClassroom: equipment[index].numberInClassroom,
+                      category: equipment[index].equipment.category.name,
+                      last: index == equipment.length - 1,
+                      groupValue: equipment[index].id,
+                      onChange: (equipment) {
+                        setState(() {
+                          print(_selected);
+                        });
+                      },
+                      value: _selected,
                     );
                   },
                 );

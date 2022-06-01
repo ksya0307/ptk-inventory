@@ -54,6 +54,7 @@ class VisibleCategoryList extends StatelessWidget {
                         child: CategoryRow(
                           id: categories[index].id.toString(),
                           category: categories[index].name,
+                          last: index == categories.length - 1,
                         ),
                       );
                     },

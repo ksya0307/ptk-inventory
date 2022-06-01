@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ptk_inventory/common/component/property_label.dart';
 
+import 'package:ptk_inventory/common/component/property_label.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_common_error.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 import 'package:ptk_inventory/users/bloc/users_bloc.dart';
-import 'package:ptk_inventory/users/view/update_user/role_dropmenu.dart';
+import 'package:ptk_inventory/users/view/input/name_input.dart';
+import 'package:ptk_inventory/users/view/input/password_input.dart';
 import 'package:ptk_inventory/users/view/update_user/delete_user_button.dart';
-import 'package:ptk_inventory/users/view/update_user/name_input.dart';
-import 'package:ptk_inventory/users/view/update_user/password_input.dart';
-import 'package:ptk_inventory/users/view/update_user/patronymic_input.dart';
+import 'package:ptk_inventory/users/view/update_user/role_dropmenu.dart';
 import 'package:ptk_inventory/users/view/update_user/save_user_button.dart';
-import 'package:ptk_inventory/users/view/update_user/surname_input.dart';
-import 'package:ptk_inventory/users/view/update_user/username_input.dart';
 
 class UpdateUserForm extends StatelessWidget {
   const UpdateUserForm({Key? key}) : super(key: key);
@@ -43,15 +40,81 @@ class UpdateUserForm extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const PropertyLabel(property: 'Фамилия', bottomPadding: 8),
-                const SurnameInput(),
+                BlocBuilder<UsersBloc, UsersState>(
+                  buildWhen: (previous, current) =>
+                      previous.surname != current.surname,
+                  builder: (context, state) {
+                    return PropertyInput(
+                      initialValue: state.selectedUser!.surname,
+                      errorText: 'Фамилия не может быть пустой',
+                      propertyInvalid: state.surname.invalid,
+                      hintText: 'Иванов',
+                      onChange: (surname) => context
+                          .read<UsersBloc>()
+                          .add(UsersSurnameChanged(surname)),
+                    );
+                  },
+                ),
                 const PropertyLabel(property: 'Имя', bottomPadding: 8),
-                const NameInput(),
+                BlocBuilder<UsersBloc, UsersState>(
+                  buildWhen: (previous, current) =>
+                      previous.name != current.name,
+                  builder: (context, state) {
+                    return PropertyInput(
+                      initialValue: state.selectedUser!.name,
+                      errorText: 'Имя не может быть пустым',
+                      propertyInvalid: state.name.invalid,
+                      hintText: 'Иван',
+                      onChange: (name) =>
+                          context.read<UsersBloc>().add(UsersNameChanged(name)),
+                    );
+                  },
+                ),
                 const PropertyLabel(property: 'Отчество', bottomPadding: 8),
-                const PatronymicInput(),
+                BlocBuilder<UsersBloc, UsersState>(
+                  buildWhen: (previous, current) =>
+                      previous.patronymic != current.patronymic,
+                  builder: (context, state) {
+                    return PropertyInput(
+                      initialValue: state.selectedUser!.patronymic,
+                      hintText: 'Иванович',
+                      onChange: (patronymic) => context
+                          .read<UsersBloc>()
+                          .add(UsersPatronymicChanged(patronymic)),
+                    );
+                  },
+                ),
                 const PropertyLabel(property: 'Логин', bottomPadding: 8),
-                const UsernameInput(),
+                BlocBuilder<UsersBloc, UsersState>(
+                  buildWhen: (previous, current) =>
+                      previous.username != current.username,
+                  builder: (context, state) {
+                    return PropertyInput(
+                      initialValue: state.selectedUser!.username,
+                      errorText: 'Логин не может быть пустым',
+                      propertyInvalid: state.username.invalid,
+                      hintText: 'ivan.ivanov',
+                      onChange: (username) => context
+                          .read<UsersBloc>()
+                          .add(UsersUsernameChanged(username)),
+                    );
+                  },
+                ),
                 const PropertyLabel(property: 'Пароль', bottomPadding: 8),
-                PasswordInput(),
+                BlocBuilder<UsersBloc, UsersState>(
+                  buildWhen: (previous, current) =>
+                      previous.password != current.password,
+                  builder: (context, state) {
+                    return PasswordInput(
+                      errorText: 'Длина должна быть не менее 8 символов',
+                      propertyInvalid: state.password.invalid,
+                      hintText: 'Новый пароль',
+                      onChange: (password) => context
+                          .read<UsersBloc>()
+                          .add(UsersPasswordChanged(password)),
+                    );
+                  },
+                ),
                 const PropertyLabel(property: 'Роль', bottomPadding: 8),
                 const RoleDropDown(),
                 const SaveUserButton(),

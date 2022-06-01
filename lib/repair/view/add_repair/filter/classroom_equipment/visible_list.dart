@@ -6,9 +6,16 @@ import 'package:ptk_inventory/classroom_equipment/view/show_equipment_details/eq
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_equipment/classroom_equipment_row.dart';
 
-class VisibleClassroomEquipmentList extends StatelessWidget {
+class VisibleClassroomEquipmentList extends StatefulWidget {
   const VisibleClassroomEquipmentList({Key? key}) : super(key: key);
 
+  @override
+  State<VisibleClassroomEquipmentList> createState() =>
+      _VisibleClassroomEquipmentListState();
+}
+
+class _VisibleClassroomEquipmentListState
+    extends State<VisibleClassroomEquipmentList> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
@@ -32,7 +39,8 @@ class VisibleClassroomEquipmentList extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: equipment.length,
                     itemBuilder: (context, index) {
-                      return InkWell(
+                      int? _selected = equipment[0].id;
+                      return ClassroomEquipmentRow(
                         onTap: () {
                           context.read<ClassroomEquipmentBloc>().add(
                                 ClassroomEquipmentUserSelected(
@@ -59,13 +67,18 @@ class VisibleClassroomEquipmentList extends StatelessWidget {
                             ),
                           );
                         },
-                        child: ClassroomEquipmentRow(
-                          inventoryNumber:
-                              equipment[index].inventoryNumber.toString(),
-                          numberInClassroom: equipment[index].numberInClassroom,
-                          category: equipment[index].equipment.category.name,
-                          last: index == equipment.length - 1,
-                        ),
+                        inventoryNumber:
+                            equipment[index].inventoryNumber.toString(),
+                        numberInClassroom: equipment[index].numberInClassroom,
+                        category: equipment[index].equipment.category.name,
+                        last: index == equipment.length - 1,
+                        groupValue: equipment[index].id,
+                        onChange: (equipment) {
+                          setState(() {
+                            print(_selected);
+                          });
+                        },
+                        value: _selected,
                       );
                     },
                   ),

@@ -29,7 +29,11 @@ class AddCategoryForm extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           children: const [
-            PropertyLabel(property: 'Название', bottomPadding: 8),
+            PropertyLabel(
+              property: 'Название',
+              bottomPadding: 8,
+              leftPadding: 0,
+            ),
             CategoryName(),
             Padding(
               padding: EdgeInsets.only(top: 8),

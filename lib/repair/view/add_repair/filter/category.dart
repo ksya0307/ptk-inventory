@@ -7,7 +7,6 @@ import 'package:ptk_inventory/common/component/property_label.dart';
 import 'package:ptk_inventory/common/component/search_field.dart';
 import 'package:ptk_inventory/common/component/show_all_label.dart';
 
-import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/category_filter/category_form.dart';
 
 class ChooseCategory extends StatelessWidget {
@@ -15,14 +14,6 @@ class ChooseCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget makeDismissible({required Widget child}) => GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () => Navigator.of(context).pop(),
-          child: GestureDetector(
-            onTap: () {},
-            child: child,
-          ),
-        );
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

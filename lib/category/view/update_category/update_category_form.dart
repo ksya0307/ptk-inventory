@@ -37,7 +37,11 @@ class UpdateCategoryForm extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              PropertyLabel(property: 'Название', bottomPadding: 8),
+              PropertyLabel(
+                property: 'Название',
+                bottomPadding: 8,
+                leftPadding: 0,
+              ),
               CategoryNameInput(),
               Padding(
                 padding: EdgeInsets.only(top: 8),

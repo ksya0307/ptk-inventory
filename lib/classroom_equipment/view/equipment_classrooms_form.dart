@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
+import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
+import 'package:ptk_inventory/common/component/apply_filter_label.dart';
+import 'package:ptk_inventory/common/component/filter_scrollable_sheet.dart';
 import 'package:ptk_inventory/common/component/property_label.dart';
 import 'package:ptk_inventory/common/component/search_field.dart';
+import 'package:ptk_inventory/common/component/show_all_filter.dart';
+import 'package:ptk_inventory/common/component/show_all_label.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
+import 'package:ptk_inventory/config/colors.dart';
+import 'package:ptk_inventory/repair/view/add_repair/filter/category_filter/category_form.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_filter/classroom_form.dart';
 
 class EquipmentClassroomForm extends StatelessWidget {
@@ -33,16 +40,28 @@ class EquipmentClassroomForm extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const PropertyLabel(property: 'Аудитория', bottomPadding: 8),
+              const PropertyLabel(
+                property: 'Аудитория',
+                bottomPadding: 8,
+                leftPadding: 0,
+              ),
               BlocProvider<ClassroomBloc>.value(
                 value: state.user.role == UserRole.teacher
                     ? teacherClassrooms
                     : allClassrooms,
-                child: const ClassroomForm(),
+                child: const ClassroomForm(bottomPadding: 16),
+              ),
+              const ShowAllFilter(
+                action: 'Показать все',
+                containerColor: greyCard,
+                property: 'Категория',
+              ),
+              const SizedBox(
+                height: 8,
               ),
               SearchField(
                 hintText: '101340003313',
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
                 ],

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
 
+import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
 import 'package:ptk_inventory/config/colors.dart';
 
 class ClassroomList extends StatefulWidget {
-  const ClassroomList({Key? key}) : super(key: key);
-
+  const ClassroomList({
+    Key? key,
+    this.bottomPadding = 0,
+  }) : super(key: key);
+  final double bottomPadding;
   @override
   State<ClassroomList> createState() => _ClassroomListState();
 }
@@ -17,7 +20,7 @@ class _ClassroomListState extends State<ClassroomList> {
     final classrooms =
         BlocProvider.of<ClassroomBloc>(context).state.globalClassrooms;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 24),
+      padding: EdgeInsets.only(bottom: widget.bottomPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

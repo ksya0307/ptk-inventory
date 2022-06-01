@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_filter/classroom_list.dart';
 
 class ClassroomForm extends StatelessWidget {
-  const ClassroomForm({Key? key}) : super(key: key);
-
+  const ClassroomForm({
+    Key? key,
+    this.bottomPadding = 0,
+  }) : super(key: key);
+  final double bottomPadding;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -50,7 +54,9 @@ class ClassroomForm extends StatelessWidget {
                     ClassroomLoadingStatus.loadingSuccess &&
                 state.globalClassrooms.isNotEmpty) {
               // print("${state.visibleList}");
-              return const ClassroomList();
+              return ClassroomList(
+                bottomPadding: bottomPadding,
+              );
             }
             if (state.classroomLoadingStatus ==
                     ClassroomLoadingStatus.loadingSuccess &&

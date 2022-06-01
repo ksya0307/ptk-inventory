@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
+import 'package:ptk_inventory/category/model/category.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/category_filter/category_row.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/category_filter/visible_category_list.dart';
@@ -33,6 +34,15 @@ class _CategoriesListState extends State<CategoriesList> {
               ),
               child: Row(
                 children: [
+                  Flexible(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 12, top: 16, bottom: 16),
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                      ),
+                    ),
+                  ),
                   Flexible(
                     flex: 5,
                     child: Padding(
@@ -110,18 +120,21 @@ class _CategoriesListState extends State<CategoriesList> {
                       ],
                     );
                   }
-                  int _currentValue = 0;
+
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: categories.length,
                     itemBuilder: (context, index) {
+                      int? _selected = categories[0].id;
                       return CategoryRow(
-                        currentValue: _currentValue,
+                        value: _selected,
+                        groupValue: categories[index].id,
                         onChange: (category) {
                           setState(() {
-                            print("click $index");
-                            _currentValue = index;
+                            print("click $_selected");
+                            _selected = category;
+                            print(category);
                           });
                         },
                         category: categories[index].name,

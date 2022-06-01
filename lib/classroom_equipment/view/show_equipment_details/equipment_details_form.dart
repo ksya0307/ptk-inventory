@@ -16,7 +16,11 @@ class EquipmentDetailsForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PropertyLabel(property: "Инвентарный номер", bottomPadding: 0),
+          const PropertyLabel(
+            property: "Инвентарный номер",
+            bottomPadding: 0,
+            leftPadding: 0,
+          ),
           BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
             buildWhen: (previous, current) =>
                 previous.selectedEquipment!.inventoryNumber !=
@@ -32,7 +36,11 @@ class EquipmentDetailsForm extends StatelessWidget {
           const SizedBox(
             height: 24,
           ),
-          const PropertyLabel(property: "Категория", bottomPadding: 0),
+          const PropertyLabel(
+            property: "Категория",
+            bottomPadding: 0,
+            leftPadding: 0,
+          ),
           BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
             buildWhen: (previous, current) =>
                 previous.selectedEquipment!.equipment.category.name !=
@@ -48,7 +56,11 @@ class EquipmentDetailsForm extends StatelessWidget {
           const SizedBox(
             height: 24,
           ),
-          const PropertyLabel(property: "Характеристики", bottomPadding: 0),
+          const PropertyLabel(
+            property: "Характеристики",
+            bottomPadding: 0,
+            leftPadding: 0,
+          ),
           BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
             buildWhen: (previous, current) =>
                 previous.selectedEquipment!.equipment.description !=
@@ -64,7 +76,11 @@ class EquipmentDetailsForm extends StatelessWidget {
           const SizedBox(
             height: 24,
           ),
-          const PropertyLabel(property: "Аудитория", bottomPadding: 0),
+          const PropertyLabel(
+            property: "Аудитория",
+            bottomPadding: 0,
+            leftPadding: 0,
+          ),
           BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
             buildWhen: (previous, current) =>
                 previous.selectedEquipment!.classroom.number !=
@@ -80,7 +96,10 @@ class EquipmentDetailsForm extends StatelessWidget {
           const SizedBox(
             height: 24,
           ),
-          const PropertyLabel(property: "Номер в аудитории", bottomPadding: 0),
+          const PropertyLabel(
+            property: "Номер в аудитории",
+            bottomPadding: 0,
+          ),
           BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
             buildWhen: (previous, current) =>
                 previous.selectedEquipment!.numberInClassroom !=
@@ -97,7 +116,10 @@ class EquipmentDetailsForm extends StatelessWidget {
             height: 24,
           ),
           const PropertyLabel(
-              property: "Принадлежность оборудования", bottomPadding: 0),
+            property: "Принадлежность оборудования",
+            bottomPadding: 0,
+            leftPadding: 0,
+          ),
           BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
             buildWhen: (previous, current) =>
                 previous.selectedEquipment!.equipmentType !=

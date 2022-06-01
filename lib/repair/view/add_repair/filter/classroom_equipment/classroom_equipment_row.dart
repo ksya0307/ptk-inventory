@@ -2,19 +2,32 @@ import 'package:flutter/material.dart';
 
 import 'package:ptk_inventory/config/colors.dart';
 
-class ClassroomEquipmentRow extends StatelessWidget {
+class ClassroomEquipmentRow extends StatefulWidget {
   final String numberInClassroom;
   final String inventoryNumber;
   final String category;
   final bool last;
-  const ClassroomEquipmentRow(
-      {Key? key,
-      required this.numberInClassroom,
-      required this.inventoryNumber,
-      required this.category,
-      required this.last})
-      : super(key: key);
+  final int value;
+  final int groupValue;
+  final Function(int?) onChange;
+  final Function() onTap;
+  const ClassroomEquipmentRow({
+    Key? key,
+    required this.numberInClassroom,
+    required this.inventoryNumber,
+    required this.category,
+    required this.last,
+    required this.value,
+    required this.groupValue,
+    required this.onChange,
+    required this.onTap,
+  }) : super(key: key);
 
+  @override
+  State<ClassroomEquipmentRow> createState() => _ClassroomEquipmentRowState();
+}
+
+class _ClassroomEquipmentRowState extends State<ClassroomEquipmentRow> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +35,6 @@ class ClassroomEquipmentRow extends StatelessWidget {
         Row(
           children: [
             Flexible(
-              flex: 2,
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 8 + 4,
@@ -31,8 +43,29 @@ class ClassroomEquipmentRow extends StatelessWidget {
                 ),
                 child: Container(
                   alignment: Alignment.centerLeft,
+                  child: Transform.scale(
+                    scale: 1.2,
+                    child: Radio(
+                      value: widget.value,
+                      groupValue: widget.groupValue,
+                      onChanged: widget.onChange,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Flexible(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 8 + 4,
+                  bottom: 8 + 4,
+                  left: 16,
+                ),
+                child: Container(
+                  alignment: Alignment.centerLeft,
                   child: Text(
-                    numberInClassroom,
+                    widget.numberInClassroom,
                     style: const TextStyle(
                       fontFamily: 'Rubik',
                       fontSize: 16,
@@ -44,35 +77,38 @@ class ClassroomEquipmentRow extends StatelessWidget {
             ),
             Flexible(
               flex: 5,
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        inventoryNumber,
-                        style: const TextStyle(
-                          fontFamily: 'Rubik',
-                          fontSize: 16,
-                          color: blackLabels,
+              child: InkWell(
+                onTap: widget.onTap,
+                child: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.inventoryNumber,
+                          style: const TextStyle(
+                            fontFamily: 'Rubik',
+                            fontSize: 16,
+                            color: blackLabels,
+                          ),
                         ),
-                      ),
-                      Text(
-                        category,
-                        style: const TextStyle(
-                          fontFamily: 'Rubik',
-                          fontSize: 14,
-                          color: greyDark,
+                        Text(
+                          widget.category,
+                          style: const TextStyle(
+                            fontFamily: 'Rubik',
+                            fontSize: 14,
+                            color: greyDark,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
         ),
-        if (!last)
+        if (!widget.last)
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 12),
             child: Divider(

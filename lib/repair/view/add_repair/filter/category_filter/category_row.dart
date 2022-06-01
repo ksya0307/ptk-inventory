@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/config/colors.dart';
 
-class CategoryRow extends StatelessWidget {
+class CategoryRow extends StatefulWidget {
   final String category;
   final bool last;
-  final int currentValue;
-  final void Function(int) onChange;
+  final int value;
+  final int groupValue;
+  final Function(int?) onChange;
   const CategoryRow({
     Key? key,
     required this.category,
     required this.last,
-    required this.currentValue,
+    required this.groupValue,
     required this.onChange,
+    required this.value,
   }) : super(key: key);
+
+  @override
+  State<CategoryRow> createState() => _CategoryRowState();
+}
+
+class _CategoryRowState extends State<CategoryRow> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,7 +28,6 @@ class CategoryRow extends StatelessWidget {
         Row(
           children: [
             Flexible(
-              flex: 2,
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 8,
@@ -30,10 +37,10 @@ class CategoryRow extends StatelessWidget {
                 ),
                 child: Container(
                   alignment: Alignment.centerLeft,
-                  child: RadioListTile(
-                    value: currentValue,
-                    onChanged: (category) => onChange,
-                    groupValue: category,
+                  child: Radio(
+                    groupValue: widget.groupValue,
+                    onChanged: widget.onChange,
+                    value: widget.value,
                   ),
                 ),
               ),
@@ -50,7 +57,7 @@ class CategoryRow extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    category,
+                    widget.category,
                     style: const TextStyle(
                       fontFamily: 'Rubik',
                       fontSize: 16,
@@ -62,7 +69,7 @@ class CategoryRow extends StatelessWidget {
             ),
           ],
         ),
-        if (!last)
+        if (!widget.last)
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 12),
             child: Divider(

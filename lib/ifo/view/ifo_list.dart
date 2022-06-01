@@ -7,14 +7,16 @@ import 'package:ptk_inventory/category/view/category_row.dart';
 import 'package:ptk_inventory/category/view/update_category/update_category_page.dart';
 import 'package:ptk_inventory/category/view/visible_category_list.dart';
 import 'package:ptk_inventory/config/colors.dart';
+import 'package:ptk_inventory/ifo/bloc/ifo_bloc.dart';
+import 'package:ptk_inventory/ifo/model/ifo.dart';
+import 'package:ptk_inventory/ifo/view/ifo_row.dart';
 
-class CategoriesList extends StatelessWidget {
-  const CategoriesList({Key? key}) : super(key: key);
+class IfosList extends StatelessWidget {
+  const IfosList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final categories =
-        BlocProvider.of<CategoryBloc>(context).state.globalCategories;
+    final ifos = BlocProvider.of<IfoBloc>(context).state.globalIfos;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 24),
@@ -68,8 +70,8 @@ class CategoriesList extends StatelessWidget {
               ),
             ),
             RefreshIndicator(
-              onRefresh: () async => BlocProvider.of<CategoryBloc>(context)
-                ..add(const CategoryLoadList()),
+              onRefresh: () async =>
+                  BlocProvider.of<IfoBloc>(context)..add(const IfoLoadList()),
               child: Container(
                 decoration: const BoxDecoration(
                   color: greyCard,
@@ -78,10 +80,10 @@ class CategoriesList extends StatelessWidget {
                     bottomRight: Radius.circular(7.0),
                   ),
                 ),
-                child: BlocBuilder<CategoryBloc, CategoryState>(
+                child: BlocBuilder<IfoBloc, IfoState>(
                   builder: (context, state) {
                     if (state.visibleList.isNotEmpty) {
-                      return const VisibleCategoryList();
+                      //return const VisibleCategoryList();
                     }
                     if (state.searchText.isNotEmpty &&
                         state.visibleList.isEmpty) {
@@ -107,7 +109,7 @@ class CategoriesList extends StatelessWidget {
                                             bottom: 16,
                                           ),
                                           child: Text(
-                                            "Категорий не найдено",
+                                            "ИФО не найдено",
                                             style: TextStyle(
                                               color: blackLabels,
                                               fontFamily: 'Rubik',
@@ -155,7 +157,7 @@ class CategoriesList extends StatelessWidget {
                                                 ),
                                               ),
                                               const Text(
-                                                "для добавления новой категории",
+                                                "для добавления нового ИФО",
                                                 style: TextStyle(
                                                   color: blackLabels,
                                                   fontFamily: 'Rubik',
@@ -179,15 +181,15 @@ class CategoriesList extends StatelessWidget {
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: categories.length,
+                      itemCount: ifos.length,
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            context.read<CategoryBloc>().add(
-                                  CategorySelected(
-                                    Category(
-                                      id: categories[index].id,
-                                      name: categories[index].name,
+                            context.read<IfoBloc>().add(
+                                  IfoSelected(
+                                    Ifo(
+                                      id: ifos[index].id,
+                                      name: ifos[index].name,
                                     ),
                                   ),
                                 );
@@ -200,10 +202,10 @@ class CategoriesList extends StatelessWidget {
                               ),
                             );
                           },
-                          child: CategoryRow(
-                            id: categories[index].id.toString(),
-                            category: categories[index].name,
-                            last: index == categories.length - 1,
+                          child: IfoRow(
+                            id: ifos[index].id.toString(),
+                            ifo: ifos[index].name,
+                            last: index == ifos.length - 1,
                           ),
                         );
                       },

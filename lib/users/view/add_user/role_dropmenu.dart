@@ -48,6 +48,28 @@ class _RoleDropDownState extends State<RoleDropDown> {
                     setState(() {
                       role = value ?? "";
                     });
+                    switch (role) {
+                      case 'admin':
+                        context
+                            .read<UsersBloc>()
+                            .add(const UsersRoleChanged(UserRole.admin));
+                        break;
+                      case 'moderator':
+                        context
+                            .read<UsersBloc>()
+                            .add(const UsersRoleChanged(UserRole.moderator));
+                        break;
+                      case 'teacher':
+                        context
+                            .read<UsersBloc>()
+                            .add(const UsersRoleChanged(UserRole.teacher));
+                        break;
+                      case 'common':
+                        context
+                            .read<UsersBloc>()
+                            .add(const UsersRoleChanged(UserRole.common));
+                        break;
+                    }
                   },
                   items: roles.map((role) {
                     return DropdownMenuItem<String>(

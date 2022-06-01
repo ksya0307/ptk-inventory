@@ -19,9 +19,69 @@ class IfoBloc extends Bloc<IfoEvent, IfoState> {
     on<IfoSaved>(_onSaved);
     on<IfoSearch>(_onSearch);
     on<IfoDeleted>(_onDeleted);
+    on<IfoSelected>(_onSelected);
+    on<IfoDeleteFromList>(_onDeleteFromList);
+    on<IfoAddToList>(_onAddToList);
+    on<IfoSaveToList>(_onSaveList);
   }
 
   final IfoRepository _ifoRepository;
+
+  void _onSaveList(
+    IfoSaveToList event,
+    Emitter<IfoState> emit,
+  ) {
+    final Ifo ifo = Ifo(id: event.ifo.id, name: state.name.value);
+
+    final newList = state.globalIfos.where((ifo) => ifo != event.ifo).toList();
+    final ifoIndex =
+        state.globalIfos.indexWhere((element) => element.id == ifo.id);
+
+    newList[ifoIndex] = ifo;
+    emit(
+      state.copyWith(
+        ifoActionStatus: IfoActionStatus.savedOnGlobal,
+        globalIfos: newList,
+      ),
+    );
+    emit(state.copyWith(ifoActionStatus: IfoActionStatus.pure));
+  }
+
+  void _onAddToList(
+    IfoAddToList event,
+    Emitter<IfoState> emit,
+  ) {
+    final newList = state.globalIfos.where((ifo) => ifo != event.ifo).toList();
+
+    emit(
+      state.copyWith(
+        ifoActionStatus: IfoActionStatus.addedToGlobal,
+        globalIfos: newList,
+      ),
+    );
+    emit(state.copyWith(ifoActionStatus: IfoActionStatus.pure));
+  }
+
+  void _onSelected(
+    IfoSelected event,
+    Emitter<IfoState> emit,
+  ) {
+    emit(state.copyWith(selectedIfo: event.selectedIfo));
+  }
+
+  void _onDeleteFromList(
+    IfoDeleteFromList event,
+    Emitter<IfoState> emit,
+  ) {
+    final newList = state.globalIfos.where((ifo) => ifo != event.ifo).toList();
+    emit(
+      state.copyWith(
+        ifoActionStatus: IfoActionStatus.deletedFromGlobal,
+        globalIfos: newList,
+      ),
+    );
+    emit(state.copyWith(ifoActionStatus: IfoActionStatus.pure));
+  }
 
   Future<void> _onDeleted(
     IfoDeleted event,
@@ -109,9 +169,30 @@ class IfoBloc extends Bloc<IfoEvent, IfoState> {
         GeneralModelRequest(name: state.name.value),
       );
       if (waiting == IfoStatus.notcreated) {
-        emit(state.copyWith(formStatus: FormzStatus.submissionFailure));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            ifoActionStatus: IfoActionStatus.notAdded,
+          ),
+        );
+        emit(
+          state.copyWith(
+            ifoActionStatus: IfoActionStatus.pure,
+          ),
+        );
       } else {
-        emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionSuccess,
+            ifoActionStatus: IfoActionStatus.added,
+          ),
+        );
+
+        emit(
+          state.copyWith(
+            ifoActionStatus: IfoActionStatus.pure,
+          ),
+        );
       }
     }
   }

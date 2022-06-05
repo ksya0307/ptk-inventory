@@ -40,7 +40,9 @@ class UserProfilePage extends StatelessWidget {
                       } else if (state.formStatus ==
                           FormzStatus.submissionFailure) {
                         snackbarMessageCommonError(
-                            context, "Пароль не удалось сохранить");
+                          context,
+                          "Пароль не удалось сохранить",
+                        );
                       }
                     },
                     child: Container(

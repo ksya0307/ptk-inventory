@@ -8,7 +8,6 @@ import 'package:ptk_inventory/classroom_equipment/view/equipment_classrooms_form
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
 import 'package:ptk_inventory/classrooms/repository/classroom_repository.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
-import 'package:ptk_inventory/config/colors.dart';
 
 class ClassroomsEquipmentPage extends StatefulWidget {
   static Route route() {

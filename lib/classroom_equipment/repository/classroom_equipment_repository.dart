@@ -20,7 +20,8 @@ class ClassroomEquipmentRepository {
   Future<List<ClassroomEquipment>> userEquipments() async {
     try {
       final result = await _classroomEquipmentProvider.equipmentInUserClassroom(
-          HeaderModel(await HeaderModel.getAccessToken()).toMap());
+        HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+      );
       return result.result;
     } on EquipmentInUserClassroomRequestFailure {
       return [];

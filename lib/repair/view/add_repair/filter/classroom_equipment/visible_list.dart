@@ -39,7 +39,7 @@ class _VisibleClassroomEquipmentListState
                     shrinkWrap: true,
                     itemCount: equipment.length,
                     itemBuilder: (context, index) {
-                      int? _selected = equipment[0].id;
+                      final int _selected = equipment[0].id;
                       return ClassroomEquipmentRow(
                         onTap: () {
                           context.read<ClassroomEquipmentBloc>().add(
@@ -74,9 +74,7 @@ class _VisibleClassroomEquipmentListState
                         last: index == equipment.length - 1,
                         groupValue: equipment[index].id,
                         onChange: (equipment) {
-                          setState(() {
-                            print(_selected);
-                          });
+                          setState(() {});
                         },
                         value: _selected,
                       );

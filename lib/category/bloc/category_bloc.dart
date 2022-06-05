@@ -16,7 +16,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<CategoryNameChanged>(_onNameChanged);
 
     on<CategoryLoadList>(_onCategoryLoadList);
-    on<CategoryUserClassrooms>(_onCategoryUserClassrooms);
+    on<CategoryInUserClassrooms>(_onCategoryUserCategories);
 
     on<CategorySubmitted>(_onSubmitted);
     on<CategorySaved>(_onSaved);
@@ -30,8 +30,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
   final CategoryRepository _categoryRepository;
 
-  Future<void> _onCategoryUserClassrooms(
-    CategoryUserClassrooms event,
+  Future<void> _onCategoryUserCategories(
+    CategoryInUserClassrooms event,
     Emitter<CategoryState> emit,
   ) async {
     emit(
@@ -152,7 +152,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     final waiting =
         await _categoryRepository.deleteCategory(state.selectedCategory!.id);
     if (waiting == CategoryStatus.undeleted) {
-      print("bloc 1");
       emit(
         state.copyWith(
           categoryLoadingStatus: CategoryLoadingStatus.loadingFailed,
@@ -165,7 +164,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         ),
       );
     } else {
-      print("bloc 2");
       emit(
         state.copyWith(
           categoryLoadingStatus: CategoryLoadingStatus.loadingSuccess,

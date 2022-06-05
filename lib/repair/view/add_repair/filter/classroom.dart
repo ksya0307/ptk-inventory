@@ -35,7 +35,6 @@ class ChooseClassroom extends StatelessWidget {
             context: context,
             backgroundColor: Colors.transparent,
             builder: (_) {
-              print("1 call?");
               return BlocProvider<ClassroomBloc>.value(
                 value: BlocProvider.of<ClassroomBloc>(
                   context,
@@ -49,7 +48,6 @@ class ChooseClassroom extends StatelessWidget {
                   ),
                 child: BlocBuilder<ClassroomBloc, ClassroomState>(
                   builder: (context, state) {
-                    print("2 call?");
                     return EquipmentFilterSheet(
                       title: 'Все аудитории',
                       widget: Column(

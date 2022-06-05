@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ptk_inventory/category/bloc/category_bloc.dart';
-import 'package:ptk_inventory/category/view/category_list.dart';
-import 'package:ptk_inventory/category/view/search_category.dart';
 import 'package:ptk_inventory/common/component/search_field.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/ifo/bloc/ifo_bloc.dart';

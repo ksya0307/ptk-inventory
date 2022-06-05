@@ -56,6 +56,10 @@ flutter:
     - images/2.0x/logo.png
     - images/3.0x/logo.png
     - images/4.0x/logo.png
+    - images/1.5x/ptk_inventory_logo.png
+    - images/2.0x/ptk_inventory_logo.png
+    - images/3.0x/ptk_inventory_logo.png
+    - images/4.0x/ptk_inventory_logo.png
 
   fonts:
    - family: Rubik

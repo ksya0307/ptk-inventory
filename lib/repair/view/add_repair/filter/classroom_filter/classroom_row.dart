@@ -12,9 +12,9 @@ class ClassroomRow extends StatefulWidget {
 }
 
 class _ClassroomRowState extends State<ClassroomRow> {
-  bool _isSelected = false;
-  Color _color = greyCard;
-  Color _textColor = blackLabels;
+  final bool _isSelected = false;
+  final Color _color = greyCard;
+  final Color _textColor = blackLabels;
   //_color == secondaryGreen
   @override
   Widget build(BuildContext context) {

@@ -18,7 +18,6 @@ class ClassroomForm extends StatelessWidget {
       children: [
         BlocBuilder<ClassroomBloc, ClassroomState>(
           builder: (context, state) {
-            print("choose classroom");
             if (state.classroomLoadingStatus ==
                 ClassroomLoadingStatus.loadingInProgress) {
               return Column(

@@ -1,23 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/view/category_list.dart';
-import 'package:ptk_inventory/category/view/search_category.dart';
 import 'package:ptk_inventory/config/colors.dart';
 
 class CategoryForm extends StatelessWidget {
-  const CategoryForm({Key? key}) : super(key: key);
-
+  const CategoryForm({
+    Key? key,
+    required this.topPaddingSearchCategory,
+    required this.topPaddingCategoryList,
+    this.search,
+  }) : super(key: key);
+  final double topPaddingSearchCategory;
+  final double topPaddingCategoryList;
+  final Widget? search;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16),
+      padding: EdgeInsets.only(top: topPaddingSearchCategory),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SearchCategory(),
+          if (search != null)
+            search!
+          else
+            const SizedBox(
+              height: 0,
+            ),
           Padding(
-            padding: const EdgeInsets.only(top: 8),
+            padding: EdgeInsets.only(top: topPaddingCategoryList),
             child: BlocBuilder<CategoryBloc, CategoryState>(
               builder: (context, state) {
                 if (state.categoryLoadingStatus ==

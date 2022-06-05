@@ -43,8 +43,6 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     UsersRoleChanged event,
     Emitter<UsersState> emit,
   ) {
-    print("bloc role");
-    print(event.role);
     emit(state.copyWith(role: event.role));
   }
 
@@ -308,7 +306,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
           patronymic: state.patronymic,
           username: state.username.value,
           password: state.password.value,
-          role: state.role.name,
+          role: state.role,
         ),
       );
       if (waiting == SignUpStatus.unsigned) {

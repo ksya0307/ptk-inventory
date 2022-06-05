@@ -40,7 +40,6 @@ class UpdateCategoryForm extends StatelessWidget {
               PropertyLabel(
                 property: 'Название',
                 bottomPadding: 8,
-                leftPadding: 0,
               ),
               CategoryNameInput(),
               Padding(

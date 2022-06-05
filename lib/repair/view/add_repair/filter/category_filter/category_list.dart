@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
-import 'package:ptk_inventory/category/model/category.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/category_filter/category_row.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/category_filter/visible_category_list.dart';
@@ -132,9 +131,7 @@ class _CategoriesListState extends State<CategoriesList> {
                         groupValue: categories[index].id,
                         onChange: (category) {
                           setState(() {
-                            print("click $_selected");
                             _selected = category;
-                            print(category);
                           });
                         },
                         category: categories[index].name,

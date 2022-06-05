@@ -71,6 +71,7 @@ class ClassroomList extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: classrooms.length,
                     itemBuilder: (context, index) {
+                      print("AYE");
                       final String patronymic =
                           classrooms[index].user.patronymic != null
                               ? "${classrooms[index].user.patronymic![0]}."

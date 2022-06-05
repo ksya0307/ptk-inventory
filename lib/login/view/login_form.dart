@@ -15,7 +15,7 @@ class LoginForm extends StatelessWidget {
   Widget _loginForm() {
     return Form(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           const SizedBox(height: 30),
           const UsernameInput(),

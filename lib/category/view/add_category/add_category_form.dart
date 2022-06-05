@@ -32,7 +32,6 @@ class AddCategoryForm extends StatelessWidget {
             PropertyLabel(
               property: 'Название',
               bottomPadding: 8,
-              leftPadding: 0,
             ),
             CategoryName(),
             Padding(

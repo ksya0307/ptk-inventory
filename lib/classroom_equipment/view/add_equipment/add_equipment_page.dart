@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/classroom_equipment/view/add_equipment/add_category_text_button.dart';
 import 'package:ptk_inventory/classroom_equipment/view/add_equipment/add_equipment_form.dart';
-import 'package:ptk_inventory/classroom_equipment/view/add_equipment/apply_filter.dart';
 
 import 'package:ptk_inventory/config/colors.dart';
 
@@ -97,7 +96,6 @@ class AddEquipmentPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: const [AddCategory()],
                             ),
-                            const ApplyFilter()
                           ],
                         ),
                       ),

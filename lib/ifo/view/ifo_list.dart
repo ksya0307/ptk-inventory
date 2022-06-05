@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/ifo/bloc/ifo_bloc.dart';
 import 'package:ptk_inventory/ifo/model/ifo.dart';

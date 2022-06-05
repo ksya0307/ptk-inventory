@@ -35,7 +35,7 @@ class DocumentNameInput extends StatelessWidget {
                 color: redCustom,
                 fontFamily: 'Rubik',
               ),
-              hintText: 'Смартфон',
+              hintText: 'Договор №1',
               contentPadding: const EdgeInsets.fromLTRB(12, 19 - 4, 12, 19 - 4),
               hintStyle: const TextStyle(
                 fontFamily: 'Rubik',

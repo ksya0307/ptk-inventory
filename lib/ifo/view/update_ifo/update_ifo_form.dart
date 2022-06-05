@@ -101,18 +101,19 @@ class UpdateIfoForm extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 24),
                       child: DeleteButton(
-                          bottomSheet: BlocProvider.value(
-                        value: context.read<IfoBloc>(),
-                        child: ConfirmDeletingBottomSheet(
-                          deleteProperty: 'ИФО',
-                          onPress: () {
-                            context
-                                .read<IfoBloc>()
-                                .add(IfoDeleted(state.selectedIfo!.id));
-                            Navigator.of(context).pop();
-                          },
+                        bottomSheet: BlocProvider.value(
+                          value: context.read<IfoBloc>(),
+                          child: ConfirmDeletingBottomSheet(
+                            deleteProperty: 'ИФО',
+                            onPress: () {
+                              context
+                                  .read<IfoBloc>()
+                                  .add(IfoDeleted(state.selectedIfo!.id));
+                              Navigator.of(context).pop();
+                            },
+                          ),
                         ),
-                      )),
+                      ),
                     );
                   },
                 ),

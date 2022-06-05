@@ -16,21 +16,22 @@ class IfoPage extends StatelessWidget {
       create: (context) =>
           IfoBloc(ifoRepository: IfoRepository())..add(const IfoLoadList()),
       child: Scaffold(
-        floatingActionButton:
-            BlocBuilder<IfoBloc, IfoState>(builder: (context, state) {
-          return FloatingActionButton(
-            tooltip: "Добавить ИФО",
-            child: const Icon(Icons.add_rounded),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute<void>(
-                builder: (_) => BlocProvider<IfoBloc>.value(
-                  value: context.read<IfoBloc>(),
-                  child: AddIfoPage(),
+        floatingActionButton: BlocBuilder<IfoBloc, IfoState>(
+          builder: (context, state) {
+            return FloatingActionButton(
+              tooltip: "Добавить ИФО",
+              child: const Icon(Icons.add_rounded),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => BlocProvider<IfoBloc>.value(
+                    value: context.read<IfoBloc>(),
+                    child: AddIfoPage(),
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          },
+        ),
         appBar: AppBar(
           leading: IconButton(
             tooltip: "Назад",

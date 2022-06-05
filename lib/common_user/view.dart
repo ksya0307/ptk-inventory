@@ -13,12 +13,14 @@ class CommonPage extends StatelessWidget {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints view) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: view.maxHeight,
-                ),
+            return RefreshIndicator(
+              color: primaryBlue,
+              backgroundColor: greyCard,
+              onRefresh: _refresh,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Container(
+                  height: MediaQuery.of(context).size.height,
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                   child: const _CommonView(),
                 ),
@@ -28,6 +30,10 @@ class CommonPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _refresh() {
+    return Future.delayed(const Duration(seconds: 5));
   }
 }
 

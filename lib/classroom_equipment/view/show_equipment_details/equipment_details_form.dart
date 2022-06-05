@@ -19,7 +19,6 @@ class EquipmentDetailsForm extends StatelessWidget {
           const PropertyLabel(
             property: "Инвентарный номер",
             bottomPadding: 0,
-            leftPadding: 0,
           ),
           BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
             buildWhen: (previous, current) =>
@@ -39,7 +38,6 @@ class EquipmentDetailsForm extends StatelessWidget {
           const PropertyLabel(
             property: "Категория",
             bottomPadding: 0,
-            leftPadding: 0,
           ),
           BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
             buildWhen: (previous, current) =>
@@ -59,7 +57,6 @@ class EquipmentDetailsForm extends StatelessWidget {
           const PropertyLabel(
             property: "Характеристики",
             bottomPadding: 0,
-            leftPadding: 0,
           ),
           BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
             buildWhen: (previous, current) =>
@@ -79,7 +76,6 @@ class EquipmentDetailsForm extends StatelessWidget {
           const PropertyLabel(
             property: "Аудитория",
             bottomPadding: 0,
-            leftPadding: 0,
           ),
           BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
             buildWhen: (previous, current) =>
@@ -118,7 +114,6 @@ class EquipmentDetailsForm extends StatelessWidget {
           const PropertyLabel(
             property: "Принадлежность оборудования",
             bottomPadding: 0,
-            leftPadding: 0,
           ),
           BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
             buildWhen: (previous, current) =>

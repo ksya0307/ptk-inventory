@@ -64,11 +64,3 @@ class DeleteButton extends StatelessWidget {
     );
   }
 }
-
-
-/*
- child: bottomSheet BlocProvider.value(
-                        value: context.read<CategoryBloc>(),
-                        child: const ConfirmDeletingBottomSheet(),
-                      ),
- */

@@ -1,10 +1,12 @@
+import 'package:ptk_inventory/common/model/user_roles.dart';
+
 class SignUpModelRequest {
   String surname;
   String name;
   String? patronymic;
   String username;
   String password;
-  String? role;
+  UserRole role;
 
   SignUpModelRequest({
     required this.surname,
@@ -12,7 +14,7 @@ class SignUpModelRequest {
     this.patronymic,
     required this.username,
     required this.password,
-    this.role,
+    this.role = UserRole.common,
   });
 
   Map<String, dynamic> toMap() {
@@ -22,7 +24,7 @@ class SignUpModelRequest {
       'patronymic': patronymic,
       'username': username,
       'password': password,
-      'role': role!.toUpperCase(),
+      'role': role.userRoleToString.toUpperCase(),
     };
   }
 
@@ -32,7 +34,7 @@ class SignUpModelRequest {
     String? patronymic,
     String? username,
     String? password,
-    String? role,
+    UserRole? role,
   }) {
     return SignUpModelRequest(
       surname: surname ?? this.surname,

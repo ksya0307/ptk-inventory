@@ -71,6 +71,6 @@ class CategorySaveToList extends CategoryEvent {
   List<Object> get props => [category];
 }
 
-class CategoryUserClassrooms extends CategoryEvent {
-  const CategoryUserClassrooms();
+class CategoryInUserClassrooms extends CategoryEvent {
+  const CategoryInUserClassrooms();
 }

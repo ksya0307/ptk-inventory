@@ -8,9 +8,9 @@ part 'classroom_equipment_state.dart';
 
 class ClassroomEquipmentBloc
     extends Bloc<ClassroomEquipmentEvent, ClassroomEquipmentState> {
-  ClassroomEquipmentBloc(
-      {required ClassroomEquipmentRepository classroomEquipmentRepository})
-      : _classroomEquipmentRepository = classroomEquipmentRepository,
+  ClassroomEquipmentBloc({
+    required ClassroomEquipmentRepository classroomEquipmentRepository,
+  })  : _classroomEquipmentRepository = classroomEquipmentRepository,
         super(const ClassroomEquipmentState()) {
     on<ClassroomEquipmentLoadUserEquipmentsList>(_onLoadUserEquipmentList);
     on<ClassroomEquipmentSearch>(_onSearch);

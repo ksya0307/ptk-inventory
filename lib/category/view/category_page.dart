@@ -5,6 +5,7 @@ import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/repository/category_repository.dart';
 import 'package:ptk_inventory/category/view/add_category/add_category_page.dart';
 import 'package:ptk_inventory/category/view/category_form.dart';
+import 'package:ptk_inventory/category/view/search_category.dart';
 
 class CategoryPage extends StatelessWidget {
   static Route route() {
@@ -69,7 +70,11 @@ class CategoryPage extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: Column(
                       children: const [
-                        CategoryForm(),
+                        CategoryForm(
+                          search: SearchCategory(),
+                          topPaddingCategoryList: 8,
+                          topPaddingSearchCategory: 16,
+                        ),
                       ],
                     ),
                   ),

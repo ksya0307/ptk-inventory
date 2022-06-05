@@ -5,9 +5,12 @@ class ClassroomRow extends StatelessWidget {
   final String number;
   final String user;
   final bool last;
-  const ClassroomRow(
-      {Key? key, required this.number, required this.user, required this.last})
-      : super(key: key);
+  const ClassroomRow({
+    Key? key,
+    required this.number,
+    required this.user,
+    required this.last,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(

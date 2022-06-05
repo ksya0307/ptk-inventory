@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/config/colors.dart';
 
 class ConfirmDeletingBottomSheet extends StatelessWidget {
@@ -103,28 +101,3 @@ class ConfirmDeleteButton extends StatelessWidget {
     );
   }
 }
-
-
-/*
- if (state.categoryActionStatus == CategoryActionStatus.deleted) {
-          snackbarMessage(context, "Категория удалена");
-          // context
-          //     .read<CategoryBloc>()
-          //     .add(CategoryDeleteFromList(category: state.selectedCategory!));
-          // context.read<CategoryBloc>().add(const CategorySelected(null));
-        }
-        if (state.categoryActionStatus ==
-            CategoryActionStatus.deletedFromGlobal) {
-          Navigator.of(context).pop();
-        }
-        if (state.categoryActionStatus == CategoryActionStatus.notDeleted) {
-          snackbarMessageError(context, "Категория не может быть удалена");
-        }
-
-
-on pressed
-        context
-                    .read<CategoryBloc>()
-                    .add(CategoryDeleted(state.selectedCategory!.id));
-                Navigator.of(context).pop();
-*/

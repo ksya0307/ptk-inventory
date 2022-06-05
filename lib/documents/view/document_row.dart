@@ -5,9 +5,12 @@ class DocumentRow extends StatelessWidget {
   final String id;
   final String document;
   final bool last;
-  const DocumentRow(
-      {Key? key, required this.id, required this.document, required this.last})
-      : super(key: key);
+  const DocumentRow({
+    Key? key,
+    required this.id,
+    required this.document,
+    required this.last,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(

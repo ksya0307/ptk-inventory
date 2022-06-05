@@ -112,8 +112,6 @@ class ClassroomBloc extends Bloc<ClassroomEvent, ClassroomState> {
     ClassroomSelected event,
     Emitter<ClassroomState> emit,
   ) {
-    print("bloc");
-    print(event.selectedClassroom);
     emit(state.copyWith(selectedClassroom: event.selectedClassroom));
   }
 
@@ -184,7 +182,6 @@ class ClassroomBloc extends Bloc<ClassroomEvent, ClassroomState> {
     ClassroomLoadList event,
     Emitter<ClassroomState> emit,
   ) async {
-    print("call");
     emit(
       state.copyWith(
         classroomLoadingStatus: ClassroomLoadingStatus.loadingInProgress,

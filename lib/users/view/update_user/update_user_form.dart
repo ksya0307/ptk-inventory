@@ -44,14 +44,17 @@ class UpdateUserForm extends StatelessWidget {
                   buildWhen: (previous, current) =>
                       previous.surname != current.surname,
                   builder: (context, state) {
-                    return PropertyInput(
-                      initialValue: state.selectedUser!.surname,
-                      errorText: 'Фамилия не может быть пустой',
-                      propertyInvalid: state.surname.invalid,
-                      hintText: 'Иванов',
-                      onChange: (surname) => context
-                          .read<UsersBloc>()
-                          .add(UsersSurnameChanged(surname)),
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: PropertyInput(
+                        initialValue: state.selectedUser!.surname,
+                        errorText: 'Фамилия не может быть пустой',
+                        propertyInvalid: state.surname.invalid,
+                        hintText: 'Иванов',
+                        onChange: (surname) => context
+                            .read<UsersBloc>()
+                            .add(UsersSurnameChanged(surname)),
+                      ),
                     );
                   },
                 ),
@@ -60,13 +63,17 @@ class UpdateUserForm extends StatelessWidget {
                   buildWhen: (previous, current) =>
                       previous.name != current.name,
                   builder: (context, state) {
-                    return PropertyInput(
-                      initialValue: state.selectedUser!.name,
-                      errorText: 'Имя не может быть пустым',
-                      propertyInvalid: state.name.invalid,
-                      hintText: 'Иван',
-                      onChange: (name) =>
-                          context.read<UsersBloc>().add(UsersNameChanged(name)),
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: PropertyInput(
+                        initialValue: state.selectedUser!.name,
+                        errorText: 'Имя не может быть пустым',
+                        propertyInvalid: state.name.invalid,
+                        hintText: 'Иван',
+                        onChange: (name) => context
+                            .read<UsersBloc>()
+                            .add(UsersNameChanged(name)),
+                      ),
                     );
                   },
                 ),
@@ -75,12 +82,15 @@ class UpdateUserForm extends StatelessWidget {
                   buildWhen: (previous, current) =>
                       previous.patronymic != current.patronymic,
                   builder: (context, state) {
-                    return PropertyInput(
-                      initialValue: state.selectedUser!.patronymic,
-                      hintText: 'Иванович',
-                      onChange: (patronymic) => context
-                          .read<UsersBloc>()
-                          .add(UsersPatronymicChanged(patronymic)),
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: PropertyInput(
+                        initialValue: state.selectedUser!.patronymic,
+                        hintText: 'Иванович',
+                        onChange: (patronymic) => context
+                            .read<UsersBloc>()
+                            .add(UsersPatronymicChanged(patronymic)),
+                      ),
                     );
                   },
                 ),
@@ -89,14 +99,17 @@ class UpdateUserForm extends StatelessWidget {
                   buildWhen: (previous, current) =>
                       previous.username != current.username,
                   builder: (context, state) {
-                    return PropertyInput(
-                      initialValue: state.selectedUser!.username,
-                      errorText: 'Логин не может быть пустым',
-                      propertyInvalid: state.username.invalid,
-                      hintText: 'ivan.ivanov',
-                      onChange: (username) => context
-                          .read<UsersBloc>()
-                          .add(UsersUsernameChanged(username)),
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: PropertyInput(
+                        initialValue: state.selectedUser!.username,
+                        errorText: 'Логин не может быть пустым',
+                        propertyInvalid: state.username.invalid,
+                        hintText: 'ivan.ivanov',
+                        onChange: (username) => context
+                            .read<UsersBloc>()
+                            .add(UsersUsernameChanged(username)),
+                      ),
                     );
                   },
                 ),
@@ -105,13 +118,16 @@ class UpdateUserForm extends StatelessWidget {
                   buildWhen: (previous, current) =>
                       previous.password != current.password,
                   builder: (context, state) {
-                    return PasswordInput(
-                      errorText: 'Длина должна быть не менее 8 символов',
-                      propertyInvalid: state.password.invalid,
-                      hintText: 'Новый пароль',
-                      onChange: (password) => context
-                          .read<UsersBloc>()
-                          .add(UsersPasswordChanged(password)),
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: PasswordInput(
+                        errorText: 'Длина должна быть не менее 8 символов',
+                        propertyInvalid: state.password.invalid,
+                        hintText: 'Новый пароль',
+                        onChange: (password) => context
+                            .read<UsersBloc>()
+                            .add(UsersPasswordChanged(password)),
+                      ),
                     );
                   },
                 ),

@@ -1,13 +1,10 @@
 import 'dart:core';
 
-import 'package:ptk_inventory/category/model/category.dart';
-import 'package:ptk_inventory/category/provider/category_api_client.dart';
 import 'package:ptk_inventory/classrooms/model/classroom.dart';
 import 'package:ptk_inventory/classrooms/model/request/create_classroom_request.dart';
 import 'package:ptk_inventory/classrooms/provider/classroom_api_client.dart';
 import 'package:ptk_inventory/common/model/hive_model.dart';
 import 'package:ptk_inventory/common/model/requests/auth_header.dart';
-import 'package:ptk_inventory/common/model/requests/general_request.dart';
 import 'package:ptk_inventory/common/provider/hive/hive_provider.dart';
 import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 

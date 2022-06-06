@@ -9,12 +9,12 @@ class CategoryNameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryBloc, CategoryState>(
-      buildWhen: (previous, current) =>
-          previous.selectedCategory != current.selectedCategory,
+      buildWhen: (previous, current) => previous.name != current.name,
       builder: (context, state) {
         if (state.selectedCategory != null) {
           return TextFormField(
             onChanged: (name) {
+              print(name);
               context.read<CategoryBloc>().add(CategoryNameChanged(name));
             },
             key: const Key('addCategoryForm_categoryInput_textField'),
@@ -29,7 +29,7 @@ class CategoryNameInput extends StatelessWidget {
             decoration: InputDecoration(
               labelStyle: const TextStyle(fontFamily: 'Rubik', fontSize: 18),
               errorText: state.name.invalid
-                  ? 'Имя категории не может быть пустым'
+                  ? 'Название категории не может быть пустым'
                   : null,
               errorStyle: const TextStyle(
                 color: redCustom,

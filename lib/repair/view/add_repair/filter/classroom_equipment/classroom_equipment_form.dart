@@ -48,7 +48,6 @@ class ClassroomEquipmentForm extends StatelessWidget {
             if (state.classroomEquipmentLoadingStatus ==
                     ClassroomEquipmentLoadingStatus.loadingSuccess &&
                 state.globalEquipments.isNotEmpty) {
-              // print("${state.visibleList}");
               return const ClassroomEquipmentList();
             }
             if (state.classroomEquipmentLoadingStatus ==

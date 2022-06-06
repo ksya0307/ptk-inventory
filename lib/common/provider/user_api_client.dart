@@ -188,9 +188,9 @@ class UserProvider {
   }) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
-      "${ApiRoutes.apiRoute}${ApiRoutes.users}?id=$userId",
+      "${ApiRoutes.apiRoute}${ApiRoutes.users}/$userId",
     );
-    final response = await _httpClient.put(
+    final response = await _httpClient.delete(
       request,
       headers: header,
     );

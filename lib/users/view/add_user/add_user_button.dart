@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:ptk_inventory/common/model/user.dart';
 import 'package:ptk_inventory/config/colors.dart';
+import 'package:ptk_inventory/sign_up/models/request/sign_up_request.dart';
 import 'package:ptk_inventory/users/bloc/users_bloc.dart';
 
 class AddUserButton extends StatelessWidget {
@@ -85,6 +87,17 @@ class AddUserButton extends StatelessWidget {
                             context
                                 .read<UsersBloc>()
                                 .add(const UsersSubmitted());
+                            context.read<UsersBloc>().add(
+                                  UsersAddToList(
+                                    user: SignUpModelRequest(
+                                      surname: state.surname.value,
+                                      name: state.name.value,
+                                      patronymic: state.patronymic,
+                                      username: state.username.value,
+                                      password: state.password.value,
+                                    ),
+                                  ),
+                                );
                           }
                         : null,
                     child: const Padding(

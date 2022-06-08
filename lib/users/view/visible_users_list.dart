@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/common/model/user.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/users/bloc/users_bloc.dart';
+import 'package:ptk_inventory/users/view/update_user/update_user_page.dart';
 import 'package:ptk_inventory/users/view/users_row.dart';
 
 class VisibleUsersList extends StatelessWidget {
@@ -13,6 +15,7 @@ class VisibleUsersList extends StatelessWidget {
       builder: (context, state) {
         final users = state.visibleList;
         return SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.only(bottom: 24),
             child: Column(
@@ -26,7 +29,7 @@ class VisibleUsersList extends StatelessWidget {
                     ),
                   ),
                   child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
+                    physics: const AlwaysScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: users.length,
                     itemBuilder: (context, index) {
@@ -35,22 +38,26 @@ class VisibleUsersList extends StatelessWidget {
                           : "";
                       return InkWell(
                         onTap: () {
-                          // context.read<CategoryBloc>().add(
-                          //       CategorySelected(
-                          //         Category(
-                          //           id: users[index].id,
-                          //           name: users[index].name,
-                          //         ),
-                          //       ),
-                          //     );
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute<void>(
-                          //     builder: (_) => BlocProvider.value(
-                          //       value: context.read<CategoryBloc>(),
-                          //       child: UpdateCategoryPage(),
-                          //     ),
-                          //   ),
-                          // );
+                          context.read<UsersBloc>().add(
+                                UsersSelected(
+                                  User(
+                                    id: users[index].id,
+                                    name: users[index].name,
+                                    role: users[index].role,
+                                    surname: users[index].surname,
+                                    username: users[index].username,
+                                    patronymic: users[index].patronymic ?? '',
+                                  ),
+                                ),
+                              );
+                          Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) => BlocProvider.value(
+                                value: context.read<UsersBloc>(),
+                                child: UpdateUserPage(),
+                              ),
+                            ),
+                          );
                         },
                         child: UsersRow(
                           id: users[index].id.toString(),

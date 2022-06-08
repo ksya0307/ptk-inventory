@@ -1,15 +1,15 @@
 import 'package:ptk_inventory/common/model/hive_model.dart';
 import 'package:ptk_inventory/common/model/requests/auth_header.dart';
 import 'package:ptk_inventory/common/model/requests/change_password_request.dart';
+import 'package:ptk_inventory/common/model/requests/change_user_request.dart';
 import 'package:ptk_inventory/common/model/user.dart';
 import 'package:ptk_inventory/common/provider/hive/hive_provider.dart';
 import 'package:ptk_inventory/common/provider/user_api_client.dart';
 import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 import 'package:ptk_inventory/sign_up/models/request/sign_up_request.dart';
 
-enum ChangeStatus { changed, unchanged }
+enum ChangeStatus { changed, unchanged, deleted, notDeleted }
 enum SignUpStatus { signed, unsigned }
-enum UsersStatus { successfullyGot, unsuccessfullyGot }
 
 class UserRepository {
   final UserProvider _userProvider;
@@ -84,5 +84,49 @@ class UserRepository {
     }
   }
 
-  Future<void> updateUser() async {}
+  Future<ChangeStatus> updateUser(
+    ChangeUserModelRequest changeUserModelRequest,
+  ) async {
+    try {
+      await _userProvider.changeUserData(
+        header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+        body: changeUserModelRequest.toMap(),
+      );
+      return ChangeStatus.changed;
+    } on ChangeUserDataFailure {
+      return ChangeStatus.unchanged;
+    } on ChangeUserDataUnauthorized {
+      final UserHiveModel? userHiveModel = await getUserProfile();
+      if (userHiveModel != null) {
+        await _authenticationRepository.refreshToken(userHiveModel);
+      }
+      await _userProvider.changeUserData(
+        header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+        body: changeUserModelRequest.toMap(),
+      );
+      return ChangeStatus.changed;
+    }
+  }
+
+  Future<ChangeStatus> deleteUser(int userId) async {
+    try {
+      await _userProvider.deleteUser(
+        header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+        userId: userId,
+      );
+      return ChangeStatus.deleted;
+    } on DeleteUserFailure {
+      return ChangeStatus.notDeleted;
+    } on DeleteUserUnauthorized {
+      final UserHiveModel? userHiveModel = await getUserProfile();
+      if (userHiveModel != null) {
+        await _authenticationRepository.refreshToken(userHiveModel);
+      }
+      await _userProvider.deleteUser(
+        header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+        userId: userId,
+      );
+      return ChangeStatus.deleted;
+    }
+  }
 }

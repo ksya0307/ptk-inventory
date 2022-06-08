@@ -26,7 +26,7 @@ class ChangeUserModelRequest {
       'patronymic': patronymic,
       'username': username,
       'password': password,
-      'role': UserRole,
+      'role': role!.userRoleToString.toUpperCase(),
     };
   }
 }

@@ -88,7 +88,7 @@ class UsersDeleteFromList extends UsersEvent {
 }
 
 class UsersAddToList extends UsersEvent {
-  final User user;
+  final SignUpModelRequest user;
   const UsersAddToList({required this.user});
   @override
   List<Object> get props => [user];

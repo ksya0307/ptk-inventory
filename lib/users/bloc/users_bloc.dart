@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
+import 'package:http/http.dart';
+import 'package:ptk_inventory/common/model/requests/change_user_request.dart';
 import 'package:ptk_inventory/common/model/user.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/common/repository/user_repository.dart';
@@ -66,15 +68,14 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     UsersAddToList event,
     Emitter<UsersState> emit,
   ) {
-    final newList =
-        state.globalUsers.where((user) => user != event.user).toList();
+    // state.globalUsers.add(event.user);
 
-    emit(
-      state.copyWith(
-        userActionStatus: UserActionStatus.addedToGlobal,
-        globalUsers: newList,
-      ),
-    );
+    // emit(
+    //   state.copyWith(
+    //     userActionStatus: UserActionStatus.addedToGlobal,
+    //     globalUsers: newList,
+    //   ),
+    // );
     emit(state.copyWith(userActionStatus: UserActionStatus.pure));
   }
 
@@ -82,24 +83,35 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     UsersSaveToList event,
     Emitter<UsersState> emit,
   ) {
-    // final Users user =
-    //     Users(id: event.user.id, name: state.name.value);
+    final User user = User(
+      id: event.user.id,
+      name: state.name.value.isEmpty
+          ? state.selectedUser!.name
+          : state.name.value,
+      surname: state.surname.value.isEmpty
+          ? state.selectedUser!.surname
+          : state.surname.value,
+      patronymic: state.patronymic ?? state.selectedUser!.patronymic,
+      username: state.username.value.isEmpty
+          ? state.selectedUser!.username
+          : state.username.value,
+      role: state.role.name.isEmpty ? state.selectedUser!.role : state.role,
+    );
 
-    // final newList = state.globalCategories
-    //     .where((user) => user != event.user)
-    //     .toList();
-    // final userIndex = state.globalCategories
-    //     .indexWhere((element) => element.id == user.id);
+    final newList = state.globalUsers;
 
-    // newList[userIndex] = user;
-    // print("user $user");
-    // emit(
-    //   state.copyWith(
-    //     userActionStatus: UserActionStatus.savedOnGlobal,
-    //     globalCategories: newList,
-    //   ),
-    // );
-    // emit(state.copyWith(userActionStatus: UserActionStatus.pure));
+    final userIndex =
+        state.globalUsers.indexWhere((element) => element.id == user.id);
+
+    newList[userIndex] = user;
+    newList.sort((a, b) => a.surname.compareTo(b.surname));
+    emit(
+      state.copyWith(
+        userActionStatus: UserActionStatus.savedOnGlobal,
+        globalUsers: newList,
+      ),
+    );
+    emit(state.copyWith(userActionStatus: UserActionStatus.pure));
   }
 
   void _onSelected(
@@ -138,39 +150,38 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     UsersDeleted event,
     Emitter<UsersState> emit,
   ) async {
-    // emit(
-    //   state.copyWith(
-    //     userLoadingStatus: UserLoadingStatus.loadingInProgress,
-    //   ),
-    // );
-    // final waiting =
-    //     await _userRepository.deleteUsers(state.selectedUsers!.id);
-    // print(waiting);
-    // if (waiting == UsersStatus.deleted) {
-    //   emit(
-    //     state.copyWith(
-    //       userLoadingStatus: UserLoadingStatus.loadingSuccess,
-    //       userActionStatus: UserActionStatus.deleted,
-    //     ),
-    //   );
-    //   emit(
-    //     state.copyWith(
-    //       userActionStatus: UserActionStatus.pure,
-    //     ),
-    //   );
-    // } else {
-    //   emit(
-    //     state.copyWith(
-    //       userLoadingStatus: UserLoadingStatus.loadingFailed,
-    //       userActionStatus: UserActionStatus.notDeleted,
-    //     ),
-    //   );
-    //   emit(
-    //     state.copyWith(
-    //       userActionStatus: UserActionStatus.pure,
-    //     ),
-    //   );
-    // }
+    emit(
+      state.copyWith(
+        userLoadingStatus: UserLoadingStatus.loadingInProgress,
+      ),
+    );
+    final waiting = await _userRepository.deleteUser(state.selectedUser!.id);
+    print(waiting);
+    if (waiting == ChangeStatus.deleted) {
+      emit(
+        state.copyWith(
+          userLoadingStatus: UserLoadingStatus.loadingSuccess,
+          userActionStatus: UserActionStatus.deleted,
+        ),
+      );
+      emit(
+        state.copyWith(
+          userActionStatus: UserActionStatus.pure,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          userLoadingStatus: UserLoadingStatus.loadingFailed,
+          userActionStatus: UserActionStatus.notDeleted,
+        ),
+      );
+      emit(
+        state.copyWith(
+          userActionStatus: UserActionStatus.pure,
+        ),
+      );
+    }
   }
 
   Future<void> _onUsersLoadList(
@@ -184,8 +195,8 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     );
     final waiting = await _userRepository.allUsers();
     if (waiting.isNotEmpty) {
-      // filter the list by the accending id of the user
-      waiting.sort((a, b) => a.id.compareTo(b.id));
+      // filter the list by the accending surname of the user
+      waiting.sort((a, b) => a.surname.compareTo(b.surname));
     }
 
     emit(
@@ -342,36 +353,60 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     Emitter<UsersState> emit,
   ) async {
     emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
-    // if (state.formStatus.isValidated) {
-    //   final waiting = await _userRepository.changeUsers(
-    //     state.selectedUsers!.id,
-    //     GeneralModelRequest(name: state.name.value),
-    //   );
-    //   if (waiting == UsersStatus.unchanged) {
-    //     emit(
-    //       state.copyWith(
-    //         formStatus: FormzStatus.submissionFailure,
-    //         userActionStatus: UserActionStatus.notSaved,
-    //       ),
-    //     );
-    //     emit(
-    //       state.copyWith(
-    //         userActionStatus: UserActionStatus.pure,
-    //       ),
-    //     );
-    //   } else {
-    //     emit(
-    //       state.copyWith(
-    //         formStatus: FormzStatus.submissionSuccess,
-    //         userActionStatus: UserActionStatus.saved,
-    //       ),
-    //     );
-    //     emit(
-    //       state.copyWith(
-    //         userActionStatus: UserActionStatus.pure,
-    //       ),
-    //     );
-    //   }
-    // }
+    print(state.name);
+
+    if (state.formStatus.isValidated) {
+      final waiting = state.username.value == state.selectedUser!.username
+          ? await _userRepository.updateUser(
+              ChangeUserModelRequest(
+                id: state.selectedUser!.id,
+                surname: state.surname.value,
+                name: state.name.value,
+                patronymic: state.patronymic ?? state.selectedUser!.patronymic,
+                password: state.password.value,
+                role: state.role.name.isEmpty
+                    ? state.selectedUser!.role
+                    : state.role,
+              ),
+            )
+          : await _userRepository.updateUser(
+              ChangeUserModelRequest(
+                id: state.selectedUser!.id,
+                surname: state.surname.value,
+                name: state.name.value,
+                patronymic: state.patronymic ?? state.selectedUser!.patronymic,
+                username: state.username.value,
+                password: state.password.value,
+                role: state.role.name.isEmpty
+                    ? state.selectedUser!.role
+                    : state.role,
+              ),
+            );
+      if (waiting == ChangeStatus.unchanged) {
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            userActionStatus: UserActionStatus.notSaved,
+          ),
+        );
+        emit(
+          state.copyWith(
+            userActionStatus: UserActionStatus.pure,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionSuccess,
+            userActionStatus: UserActionStatus.saved,
+          ),
+        );
+        emit(
+          state.copyWith(
+            userActionStatus: UserActionStatus.pure,
+          ),
+        );
+      }
+    }
   }
 }

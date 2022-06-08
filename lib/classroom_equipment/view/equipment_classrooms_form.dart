@@ -18,16 +18,6 @@ class EquipmentClassroomForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
-        final teacherClassrooms = context.read<ClassroomBloc>()
-          ..add(
-            ClassroomLoadUserList(
-              BlocProvider.of<AuthenticationBloc>(context).state.user.id,
-            ),
-          );
-        final allClassrooms = context.read<ClassroomBloc>()
-          ..add(
-            const ClassroomLoadList(),
-          );
         return Padding(
           padding:
               const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 24),
@@ -38,12 +28,26 @@ class EquipmentClassroomForm extends StatelessWidget {
                 property: 'Аудитория',
                 bottomPadding: 8,
               ),
-              BlocProvider<ClassroomBloc>.value(
-                value: state.user.role == UserRole.teacher
-                    ? teacherClassrooms
-                    : allClassrooms,
-                child: const ClassroomForm(bottomPadding: 16),
-              ),
+              if (state.user.role == UserRole.teacher)
+                BlocProvider<ClassroomBloc>.value(
+                  value: context.read<ClassroomBloc>()
+                    ..add(
+                      ClassroomLoadUserList(
+                        BlocProvider.of<AuthenticationBloc>(context)
+                            .state
+                            .user
+                            .id,
+                      ),
+                    ),
+                  child: const ClassroomForm(bottomPadding: 16),
+                )
+              else
+                BlocProvider<ClassroomBloc>.value(
+                    value: context.read<ClassroomBloc>()
+                      ..add(
+                        const ClassroomLoadList(),
+                      ),
+                    child: const ClassroomForm(bottomPadding: 16)),
               const ShowAllFilter(
                 action: 'Показать все',
                 containerColor: greyCard,

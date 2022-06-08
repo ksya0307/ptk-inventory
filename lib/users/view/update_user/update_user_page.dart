@@ -19,8 +19,8 @@ class UpdateUserPage extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
             context.read<UsersBloc>().add(const UsersSelected(null));
+            Navigator.of(context).pop();
           },
         ),
         elevation: 0,

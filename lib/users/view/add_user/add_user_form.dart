@@ -24,6 +24,10 @@ class AddUserForm extends StatelessWidget {
           Navigator.of(context).pop();
           //context.read<CategoryBloc>().add(const CategoryLoadList());
         }
+        print(state.userActionStatus);
+        if (state.userActionStatus == UserActionStatus.addedToGlobal) {
+          Navigator.of(context).pop();
+        }
 
         if (state.userActionStatus == UserActionStatus.notAdded) {
           snackbarMessageCommonError(

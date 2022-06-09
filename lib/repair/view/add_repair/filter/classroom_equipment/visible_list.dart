@@ -16,6 +16,7 @@ class VisibleClassroomEquipmentList extends StatefulWidget {
 
 class _VisibleClassroomEquipmentListState
     extends State<VisibleClassroomEquipmentList> {
+  int groupValue = -1;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
@@ -39,7 +40,6 @@ class _VisibleClassroomEquipmentListState
                     shrinkWrap: true,
                     itemCount: equipment.length,
                     itemBuilder: (context, index) {
-                      final int _selected = equipment[0].id;
                       return ClassroomEquipmentRow(
                         onTap: () {
                           context.read<ClassroomEquipmentBloc>().add(
@@ -72,11 +72,16 @@ class _VisibleClassroomEquipmentListState
                         numberInClassroom: equipment[index].numberInClassroom,
                         category: equipment[index].equipment.category.name,
                         last: index == equipment.length - 1,
-                        groupValue: equipment[index].id,
-                        onChange: (equipment) {
-                          setState(() {});
-                        },
-                        value: _selected,
+                        radio: Radio<int>(
+                          value: index,
+                          groupValue: groupValue,
+                          onChanged: (equipments) {
+                            setState(() {
+                              groupValue = equipments!;
+                              print(equipment[index]);
+                            });
+                          },
+                        ),
                       );
                     },
                   ),

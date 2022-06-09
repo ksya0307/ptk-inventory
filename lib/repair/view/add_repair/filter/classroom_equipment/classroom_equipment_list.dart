@@ -15,6 +15,7 @@ class ClassroomEquipmentList extends StatefulWidget {
 }
 
 class _ClassroomEquipmentListState extends State<ClassroomEquipmentList> {
+  int groupValue = -1;
   @override
   Widget build(BuildContext context) {
     final equipment =
@@ -132,12 +133,12 @@ class _ClassroomEquipmentListState extends State<ClassroomEquipmentList> {
                     ],
                   );
                 }
+
                 return ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: equipment.length,
                   itemBuilder: (context, index) {
-                    final int _selected = equipment[0].id;
                     return ClassroomEquipmentRow(
                       onTap: () {
                         context.read<ClassroomEquipmentBloc>().add(
@@ -169,11 +170,28 @@ class _ClassroomEquipmentListState extends State<ClassroomEquipmentList> {
                       numberInClassroom: equipment[index].numberInClassroom,
                       category: equipment[index].equipment.category.name,
                       last: index == equipment.length - 1,
-                      groupValue: equipment[index].id,
-                      onChange: (equipment) {
-                        setState(() {});
-                      },
-                      value: _selected,
+                      // groupValue: groupValue,
+                      // onChange: (equipments) {
+                      //   setState(() {
+                      //     print(equipment[index].id);
+                      //     groupValue = equipments;
+                      //   });
+                      // },
+                      // value: index,
+                      radio: Radio<int>(
+                        value: index,
+                        groupValue: groupValue,
+                        onChanged: (equipments) {
+                          setState(() {
+                            groupValue = equipments!;
+                            context.read<ClassroomEquipmentBloc>().add(
+                                  ClassroomEquipmentFilteredEquipment(
+                                    equipment[index],
+                                  ),
+                                );
+                          });
+                        },
+                      ),
                     );
                   },
                 );

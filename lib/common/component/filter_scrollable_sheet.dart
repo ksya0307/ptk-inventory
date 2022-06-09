@@ -7,14 +7,18 @@ class EquipmentFilterSheet extends StatelessWidget {
     Key? key,
     required this.widget,
     required this.title,
+    this.onTap,
   }) : super(key: key);
   final Widget widget;
   final String title;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     Widget makeDismissible({required Widget child}) => GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: () => Navigator.of(context).pop(),
+          onTap: () {
+            Navigator.of(context).pop();
+          },
           child: GestureDetector(
             onTap: () {},
             child: child,
@@ -60,9 +64,7 @@ class EquipmentFilterSheet extends StatelessWidget {
                               direction: Axis.horizontal,
                               children: [
                                 GestureDetector(
-                                  onTap: () => Navigator.of(
-                                    context,
-                                  ).pop(),
+                                  onTap: onTap,
                                   child: const Icon(
                                     Icons.arrow_back_rounded,
                                     color: primaryBlue,

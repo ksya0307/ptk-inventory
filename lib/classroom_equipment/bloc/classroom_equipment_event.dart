@@ -21,3 +21,8 @@ class ClassroomEquipmentSearch extends ClassroomEquipmentEvent {
 
   const ClassroomEquipmentSearch(this.matchingWord);
 }
+
+class ClassroomEquipmentFilteredEquipment extends ClassroomEquipmentEvent {
+  final ClassroomEquipment? filteredEquipment;
+  const ClassroomEquipmentFilteredEquipment(this.filteredEquipment);
+}

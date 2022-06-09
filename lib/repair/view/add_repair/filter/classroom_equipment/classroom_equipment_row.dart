@@ -7,20 +7,22 @@ class ClassroomEquipmentRow extends StatefulWidget {
   final String inventoryNumber;
   final String category;
   final bool last;
-  final int value;
-  final int groupValue;
-  final Function(int?) onChange;
+  // final int value;
+  // final int groupValue;
+  // final Function(int?)? onChange;
   final Function() onTap;
+  final Widget? radio;
   const ClassroomEquipmentRow({
     Key? key,
     required this.numberInClassroom,
     required this.inventoryNumber,
     required this.category,
     required this.last,
-    required this.value,
-    required this.groupValue,
-    required this.onChange,
+    // required this.value,
+    // required this.groupValue,
+    // required this.onChange,
     required this.onTap,
+    this.radio,
   }) : super(key: key);
 
   @override
@@ -30,6 +32,7 @@ class ClassroomEquipmentRow extends StatefulWidget {
 class _ClassroomEquipmentRowState extends State<ClassroomEquipmentRow> {
   @override
   Widget build(BuildContext context) {
+    //print(widget.groupValue);
     return Column(
       children: [
         Row(
@@ -45,10 +48,12 @@ class _ClassroomEquipmentRowState extends State<ClassroomEquipmentRow> {
                   alignment: Alignment.centerLeft,
                   child: Transform.scale(
                     scale: 1.2,
-                    child: Radio(
-                      value: widget.value,
-                      groupValue: widget.groupValue,
-                      onChanged: widget.onChange,
+                    child: RadioTheme(
+                      data: RadioThemeData(
+                        fillColor: MaterialStateProperty.all(primaryBlue),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: widget.radio!,
                     ),
                   ),
                 ),

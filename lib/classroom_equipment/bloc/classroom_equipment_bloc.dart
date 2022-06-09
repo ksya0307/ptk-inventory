@@ -15,6 +15,7 @@ class ClassroomEquipmentBloc
     on<ClassroomEquipmentLoadUserEquipmentsList>(_onLoadUserEquipmentList);
     on<ClassroomEquipmentSearch>(_onSearch);
     on<ClassroomEquipmentUserSelected>(_onSelected);
+    on<ClassroomEquipmentFilteredEquipment>(_onFiltered);
   }
 
   final ClassroomEquipmentRepository _classroomEquipmentRepository;
@@ -44,6 +45,13 @@ class ClassroomEquipmentBloc
             ClassroomEquipmentLoadingStatus.loadingSuccess,
       ),
     );
+  }
+
+  void _onFiltered(
+    ClassroomEquipmentFilteredEquipment event,
+    Emitter<ClassroomEquipmentState> emit,
+  ) {
+    emit(state.copyWith(filteredEquipment: event.filteredEquipment));
   }
 
   void _onSelected(

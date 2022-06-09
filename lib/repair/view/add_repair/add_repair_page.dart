@@ -75,6 +75,15 @@ class AddRepairPage extends StatelessWidget {
                               const ClassroomEquipmentLoadUserEquipmentsList(),
                             ),
                           child: EquipmentFilterSheet(
+                            onTap: () {
+                              print("close");
+                              context.read<ClassroomEquipmentBloc>().add(
+                                    const ClassroomEquipmentFilteredEquipment(
+                                      null,
+                                    ),
+                                  );
+                              Navigator.of(context).pop();
+                            },
                             widget: Column(
                               children: [
                                 BlocProvider.value(
@@ -118,16 +127,22 @@ class AddRepairPage extends StatelessWidget {
                                 const SizedBox(
                                   height: 12,
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
+                                BlocBuilder<ClassroomEquipmentBloc,
+                                    ClassroomEquipmentState>(
+                                  builder: (context, state) {
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: const [
+                                          ApplyFilterLabel(),
+                                        ],
+                                      ),
+                                    );
                                   },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
-                                      ApplyFilterLabel(),
-                                    ],
-                                  ),
                                 ),
                                 const SizedBox(
                                   height: 12,
@@ -153,26 +168,29 @@ class AddRepairPage extends StatelessWidget {
                 ),
               ),
             ),
-            body: SafeArea(
-              child: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints view) {
-                  return SingleChildScrollView(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: view.maxHeight,
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            AddRepairForm(),
-                          ],
+            body: BlocProvider.value(
+              value: context.read<ClassroomEquipmentBloc>(),
+              child: SafeArea(
+                child: LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints view) {
+                    return SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: view.maxHeight,
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              AddRepairForm(),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           );

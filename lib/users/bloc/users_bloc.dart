@@ -119,6 +119,18 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     Emitter<UsersState> emit,
   ) {
     emit(state.copyWith(selectedUser: event.selectedUser));
+    emit(
+      state.copyWith(
+        surname: Surname.dirty(
+          event.selectedUser!.surname,
+        ),
+        name: Name.dirty(event.selectedUser!.name),
+        patronymic: event.selectedUser!.patronymic,
+        username: Username.dirty(event.selectedUser!.username),
+        role: event.selectedUser!.role,
+        password: const Password.dirty(),
+      ),
+    );
   }
 
   void _onSearch(
@@ -127,6 +139,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   ) {
     // filter from gloabl list where name contains event.matchingWord
     // and return that list to the state
+
     List<User> finalList = [];
     if (event.matchingWord.isNotEmpty) {
       finalList = state.globalUsers

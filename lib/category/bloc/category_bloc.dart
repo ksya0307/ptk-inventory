@@ -23,9 +23,10 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<CategorySearch>(_onSearch);
     on<CategoryDeleted>(_onDeleted);
     on<CategorySelected>(_onSelected);
+
     on<CategoryDeleteFromList>(_onDeleteFromList);
     on<CategoryAddToList>(_onAddToList);
-    on<CategorySaveToList>(_onSaveList);
+    on<CategorySaveToList>(_onSaveToList);
   }
 
   final CategoryRepository _categoryRepository;
@@ -71,34 +72,25 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   void _onAddToList(
     CategoryAddToList event,
     Emitter<CategoryState> emit,
-  ) {
-    final newList = state.globalCategories
-        .where((category) => category != event.category)
-        .toList();
+  ) {}
 
-    emit(
-      state.copyWith(
-        categoryActionStatus: CategoryActionStatus.addedToGlobal,
-        globalCategories: newList,
-      ),
-    );
-    emit(state.copyWith(categoryActionStatus: CategoryActionStatus.pure));
-  }
-
-  void _onSaveList(
+  void _onSaveToList(
     CategorySaveToList event,
     Emitter<CategoryState> emit,
   ) {
-    final Category category =
-        Category(id: event.category.id, name: state.name.value);
+    final Category category = Category(
+      id: event.category.id,
+      name: state.name.value.isEmpty
+          ? state.selectedCategory!.name
+          : state.name.value,
+    );
 
-    final newList = state.globalCategories
-        .where((category) => category != event.category)
-        .toList();
+    final newList = state.globalCategories;
+
     final categoryIndex = state.globalCategories
         .indexWhere((element) => element.id == category.id);
-
     newList[categoryIndex] = category;
+    newList.sort((a, b) => a.name.compareTo(b.name));
     emit(
       state.copyWith(
         categoryActionStatus: CategoryActionStatus.savedOnGlobal,

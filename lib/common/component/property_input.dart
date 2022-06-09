@@ -10,12 +10,16 @@ class PropertyInput extends StatelessWidget {
     this.errorText = '',
     this.propertyInvalid = false,
     required this.hintText,
+    this.maxLines,
+    this.maxLength,
   }) : super(key: key);
   final String? initialValue;
   final Function(String)? onChange;
   final String errorText;
   final bool propertyInvalid;
   final String hintText;
+  final int? maxLines;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,8 @@ class PropertyInput extends StatelessWidget {
       initialValue: initialValue,
       onChanged: onChange,
       cursorColor: Theme.of(context).primaryColor,
-      minLines: 1,
+      maxLines: maxLines,
+      maxLength: maxLength,
       style: const TextStyle(
         fontFamily: 'Rubik',
         fontSize: 18,

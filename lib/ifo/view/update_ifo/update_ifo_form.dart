@@ -16,46 +16,47 @@ class UpdateIfoForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<IfoBloc, IfoState>(
-      listener: (context, state) {
-        //print("GLOBAl ${state.globalCategories}");
-        if (state.ifoActionStatus == IfoActionStatus.saved) {
-          snackbarMessage(context, "ИФО сохранен");
-          context.read<IfoBloc>().add(IfoSaveToList(ifo: state.selectedIfo!));
-          context.read<IfoBloc>().add(const IfoSelected(null));
-        }
-        if (state.ifoActionStatus == IfoActionStatus.savedOnGlobal) {
-          Navigator.of(context).pop();
-        }
-        if (state.ifoActionStatus == IfoActionStatus.notSaved) {
-          snackbarMessageError(context, "Такой ИФО уже существует");
-        }
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const PropertyLabel(
-                property: 'Название',
-                bottomPadding: 8,
-              ),
-              BlocBuilder<IfoBloc, IfoState>(
-                buildWhen: (previous, current) => previous.name != current.name,
-                builder: (context, state) {
-                  return PropertyInput(
-                    initialValue: state.selectedIfo!.name,
-                    hintText: 'Грант А',
-                    errorText: 'Название ИФО не может быть пустым',
-                    propertyInvalid: state.name.invalid,
-                    onChange: (ifo) =>
-                        context.read<IfoBloc>().add(IfoNameChanged(ifo)),
-                  );
-                },
-              ),
-              Padding(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const PropertyLabel(
+              property: 'Название',
+              bottomPadding: 8,
+            ),
+            BlocBuilder<IfoBloc, IfoState>(
+              buildWhen: (previous, current) => previous.name != current.name,
+              builder: (context, state) {
+                return PropertyInput(
+                  initialValue: state.selectedIfo!.name,
+                  hintText: 'Грант А',
+                  errorText: 'Название ИФО не может быть пустым',
+                  propertyInvalid: state.name.invalid,
+                  onChange: (ifo) =>
+                      context.read<IfoBloc>().add(IfoNameChanged(ifo)),
+                );
+              },
+            ),
+            BlocListener<IfoBloc, IfoState>(
+              listener: (context, state) {
+                if (state.ifoActionStatus == IfoActionStatus.saved) {
+                  snackbarMessage(context, "ИФО сохранен");
+                  context
+                      .read<IfoBloc>()
+                      .add(IfoSaveToList(ifo: state.selectedIfo!));
+                  context.read<IfoBloc>().add(const IfoSelected(null));
+                }
+                if (state.ifoActionStatus == IfoActionStatus.savedOnGlobal) {
+                  Navigator.of(context).pop();
+                }
+                if (state.ifoActionStatus == IfoActionStatus.notSaved) {
+                  snackbarMessageError(context, "Такой ИФО уже существует");
+                }
+              },
+              child: Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: BlocBuilder<IfoBloc, IfoState>(
                   buildWhen: (previous, current) =>
@@ -75,53 +76,55 @@ class UpdateIfoForm extends StatelessWidget {
                   },
                 ),
               ),
-            ],
-          ),
-          Column(
-            children: [
-              BlocListener<IfoBloc, IfoState>(
-                listener: (context, state) {
-                  if (state.ifoActionStatus == IfoActionStatus.deleted) {
-                    snackbarMessage(context, "ИФО удален");
-                    // context
-                    //     .read<CategoryBloc>()
-                    //     .add(CategoryDeleteFromList(category: state.selectedCategory!));
-                    // context.read<CategoryBloc>().add(const CategorySelected(null));
-                  }
-                  if (state.ifoActionStatus ==
-                      IfoActionStatus.deletedFromGlobal) {
-                    Navigator.of(context).pop();
-                  }
-                  if (state.ifoActionStatus == IfoActionStatus.notDeleted) {
-                    snackbarMessageError(context, "ИФО не может быть удален");
-                  }
-                },
-                child: BlocBuilder<IfoBloc, IfoState>(
-                  builder: (context, state) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 24),
-                      child: DeleteButton(
-                        bottomSheet: BlocProvider.value(
-                          value: context.read<IfoBloc>(),
-                          child: ConfirmDeletingBottomSheet(
-                            deleteProperty: 'ИФО',
-                            onPress: () {
-                              context
-                                  .read<IfoBloc>()
-                                  .add(IfoDeleted(state.selectedIfo!.id));
-                              Navigator.of(context).pop();
-                            },
-                          ),
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            BlocListener<IfoBloc, IfoState>(
+              listener: (context, state) {
+                if (state.ifoActionStatus == IfoActionStatus.deleted) {
+                  snackbarMessage(context, "ИФО удален");
+                }
+                if (state.ifoActionStatus ==
+                    IfoActionStatus.deletedFromGlobal) {
+                  Navigator.of(context).pop();
+                }
+                if (state.ifoActionStatus == IfoActionStatus.notDeleted) {
+                  snackbarMessageError(context, "ИФО не может быть удален");
+                }
+              },
+              child: BlocBuilder<IfoBloc, IfoState>(
+                builder: (context, state) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 24),
+                    child: DeleteButton(
+                      bottomSheet: BlocProvider.value(
+                        value: context.read<IfoBloc>(),
+                        child: ConfirmDeletingBottomSheet(
+                          deleteProperty: 'ИФО',
+                          onPress: () {
+                            context
+                                .read<IfoBloc>()
+                                .add(IfoDeleted(state.selectedIfo!.id));
+                            Navigator.of(context).pop();
+                            context.read<IfoBloc>().add(
+                                  IfoDeleteFromList(ifo: state.selectedIfo!),
+                                );
+                            context
+                                .read<IfoBloc>()
+                                .add(const IfoSelected(null));
+                          },
                         ),
                       ),
-                    );
-                  },
-                ),
-              )
-            ],
-          )
-        ],
-      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        )
+      ],
     );
   }
 }

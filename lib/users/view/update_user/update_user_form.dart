@@ -30,6 +30,8 @@ class UpdateUserForm extends StatelessWidget {
             children: [
               const PropertyLabel(property: 'Фамилия', bottomPadding: 8),
               BlocBuilder<UsersBloc, UsersState>(
+                buildWhen: (previous, current) =>
+                    previous.surname != current.surname,
                 builder: (context, state) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
@@ -47,6 +49,7 @@ class UpdateUserForm extends StatelessWidget {
               ),
               const PropertyLabel(property: 'Имя', bottomPadding: 8),
               BlocBuilder<UsersBloc, UsersState>(
+                buildWhen: (previous, current) => previous.name != current.name,
                 builder: (context, state) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
@@ -63,6 +66,8 @@ class UpdateUserForm extends StatelessWidget {
               ),
               const PropertyLabel(property: 'Отчество', bottomPadding: 8),
               BlocBuilder<UsersBloc, UsersState>(
+                buildWhen: (previous, current) =>
+                    previous.patronymic != current.patronymic,
                 builder: (context, state) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
@@ -78,7 +83,15 @@ class UpdateUserForm extends StatelessWidget {
               ),
               const PropertyLabel(property: 'Логин', bottomPadding: 8),
               BlocBuilder<UsersBloc, UsersState>(
+                buildWhen: (previous, current) =>
+                    previous.username != current.username,
                 builder: (context, state) {
+                  print(state.name);
+                  print(state.surname);
+                  print(state.patronymic);
+                  print(state.password);
+                  print(state.role);
+                  print(state.username);
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: PropertyInput(
@@ -95,8 +108,9 @@ class UpdateUserForm extends StatelessWidget {
               ),
               const PropertyLabel(property: 'Пароль', bottomPadding: 8),
               BlocBuilder<UsersBloc, UsersState>(
+                buildWhen: (previous, current) =>
+                    previous.password != current.password,
                 builder: (context, state) {
-                  print("Selected User ${state.selectedUser}");
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: PasswordInput(
@@ -124,7 +138,6 @@ class UpdateUserForm extends StatelessWidget {
                             ),
                           );
                       context.read<UsersBloc>().add(const UsersSelected(null));
-                      //context.read<CategoryBloc>().add(const CategoryLoadList());
                     }
                     if (state.userActionStatus ==
                         UserActionStatus.savedOnGlobal) {

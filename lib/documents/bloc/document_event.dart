@@ -46,3 +46,24 @@ class DocumentSelected extends DocumentEvent {
 
   const DocumentSelected(this.selectedDocument);
 }
+
+class DocumentDeleteFromList extends DocumentEvent {
+  final Document document;
+  const DocumentDeleteFromList({required this.document});
+  @override
+  List<Object> get props => [document];
+}
+
+class DocumentAddToList extends DocumentEvent {
+  final Document document;
+  const DocumentAddToList({required this.document});
+  @override
+  List<Object> get props => [document];
+}
+
+class DocumentSaveToList extends DocumentEvent {
+  final Document document;
+  const DocumentSaveToList({required this.document});
+  @override
+  List<Object> get props => [document];
+}

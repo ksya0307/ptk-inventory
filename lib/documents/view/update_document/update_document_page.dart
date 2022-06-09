@@ -48,23 +48,9 @@ class UpdateDocumentPage extends StatelessWidget {
                 constraints: BoxConstraints(
                   minHeight: view.maxHeight,
                 ),
-                child: BlocListener<DocumentBloc, DocumentState>(
-                  listener: (context, state) {
-                    if (state.formStatus == FormzStatus.submissionSuccess) {
-                      snackbarMessage(context, "Документ сохранен");
-                      context
-                          .read<DocumentBloc>()
-                          .add(const DocumentSelected(null));
-                      Navigator.of(context).pop();
-                    } else if (state.formStatus ==
-                        FormzStatus.submissionFailure) {
-                      snackbarMessageError(context, "Документ уже существует");
-                    }
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                    child: const UpdateDocumentForm(),
-                  ),
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: const UpdateDocumentForm(),
                 ),
               ),
             );

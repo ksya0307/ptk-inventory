@@ -7,10 +7,21 @@ enum DocumentLoadingStatus {
   loadingSuccess,
 }
 
-enum DocumentDeleteStatus { pure, deleted, notDeleted }
+enum DocumentActionStatus {
+  pure,
+  deleted,
+  notDeleted,
+  deletedFromGlobal,
+  savedOnGlobal,
+  saved,
+  notSaved,
+  added,
+  notAdded,
+  addedToGlobal,
+}
 
 class DocumentState extends Equatable {
-  final DocumentDeleteStatus documentDeleteStatus;
+  final DocumentActionStatus documentActionStatus;
   final FormzStatus formStatus;
   final Name name;
   final String searchText;
@@ -19,7 +30,7 @@ class DocumentState extends Equatable {
   final List<Document> globalDocuments;
   final List<Document> visibleList;
   const DocumentState({
-    this.documentDeleteStatus = DocumentDeleteStatus.pure,
+    this.documentActionStatus = DocumentActionStatus.pure,
     this.formStatus = FormzStatus.pure,
     this.name = const Name.pure(),
     this.documentLoadingStatus = DocumentLoadingStatus.pure,
@@ -31,7 +42,7 @@ class DocumentState extends Equatable {
 
   @override
   List<Object?> get props => [
-        documentDeleteStatus,
+        documentActionStatus,
         formStatus,
         name,
         documentLoadingStatus,
@@ -42,7 +53,7 @@ class DocumentState extends Equatable {
       ];
 
   DocumentState copyWith({
-    DocumentDeleteStatus? documentDeleteStatus,
+    DocumentActionStatus? documentActionStatus,
     FormzStatus? formStatus,
     Name? name,
     String? searchText,
@@ -52,7 +63,7 @@ class DocumentState extends Equatable {
     List<Document>? visibleList,
   }) {
     return DocumentState(
-      documentDeleteStatus: documentDeleteStatus ?? this.documentDeleteStatus,
+      documentActionStatus: documentActionStatus ?? this.documentActionStatus,
       formStatus: formStatus ?? this.formStatus,
       name: name ?? this.name,
       searchText: searchText ?? this.searchText,

@@ -14,15 +14,69 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
       : _documentRepository = documentRepository,
         super(const DocumentState()) {
     on<DocumentNameChanged>(_onNameChanged);
+
     on<DocumentLoadList>(_onDocumentLoadList);
+
     on<DocumentSubmitted>(_onSubmitted);
     on<DocumentSaved>(_onSaved);
     on<DocumentSearch>(_onSearch);
     on<DocumentDeleted>(_onDeleted);
     on<DocumentSelected>(_onSelected);
+
+    on<DocumentDeleteFromList>(_onDeleteFromList);
+    on<DocumentAddToList>(_onAddToList);
+    on<DocumentSaveToList>(_onSaveToList);
   }
 
   final DocumentRepository _documentRepository;
+
+  void _onSaveToList(
+    DocumentSaveToList event,
+    Emitter<DocumentState> emit,
+  ) {
+    final Document document = Document(
+      id: event.document.id,
+      name: state.name.value.isEmpty
+          ? state.selectedDocument!.name
+          : state.name.value,
+    );
+
+    final newList = state.globalDocuments;
+    final ifoIndex = state.globalDocuments
+        .indexWhere((element) => element.id == document.id);
+
+    newList[ifoIndex] = document;
+    newList.sort((a, b) => a.name.compareTo(b.name));
+    emit(
+      state.copyWith(
+        documentActionStatus: DocumentActionStatus.savedOnGlobal,
+        globalDocuments: newList,
+      ),
+    );
+    emit(state.copyWith(documentActionStatus: DocumentActionStatus.pure));
+  }
+
+  void _onAddToList(
+    DocumentAddToList event,
+    Emitter<DocumentState> emit,
+  ) {}
+
+  void _onDeleteFromList(
+    DocumentDeleteFromList event,
+    Emitter<DocumentState> emit,
+  ) {
+    final newList = state.globalDocuments
+        .where((document) => document != event.document)
+        .toList();
+
+    emit(
+      state.copyWith(
+        documentActionStatus: DocumentActionStatus.deletedFromGlobal,
+        globalDocuments: newList,
+      ),
+    );
+    emit(state.copyWith(documentActionStatus: DocumentActionStatus.pure));
+  }
 
   void _onSelected(
     DocumentSelected event,
@@ -46,16 +100,18 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
       emit(
         state.copyWith(
           documentLoadingStatus: DocumentLoadingStatus.loadingSuccess,
-          documentDeleteStatus: DocumentDeleteStatus.deleted,
+          documentActionStatus: DocumentActionStatus.deleted,
         ),
       );
+      emit(state.copyWith(documentActionStatus: DocumentActionStatus.pure));
     } else {
       emit(
         state.copyWith(
           documentLoadingStatus: DocumentLoadingStatus.loadingFailed,
-          documentDeleteStatus: DocumentDeleteStatus.notDeleted,
+          documentActionStatus: DocumentActionStatus.notDeleted,
         ),
       );
+      emit(state.copyWith(documentActionStatus: DocumentActionStatus.pure));
     }
   }
 
@@ -129,9 +185,29 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
         GeneralModelRequest(name: state.name.value),
       );
       if (waiting == DocumentStatus.notcreated) {
-        emit(state.copyWith(formStatus: FormzStatus.submissionFailure));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            documentActionStatus: DocumentActionStatus.notAdded,
+          ),
+        );
+        emit(
+          state.copyWith(
+            documentActionStatus: DocumentActionStatus.pure,
+          ),
+        );
       } else {
-        emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionSuccess,
+            documentActionStatus: DocumentActionStatus.added,
+          ),
+        );
+        emit(
+          state.copyWith(
+            documentActionStatus: DocumentActionStatus.pure,
+          ),
+        );
       }
     }
   }
@@ -149,9 +225,29 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
         ),
       );
       if (waiting == DocumentStatus.unchanged) {
-        emit(state.copyWith(formStatus: FormzStatus.submissionFailure));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            documentActionStatus: DocumentActionStatus.notSaved,
+          ),
+        );
+        emit(
+          state.copyWith(
+            documentActionStatus: DocumentActionStatus.pure,
+          ),
+        );
       } else {
-        emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionSuccess,
+            documentActionStatus: DocumentActionStatus.saved,
+          ),
+        );
+        emit(
+          state.copyWith(
+            documentActionStatus: DocumentActionStatus.pure,
+          ),
+        );
       }
     }
   }

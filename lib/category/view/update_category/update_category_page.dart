@@ -19,8 +19,8 @@ class UpdateCategoryPage extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
             context.read<CategoryBloc>().add(const CategorySelected(null));
+            Navigator.of(context).pop();
           },
         ),
         elevation: 0,

@@ -19,8 +19,8 @@ class UpdateIfoPage extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
             context.read<IfoBloc>().add(const IfoSelected(null));
+            Navigator.of(context).pop();
           },
         ),
         elevation: 0,

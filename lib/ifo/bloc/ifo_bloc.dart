@@ -14,30 +14,38 @@ class IfoBloc extends Bloc<IfoEvent, IfoState> {
       : _ifoRepository = ifoRepository,
         super(const IfoState()) {
     on<IfoNameChanged>(_onNameChanged);
+
     on<IfoLoadList>(_onIfoLoadList);
+
     on<IfoSubmitted>(_onSubmitted);
     on<IfoSaved>(_onSaved);
     on<IfoSearch>(_onSearch);
     on<IfoDeleted>(_onDeleted);
     on<IfoSelected>(_onSelected);
+
     on<IfoDeleteFromList>(_onDeleteFromList);
     on<IfoAddToList>(_onAddToList);
-    on<IfoSaveToList>(_onSaveList);
+    on<IfoSaveToList>(_onSaveToList);
   }
 
   final IfoRepository _ifoRepository;
 
-  void _onSaveList(
+  void _onSaveToList(
     IfoSaveToList event,
     Emitter<IfoState> emit,
   ) {
-    final Ifo ifo = Ifo(id: event.ifo.id, name: state.name.value);
+    final Ifo ifo = Ifo(
+      id: event.ifo.id,
+      name:
+          state.name.value.isEmpty ? state.selectedIfo!.name : state.name.value,
+    );
 
-    final newList = state.globalIfos.where((ifo) => ifo != event.ifo).toList();
+    final newList = state.globalIfos;
     final ifoIndex =
         state.globalIfos.indexWhere((element) => element.id == ifo.id);
 
     newList[ifoIndex] = ifo;
+    newList.sort((a, b) => a.name.compareTo(b.name));
     emit(
       state.copyWith(
         ifoActionStatus: IfoActionStatus.savedOnGlobal,
@@ -50,17 +58,7 @@ class IfoBloc extends Bloc<IfoEvent, IfoState> {
   void _onAddToList(
     IfoAddToList event,
     Emitter<IfoState> emit,
-  ) {
-    final newList = state.globalIfos.where((ifo) => ifo != event.ifo).toList();
-
-    emit(
-      state.copyWith(
-        ifoActionStatus: IfoActionStatus.addedToGlobal,
-        globalIfos: newList,
-      ),
-    );
-    emit(state.copyWith(ifoActionStatus: IfoActionStatus.pure));
-  }
+  ) {}
 
   void _onSelected(
     IfoSelected event,
@@ -93,19 +91,19 @@ class IfoBloc extends Bloc<IfoEvent, IfoState> {
       ),
     );
     final waiting = await _ifoRepository.deleteIfo(state.selectedIfo!.id);
-    if (waiting == IfoStatus.deleted) {
+    if (waiting == IfoStatus.undeleted) {
       emit(
         state.copyWith(
-          ifoLoadingStatus: IfoLoadingStatus.loadingSuccess,
-          ifoActionStatus: IfoActionStatus.deleted,
+          ifoLoadingStatus: IfoLoadingStatus.loadingFailed,
+          ifoActionStatus: IfoActionStatus.notDeleted,
         ),
       );
       emit(state.copyWith(ifoActionStatus: IfoActionStatus.pure));
     } else {
       emit(
         state.copyWith(
-          ifoLoadingStatus: IfoLoadingStatus.loadingFailed,
-          ifoActionStatus: IfoActionStatus.notDeleted,
+          ifoLoadingStatus: IfoLoadingStatus.loadingSuccess,
+          ifoActionStatus: IfoActionStatus.deleted,
         ),
       );
       emit(state.copyWith(ifoActionStatus: IfoActionStatus.pure));
@@ -116,12 +114,21 @@ class IfoBloc extends Bloc<IfoEvent, IfoState> {
     IfoSearch event,
     Emitter<IfoState> emit,
   ) {
-    final filteredList = state.globalIfos
-        .where((ifo) => ifo.name.contains(event.matchingWord))
-        .toList();
+    List<Ifo> finalList = [];
+    if (event.matchingWord.isNotEmpty) {
+      finalList = state.globalIfos
+          .where(
+            (ifo) => ifo.name.toLowerCase().contains(
+                  event.matchingWord.toLowerCase(),
+                ),
+          )
+          .toList();
+    }
+
     emit(
       state.copyWith(
-        visibleList: filteredList,
+        visibleList: finalList,
+        searchText: event.matchingWord,
       ),
     );
   }

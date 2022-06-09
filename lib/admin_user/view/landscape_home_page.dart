@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:ptk_inventory/category/view/category_page.dart';
 import 'package:ptk_inventory/classroom_equipment/view/equipment_classrooms_page.dart';
+import 'package:ptk_inventory/classrooms/view/classroom_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/documents/view/document_page.dart';
 import 'package:ptk_inventory/ifo/view/ifo_page.dart';
@@ -161,7 +162,7 @@ Widget repairCard(BuildContext context) {
 
 Widget classroomsCard(BuildContext context) {
   return GestureDetector(
-    onTap: () {},
+    onTap: () => Navigator.of(context).push(ClassroomsPage.route()),
     child: SizedBox(
       width: MediaQuery.of(context).size.width * 0.47,
       height: MediaQuery.of(context).size.height * 0.18,

@@ -3,12 +3,12 @@ import 'package:ptk_inventory/config/colors.dart';
 
 class ClassroomRow extends StatelessWidget {
   final String number;
-  final String user;
+  final String fullName;
   final bool last;
   const ClassroomRow({
     Key? key,
     required this.number,
-    required this.user,
+    required this.fullName,
     required this.last,
   }) : super(key: key);
   @override
@@ -18,7 +18,6 @@ class ClassroomRow extends StatelessWidget {
         Row(
           children: [
             Flexible(
-              flex: 2,
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 8 + 4,
@@ -29,6 +28,27 @@ class ClassroomRow extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     number,
+                    style: const TextStyle(
+                      fontFamily: 'Rubik',
+                      fontSize: 16,
+                      color: blackLabels,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Flexible(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 8 + 4,
+                  bottom: 8 + 4,
+                  left: 12,
+                ),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    fullName,
                     style: const TextStyle(
                       fontFamily: 'Rubik',
                       fontSize: 16,

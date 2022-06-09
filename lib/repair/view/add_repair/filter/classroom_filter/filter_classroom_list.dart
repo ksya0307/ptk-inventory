@@ -4,17 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
 import 'package:ptk_inventory/config/colors.dart';
 
-class ClassroomList extends StatefulWidget {
-  const ClassroomList({
+class FilterClassroomList extends StatefulWidget {
+  const FilterClassroomList({
     Key? key,
     this.bottomPadding = 0,
   }) : super(key: key);
   final double bottomPadding;
   @override
-  State<ClassroomList> createState() => _ClassroomListState();
+  State<FilterClassroomList> createState() => _ClassroomListState();
 }
 
-class _ClassroomListState extends State<ClassroomList> {
+class _ClassroomListState extends State<FilterClassroomList> {
   @override
   Widget build(BuildContext context) {
     final classrooms =

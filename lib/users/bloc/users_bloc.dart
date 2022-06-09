@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-import 'package:http/http.dart';
 import 'package:ptk_inventory/common/model/requests/change_user_request.dart';
 import 'package:ptk_inventory/common/model/user.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
@@ -169,7 +168,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
       ),
     );
     final waiting = await _userRepository.deleteUser(state.selectedUser!.id);
-    print(waiting);
+
     if (waiting == ChangeStatus.deleted) {
       emit(
         state.copyWith(
@@ -366,7 +365,6 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     Emitter<UsersState> emit,
   ) async {
     emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
-    print(state.name);
 
     if (state.formStatus.isValidated) {
       final waiting = state.username.value == state.selectedUser!.username

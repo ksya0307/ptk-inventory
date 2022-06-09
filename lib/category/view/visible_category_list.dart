@@ -33,7 +33,6 @@ class VisibleCategoryList extends StatelessWidget {
                     buildWhen: (previous, current) =>
                         previous.user.role != current.user.role,
                     builder: (context, state) {
-                      print(state);
                       return ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
@@ -43,7 +42,6 @@ class VisibleCategoryList extends StatelessWidget {
                             onTap: () {
                               if (state.user.role == UserRole.admin ||
                                   state.user.role == UserRole.moderator) {
-                                print("moderator or admin");
                                 context.read<CategoryBloc>().add(
                                       CategorySelected(
                                         Category(

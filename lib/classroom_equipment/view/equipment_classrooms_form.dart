@@ -9,7 +9,7 @@ import 'package:ptk_inventory/common/component/search_field.dart';
 import 'package:ptk_inventory/common/component/show_all_filter.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/config/colors.dart';
-import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_filter/classroom_form.dart';
+import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_filter/filter_classroom_form.dart';
 
 class EquipmentClassroomForm extends StatelessWidget {
   const EquipmentClassroomForm({Key? key}) : super(key: key);
@@ -39,15 +39,16 @@ class EquipmentClassroomForm extends StatelessWidget {
                             .id,
                       ),
                     ),
-                  child: const ClassroomForm(bottomPadding: 16),
+                  child: const FilterClassroomForm(bottomPadding: 16),
                 )
               else
                 BlocProvider<ClassroomBloc>.value(
-                    value: context.read<ClassroomBloc>()
-                      ..add(
-                        const ClassroomLoadList(),
-                      ),
-                    child: const ClassroomForm(bottomPadding: 16)),
+                  value: context.read<ClassroomBloc>()
+                    ..add(
+                      const ClassroomLoadList(),
+                    ),
+                  child: const FilterClassroomForm(bottomPadding: 16),
+                ),
               const ShowAllFilter(
                 action: 'Показать все',
                 containerColor: greyCard,

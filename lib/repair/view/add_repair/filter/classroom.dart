@@ -7,7 +7,7 @@ import 'package:ptk_inventory/common/component/filter_scrollable_sheet.dart';
 import 'package:ptk_inventory/common/component/property_label.dart';
 import 'package:ptk_inventory/common/component/show_all_label.dart';
 
-import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_filter/classroom_form.dart';
+import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_filter/filter_classroom_form.dart';
 
 class ChooseClassroom extends StatelessWidget {
   const ChooseClassroom({Key? key}) : super(key: key);
@@ -66,7 +66,7 @@ class ChooseClassroom extends StatelessWidget {
                           const SizedBox(
                             height: 12,
                           ),
-                          const ClassroomForm()
+                          const FilterClassroomForm()
                         ],
                       ),
                     );

@@ -46,7 +46,6 @@ class LoginPage extends StatelessWidget {
         child: Scaffold(
           body: OrientationBuilder(
             builder: (context, orientation) {
-              print(orientation);
               return orientation == Orientation.portrait
                   ? Portrait()
                   : Landscape();

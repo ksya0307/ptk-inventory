@@ -9,6 +9,7 @@ import 'package:ptk_inventory/documents/view/document_page.dart';
 import 'package:ptk_inventory/ifo/view/ifo_page.dart';
 import 'package:ptk_inventory/user_profile/view/my_profile.dart';
 import 'package:ptk_inventory/users/view/users_page.dart';
+import 'package:ptk_inventory/classrooms/view/classroom_page.dart';
 
 class PortraitAdminPage extends StatelessWidget {
   static Route route() {
@@ -163,7 +164,7 @@ Widget repairCard(BuildContext context) {
 
 Widget classroomsCard(BuildContext context) {
   return GestureDetector(
-    onTap: () {},
+    onTap: () => Navigator.of(context).push(ClassroomsPage.route()),
     child: SizedBox(
       width: MediaQuery.of(context).size.width * 0.47,
       height: MediaQuery.of(context).size.height * 0.1,

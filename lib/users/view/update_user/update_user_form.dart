@@ -86,12 +86,6 @@ class UpdateUserForm extends StatelessWidget {
                 buildWhen: (previous, current) =>
                     previous.username != current.username,
                 builder: (context, state) {
-                  print(state.name);
-                  print(state.surname);
-                  print(state.patronymic);
-                  print(state.password);
-                  print(state.role);
-                  print(state.username);
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: PropertyInput(

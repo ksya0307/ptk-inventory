@@ -58,7 +58,6 @@ class AuthenticationRepository {
       _controller.add(AuthenticationStatus.authenticated);
       return LoginStatus.verified;
     } catch (e) {
-      print(e);
       _controller.add(AuthenticationStatus.unauthenticated);
       return LoginStatus.unverified;
     }

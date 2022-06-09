@@ -35,7 +35,6 @@ class ChooseCategory extends StatelessWidget {
             context: context,
             backgroundColor: Colors.transparent,
             builder: (_) {
-              print("category 1");
               return BlocProvider.value(
                 value: BlocProvider.of<CategoryBloc>(context)
                   ..add(const CategoryInUserClassrooms()),

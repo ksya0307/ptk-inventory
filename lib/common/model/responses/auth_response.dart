@@ -6,8 +6,15 @@ part 'auth_response.g.dart';
 class AuthResponse {
   final String accessToken;
   final String refreshToken;
+  final int accessTokenExpiredAt;
+  final int refreshTokenExpiredAt;
 
-  AuthResponse(this.accessToken, this.refreshToken);
+  AuthResponse(
+    this.accessToken,
+    this.refreshToken,
+    this.accessTokenExpiredAt,
+    this.refreshTokenExpiredAt,
+  );
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) =>
       _$AuthResponseFromJson(json);

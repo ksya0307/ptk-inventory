@@ -25,14 +25,15 @@ class UserHiveModelAdapter extends TypeAdapter<UserHiveModel> {
       userRole: fields[5] as String,
       accessToken: fields[6] as String,
       refreshToken: fields[7] as String,
-      lastTimeUpdated: fields[8] as DateTime,
+      accessTokenExpiredAt: fields[8] as int,
+      refreshTokenExpiredAt: fields[9] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserHiveModel obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -50,7 +51,9 @@ class UserHiveModelAdapter extends TypeAdapter<UserHiveModel> {
       ..writeByte(7)
       ..write(obj.refreshToken)
       ..writeByte(8)
-      ..write(obj.lastTimeUpdated);
+      ..write(obj.accessTokenExpiredAt)
+      ..writeByte(9)
+      ..write(obj.refreshTokenExpiredAt);
   }
 
   @override
@@ -78,7 +81,8 @@ UserHiveModel _$UserHiveModelFromJson(Map<String, dynamic> json) =>
       userRole: json['userRole'] as String,
       accessToken: json['accessToken'] as String,
       refreshToken: json['refreshToken'] as String,
-      lastTimeUpdated: DateTime.parse(json['lastTimeUpdated'] as String),
+      accessTokenExpiredAt: json['accessTokenExpiredAt'] as int,
+      refreshTokenExpiredAt: json['refreshTokenExpiredAt'] as int,
     );
 
 Map<String, dynamic> _$UserHiveModelToJson(UserHiveModel instance) =>
@@ -91,5 +95,6 @@ Map<String, dynamic> _$UserHiveModelToJson(UserHiveModel instance) =>
       'userRole': instance.userRole,
       'accessToken': instance.accessToken,
       'refreshToken': instance.refreshToken,
-      'lastTimeUpdated': instance.lastTimeUpdated.toIso8601String(),
+      'accessTokenExpiredAt': instance.accessTokenExpiredAt,
+      'refreshTokenExpiredAt': instance.refreshTokenExpiredAt,
     };

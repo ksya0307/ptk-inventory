@@ -22,6 +22,8 @@ Future<bool?> addUserProfile({required UserHiveModel userHiveModel}) async {
 Future<bool?> editUserProfile({
   required String accessToken,
   required String refreshToken,
+  required int accessTokenExpiredAt,
+  required int refreshTokenExpiredAt,
 }) async {
   final userProfile = userHiveBox.get(0);
   if (userProfile != null) {
@@ -33,7 +35,8 @@ Future<bool?> editUserProfile({
       username: userProfile.username,
       accessToken: accessToken,
       refreshToken: refreshToken,
-      lastTimeUpdated: DateTime.now(),
+      accessTokenExpiredAt: accessTokenExpiredAt,
+      refreshTokenExpiredAt: refreshTokenExpiredAt,
       userRole: userProfile.userRole,
     );
 

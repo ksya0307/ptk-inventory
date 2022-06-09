@@ -25,7 +25,9 @@ class UserHiveModel extends Equatable {
   @HiveField(7)
   final String refreshToken;
   @HiveField(8)
-  final DateTime lastTimeUpdated;
+  final int accessTokenExpiredAt;
+  @HiveField(9)
+  final int refreshTokenExpiredAt;
 
   const UserHiveModel({
     required this.id,
@@ -36,18 +38,14 @@ class UserHiveModel extends Equatable {
     required this.userRole,
     required this.accessToken,
     required this.refreshToken,
-    required this.lastTimeUpdated,
+    required this.accessTokenExpiredAt,
+    required this.refreshTokenExpiredAt,
   });
 
   factory UserHiveModel.fromJson(Map<String, dynamic> json) =>
       _$UserHiveModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserHiveModelToJson(this);
-
-  @override
-  String toString() {
-    return 'UserHiveModel{id: $id, surname: $surname, name: $name, patronymic: $patronymic, username: $username, role: $userRole, accessToken: $accessToken, refreshToken: $refreshToken, lastTimeUpdated: $lastTimeUpdated}';
-  }
 
   @override
   List<Object?> get props => [
@@ -59,6 +57,7 @@ class UserHiveModel extends Equatable {
         userRole,
         accessToken,
         refreshToken,
-        lastTimeUpdated,
+        accessTokenExpiredAt,
+        refreshTokenExpiredAt
       ];
 }

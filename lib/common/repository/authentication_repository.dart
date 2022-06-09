@@ -20,11 +20,17 @@ class AuthenticationRepository {
     final UserHiveModel? userHiveModel = await getUserProfile();
     if (userHiveModel != null) {
       //  if the diffrence between the userHiveModel lastUpdate and now is greater than 15 min then call refreshToken()
-      if (DateTime.now().difference(userHiveModel.lastTimeUpdated).inMinutes >
-          15) {
+      if (DateTime.now() ==
+          DateTime.fromMillisecondsSinceEpoch(
+            userHiveModel.accessTokenExpiredAt,
+          )) {
         await refreshToken(userHiveModel);
       }
       yield AuthenticationStatus.authenticated;
+      yield* _controller.stream;
+    }
+    if (DateTime.now().millisecond > userHiveModel!.refreshTokenExpiredAt) {
+      yield AuthenticationStatus.unauthenticated;
       yield* _controller.stream;
     } else {
       yield AuthenticationStatus.unauthenticated;
@@ -51,7 +57,8 @@ class AuthenticationRepository {
         username: userModel.username,
         accessToken: data.accessToken,
         refreshToken: data.refreshToken,
-        lastTimeUpdated: DateTime.now(),
+        accessTokenExpiredAt: data.accessTokenExpiredAt,
+        refreshTokenExpiredAt: data.refreshTokenExpiredAt,
         userRole: userModel.role.userRoleToString,
       );
       await addUserProfile(userHiveModel: userHiveModel);
@@ -71,6 +78,8 @@ class AuthenticationRepository {
       await editUserProfile(
         accessToken: data.accessToken,
         refreshToken: data.refreshToken,
+        accessTokenExpiredAt: data.accessTokenExpiredAt,
+        refreshTokenExpiredAt: data.refreshTokenExpiredAt,
       );
     } catch (_) {
       _controller.add(AuthenticationStatus.unauthenticated);

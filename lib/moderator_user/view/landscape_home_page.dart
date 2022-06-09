@@ -92,7 +92,10 @@ Widget ifosCard(BuildContext context) {
       width: MediaQuery.of(context).size.width * 0.47,
       height: MediaQuery.of(context).size.height * 0.22,
       child: Card(
-        elevation: 2.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7.0),
+        ),
+        elevation: 7.0,
         shadowColor: greyShadow,
         color: purpleCustom,
         child: Column(
@@ -137,7 +140,10 @@ Widget documentsCard(BuildContext context) {
       width: MediaQuery.of(context).size.width * 0.47,
       height: MediaQuery.of(context).size.height * 0.22,
       child: Card(
-        elevation: 2.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7.0),
+        ),
+        elevation: 7.0,
         shadowColor: greyShadow,
         color: greenCustom,
         child: Column(
@@ -185,7 +191,8 @@ Widget classroomsCard(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.0),
         ),
-        elevation: 2.0,
+        elevation: 7.0,
+        shadowColor: greyShadow,
         color: greenCustom,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,7 +237,8 @@ Widget repairCard(BuildContext context) {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(7.0),
       ),
-      elevation: 2.0,
+      elevation: 7.0,
+      shadowColor: greyShadow,
       color: orangeCustom,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,7 +284,8 @@ Widget profileCard(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.0),
         ),
-        elevation: 2.0,
+        elevation: 7.0,
+        shadowColor: greyShadow,
         color: blueCustom,
         child: const Padding(
           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
@@ -305,7 +314,8 @@ Widget categoryCard(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.0),
         ),
-        elevation: 2.0,
+        elevation: 7.0,
+        shadowColor: greyShadow,
         color: purpleCustom,
         child: const Padding(
           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
@@ -334,7 +344,8 @@ Widget inventoryManagementCard(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.0),
         ),
-        elevation: 2.0,
+        elevation: 7.0,
+        shadowColor: greyShadow,
         color: purpleCustom,
         child: const Padding(
           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
@@ -363,7 +374,8 @@ Widget equipmentCard(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.0),
         ),
-        elevation: 2.0,
+        elevation: 7.0,
+        shadowColor: greyShadow,
         color: redCustom,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

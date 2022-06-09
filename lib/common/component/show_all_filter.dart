@@ -62,6 +62,7 @@ class ShowAllFilter extends StatelessWidget {
                     context: context,
                     backgroundColor: Colors.transparent,
                     builder: (_) {
+                      //исправить
                       return BlocProvider<CategoryBloc>.value(
                         value: state.user.role == UserRole.admin ||
                                 state.user.role == UserRole.moderator

@@ -85,6 +85,8 @@ Widget profileCard(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.0),
         ),
+        elevation: 7.0,
+        shadowColor: greyShadow,
         color: blueCustom,
         child: const Padding(
           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
@@ -113,6 +115,8 @@ Widget repairCard(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.0),
         ),
+        elevation: 7.0,
+        shadowColor: greyShadow,
         color: orangeCustom,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,6 +163,8 @@ Widget myEquipmentCard(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.0),
         ),
+        elevation: 7.0,
+        shadowColor: greyShadow,
         color: redCustom,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

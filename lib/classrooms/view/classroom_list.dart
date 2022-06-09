@@ -54,7 +54,7 @@ class ClassroomList extends StatelessWidget {
                   child: Container(
                     alignment: Alignment.centerLeft,
                     child: const Text(
-                      'Сотрудник',
+                      'Заведующий',
                       style: TextStyle(
                         fontFamily: 'Rubik',
                         fontSize: 16,

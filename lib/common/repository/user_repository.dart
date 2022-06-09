@@ -8,7 +8,7 @@ import 'package:ptk_inventory/common/provider/user_api_client.dart';
 import 'package:ptk_inventory/common/repository/authentication_repository.dart';
 import 'package:ptk_inventory/sign_up/models/request/sign_up_request.dart';
 
-enum ChangeStatus { changed, unchanged, deleted, notDeleted }
+enum UserStatus { changed, unchanged, deleted, notDeleted, exists, notExists }
 enum SignUpStatus { signed, unsigned }
 
 class UserRepository {
@@ -21,6 +21,28 @@ class UserRepository {
         _authenticationRepository =
             authenticationRepository ?? AuthenticationRepository();
 
+  // Future<UserStatus> refreshUser(int userId) async {
+  //   try {
+  //     await _userProvider.existingUser(
+  //       header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+  //       userId: userId,
+  //     );
+  //     return UserStatus.exists;
+  //   } on ExistingUserFailure {
+  //     return UserStatus.notExists;
+  //   } on ExistingUserUnauthorized {
+  //     final UserHiveModel? userHiveModel = await getUserProfile();
+  //     if (userHiveModel != null) {
+  //       await _authenticationRepository.refreshToken(userHiveModel);
+  //     }
+  //     await _userProvider.existingUser(
+  //       header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+  //       userId: userId,
+  //     );
+  //     return UserStatus.exists;
+  //   }
+  // }
+
   Future<User?> getUser() async {
     final UserHiveModel? userHiveModel = await getUserProfile();
     if (userHiveModel != null) {
@@ -29,7 +51,7 @@ class UserRepository {
     return null;
   }
 
-  Future<ChangeStatus> userChangePassword(
+  Future<UserStatus> userChangePassword(
     ChangePasswordModelRequest changePasswordModelRequest,
   ) async {
     try {
@@ -37,7 +59,7 @@ class UserRepository {
         header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         body: changePasswordModelRequest.toMap(),
       );
-      return ChangeStatus.changed;
+      return UserStatus.changed;
     } on ChangePasswordUnauthorized {
       final UserHiveModel? userHiveModel = await getUserProfile();
       if (userHiveModel != null) {
@@ -47,9 +69,9 @@ class UserRepository {
         header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         body: changePasswordModelRequest.toMap(),
       );
-      return ChangeStatus.changed;
+      return UserStatus.changed;
     } on ChangePasswordFailure {
-      return ChangeStatus.unchanged;
+      return UserStatus.unchanged;
     }
   }
 
@@ -84,7 +106,7 @@ class UserRepository {
     }
   }
 
-  Future<ChangeStatus> updateUser(
+  Future<UserStatus> updateUser(
     ChangeUserModelRequest changeUserModelRequest,
   ) async {
     try {
@@ -92,9 +114,9 @@ class UserRepository {
         header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         body: changeUserModelRequest.toMap(),
       );
-      return ChangeStatus.changed;
+      return UserStatus.changed;
     } on ChangeUserDataFailure {
-      return ChangeStatus.unchanged;
+      return UserStatus.unchanged;
     } on ChangeUserDataUnauthorized {
       final UserHiveModel? userHiveModel = await getUserProfile();
       if (userHiveModel != null) {
@@ -104,19 +126,19 @@ class UserRepository {
         header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         body: changeUserModelRequest.toMap(),
       );
-      return ChangeStatus.changed;
+      return UserStatus.changed;
     }
   }
 
-  Future<ChangeStatus> deleteUser(int userId) async {
+  Future<UserStatus> deleteUser(int userId) async {
     try {
       await _userProvider.deleteUser(
         header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         userId: userId,
       );
-      return ChangeStatus.deleted;
+      return UserStatus.deleted;
     } on DeleteUserFailure {
-      return ChangeStatus.notDeleted;
+      return UserStatus.notDeleted;
     } on DeleteUserUnauthorized {
       final UserHiveModel? userHiveModel = await getUserProfile();
       if (userHiveModel != null) {
@@ -126,7 +148,7 @@ class UserRepository {
         header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         userId: userId,
       );
-      return ChangeStatus.deleted;
+      return UserStatus.deleted;
     }
   }
 }

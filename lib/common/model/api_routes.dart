@@ -8,7 +8,7 @@ class ApiRoutes {
   static const users = 'users';
   static const refresh = 'refresh';
   static const changePassword = '/change-password';
-  static const existingUser = 'existing-user';
+  static const existingUser = '/existing-user';
 
   static const categories = 'categories';
   static const categoriesInClassroom = '/categories-in-classroom';

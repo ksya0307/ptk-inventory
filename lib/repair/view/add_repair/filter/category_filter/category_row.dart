@@ -52,7 +52,7 @@ class _CategoryRowState extends State<CategoryRow> {
                   top: 8,
                   bottom: 8,
                   left: 12,
-                  right: 12,
+                  right: 8,
                 ),
                 child: Container(
                   alignment: Alignment.centerLeft,

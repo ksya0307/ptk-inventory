@@ -118,6 +118,10 @@ class UserProvider {
     return User.fromJson(userJson);
   }
 
+  // Future<User> refreshUser({ required Map<String, String> header, required String username,}) async{
+  //   final request
+  // }
+
   Future<AuthResponse> getNewPairOfTokens(Map<String, String> header) async {
     final request =
         Uri.https(ApiRoutes.baseUrl, ApiRoutes.apiRoute + ApiRoutes.refresh);
@@ -226,14 +230,13 @@ class UserProvider {
   }
 
   Future<GeneralModelResponse> existingUser({
-    required Map<String, String> header,
     required int userId,
   }) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
       "${ApiRoutes.apiRoute}${ApiRoutes.users}${ApiRoutes.existingUser}/$userId",
     );
-    final response = await _httpClient.get(request, headers: header);
+    final response = await _httpClient.get(request);
 
     if (response.statusCode != 200 && response.statusCode != 401) {
       throw ExistingUserFailure();

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
 import 'package:ptk_inventory/classrooms/repository/classroom_repository.dart';
+import 'package:ptk_inventory/classrooms/view/add_classroom/add_classroom_page.dart';
 import 'package:ptk_inventory/classrooms/view/classroom_form.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
 
@@ -24,8 +25,14 @@ class ClassroomsPage extends StatelessWidget {
                 ? FloatingActionButton(
                     tooltip: "Добавить аудиторию",
                     child: const Icon(Icons.add_rounded),
-                    onPressed: () {},
-                    //Navigator.of(context).push(AddEquipmentPage.route()),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => BlocProvider.value(
+                          value: context.read<ClassroomBloc>(),
+                          child: AddClassroomsPage(),
+                        ),
+                      ),
+                    ),
                   )
                 : null,
             appBar: AppBar(

@@ -42,7 +42,7 @@ class ClassroomForm extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.2,
+                        height: MediaQuery.of(context).size.height * 0.7,
                         width: MediaQuery.of(context).size.width,
                         child: Center(
                           child: Column(

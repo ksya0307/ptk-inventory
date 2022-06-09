@@ -40,14 +40,17 @@ class IfoRow extends StatelessWidget {
             ),
             Flexible(
               flex: 5,
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  ifo,
-                  style: const TextStyle(
-                    fontFamily: 'Rubik',
-                    fontSize: 16,
-                    color: blackLabels,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    ifo,
+                    style: const TextStyle(
+                      fontFamily: 'Rubik',
+                      fontSize: 16,
+                      color: blackLabels,
+                    ),
                   ),
                 ),
               ),

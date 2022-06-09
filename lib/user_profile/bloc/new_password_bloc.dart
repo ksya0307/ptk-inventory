@@ -31,7 +31,7 @@ class NewPasswordBloc extends Bloc<NewPasswordEvent, NewPasswordState> {
           newPassword: state.newPassword.value,
         ),
       );
-      if (waiting == ChangeStatus.unchanged) {
+      if (waiting == UserStatus.unchanged) {
         emit(state.copyWith(formStatus: FormzStatus.submissionFailure));
       } else {
         emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));

@@ -14,7 +14,7 @@ class ClassroomBloc extends Bloc<ClassroomEvent, ClassroomState> {
   ClassroomBloc({required ClassroomRepository classroomRepository})
       : _classroomRepository = classroomRepository,
         super(const ClassroomState()) {
-    on<ClassroomNameChanged>(_onNameChanged);
+    on<ClassroomNumberChanged>(_onNameChanged);
     on<ClassroomLoadList>(_onClassroomLoadList);
     on<ClassroomSubmitted>(_onSubmitted);
     on<ClassroomSaved>(_onSaved);
@@ -202,7 +202,7 @@ class ClassroomBloc extends Bloc<ClassroomEvent, ClassroomState> {
   }
 
   void _onNameChanged(
-    ClassroomNameChanged event,
+    ClassroomNumberChanged event,
     Emitter<ClassroomState> emit,
   ) {
     final number = Number.dirty(event.number);

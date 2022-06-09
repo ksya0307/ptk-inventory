@@ -169,7 +169,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     );
     final waiting = await _userRepository.deleteUser(state.selectedUser!.id);
 
-    if (waiting == ChangeStatus.deleted) {
+    if (waiting == UserStatus.deleted) {
       emit(
         state.copyWith(
           userLoadingStatus: UserLoadingStatus.loadingSuccess,
@@ -393,7 +393,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
                     : state.role,
               ),
             );
-      if (waiting == ChangeStatus.unchanged) {
+      if (waiting == UserStatus.unchanged) {
         emit(
           state.copyWith(
             formStatus: FormzStatus.submissionFailure,

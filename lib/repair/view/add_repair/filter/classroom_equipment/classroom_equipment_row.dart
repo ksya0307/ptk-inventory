@@ -61,6 +61,7 @@ class _ClassroomEquipmentRowState extends State<ClassroomEquipmentRow> {
                   top: 8 + 4,
                   bottom: 8 + 4,
                   left: 16,
+                  right: 8,
                 ),
                 child: Container(
                   alignment: Alignment.centerLeft,

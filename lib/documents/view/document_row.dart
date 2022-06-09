@@ -40,14 +40,17 @@ class DocumentRow extends StatelessWidget {
             ),
             Flexible(
               flex: 5,
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  document,
-                  style: const TextStyle(
-                    fontFamily: 'Rubik',
-                    fontSize: 16,
-                    color: blackLabels,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    document,
+                    style: const TextStyle(
+                      fontFamily: 'Rubik',
+                      fontSize: 16,
+                      color: blackLabels,
+                    ),
                   ),
                 ),
               ),

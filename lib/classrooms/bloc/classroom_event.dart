@@ -7,10 +7,10 @@ abstract class ClassroomEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ClassroomNameChanged extends ClassroomEvent {
+class ClassroomNumberChanged extends ClassroomEvent {
   final String number;
 
-  const ClassroomNameChanged(this.number);
+  const ClassroomNumberChanged(this.number);
   @override
   List<Object> get props => [number];
 }

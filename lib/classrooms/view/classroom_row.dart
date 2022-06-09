@@ -44,6 +44,7 @@ class ClassroomRow extends StatelessWidget {
                   top: 8 + 4,
                   bottom: 8 + 4,
                   left: 12,
+                  right: 8,
                 ),
                 child: Container(
                   alignment: Alignment.centerLeft,

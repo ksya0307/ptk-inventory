@@ -7,6 +7,7 @@ import 'package:ptk_inventory/common/model/requests/login.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/common/provider/hive/hive_provider.dart';
 import 'package:ptk_inventory/common/provider/user_api_client.dart';
+import 'package:ptk_inventory/common/repository/user_repository.dart';
 
 enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 enum LoginStatus { verified, unverified }
@@ -19,6 +20,16 @@ class AuthenticationRepository {
   Stream<AuthenticationStatus> get status async* {
     final UserHiveModel? userHiveModel = await getUserProfile();
     if (userHiveModel != null) {
+      try {
+        var result = await _userProvider.existingUser(
+          userId: userHiveModel.id,
+        );
+        print(result.statusCode);
+      } on ExistingUserFailure {
+        await logout();
+      } on ExistingUserUnauthorized {
+        await refreshToken(userHiveModel);
+      }
       //  if the diffrence between the userHiveModel lastUpdate and now is greater than 15 min then call refreshToken()
       if (DateTime.now() ==
           DateTime.fromMillisecondsSinceEpoch(
@@ -28,10 +39,10 @@ class AuthenticationRepository {
       }
       yield AuthenticationStatus.authenticated;
       yield* _controller.stream;
-    }
-    if (DateTime.now().millisecond > userHiveModel!.refreshTokenExpiredAt) {
-      yield AuthenticationStatus.unauthenticated;
-      yield* _controller.stream;
+      if (DateTime.now().millisecond > userHiveModel.refreshTokenExpiredAt) {
+        yield AuthenticationStatus.unauthenticated;
+        yield* _controller.stream;
+      }
     } else {
       yield AuthenticationStatus.unauthenticated;
       yield* _controller.stream;

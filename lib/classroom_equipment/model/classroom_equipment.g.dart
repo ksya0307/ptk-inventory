@@ -15,6 +15,7 @@ ClassroomEquipment _$ClassroomEquipmentFromJson(Map<String, dynamic> json) =>
       numberInClassroom: json['number_in_classroom'] as String,
       equipmentType:
           $enumDecode(_$EquipmentBelongingEnumMap, json['equipment_type']),
+      isChecked: json['isChecked'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$ClassroomEquipmentToJson(ClassroomEquipment instance) =>
@@ -25,6 +26,7 @@ Map<String, dynamic> _$ClassroomEquipmentToJson(ClassroomEquipment instance) =>
       'equipment': instance.equipment,
       'number_in_classroom': instance.numberInClassroom,
       'equipment_type': _$EquipmentBelongingEnumMap[instance.equipmentType],
+      'isChecked': instance.isChecked,
     };
 
 const _$EquipmentBelongingEnumMap = {

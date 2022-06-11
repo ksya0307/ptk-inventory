@@ -21,28 +21,6 @@ class UserRepository {
         _authenticationRepository =
             authenticationRepository ?? AuthenticationRepository();
 
-  // Future<UserStatus> refreshUser(int userId) async {
-  //   try {
-  //     await _userProvider.existingUser(
-  //       header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
-  //       userId: userId,
-  //     );
-  //     return UserStatus.exists;
-  //   } on ExistingUserFailure {
-  //     return UserStatus.notExists;
-  //   } on ExistingUserUnauthorized {
-  //     final UserHiveModel? userHiveModel = await getUserProfile();
-  //     if (userHiveModel != null) {
-  //       await _authenticationRepository.refreshToken(userHiveModel);
-  //     }
-  //     await _userProvider.existingUser(
-  //       header: HeaderModel(await HeaderModel.getAccessToken()).toMap(),
-  //       userId: userId,
-  //     );
-  //     return UserStatus.exists;
-  //   }
-  // }
-
   Future<User?> getUser() async {
     final UserHiveModel? userHiveModel = await getUserProfile();
     if (userHiveModel != null) {

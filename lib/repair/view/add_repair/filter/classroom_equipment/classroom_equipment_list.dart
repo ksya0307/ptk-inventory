@@ -15,7 +15,7 @@ class ClassroomEquipmentList extends StatefulWidget {
 }
 
 class _ClassroomEquipmentListState extends State<ClassroomEquipmentList> {
-  int groupValue = -1;
+  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
     final equipment =
@@ -90,6 +90,7 @@ class _ClassroomEquipmentListState extends State<ClassroomEquipmentList> {
             ),
             child: BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
               builder: (context, state) {
+                print(equipment[0].isChecked);
                 if (state.visibleList.isNotEmpty) {
                   return const VisibleClassroomEquipmentList();
                 }
@@ -178,12 +179,14 @@ class _ClassroomEquipmentListState extends State<ClassroomEquipmentList> {
                       //   });
                       // },
                       // value: index,
-                      radio: Radio<int>(
-                        value: index,
-                        groupValue: groupValue,
-                        onChanged: (equipments) {
+                      radio: Checkbox(
+                        value: equipment[index].isChecked,
+                        onChanged: (value) {
                           setState(() {
-                            groupValue = equipments!;
+                            equipment[index].isChecked = value!;
+
+                            // print("value");
+                            // print(value);
                             context.read<ClassroomEquipmentBloc>().add(
                                   ClassroomEquipmentFilteredEquipment(
                                     equipment[index],

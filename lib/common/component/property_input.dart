@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:ptk_inventory/config/colors.dart';
 
@@ -9,21 +10,27 @@ class PropertyInput extends StatelessWidget {
     this.onChange,
     this.errorText = '',
     this.propertyInvalid = false,
-    required this.hintText,
+    this.hintText,
     this.maxLines,
     this.maxLength,
+    this.keyboardType,
+    this.inputFormatters,
   }) : super(key: key);
   final String? initialValue;
   final Function(String)? onChange;
   final String errorText;
   final bool propertyInvalid;
-  final String hintText;
+  final String? hintText;
   final int? maxLines;
   final int? maxLength;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
       initialValue: initialValue,
       onChanged: onChange,
       cursorColor: Theme.of(context).primaryColor,

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:ptk_inventory/classroom_equipment/model/equipment_types.dart';
@@ -18,13 +20,15 @@ class ClassroomEquipment extends Equatable {
   final String numberInClassroom;
   @JsonKey(name: "equipment_type")
   final EquipmentBelonging equipmentType;
-  const ClassroomEquipment({
+  bool isChecked;
+  ClassroomEquipment({
     required this.id,
     required this.inventoryNumber,
     required this.classroom,
     required this.equipment,
     required this.numberInClassroom,
     required this.equipmentType,
+    this.isChecked = false,
   });
 
   factory ClassroomEquipment.fromJson(Map<String, dynamic> json) =>
@@ -38,5 +42,6 @@ class ClassroomEquipment extends Equatable {
         equipment,
         numberInClassroom,
         equipmentType,
+        isChecked,
       ];
 }

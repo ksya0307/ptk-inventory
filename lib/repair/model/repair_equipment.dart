@@ -8,9 +8,15 @@ part 'repair_equipment.g.dart';
 
 @JsonSerializable()
 class RepairEquipment extends Equatable {
+  final int id;
+  @JsonKey(name: "repair_id")
   final Repair repair;
+  @JsonKey(name: "equipment_id")
   final ClassroomEquipment equipment;
-  const RepairEquipment({
+  final String problem;
+  const RepairEquipment(
+    this.id,
+    this.problem, {
     required this.repair,
     required this.equipment,
   });
@@ -18,5 +24,5 @@ class RepairEquipment extends Equatable {
   factory RepairEquipment.fromJson(Map<String, dynamic> json) =>
       _$RepairEquipmentFromJson(json);
   @override
-  List<Object?> get props => [repair, equipment];
+  List<Object?> get props => [id, repair, equipment, problem];
 }

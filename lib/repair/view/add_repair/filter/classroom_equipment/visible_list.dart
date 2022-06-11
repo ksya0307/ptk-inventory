@@ -78,7 +78,11 @@ class _VisibleClassroomEquipmentListState
                           onChanged: (equipments) {
                             setState(() {
                               groupValue = equipments!;
-                              print(equipment[index]);
+                              context.read<ClassroomEquipmentBloc>().add(
+                                    ClassroomEquipmentFilteredEquipment(
+                                      equipment[index],
+                                    ),
+                                  );
                             });
                           },
                         ),

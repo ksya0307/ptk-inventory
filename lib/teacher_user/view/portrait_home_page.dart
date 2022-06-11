@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ptk_inventory/classroom_equipment/view/equipment_classrooms_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/view/add_repair/add_repair_page.dart';
+import 'package:ptk_inventory/repair/view/repair_page.dart';
 import 'package:ptk_inventory/user_profile/view/my_profile.dart';
 
 class PortraitReaderPage extends StatelessWidget {
@@ -107,7 +108,7 @@ Widget profileCard(BuildContext context) {
 
 Widget repairCard(BuildContext context) {
   return GestureDetector(
-    onTap: () => Navigator.of(context).push(AddRepairPage.route()),
+    onTap: () => Navigator.of(context).push(RepairPage.route()),
     child: SizedBox(
       width: MediaQuery.of(context).size.width * 0.47,
       height: MediaQuery.of(context).size.height * 0.2,

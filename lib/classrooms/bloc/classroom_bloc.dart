@@ -15,16 +15,21 @@ class ClassroomBloc extends Bloc<ClassroomEvent, ClassroomState> {
       : _classroomRepository = classroomRepository,
         super(const ClassroomState()) {
     on<ClassroomNumberChanged>(_onNameChanged);
-    on<ClassroomLoadList>(_onClassroomLoadList);
+
     on<ClassroomSubmitted>(_onSubmitted);
     on<ClassroomSaved>(_onSaved);
+
     on<ClassroomSearch>(_onSearch);
+
     on<ClassroomDeleted>(_onDeleted);
     on<ClassroomSelected>(_onSelected);
+
     on<ClassroomDeleteFromList>(_onDeleteFromList);
     on<ClassroomAddToList>(_onAddToList);
-    on<ClassroomSaveToList>(_onSaveList);
+    on<ClassroomSaveToList>(_onSaveToList);
+
     on<ClassroomLoadUserList>(_onUserClassroomList);
+    on<ClassroomLoadList>(_onClassroomLoadList);
   }
 
   final ClassroomRepository _classroomRepository;
@@ -85,7 +90,7 @@ class ClassroomBloc extends Bloc<ClassroomEvent, ClassroomState> {
     emit(state.copyWith(classroomActionStatus: ClassroomActionStatus.pure));
   }
 
-  void _onSaveList(
+  void _onSaveToList(
     ClassroomSaveToList event,
     Emitter<ClassroomState> emit,
   ) {

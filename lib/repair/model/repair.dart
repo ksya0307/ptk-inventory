@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -21,4 +23,12 @@ class Repair extends Equatable {
 
   @override
   List<Object?> get props => [id, phone, datetime, completed];
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'phone': phone,
+      'datetime': datetime.toIso8601String(),
+      'completed': completed,
+    };
+  }
 }

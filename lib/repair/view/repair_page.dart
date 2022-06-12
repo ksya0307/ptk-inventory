@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/repository/category_repository.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/repository/classroom_equipment_repository.dart';
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
 import 'package:ptk_inventory/classrooms/repository/classroom_repository.dart';
+import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/repair/bloc/repair_bloc.dart';
 import 'package:ptk_inventory/repair/repository/repair_repository.dart';
 import 'package:ptk_inventory/repair/view/add_repair/add_repair_page.dart';
@@ -57,7 +59,8 @@ class RepairPage extends StatelessWidget {
                         value: context.read<ClassroomBloc>(),
                       ),
                       BlocProvider<CategoryBloc>.value(
-                          value: context.read<CategoryBloc>())
+                        value: context.read<CategoryBloc>(),
+                      )
                     ],
                     child: AddRepairPage(),
                   ),
@@ -97,13 +100,32 @@ class RepairPage extends StatelessWidget {
                   constraints: BoxConstraints(
                     minHeight: view.maxHeight,
                   ),
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                    child: Column(
-                      children: const [
-                        RepairForm(),
-                      ],
-                    ),
+                  child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                    builder: (context, state) {
+                      if (state.user.role == UserRole.teacher) {
+                        BlocProvider<RepairBloc>.value(
+                          value: context.read<RepairBloc>()
+                            ..add(const RepairUserLoadList()),
+                          child: const RepairForm(),
+                        );
+                      } else {
+                        BlocProvider<RepairBloc>.value(
+                          value: context.read<RepairBloc>()
+                            ..add(
+                              const RepairLoadList(),
+                            ),
+                          child: const RepairForm(),
+                        );
+                      }
+                      return Container(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+                        child: Column(
+                          children: const [
+                            RepairForm(),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
               );

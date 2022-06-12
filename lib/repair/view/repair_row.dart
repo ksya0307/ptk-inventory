@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'package:ptk_inventory/config/colors.dart';
 
-class Repair extends StatelessWidget {
-  final int id;
-  const Repair({
+class RepairRow extends StatelessWidget {
+  final String number;
+  final String inventoryNumber;
+  final String dateTime;
+  final bool last;
+  const RepairRow({
     Key? key,
-    required this.id,
+    required this.number,
+    required this.inventoryNumber,
+    required this.dateTime,
+    required this.last,
   }) : super(key: key);
 
   @override
@@ -16,7 +22,7 @@ class Repair extends StatelessWidget {
         Row(
           children: [
             Flexible(
-              flex: 3,
+              flex: 2,
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 8 + 4,
@@ -27,7 +33,7 @@ class Repair extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "  widget.numberInClassroom",
+                    number,
                     style: const TextStyle(
                       fontFamily: 'Rubik',
                       fontSize: 16,
@@ -38,7 +44,7 @@ class Repair extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 5,
+              flex: 6,
               child: InkWell(
                 //  onTap: "widget.onTap",
                 child: Row(
@@ -47,7 +53,7 @@ class Repair extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "widget.inventoryNumber",
+                          inventoryNumber,
                           style: const TextStyle(
                             fontFamily: 'Rubik',
                             fontSize: 16,
@@ -55,7 +61,7 @@ class Repair extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "widget.category",
+                          dateTime,
                           style: const TextStyle(
                             fontFamily: 'Rubik',
                             fontSize: 14,
@@ -70,16 +76,16 @@ class Repair extends StatelessWidget {
             ),
           ],
         ),
-        // if (!widget.last)
-        //   const Padding(
-        //     padding: EdgeInsets.symmetric(horizontal: 12),
-        //     child: Divider(
-        //       color: greyDivider,
-        //       thickness: .75,
-        //     ),
-        //   )
-        // else
-        //   const Padding(padding: EdgeInsets.only(bottom: 12)),
+        if (!last)
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Divider(
+              color: greyDivider,
+              thickness: .75,
+            ),
+          )
+        else
+          const Padding(padding: EdgeInsets.only(bottom: 12)),
       ],
     );
   }

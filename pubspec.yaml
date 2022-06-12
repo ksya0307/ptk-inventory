@@ -29,7 +29,7 @@ dependencies:
   docx_template: ^0.3.2
   aspose_words_cloud: 22.5.0
   permission_handler: ^9.2.0
-  # flutter_pdfview: ^1.2.2
+  pdfx: ^2.0.1+2
 
 module:
     androidX:true

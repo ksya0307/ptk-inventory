@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
-import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
 import 'package:ptk_inventory/common/component/apply_filter_label.dart';
 import 'package:ptk_inventory/common/component/filter_scrollable_sheet.dart';
 import 'package:ptk_inventory/common/component/search_field.dart';
@@ -34,6 +32,7 @@ class _AddRepairPageState extends State<AddRepairPage> {
             color: primaryBlue,
           ),
           onPressed: () {
+            context.read<RepairBloc>().add(const RepairEquipmentChanged(null));
             Navigator.of(context).pop();
           },
         ),

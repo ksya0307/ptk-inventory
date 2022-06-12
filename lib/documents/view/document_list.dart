@@ -190,7 +190,7 @@ class DocumentsList extends StatelessWidget {
                         );
                       },
                       child: DocumentRow(
-                        id: documents[index].id.toString(),
+                        id: (index + 1).toString(),
                         document: documents[index].name,
                         last: index == documents.length - 1,
                       ),

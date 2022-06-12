@@ -8,15 +8,13 @@ part 'repair_equipment.g.dart';
 
 @JsonSerializable()
 class RepairEquipment extends Equatable {
-  final int id;
-  @JsonKey(name: "repair_id")
   final Repair repair;
-  @JsonKey(name: "equipment_id")
   final ClassroomEquipment equipment;
   final String problem;
-  const RepairEquipment(
-    this.id,
-    this.problem, {
+  final int id;
+  const RepairEquipment({
+    required this.id,
+    required this.problem,
     required this.repair,
     required this.equipment,
   });

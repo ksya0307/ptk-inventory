@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
+import 'package:intl/intl.dart';
 
-import 'package:ptk_inventory/category/bloc/category_bloc.dart';
-import 'package:ptk_inventory/category/model/category.dart';
-import 'package:ptk_inventory/category/view/category_row.dart';
-import 'package:ptk_inventory/category/view/update_category/update_category_page.dart';
-import 'package:ptk_inventory/category/view/visible_category_list.dart';
-import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/bloc/repair_bloc.dart';
+import 'package:ptk_inventory/repair/view/repair_row.dart';
+import 'package:ptk_inventory/repair/view/repair_visible_list.dart';
 
 class RepairList extends StatelessWidget {
   const RepairList({Key? key}) : super(key: key);
@@ -53,7 +49,7 @@ class RepairList extends StatelessWidget {
                     ),
                   ),
                   Flexible(
-                    flex: 5,
+                    flex: 6,
                     child: Container(
                       alignment: Alignment.centerLeft,
                       child: const Text(
@@ -81,7 +77,7 @@ class RepairList extends StatelessWidget {
               child: BlocBuilder<RepairBloc, RepairState>(
                 builder: (context, state) {
                   if (state.visibleList.isNotEmpty) {
-                    //  return const VisibleCategoryList();
+                    return const RepairVisibleList();
                   }
                   if (state.searchText.isNotEmpty &&
                       state.visibleList.isEmpty) {
@@ -198,11 +194,16 @@ class RepairList extends StatelessWidget {
                           //   ),
                           // );
                         },
-                        // child: RepairRow(
-                        //   id: repairs[index].id.toString(),
-                        //   category: repairs[index].name,
-                        //   last: index == repairs.length - 1,
-                        // ),
+                        child: RepairRow(
+                          number: (index + 1).toString(),
+                          inventoryNumber: repairs[index]
+                              .equipment
+                              .inventoryNumber
+                              .toString(),
+                          dateTime: DateFormat("dd-MM-yyyy")
+                              .format(repairs[index].repair.datetime),
+                          last: index == repairs.length - 1,
+                        ),
                       );
                     },
                   );

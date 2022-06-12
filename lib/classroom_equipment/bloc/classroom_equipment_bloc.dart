@@ -51,9 +51,9 @@ class ClassroomEquipmentBloc
     ClassroomEquipmentFilteredEquipment event,
     Emitter<ClassroomEquipmentState> emit,
   ) {
-    print("bloc");
+    //print("bloc");
     List<ClassroomEquipment> newList = state.filteredEquipment;
-    print(newList);
+    //print(newList);
 
     ClassroomEquipment classroomEquipment;
 
@@ -69,7 +69,7 @@ class ClassroomEquipmentBloc
         equipmentType: event.filteredEquipment!.equipmentType,
         isChecked: event.filteredEquipment!.isChecked,
       );
-      print("CHECKED $classroomEquipment");
+      //print("CHECKED $classroomEquipment");
       newList = List.from(state.filteredEquipment)..add(classroomEquipment);
       // print("true");
       // print(newList);
@@ -88,12 +88,12 @@ class ClassroomEquipmentBloc
       );
 
       final index = state.filteredEquipment.indexWhere((element) {
-        print("element.inventoryNumber ${element.inventoryNumber}");
+        //  print("element.inventoryNumber ${element.inventoryNumber}");
         return element.inventoryNumber == classroomEquipment.inventoryNumber;
       });
       newList[index] = classroomEquipment;
       emit(state.copyWith(filteredEquipment: newList));
-      print("3 $newList");
+      //print("3 $newList");
 
       newList.removeWhere((item) {
         // print("item");
@@ -101,7 +101,7 @@ class ClassroomEquipmentBloc
         return item.isChecked == false &&
             item.inventoryNumber == event.filteredEquipment!.inventoryNumber;
       });
-      print("4 $newList");
+      //  print("4 $newList");
       emit(state.copyWith(filteredEquipment: newList));
     }
   }

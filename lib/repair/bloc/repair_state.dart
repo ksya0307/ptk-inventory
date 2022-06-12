@@ -17,9 +17,13 @@ enum RepairActionStatus {
   added,
   notAdded,
   addedToGlobal,
+  downloaded,
+  notDownloaded,
+  shown,
 }
 
 class RepairState extends Equatable {
+  final Repair? repair;
   final List<RepairEquipment> globalRepairEquipment;
   final List<RepairEquipment> visibleList;
   final RepairLoadingStatus repairLoadingStatus;
@@ -32,8 +36,11 @@ class RepairState extends Equatable {
   final DateTime? dateTime;
   final String searchText;
   final RepairEquipment? selectedRepairEquipment;
+  final Uint8List document;
 
   RepairState({
+    this.repair,
+    Uint8List? createdDocument,
     this.visibleList = const [],
     this.globalRepairEquipment = const [],
     this.searchText = "",
@@ -46,10 +53,12 @@ class RepairState extends Equatable {
     this.isCompleted,
     this.selectedEquipment,
     DateTime? creationDate,
-  }) : dateTime = creationDate ?? DateTime.now();
+  })  : dateTime = creationDate ?? DateTime.now(),
+        document = createdDocument ?? Uint8List(0);
 
   @override
   List<Object?> get props => [
+        repair,
         repairActionStatus,
         repairLoadingStatus,
         formStatus,
@@ -61,10 +70,12 @@ class RepairState extends Equatable {
         selectedEquipment,
         dateTime,
         searchText,
-        selectedRepairEquipment
+        selectedRepairEquipment,
+        document,
       ];
 
   RepairState copyWith({
+    Repair? repair,
     List<RepairEquipment>? globalRepairEquipment,
     List<RepairEquipment>? visibleList,
     RepairLoadingStatus? repairLoadingStatus,
@@ -77,8 +88,10 @@ class RepairState extends Equatable {
     DateTime? dateTime,
     String? searchText,
     RepairEquipment? selectedRepairEquipment,
+    Uint8List? document,
   }) {
     return RepairState(
+      repair: repair ?? this.repair,
       globalRepairEquipment:
           globalRepairEquipment ?? this.globalRepairEquipment,
       visibleList: visibleList ?? this.visibleList,
@@ -93,6 +106,7 @@ class RepairState extends Equatable {
       searchText: searchText ?? this.searchText,
       selectedRepairEquipment:
           selectedRepairEquipment ?? this.selectedRepairEquipment,
+      createdDocument: document ?? this.document,
     );
   }
 }

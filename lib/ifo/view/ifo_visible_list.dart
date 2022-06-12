@@ -53,7 +53,7 @@ class VisibleIfoList extends StatelessWidget {
                           );
                         },
                         child: CategoryRow(
-                          id: ifos[index].id.toString(),
+                          id: (index + 1).toString(),
                           category: ifos[index].name,
                           last: index == ifos.length - 1,
                         ),

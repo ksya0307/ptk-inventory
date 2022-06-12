@@ -26,4 +26,5 @@ class ApiRoutes {
 
   static const repair = 'repair';
   static const repairEquipment = 'repair-equipment';
+  static const userRepair = 'user-repair';
 }

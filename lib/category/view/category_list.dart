@@ -203,7 +203,7 @@ class CategoriesList extends StatelessWidget {
                               }
                             },
                             child: CategoryRow(
-                              id: categories[index].id.toString(),
+                              id: (index + 1).toString(),
                               category: categories[index].name,
                               last: index == categories.length - 1,
                             ),

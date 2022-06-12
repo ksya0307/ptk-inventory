@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:aspose_words_cloud/aspose_words_cloud.dart';
@@ -16,6 +17,7 @@ import 'package:ptk_inventory/classroom_equipment/model/classroom_equipment.dart
 import 'package:ptk_inventory/repair/model/phone.dart';
 
 import 'package:ptk_inventory/repair/model/problem.dart';
+import 'package:ptk_inventory/repair/model/repair.dart';
 import 'package:ptk_inventory/repair/model/repair_equipment.dart';
 import 'package:ptk_inventory/repair/model/request/create_repair_equipment_request.dart';
 import 'package:ptk_inventory/repair/model/request/create_repair_request.dart';
@@ -42,19 +44,125 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
     on<RepairUserLoadList>(_onUserRepairLoadList);
 
     on<RepairSubmitted>(_onSubmitted);
+
+    on<RepairShowDocument>(_onShowDocument);
+    on<RepairSaveDocument>(_onSaveDocument);
     // on<RepairSaved>(_onSaved);
     // on<RepairmDeleted>(_onDeleted);
     // on<RepairSelected>(onSelected);
   }
 
   final RepairRepository _repairRepository;
+  static const clientId = 'a00b2452-575b-4e55-b01b-415fb4d83319';
+  static const secret = '97ad45b81c1f33855177353e0cd8b381';
+  final wordsApi = WordsApi(Configuration(clientId, secret));
 
-  void _onSaveToList(RepairSaveToList event, Emitter<RepairState> emit) {}
+  Future<void> _onShowDocument(
+    RepairShowDocument event,
+    Emitter<RepairState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        repairLoadingStatus: RepairLoadingStatus.loadingInProgress,
+      ),
+    );
+    final downloadRequest = DownloadFileRequest(
+      '${state.selectedEquipment!.inventoryNumber}${state.repair!.datetime}Акт приема-передачи оборудования в ремонт.pdf',
+    );
+
+    final newFile = await wordsApi.downloadFile(downloadRequest);
+    final bytes = newFile.buffer;
+    final dir = await getApplicationDocumentsDirectory();
+
+    final f =
+        await File('${dir.path}/Акт приема-передачи ${DateTime.now()}.pdf')
+            .writeAsBytes(
+      bytes.asUint8List(
+        newFile.offsetInBytes,
+        newFile.lengthInBytes,
+      ),
+    );
+
+    final Uint8List byteDate = f.readAsBytesSync();
+
+    //print()
+    emit(
+      state.copyWith(
+        document: byteDate,
+        repairActionStatus: RepairActionStatus.shown,
+        repairLoadingStatus: RepairLoadingStatus.loadingSuccess,
+      ),
+    );
+  }
+
+  Future<void> _onSaveDocument(
+    RepairSaveDocument event,
+    Emitter<RepairState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        formStatus: FormzStatus.submissionInProgress,
+      ),
+    );
+    final downloadRequest = DownloadFileRequest(
+      'Акт приема-передачи оборудования в ремонт.pdf',
+    );
+
+    final newFile = await wordsApi.downloadFile(downloadRequest);
+    final status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+    if (await Permission.storage.isGranted) {
+      //print(status);
+
+      final buffer = newFile.buffer;
+      final Directory tempDir = Platform.isAndroid
+          ? Directory('/storage/emulated/0/Download')
+          : await getApplicationSupportDirectory();
+
+      File('${tempDir.path}/Акт приема-передачи ${DateTime.now()}.pdf')
+          .writeAsBytes(
+        buffer.asUint8List(
+          newFile.offsetInBytes,
+          newFile.lengthInBytes,
+        ),
+      );
+    }
+    emit(
+      state.copyWith(
+        repairActionStatus: RepairActionStatus.downloaded,
+      ),
+    );
+  }
+
+  void _onSaveToList(
+    RepairSaveToList event,
+    Emitter<RepairState> emit,
+  ) {}
 
   void _onDeleteFromList(
-      RepairDeleteFromList event, Emitter<RepairState> emit) {}
+    RepairDeleteFromList event,
+    Emitter<RepairState> emit,
+  ) {}
 
-  void _onSearch(RepairSearch event, Emitter<RepairState> emit) {}
+  void _onSearch(
+    RepairSearch event,
+    Emitter<RepairState> emit,
+  ) {
+    List<RepairEquipment> finalList = [];
+    if (event.matchingWord.isNotEmpty) {
+      finalList = state.globalRepairEquipment
+          .where(
+            (element) => element.equipment.inventoryNumber.toString().contains(
+                  event.matchingWord,
+                ),
+          )
+          .toList();
+    }
+    emit(
+        state.copyWith(visibleList: finalList, searchText: event.matchingWord));
+  }
 
 //    Future<void> _onSaved(RepairSaved event, Emitter<RepairState> emit) {
 //   }
@@ -112,11 +220,6 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
     RepairSubmitted event,
     Emitter<RepairState> emit,
   ) async {
-    const clientId = 'cafd6028-1fe6-48a1-9dfe-dca4943bafb4';
-    const secret = 'b236dde543188e1c512de2d75a4905e9';
-    final configuration = Configuration(clientId, secret);
-    final wordsApi = WordsApi(configuration);
-
     emit(
       state.copyWith(
         formStatus: FormzStatus.submissionInProgress,
@@ -128,6 +231,7 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
             CreateRepairModelRequest(state.phone.value, state.dateTime!),
       );
       if (repair != null) {
+        emit(state.copyWith(repair: repair));
         final waiting = await _repairRepository.createRepairEquipment(
           createRepairEquipmentModelRequest: CreateRepairEquipmentModelRequest(
             repair.id,
@@ -197,7 +301,7 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
             ..add(
               TextContent(
                 "classroom",
-                state.selectedEquipment!.classroom.number,
+                "+7 ${state.selectedEquipment!.classroom.number}",
               ),
             )
             ..add(TextContent("phone", state.phone.value))
@@ -228,48 +332,27 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
               ),
             );
 
+          //Запись данных в новый файл
           final d = await docx.generate(c);
-          var status = await Permission.storage.status;
-          if (!status.isGranted) {
-            await Permission.storage.request();
-          }
-          if (await Permission.storage.isGranted) {
-            final of = File('${dir.path}/generated.docx');
-            if (d != null) await of.writeAsBytes(d);
+          final of = File('${dir.path}/generated.docx');
+          if (d != null) await of.writeAsBytes(d);
 
-            final requestDocument =
-                (await File('${dir.path}/generated.docx').readAsBytes())
-                    .buffer
-                    .asByteData();
-            final convertRequest =
-                ConvertDocumentRequest(requestDocument, 'pdf');
-            final newFile = await wordsApi.convertDocument(convertRequest);
+          //Создание файла
+          final requestDocument =
+              (await File('${dir.path}/generated.docx').readAsBytes())
+                  .buffer
+                  .asByteData();
 
-            final uploadReq = UploadFileRequest(
-              newFile,
-              'Акт приема-передачи оборудования в ремонт.pdf',
-            );
-            await wordsApi.uploadFile(uploadReq);
+          //Конвертация в PDF
+          final convertRequest = ConvertDocumentRequest(requestDocument, 'pdf');
+          final newFile = await wordsApi.convertDocument(convertRequest);
 
-            final downloadRequest = DownloadFileRequest(
-                'Акт приема-передачи оборудования в ремонт.pdf');
-            await wordsApi.downloadFile(downloadRequest);
-
-            print(status);
-
-            final buffer = newFile.buffer;
-            final Directory tempDir = Platform.isAndroid
-                ? Directory('/storage/emulated/0/Download')
-                : await getApplicationSupportDirectory();
-
-            File('${tempDir.path}/Акт приема-передачи ${DateTime.now()}.pdf')
-                .writeAsBytes(
-              buffer.asUint8List(
-                newFile.offsetInBytes,
-                newFile.lengthInBytes,
-              ),
-            );
-          }
+          //Загрузка в облако
+          final uploadReq = UploadFileRequest(
+            newFile,
+            '${state.selectedEquipment!.inventoryNumber}${repair.datetime}Акт приема-передачи оборудования в ремонт.pdf',
+          );
+          await wordsApi.uploadFile(uploadReq);
 
           emit(
             state.copyWith(
@@ -311,7 +394,7 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
     RepairDateTimeChanged event,
     Emitter<RepairState> emit,
   ) {
-    print(event.dateTime);
+    //print(event.dateTime);
     emit(
       state.copyWith(
         dateTime: event.dateTime,

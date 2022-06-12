@@ -14,6 +14,7 @@ import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/bloc/repair_bloc.dart';
 import 'package:ptk_inventory/repair/view/add_repair/choose_inventory_number_label.dart';
+import 'package:ptk_inventory/repair/view/load_document/load_document_page.dart';
 
 class AddRepairForm extends StatefulWidget {
   const AddRepairForm({
@@ -235,12 +236,16 @@ class _AddRepairFormState extends State<AddRepairForm> {
                           previous.phone != current.phone,
                       builder: (context, state) {
                         return PropertyInput(
+                          prefixIcon: const Text(
+                            "+7",
+                            style: TextStyle(fontFamily: 'Rubik', fontSize: 18),
+                          ),
                           errorText: 'Введите корректный номер телефона',
                           propertyInvalid: state.phone.invalid,
                           onChange: (phone) => context
                               .read<RepairBloc>()
                               .add(RepairPhoneChanged(phone)),
-                          hintText: '+7 (900) 123-45-67',
+                          hintText: '(900) 123-45-67',
                           inputFormatters: [phoneNumber],
                           keyboardType: TextInputType.number,
                         );
@@ -313,12 +318,22 @@ class _AddRepairFormState extends State<AddRepairForm> {
                     child: BlocListener<RepairBloc, RepairState>(
                       listener: (context, state) {
                         if (state.repairActionStatus ==
-                            RepairActionStatus.added) {
-                          snackbarMessage(
-                            context,
-                            "Акт приема-передачи оборудования в ремонт создан",
+                                RepairActionStatus.added &&
+                            state.formStatus == FormzStatus.submissionSuccess) {
+                          // snackbarMessage(
+                          //   context,
+                          //   "Акт приема-передачи оборудования в ремонт создан",
+                          // );
+
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => BlocProvider.value(
+                                value: context.read<RepairBloc>()
+                                  ..add(const RepairShowDocument()),
+                                child: const LoadDocumentPage(),
+                              ),
+                            ),
                           );
-                          Navigator.of(context).pop();
                         }
                         if (state.repairActionStatus ==
                             RepairActionStatus.notAdded) {

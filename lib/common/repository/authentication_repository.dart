@@ -7,7 +7,6 @@ import 'package:ptk_inventory/common/model/requests/login.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/common/provider/hive/hive_provider.dart';
 import 'package:ptk_inventory/common/provider/user_api_client.dart';
-import 'package:ptk_inventory/common/repository/user_repository.dart';
 
 enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 enum LoginStatus { verified, unverified }
@@ -21,10 +20,10 @@ class AuthenticationRepository {
     final UserHiveModel? userHiveModel = await getUserProfile();
     if (userHiveModel != null) {
       try {
-        var result = await _userProvider.existingUser(
+        await _userProvider.existingUser(
           userId: userHiveModel.id,
         );
-        print(result.statusCode);
+        //  print(result.statusCode);
       } on ExistingUserFailure {
         await logout();
       } on ExistingUserUnauthorized {

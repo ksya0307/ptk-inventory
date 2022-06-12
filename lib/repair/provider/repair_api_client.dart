@@ -154,7 +154,7 @@ class RepairProvider {
   }) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
-      "${ApiRoutes.apiRoute}${ApiRoutes.repairEquipment}",
+      "${ApiRoutes.apiRoute}${ApiRoutes.repairEquipment}/${ApiRoutes.userRepair}",
     );
 
     final response = await _httpClient.get(request, headers: header);
@@ -165,6 +165,7 @@ class RepairProvider {
     }
     final Map<String, dynamic> jsonAnswer = {};
     jsonAnswer['result'] = jsonDecode(response.body);
+
     return RepairEquipmentResult.fromJson(jsonAnswer);
   }
 

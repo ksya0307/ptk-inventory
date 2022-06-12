@@ -8,17 +8,17 @@ part of 'repair_equipment.dart';
 
 RepairEquipment _$RepairEquipmentFromJson(Map<String, dynamic> json) =>
     RepairEquipment(
-      json['id'] as int,
-      json['problem'] as String,
-      repair: Repair.fromJson(json['repair_id'] as Map<String, dynamic>),
+      id: json['id'] as int,
+      problem: json['problem'] as String,
+      repair: Repair.fromJson(json['repair'] as Map<String, dynamic>),
       equipment: ClassroomEquipment.fromJson(
-          json['equipment_id'] as Map<String, dynamic>),
+          json['equipment'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$RepairEquipmentToJson(RepairEquipment instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'repair_id': instance.repair,
-      'equipment_id': instance.equipment,
+      'repair': instance.repair,
+      'equipment': instance.equipment,
       'problem': instance.problem,
+      'id': instance.id,
     };

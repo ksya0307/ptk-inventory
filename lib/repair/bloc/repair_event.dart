@@ -42,7 +42,6 @@ class RepairSubmitted extends RepairEvent {
   const RepairSubmitted();
 }
 
-
 class RepairSaved extends RepairEvent {
   const RepairSaved();
 }
@@ -89,4 +88,12 @@ class RepairSaveToList extends RepairEvent {
   const RepairSaveToList({required this.repairEquipment});
   @override
   List<Object> get props => [repairEquipment];
+}
+
+class RepairShowDocument extends RepairEvent {
+  const RepairShowDocument();
+}
+
+class RepairSaveDocument extends RepairEvent {
+  const RepairSaveDocument();
 }

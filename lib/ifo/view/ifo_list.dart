@@ -195,7 +195,7 @@ class IfosList extends StatelessWidget {
                           );
                         },
                         child: IfoRow(
-                          id: ifos[index].id.toString(),
+                          id: (index + 1).toString(),
                           ifo: ifos[index].name,
                           last: index == ifos.length - 1,
                         ),

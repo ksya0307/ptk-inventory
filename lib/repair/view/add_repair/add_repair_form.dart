@@ -28,7 +28,7 @@ class AddRepairForm extends StatefulWidget {
 class _AddRepairFormState extends State<AddRepairForm> {
   DateTime? date;
   MaskTextInputFormatter phoneNumber = MaskTextInputFormatter(
-    mask: '+7 (###) ###-##-##',
+    mask: '(###) ###-##-##',
     filter: {"#": RegExp('[0-9]')},
   );
   @override
@@ -236,9 +236,20 @@ class _AddRepairFormState extends State<AddRepairForm> {
                           previous.phone != current.phone,
                       builder: (context, state) {
                         return PropertyInput(
-                          prefixIcon: const Text(
-                            "+7",
-                            style: TextStyle(fontFamily: 'Rubik', fontSize: 18),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.only(left: 12),
+                            child: Container(
+                              height: 32,
+                              width: 32,
+                              transformAlignment: Alignment.centerLeft,
+                              alignment: Alignment.centerLeft,
+                              child: const Text(
+                                "+7",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'Rubik', fontSize: 18),
+                              ),
+                            ),
                           ),
                           errorText: 'Введите корректный номер телефона',
                           propertyInvalid: state.phone.invalid,

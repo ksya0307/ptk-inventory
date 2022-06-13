@@ -53,7 +53,17 @@ class RepairState extends Equatable {
     this.isCompleted,
     this.selectedEquipment,
     DateTime? creationDate,
-  })  : dateTime = creationDate ?? DateTime.now(),
+  })  : dateTime = creationDate ??
+            DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+              DateTime.now().hour,
+              DateTime.now().minute,
+              DateTime.now().second,
+              DateTime.now().millisecond,
+              DateTime.now().microsecond,
+            ),
         document = createdDocument ?? Uint8List(0);
 
   @override

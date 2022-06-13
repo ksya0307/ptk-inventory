@@ -83,6 +83,7 @@ class UpdateCategoryForm extends StatelessWidget {
                             inProgressText: 'Сохранение...',
                           )
                         : CommonButton(
+                            fontSize: 18,
                             formValidated: state.formStatus.isValidated,
                             buttonText: 'Сохранить',
                             onPress: () {

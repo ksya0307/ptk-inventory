@@ -69,6 +69,9 @@ class ShowAllFilter extends StatelessWidget {
                             ? allCategories
                             : teacherCategories,
                         child: EquipmentFilterSheet(
+                          initialChildSize: 0.7,
+                          minChildSize: 0.5,
+                          maxChildSize: 0.95,
                           title: 'Все категории',
                           widget: Column(
                             children: [

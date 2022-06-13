@@ -59,6 +59,7 @@ class AddIfoForm extends StatelessWidget {
                           inProgressText: "Добавление...",
                         )
                       : CommonButton(
+                          fontSize: 18,
                           buttonText: "Добавить",
                           onPress: () {
                             context.read<IfoBloc>().add(const IfoSubmitted());

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/repository/category_repository.dart';
@@ -136,16 +137,3 @@ class RepairPage extends StatelessWidget {
     );
   }
 }
-
-/*
-    BlocProvider.value(
-              value: context.read<RepairBloc>(),
-            ),
-            BlocProvider.value(
-              value: context.read<ClassroomEquipmentBloc>(),
-            ),
-            BlocProvider.value(
-              value: context.read<ClassroomBloc>(),
-            ),
-            BlocProvider.value(value: context.read<CategoryBloc>())
- */

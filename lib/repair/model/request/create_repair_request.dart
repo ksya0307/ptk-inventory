@@ -10,9 +10,11 @@ class CreateRepairModelRequest {
   );
 
   Map<String, dynamic> toMap() {
+    //  print("TO MAP");
+    //print(DateFormat('yyyy-MM-ddThh:mm:ss.SSSSSS').format(dateTime));
     return <String, dynamic>{
       'phone': '+7 $phone',
-      'datetime': DateFormat('yyyy-MM-dd').format(dateTime),
+      'datetime': DateFormat('yyyy-MM-ddThh:mm:ss.SSSSSS').format(dateTime),
     };
   }
 

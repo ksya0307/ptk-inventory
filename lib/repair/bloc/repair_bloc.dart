@@ -66,29 +66,28 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
         repairLoadingStatus: RepairLoadingStatus.loadingInProgress,
       ),
     );
-    final downloadRequest = DownloadFileRequest(
-      '${state.selectedEquipment!.inventoryNumber}${state.repair!.datetime}Акт приема-передачи оборудования в ремонт.pdf',
-    );
+    // final downloadRequest = DownloadFileRequest(
+    //   '${state.selectedEquipment!.inventoryNumber}${state.repair!.datetime}Акт приема-передачи оборудования в ремонт.pdf',
+    // );
 
-    final newFile = await wordsApi.downloadFile(downloadRequest);
-    final bytes = newFile.buffer;
-    final dir = await getApplicationDocumentsDirectory();
+    // final newFile = await wordsApi.downloadFile(downloadRequest);
+    // final bytes = newFile.buffer;
+    // final dir = await getApplicationDocumentsDirectory();
 
-    final f =
-        await File('${dir.path}/Акт приема-передачи ${DateTime.now()}.pdf')
-            .writeAsBytes(
-      bytes.asUint8List(
-        newFile.offsetInBytes,
-        newFile.lengthInBytes,
-      ),
-    );
+    // final f = await File(
+    //         '${dir.path}/Акт приема-передачи ${DateFormat('dd-MM-yyyy-hh-mm-ss-SSSSSS').format(DateTime.now())}.pdf')
+    //     .writeAsBytes(
+    //   bytes.asUint8List(
+    //     newFile.offsetInBytes,
+    //     newFile.lengthInBytes,
+    //   ),
+    // );
 
-    final Uint8List byteDate = f.readAsBytesSync();
+    // final Uint8List byteDate = f.readAsBytesSync();
 
-    //print()
     emit(
       state.copyWith(
-        document: byteDate,
+        //  document: byteDate,
         repairActionStatus: RepairActionStatus.shown,
         repairLoadingStatus: RepairLoadingStatus.loadingSuccess,
       ),
@@ -104,31 +103,31 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
         formStatus: FormzStatus.submissionInProgress,
       ),
     );
-    final downloadRequest = DownloadFileRequest(
-      'Акт приема-передачи оборудования в ремонт.pdf',
-    );
+    // final downloadRequest = DownloadFileRequest(
+    //   'Акт приема-передачи оборудования в ремонт.pdf',
+    // );
 
-    final newFile = await wordsApi.downloadFile(downloadRequest);
-    final status = await Permission.storage.status;
-    if (!status.isGranted) {
-      await Permission.storage.request();
-    }
-    if (await Permission.storage.isGranted) {
-      //print(status);
+    // final newFile = await wordsApi.downloadFile(downloadRequest);
+    // final status = await Permission.storage.status;
+    // if (!status.isGranted) {
+    //   await Permission.storage.request();
+    // }
+    // if (await Permission.storage.isGranted) {
+    //   //print(status);
 
-      final buffer = newFile.buffer;
-      final Directory tempDir = Platform.isAndroid
-          ? Directory('/storage/emulated/0/Download')
-          : await getApplicationSupportDirectory();
+    //   final buffer = newFile.buffer;
+    //   final Directory tempDir = Platform.isAndroid
+    //       ? Directory('/storage/emulated/0/Download')
+    //       : await getApplicationSupportDirectory();
 
-      File('${tempDir.path}/Акт приема-передачи ${DateTime.now()}.pdf')
-          .writeAsBytes(
-        buffer.asUint8List(
-          newFile.offsetInBytes,
-          newFile.lengthInBytes,
-        ),
-      );
-    }
+    //   File('${tempDir.path}/Акт приема-передачи ${DateTime.now()}.pdf')
+    //       .writeAsBytes(
+    //     buffer.asUint8List(
+    //       newFile.offsetInBytes,
+    //       newFile.lengthInBytes,
+    //     ),
+    //   );
+    // }
     emit(
       state.copyWith(
         repairActionStatus: RepairActionStatus.downloaded,
@@ -226,12 +225,14 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
       ),
     );
     if (state.formStatus.isValidated) {
+      print(state.dateTime);
       final repair = await _repairRepository.createRepair(
         repairModelRequest:
             CreateRepairModelRequest(state.phone.value, state.dateTime!),
       );
       if (repair != null) {
         emit(state.copyWith(repair: repair));
+
         final waiting = await _repairRepository.createRepairEquipment(
           createRepairEquipmentModelRequest: CreateRepairEquipmentModelRequest(
             repair.id,
@@ -301,10 +302,10 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
             ..add(
               TextContent(
                 "classroom",
-                "+7 ${state.selectedEquipment!.classroom.number}",
+                state.selectedEquipment!.classroom.number,
               ),
             )
-            ..add(TextContent("phone", state.phone.value))
+            ..add(TextContent("phone", "+7 ${state.phone.value}"))
             ..add(
               TableContent(
                 "table",
@@ -332,27 +333,27 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
               ),
             );
 
-          //Запись данных в новый файл
-          final d = await docx.generate(c);
-          final of = File('${dir.path}/generated.docx');
-          if (d != null) await of.writeAsBytes(d);
+          // //Запись данных в новый файл
+          // final d = await docx.generate(c);
+          // final of = File('${dir.path}/generated.docx');
+          // if (d != null) await of.writeAsBytes(d);
 
-          //Создание файла
-          final requestDocument =
-              (await File('${dir.path}/generated.docx').readAsBytes())
-                  .buffer
-                  .asByteData();
+          // //Создание файла
+          // final requestDocument =
+          //     (await File('${dir.path}/generated.docx').readAsBytes())
+          //         .buffer
+          //         .asByteData();
 
-          //Конвертация в PDF
-          final convertRequest = ConvertDocumentRequest(requestDocument, 'pdf');
-          final newFile = await wordsApi.convertDocument(convertRequest);
+          // //Конвертация в PDF
+          // final convertRequest = ConvertDocumentRequest(requestDocument, 'pdf');
+          // final newFile = await wordsApi.convertDocument(convertRequest);
 
-          //Загрузка в облако
-          final uploadReq = UploadFileRequest(
-            newFile,
-            '${state.selectedEquipment!.inventoryNumber}${repair.datetime}Акт приема-передачи оборудования в ремонт.pdf',
-          );
-          await wordsApi.uploadFile(uploadReq);
+          // //Загрузка в облако
+          // final uploadReq = UploadFileRequest(
+          //   newFile,
+          //   '${state.selectedEquipment!.inventoryNumber}${state.repair!.datetime}Акт приема-передачи оборудования в ремонт.pdf',
+          // );
+          // await wordsApi.uploadFile(uploadReq);
 
           emit(
             state.copyWith(
@@ -361,6 +362,13 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
             ),
           );
         }
+      } else {
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            repairActionStatus: RepairActionStatus.notAdded,
+          ),
+        );
       }
     }
   }
@@ -394,7 +402,8 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
     RepairDateTimeChanged event,
     Emitter<RepairState> emit,
   ) {
-    //print(event.dateTime);
+    print("BLOC");
+    print(event.dateTime);
     emit(
       state.copyWith(
         dateTime: event.dateTime,

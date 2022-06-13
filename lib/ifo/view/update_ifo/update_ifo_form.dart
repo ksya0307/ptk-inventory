@@ -67,6 +67,7 @@ class UpdateIfoForm extends StatelessWidget {
                             inProgressText: "Сохранение...",
                           )
                         : CommonButton(
+                            fontSize: 18,
                             buttonText: 'Сохранить',
                             onPress: () {
                               context.read<IfoBloc>().add(const IfoSaved());

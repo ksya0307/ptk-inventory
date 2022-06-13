@@ -6,10 +6,12 @@ class CommonButton extends StatelessWidget {
     required this.formValidated,
     this.onPress,
     required this.buttonText,
+    required this.fontSize,
   }) : super(key: key);
   final bool formValidated;
   final void Function()? onPress;
   final String buttonText;
+  final double fontSize;
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
@@ -43,8 +45,8 @@ class CommonButton extends StatelessWidget {
           child: Text(
             buttonText,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 18,
+            style: TextStyle(
+              fontSize: fontSize,
               fontFamily: 'Rubik',
               fontWeight: FontWeight.w500,
             ),

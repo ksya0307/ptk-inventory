@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/repair/view/load_document/load_document_form.dart';
+import 'package:ptk_inventory/repair/view/repair_page.dart';
 import 'package:ptk_inventory/teacher_user/view/home_page.dart';
 
 class LoadDocumentPage extends StatelessWidget {
@@ -20,6 +21,7 @@ class LoadDocumentPage extends StatelessWidget {
           ),
           onPressed: () {
             Navigator.of(context).pushReplacement(ReaderPage.route());
+            Navigator.of(context).push(RepairPage.route());
           },
         ),
         elevation: 0,

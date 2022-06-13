@@ -57,6 +57,9 @@ class _AddRepairPageState extends State<AddRepairPage> {
                         const ClassroomEquipmentLoadUserEquipmentsList(),
                       ),
                     child: EquipmentFilterSheet(
+                      initialChildSize: 0.7,
+                      minChildSize: 0.5,
+                      maxChildSize: 0.95,
                       onTap: () {
                         context.read<ClassroomEquipmentBloc>().add(
                               const ClassroomEquipmentFilteredEquipment(

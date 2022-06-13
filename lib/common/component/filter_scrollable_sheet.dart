@@ -8,10 +8,16 @@ class EquipmentFilterSheet extends StatelessWidget {
     required this.widget,
     required this.title,
     this.onTap,
+    required this.initialChildSize,
+    required this.minChildSize,
+    required this.maxChildSize,
   }) : super(key: key);
   final Widget widget;
   final String title;
   final void Function()? onTap;
+  final double initialChildSize;
+  final double minChildSize;
+  final double maxChildSize;
   @override
   Widget build(BuildContext context) {
     Widget makeDismissible({required Widget child}) => GestureDetector(
@@ -26,9 +32,9 @@ class EquipmentFilterSheet extends StatelessWidget {
         );
     return makeDismissible(
       child: DraggableScrollableSheet(
-        initialChildSize: 0.7,
-        minChildSize: 0.5,
-        maxChildSize: 0.95,
+        initialChildSize: initialChildSize,
+        minChildSize: minChildSize,
+        maxChildSize: maxChildSize,
         builder: (_, controller) {
           return Container(
             decoration: const BoxDecoration(

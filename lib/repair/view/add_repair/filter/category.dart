@@ -39,6 +39,9 @@ class ChooseCategory extends StatelessWidget {
                 value: BlocProvider.of<CategoryBloc>(context)
                   ..add(const CategoryInUserClassrooms()),
                 child: EquipmentFilterSheet(
+                  initialChildSize: 0.7,
+                  minChildSize: 0.5,
+                  maxChildSize: 0.95,
                   title: 'Все категории',
                   widget: Column(
                     children: [

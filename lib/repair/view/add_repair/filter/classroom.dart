@@ -49,6 +49,9 @@ class ChooseClassroom extends StatelessWidget {
                 child: BlocBuilder<ClassroomBloc, ClassroomState>(
                   builder: (context, state) {
                     return EquipmentFilterSheet(
+                      initialChildSize: 0.7,
+                      minChildSize: 0.5,
+                      maxChildSize: 0.95,
                       title: 'Все аудитории',
                       widget: Column(
                         children: [

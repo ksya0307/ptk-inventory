@@ -38,8 +38,8 @@ class _AddRepairFormState extends State<AddRepairForm> {
         final equipment = BlocProvider.of<ClassroomEquipmentBloc>(context)
             .state
             .filteredEquipment;
-        print("form");
-        print(equipment);
+        // print("form");
+        // print(equipment);
         return Form(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,10 +56,10 @@ class _AddRepairFormState extends State<AddRepairForm> {
                     children: List.generate(
                       equipment.length,
                       (index) {
-                        print("allly");
-                        print(equipment[index].isChecked);
+                        // print("allly");
+                        // print(equipment[index].isChecked);
                         if (equipment[index].isChecked == false) {
-                          print("not checked");
+                          // print("not checked");
                           return const SizedBox(
                             height: 0,
                           );
@@ -110,9 +110,9 @@ class _AddRepairFormState extends State<AddRepairForm> {
                                 ),
                                 onSelected: (selected) {
                                   setState(() {
-                                    print(
-                                      "on select ${equipment[index].classroom}",
-                                    );
+                                    // print(
+                                    //   "on select ${equipment[index].classroom}",
+                                    // );
                                     selected = !selected;
                                     context.read<RepairBloc>().add(
                                           RepairEquipmentChanged(
@@ -283,6 +283,7 @@ class _AddRepairFormState extends State<AddRepairForm> {
                           calendarText: "Дата составления акта приема-передачи",
                           onPress: () async {
                             final initDate = DateTime.now();
+
                             final DateTime? newDate = await showDatePicker(
                               cancelText: "Отмена",
                               confirmText: "Выбрать",
@@ -292,14 +293,29 @@ class _AddRepairFormState extends State<AddRepairForm> {
                               firstDate: DateTime(DateTime.now().year - 5),
                               lastDate: DateTime(DateTime.now().year + 5),
                             );
+
                             // if 'Cancel' => null
                             if (newDate == null) return;
                             //of Ok =>DateTime
                             setState(() {
                               date = newDate;
+
+                              var newNewDate = DateTime(
+                                date!.year,
+                                date!.month,
+                                date!.day,
+                                DateTime.now().hour,
+                                DateTime.now().minute,
+                                DateTime.now().second,
+                                DateTime.now().millisecond,
+                                DateTime.now().microsecond,
+                              );
+                              print("date date");
+                              print(DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+                                  .format(newNewDate));
                               context
                                   .read<RepairBloc>()
-                                  .add(RepairDateTimeChanged(date!));
+                                  .add(RepairDateTimeChanged(newNewDate));
                             });
                           },
                         );
@@ -363,6 +379,7 @@ class _AddRepairFormState extends State<AddRepairForm> {
                                   inProgressText: "Формирование...",
                                 )
                               : CommonButton(
+                                  fontSize: 18,
                                   buttonText: "Сформировать",
                                   onPress: () {
                                     context

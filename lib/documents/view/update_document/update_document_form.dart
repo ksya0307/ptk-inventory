@@ -72,6 +72,7 @@ class UpdateDocumentForm extends StatelessWidget {
                     return state.formStatus.isSubmissionInProgress
                         ? const InProgress(inProgressText: 'Сохранение...')
                         : CommonButton(
+                            fontSize: 18,
                             formValidated: state.formStatus.isValidated,
                             buttonText: 'Сохранить',
                             onPress: () {

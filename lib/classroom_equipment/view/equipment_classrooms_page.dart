@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/repository/category_repository.dart';
+import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
+import 'package:ptk_inventory/classroom_equipment/repository/classroom_equipment_repository.dart';
 import 'package:ptk_inventory/classroom_equipment/view/add_equipment/add_equipment_page.dart';
 import 'package:ptk_inventory/classroom_equipment/view/equipment_classrooms_form.dart';
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
@@ -29,6 +31,11 @@ class _EquipmentClassroomsPageState extends State<ClassroomsEquipmentPage> {
         BlocProvider(
           create: (context) =>
               ClassroomBloc(classroomRepository: ClassroomRepository()),
+        ),
+        BlocProvider(
+          create: (context) => ClassroomEquipmentBloc(
+            classroomEquipmentRepository: ClassroomEquipmentRepository(),
+          ),
         ),
         BlocProvider(
           create: (context) =>

@@ -23,6 +23,7 @@ class ClassroomBloc extends Bloc<ClassroomEvent, ClassroomState> {
 
     on<ClassroomDeleted>(_onDeleted);
     on<ClassroomSelected>(_onSelected);
+    //  on<ClassroomChosen>(_onChosen);
 
     on<ClassroomDeleteFromList>(_onDeleteFromList);
     on<ClassroomAddToList>(_onAddToList);
@@ -46,7 +47,9 @@ class ClassroomBloc extends Bloc<ClassroomEvent, ClassroomState> {
     final waiting = await _classroomRepository.userClassrooms();
     if (waiting.isNotEmpty) {
       // filter the list by the accending id of the classroom
-      waiting.sort((a, b) => a.number.compareTo(b.number));
+
+      waiting.add(Classroom(number: "Все", user: state.user));
+      waiting.sort((a, b) => b.number.compareTo(a.number));
     }
 
     emit(

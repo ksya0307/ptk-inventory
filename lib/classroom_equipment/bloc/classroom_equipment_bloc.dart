@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:ptk_inventory/classroom_equipment/model/classroom_equipment.dart';
 import 'package:ptk_inventory/classroom_equipment/repository/classroom_equipment_repository.dart';
+import 'package:ptk_inventory/classrooms/model/classroom.dart';
 
 part 'classroom_equipment_event.dart';
 part 'classroom_equipment_state.dart';
@@ -16,6 +17,7 @@ class ClassroomEquipmentBloc
     on<ClassroomEquipmentSearch>(_onSearch);
     on<ClassroomEquipmentUserSelected>(_onSelected);
     on<ClassroomEquipmentFilteredEquipment>(_onFiltered);
+    on<ClassroomEquipmentSelectedClassroom>(_selectedClassroom);
   }
 
   final ClassroomEquipmentRepository _classroomEquipmentRepository;
@@ -31,6 +33,35 @@ class ClassroomEquipmentBloc
       ),
     );
     final waiting = await _classroomEquipmentRepository.userEquipments();
+    if (waiting.isNotEmpty) {
+      waiting.sort(
+        (a, b) => a.equipment.category.name.compareTo(
+          b.equipment.category.name,
+        ),
+      );
+    }
+    emit(
+      state.copyWith(
+        globalEquipments: waiting,
+        classroomEquipmentLoadingStatus:
+            ClassroomEquipmentLoadingStatus.loadingSuccess,
+      ),
+    );
+  }
+
+  Future<void> _selectedClassroom(
+    ClassroomEquipmentSelectedClassroom event,
+    Emitter<ClassroomEquipmentState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        classroomEquipmentLoadingStatus:
+            ClassroomEquipmentLoadingStatus.loadingInProgress,
+      ),
+    );
+    final waiting =
+        await _classroomEquipmentRepository.userChosenClassroomEquipment(
+            classroom: event.selectedClassroom!.number);
     if (waiting.isNotEmpty) {
       waiting.sort(
         (a, b) => a.equipment.category.name.compareTo(

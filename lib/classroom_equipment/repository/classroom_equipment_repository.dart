@@ -38,4 +38,28 @@ class ClassroomEquipmentRepository {
       return result.result;
     }
   }
+
+  Future<List<ClassroomEquipment>> userChosenClassroomEquipment(
+      {required String classroom}) async {
+    try {
+      final result =
+          await _classroomEquipmentProvider.equipmentInChoosenClassroom(
+              HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+              classroom);
+      return result.result;
+    } on EquipmentInUserClassroomRequestFailure {
+      return [];
+    } on EquipmentInUserClassroomRequestUnauthorized {
+      final UserHiveModel? userHiveModel = await getUserProfile();
+      if (userHiveModel != null) {
+        await _authenticationRepository.refreshToken(userHiveModel);
+      }
+      final result = await _classroomEquipmentProvider.equipmentInUserClassroom(
+        HeaderModel(
+          await HeaderModel.getAccessToken(),
+        ).toMap(),
+      );
+      return result.result;
+    }
+  }
 }

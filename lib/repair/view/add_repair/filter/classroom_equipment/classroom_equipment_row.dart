@@ -7,22 +7,23 @@ class ClassroomEquipmentRow extends StatefulWidget {
   final String inventoryNumber;
   final String category;
   final bool last;
+  final int firstFlexRow;
+  final int secondFlexRow;
   // final int value;
   // final int groupValue;
   // final Function(int?)? onChange;
   final Function() onTap;
-  final Widget? radio;
+  final Widget? widget;
   const ClassroomEquipmentRow({
     Key? key,
     required this.numberInClassroom,
     required this.inventoryNumber,
     required this.category,
     required this.last,
-    // required this.value,
-    // required this.groupValue,
-    // required this.onChange,
+    required this.firstFlexRow,
+    required this.secondFlexRow,
     required this.onTap,
-    this.radio,
+    this.widget,
   }) : super(key: key);
 
   @override
@@ -32,35 +33,33 @@ class ClassroomEquipmentRow extends StatefulWidget {
 class _ClassroomEquipmentRowState extends State<ClassroomEquipmentRow> {
   @override
   Widget build(BuildContext context) {
-    //print(widget.groupValue);
     return Column(
       children: [
         Row(
           children: [
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 8 + 4,
-                  bottom: 8 + 4,
-                  left: 12,
-                ),
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: Transform.scale(
-                    scale: 1.2,
-                    child: RadioTheme(
-                      data: RadioThemeData(
-                        fillColor: MaterialStateProperty.all(primaryBlue),
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                      child: widget.radio!,
+            if (widget.widget == null)
+              const SizedBox(
+                height: 0,
+              )
+            else
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8 + 4,
+                    bottom: 8 + 4,
+                    left: 12,
+                  ),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: Transform.scale(
+                      scale: 1.2,
+                      child: widget.widget,
                     ),
                   ),
                 ),
               ),
-            ),
             Flexible(
-              flex: 3,
+              flex: widget.firstFlexRow,
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 8 + 4,
@@ -82,7 +81,7 @@ class _ClassroomEquipmentRowState extends State<ClassroomEquipmentRow> {
               ),
             ),
             Flexible(
-              flex: 5,
+              flex: widget.secondFlexRow,
               child: InkWell(
                 onTap: widget.onTap,
                 child: Row(

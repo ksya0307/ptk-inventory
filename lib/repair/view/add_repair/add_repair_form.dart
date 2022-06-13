@@ -300,7 +300,7 @@ class _AddRepairFormState extends State<AddRepairForm> {
                             setState(() {
                               date = newDate;
 
-                              var newNewDate = DateTime(
+                              final newNewDate = DateTime(
                                 date!.year,
                                 date!.month,
                                 date!.day,
@@ -310,9 +310,7 @@ class _AddRepairFormState extends State<AddRepairForm> {
                                 DateTime.now().millisecond,
                                 DateTime.now().microsecond,
                               );
-                              print("date date");
-                              print(DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-                                  .format(newNewDate));
+
                               context
                                   .read<RepairBloc>()
                                   .add(RepairDateTimeChanged(newNewDate));

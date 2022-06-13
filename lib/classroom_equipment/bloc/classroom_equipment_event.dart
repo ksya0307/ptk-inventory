@@ -13,6 +13,7 @@ class ClassroomEquipmentLoadUserEquipmentsList extends ClassroomEquipmentEvent {
 
 class ClassroomEquipmentUserSelected extends ClassroomEquipmentEvent {
   final ClassroomEquipment? selectedEquipment;
+
   const ClassroomEquipmentUserSelected(this.selectedEquipment);
 }
 
@@ -25,4 +26,10 @@ class ClassroomEquipmentSearch extends ClassroomEquipmentEvent {
 class ClassroomEquipmentFilteredEquipment extends ClassroomEquipmentEvent {
   final ClassroomEquipment? filteredEquipment;
   const ClassroomEquipmentFilteredEquipment(this.filteredEquipment);
+}
+
+class ClassroomEquipmentSelectedClassroom extends ClassroomEquipmentEvent {
+  final Classroom? selectedClassroom;
+
+  const ClassroomEquipmentSelectedClassroom(this.selectedClassroom);
 }

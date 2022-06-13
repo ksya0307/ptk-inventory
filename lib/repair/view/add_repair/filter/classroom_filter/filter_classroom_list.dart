@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
 import 'package:ptk_inventory/config/colors.dart';
@@ -81,10 +82,19 @@ class _ClassroomListState extends State<FilterClassroomList> {
                               setState(() {
                                 selected = !selected;
                               });
-
                               context
                                   .read<ClassroomBloc>()
                                   .add(ClassroomSelected(classrooms[index]));
+                              if (index == 0) {
+                                context.read<ClassroomEquipmentBloc>().add(
+                                      const ClassroomEquipmentLoadUserEquipmentsList(),
+                                    );
+                              } else if (index != 0) {
+                                context.read<ClassroomEquipmentBloc>().add(
+                                    ClassroomEquipmentSelectedClassroom(
+                                        classrooms[index]));
+                              }
+                              print(index);
                             },
                           ),
                         );

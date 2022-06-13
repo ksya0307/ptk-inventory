@@ -173,18 +173,16 @@ class _LoadDocumentFormState extends State<LoadDocumentForm> {
                                             RepairLoadingStatus
                                                 .loadingSuccess) {
                                       Navigator.of(context).pop();
-                                      print(
-                                        "Downloads/${state.selectedEquipment!.inventoryNumber} Акт приема-передачи ${DateTime.now()}.pdf",
+
+                                      Fluttertoast.showToast(
+                                        msg:
+                                            'Downloads/Акт приема-передачи ${DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now())}.pdf',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        backgroundColor: Colors.blueGrey,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0,
                                       );
-                                      // Fluttertoast.showToast(
-                                      //   msg:
-                                      //       'Downloads/Акт приема-передачи ${DateTime.now()}.pdf',
-                                      //   toastLength: Toast.LENGTH_SHORT,
-                                      //   gravity: ToastGravity.BOTTOM,
-                                      //   backgroundColor: Colors.blueGrey,
-                                      //   textColor: Colors.white,
-                                      //   fontSize: 16.0,
-                                      // );
                                     }
                                   },
                                   child: BlocBuilder<RepairBloc, RepairState>(

@@ -56,6 +56,12 @@ class ClassroomSelected extends ClassroomEvent {
   const ClassroomSelected(this.selectedClassroom);
 }
 
+class ClassroomChosen extends ClassroomEvent {
+  final Classroom chosenClassroom;
+
+  const ClassroomChosen(this.chosenClassroom);
+}
+
 class ClassroomDeleteFromList extends ClassroomEvent {
   final Classroom classroom;
   const ClassroomDeleteFromList({required this.classroom});

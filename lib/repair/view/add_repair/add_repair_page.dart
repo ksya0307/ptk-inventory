@@ -127,7 +127,13 @@ class _AddRepairPageState extends State<AddRepairPage> {
                           const SizedBox(
                             height: 12,
                           ),
-                          const ClassroomEquipmentForm(),
+                          const ClassroomEquipmentForm(
+                            firstFlexRow: 3,
+                            secondFlexRow: 5,
+                            firstFlex: 3,
+                            secondFlex: 5,
+                            widget: SizedBox(),
+                          ),
                         ],
                       ),
                       title: 'Фильтр',

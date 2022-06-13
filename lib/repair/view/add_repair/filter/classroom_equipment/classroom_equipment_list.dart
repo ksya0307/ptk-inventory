@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/model/classroom_equipment.dart';
 import 'package:ptk_inventory/classroom_equipment/view/show_equipment_details/equipement_details_page.dart';
@@ -8,7 +9,20 @@ import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_equipment/
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_equipment/visible_list.dart';
 
 class ClassroomEquipmentList extends StatefulWidget {
-  const ClassroomEquipmentList({Key? key}) : super(key: key);
+  final Widget? checkbox;
+  final int firstFlex;
+  final int secondFlex;
+  final int firstFlexRow;
+  final int secondFlexRow;
+
+  const ClassroomEquipmentList({
+    Key? key,
+    this.checkbox,
+    required this.firstFlex,
+    required this.secondFlex,
+    required this.firstFlexRow,
+    required this.secondFlexRow,
+  }) : super(key: key);
 
   @override
   State<ClassroomEquipmentList> createState() => _ClassroomEquipmentListState();
@@ -34,17 +48,22 @@ class _ClassroomEquipmentListState extends State<ClassroomEquipmentList> {
             ),
             child: Row(
               children: [
-                Flexible(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 12, top: 16, bottom: 16),
-                    child: Container(
-                      alignment: Alignment.centerLeft,
+                if (widget.checkbox != null)
+                  Flexible(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 12, top: 16, bottom: 16),
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                      ),
                     ),
+                  )
+                else
+                  const SizedBox(
+                    height: 0,
                   ),
-                ),
                 Flexible(
-                  flex: 3,
+                  flex: widget.firstFlex,
                   child: Padding(
                     padding:
                         const EdgeInsets.only(left: 18, top: 16, bottom: 16),
@@ -63,7 +82,7 @@ class _ClassroomEquipmentListState extends State<ClassroomEquipmentList> {
                   ),
                 ),
                 Flexible(
-                  flex: 5,
+                  flex: widget.secondFlex,
                   child: Container(
                     alignment: Alignment.centerLeft,
                     child: const Text(
@@ -140,62 +159,116 @@ class _ClassroomEquipmentListState extends State<ClassroomEquipmentList> {
                   shrinkWrap: true,
                   itemCount: equipment.length,
                   itemBuilder: (context, index) {
-                    return ClassroomEquipmentRow(
-                      onTap: () {
-                        context.read<ClassroomEquipmentBloc>().add(
-                              ClassroomEquipmentUserSelected(
-                                ClassroomEquipment(
-                                  id: equipment[index].id,
-                                  inventoryNumber:
-                                      equipment[index].inventoryNumber,
-                                  classroom: equipment[index].classroom,
-                                  equipment: equipment[index].equipment,
-                                  numberInClassroom:
-                                      equipment[index].numberInClassroom,
-                                  equipmentType: equipment[index].equipmentType,
-                                ),
-                              ),
-                            );
+                    return widget.checkbox == null
+                        ? ClassroomEquipmentRow(
+                            firstFlexRow: widget.firstFlexRow,
+                            secondFlexRow: widget.secondFlexRow,
+                            onTap: () {
+                              context.read<ClassroomEquipmentBloc>().add(
+                                    ClassroomEquipmentUserSelected(
+                                      ClassroomEquipment(
+                                        id: equipment[index].id,
+                                        inventoryNumber:
+                                            equipment[index].inventoryNumber,
+                                        classroom: equipment[index].classroom,
+                                        equipment: equipment[index].equipment,
+                                        numberInClassroom:
+                                            equipment[index].numberInClassroom,
+                                        equipmentType:
+                                            equipment[index].equipmentType,
+                                      ),
+                                    ),
+                                  );
 
-                        Navigator.of(context).push(
-                          MaterialPageRoute<void>(
-                            builder: (_) => BlocProvider.value(
-                              value: context.read<ClassroomEquipmentBloc>(),
-                              child: EquipmentDetailsPage(),
-                            ),
-                          ),
-                        );
-                      },
-                      inventoryNumber:
-                          equipment[index].inventoryNumber.toString(),
-                      numberInClassroom: equipment[index].numberInClassroom,
-                      category: equipment[index].equipment.category.name,
-                      last: index == equipment.length - 1,
-                      // groupValue: groupValue,
-                      // onChange: (equipments) {
-                      //   setState(() {
-                      //     print(equipment[index].id);
-                      //     groupValue = equipments;
-                      //   });
-                      // },
-                      // value: index,
-                      radio: Checkbox(
-                        value: equipment[index].isChecked,
-                        onChanged: (value) {
-                          setState(() {
-                            equipment[index].isChecked = value!;
-
-                            // print("value");
-                            // print(value);
-                            context.read<ClassroomEquipmentBloc>().add(
-                                  ClassroomEquipmentFilteredEquipment(
-                                    equipment[index],
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) => BlocProvider.value(
+                                    value:
+                                        context.read<ClassroomEquipmentBloc>(),
+                                    child: EquipmentDetailsPage(),
                                   ),
-                                );
-                          });
-                        },
-                      ),
-                    );
+                                ),
+                              );
+                            },
+                            inventoryNumber:
+                                equipment[index].inventoryNumber.toString(),
+                            numberInClassroom:
+                                equipment[index].numberInClassroom,
+                            category: equipment[index].equipment.category.name,
+                            last: index == equipment.length - 1,
+
+                            // groupValue: groupValue,
+                            // onChange: (equipments) {
+                            //   setState(() {
+                            //     print(equipment[index].id);
+                            //     groupValue = equipments;
+                            //   });
+                            // },
+                            // value: index,
+                            widget: null,
+                          )
+                        : ClassroomEquipmentRow(
+                            firstFlexRow: widget.firstFlexRow,
+                            secondFlexRow: widget.secondFlexRow,
+                            onTap: () {
+                              context.read<ClassroomEquipmentBloc>().add(
+                                    ClassroomEquipmentUserSelected(
+                                      ClassroomEquipment(
+                                        id: equipment[index].id,
+                                        inventoryNumber:
+                                            equipment[index].inventoryNumber,
+                                        classroom: equipment[index].classroom,
+                                        equipment: equipment[index].equipment,
+                                        numberInClassroom:
+                                            equipment[index].numberInClassroom,
+                                        equipmentType:
+                                            equipment[index].equipmentType,
+                                      ),
+                                    ),
+                                  );
+
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) => BlocProvider.value(
+                                    value:
+                                        context.read<ClassroomEquipmentBloc>(),
+                                    child: EquipmentDetailsPage(),
+                                  ),
+                                ),
+                              );
+                            },
+                            inventoryNumber:
+                                equipment[index].inventoryNumber.toString(),
+                            numberInClassroom:
+                                equipment[index].numberInClassroom,
+                            category: equipment[index].equipment.category.name,
+                            last: index == equipment.length - 1,
+
+                            // groupValue: groupValue,
+                            // onChange: (equipments) {
+                            //   setState(() {
+                            //     print(equipment[index].id);
+                            //     groupValue = equipments;
+                            //   });
+                            // },
+                            // value: index,
+                            widget: Checkbox(
+                              value: equipment[index].isChecked,
+                              onChanged: (value) {
+                                setState(() {
+                                  equipment[index].isChecked = value!;
+
+                                  // print("value");
+                                  // print(value);
+                                  context.read<ClassroomEquipmentBloc>().add(
+                                        ClassroomEquipmentFilteredEquipment(
+                                          equipment[index],
+                                        ),
+                                      );
+                                });
+                              },
+                            ),
+                          );
                   },
                 );
               },

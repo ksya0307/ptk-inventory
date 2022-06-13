@@ -41,6 +41,8 @@ class _VisibleClassroomEquipmentListState
                     itemCount: equipment.length,
                     itemBuilder: (context, index) {
                       return ClassroomEquipmentRow(
+                        firstFlexRow: 3,
+                        secondFlexRow: 5,
                         onTap: () {
                           context.read<ClassroomEquipmentBloc>().add(
                                 ClassroomEquipmentUserSelected(
@@ -72,7 +74,7 @@ class _VisibleClassroomEquipmentListState
                         numberInClassroom: equipment[index].numberInClassroom,
                         category: equipment[index].equipment.category.name,
                         last: index == equipment.length - 1,
-                        radio: Radio<int>(
+                        widget: Radio<int>(
                           value: index,
                           groupValue: groupValue,
                           onChanged: (equipments) {

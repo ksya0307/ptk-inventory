@@ -67,7 +67,7 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
       ),
     );
     final downloadRequest = DownloadFileRequest(
-      '${state.selectedEquipment!.inventoryNumber}${state.repair!.datetime}Акт приема-передачи оборудования в ремонт.pdf',
+      '${state.selectedEquipment!.inventoryNumber}${DateFormat('dd-MM-yyyy HH:mm:ss').format(state.repair!.datetime)}Акт приема-передачи оборудования в ремонт.pdf',
     );
 
     final newFile = await wordsApi.downloadFile(downloadRequest);
@@ -75,8 +75,8 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
     final dir = await getApplicationDocumentsDirectory();
 
     final f = await File(
-            '${dir.path}/Акт приема-передачи ${DateFormat('dd-MM-yyyy HH:mm:ss').format(state.repair!.datetime)}.pdf')
-        .writeAsBytes(
+      '${dir.path}/Акт приема-передачи ${DateFormat('dd-MM-yyyy HH:mm:ss').format(state.repair!.datetime)}.pdf',
+    ).writeAsBytes(
       bytes.asUint8List(
         newFile.offsetInBytes,
         newFile.lengthInBytes,
@@ -117,7 +117,7 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
       ),
     );
     final downloadRequest = DownloadFileRequest(
-      '${state.selectedEquipment!.inventoryNumber}${state.repair!.datetime}Акт приема-передачи оборудования в ремонт.pdf',
+      '${state.selectedEquipment!.inventoryNumber}${DateFormat('dd-MM-yyyy HH:mm:ss').format(state.repair!.datetime)}Акт приема-передачи оборудования в ремонт.pdf',
     );
 
     final newFile = await wordsApi.downloadFile(downloadRequest);
@@ -244,7 +244,6 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
       ),
     );
     if (state.formStatus.isValidated) {
-      print(state.dateTime);
       final repair = await _repairRepository.createRepair(
         repairModelRequest:
             CreateRepairModelRequest(state.phone.value, state.dateTime!),
@@ -370,7 +369,7 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
           //Загрузка в облако
           final uploadReq = UploadFileRequest(
             newFile,
-            '${state.selectedEquipment!.inventoryNumber}${state.repair!.datetime}Акт приема-передачи оборудования в ремонт.pdf',
+            '${state.selectedEquipment!.inventoryNumber}${DateFormat('dd-MM-yyyy HH:mm:ss').format(state.repair!.datetime)}Акт приема-передачи оборудования в ремонт.pdf',
           );
           await wordsApi.uploadFile(uploadReq);
 
@@ -381,7 +380,7 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
             ),
           );
 
-          ///Может потом удалить idk
+          ///чтобы не было перезагрузки экрана в дальнейшем
           emit(
             state.copyWith(
               repairActionStatus: RepairActionStatus.pure,
@@ -433,8 +432,6 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
     RepairDateTimeChanged event,
     Emitter<RepairState> emit,
   ) {
-    print("BLOC");
-    print(event.dateTime);
     emit(
       state.copyWith(
         dateTime: event.dateTime,

@@ -72,7 +72,7 @@ class CategoryForm extends StatelessWidget {
                 if (state.categoryLoadingStatus ==
                         CategoryLoadingStatus.loadingSuccess &&
                     state.globalCategories.isEmpty) {
-                  return const Text("Список категорий пуст");
+                  return const Text("Список категорий оборудования пуст");
                 }
 
                 return const Text("Что-то пошло не так");

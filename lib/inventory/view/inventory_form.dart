@@ -125,25 +125,6 @@ class InventoryFormState extends State<InventoryForm> {
   Widget thirdProperty() {
     return Column(
       children: [
-        ElevatedButton(
-          onPressed: () {
-            context.read<AuthenticationBloc>().add(
-                  AuthenticationLogoutRequested(),
-                );
-          },
-          child: const Padding(
-            padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
-            child: Text(
-              "Выйти из учетной записи",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontFamily: 'Rubik',
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Container(

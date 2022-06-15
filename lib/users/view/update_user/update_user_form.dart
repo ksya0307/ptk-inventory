@@ -109,7 +109,7 @@ class UpdateUserForm extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 16),
                     child: PasswordInput(
                       errorText: 'Длина должна быть не менее 8 символов',
-                      propertyInvalid: state.password.invalid,
+                      propertyInvalid: false,
                       hintText: 'Новый пароль',
                       onChange: (password) => context
                           .read<UsersBloc>()

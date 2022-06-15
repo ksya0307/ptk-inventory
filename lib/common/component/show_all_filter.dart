@@ -49,12 +49,6 @@ class ShowAllFilter extends StatelessWidget {
           ),
           BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) {
-              final allCategories = context.read<CategoryBloc>()
-                ..add(
-                  const CategoryLoadList(),
-                );
-              final teacherCategories = context.read<CategoryBloc>()
-                ..add(const CategoryInUserClassrooms());
               return InkWell(
                 onTap: () {
                   showModalBottomSheet<void>(
@@ -63,61 +57,52 @@ class ShowAllFilter extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     builder: (_) {
                       //исправить
-                      return BlocProvider<CategoryBloc>.value(
-                        value: state.user.role == UserRole.admin ||
-                                state.user.role == UserRole.moderator
-                            ? allCategories
-                            : teacherCategories,
-                        child: EquipmentFilterSheet(
-                          initialChildSize: 0.7,
-                          minChildSize: 0.5,
-                          maxChildSize: 0.95,
-                          title: 'Все категории',
-                          widget: Column(
-                            children: [
-                              BlocBuilder<CategoryBloc, CategoryState>(
-                                buildWhen: (previous, current) =>
-                                    previous.visibleList != current.visibleList,
-                                builder: (context, state) {
-                                  return SearchField(
-                                    hintText: 'Смартфон',
-                                    keyboardType: TextInputType.text,
-                                    inputFormatters: const [],
-                                    onChange: (category) => {
-                                      context.read<CategoryBloc>().add(
-                                            CategorySearch(
-                                              matchingWord: category,
-                                            ),
-                                          ),
-                                    },
-                                  );
-                                },
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: const [
-                                    ApplyFilterLabel(),
+                      return state.user.role == UserRole.moderator ||
+                              state.user.role == UserRole.admin
+                          ? BlocProvider<CategoryBloc>.value(
+                              value: context.read<CategoryBloc>()
+                                ..add(const CategoryLoadList()),
+                            )
+                          : BlocProvider<CategoryBloc>.value(
+                              value: context.read<CategoryBloc>()
+                                ..add(const CategoryInUserClassrooms()),
+                              child: EquipmentFilterSheet(
+                                initialChildSize: 0.7,
+                                minChildSize: 0.5,
+                                maxChildSize: 0.95,
+                                title: 'Все категории',
+                                widget: Column(
+                                  children: [
+                                    BlocBuilder<CategoryBloc, CategoryState>(
+                                      buildWhen: (previous, current) =>
+                                          previous.visibleList !=
+                                          current.visibleList,
+                                      builder: (context, state) {
+                                        return SearchField(
+                                          hintText: 'Смартфон',
+                                          keyboardType: TextInputType.text,
+                                          inputFormatters: const [],
+                                          onChange: (category) => {
+                                            context.read<CategoryBloc>().add(
+                                                  CategorySearch(
+                                                    matchingWord: category,
+                                                  ),
+                                                ),
+                                          },
+                                        );
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    const CategoryForm(
+                                      topPaddingCategoryList: 0,
+                                      topPaddingSearchCategory: 0,
+                                    ),
                                   ],
                                 ),
                               ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              const CategoryForm(
-                                topPaddingCategoryList: 0,
-                                topPaddingSearchCategory: 0,
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
+                            );
                     },
                   );
                 },

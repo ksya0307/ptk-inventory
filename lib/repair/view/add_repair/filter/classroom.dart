@@ -54,22 +54,11 @@ class ChooseClassroom extends StatelessWidget {
                       maxChildSize: 0.95,
                       title: 'Все аудитории',
                       widget: Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: const [
-                                ApplyFilterLabel(),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
+                        children: const [
+                          SizedBox(
                             height: 12,
                           ),
-                          const FilterClassroomForm()
+                          FilterClassroomForm()
                         ],
                       ),
                     );

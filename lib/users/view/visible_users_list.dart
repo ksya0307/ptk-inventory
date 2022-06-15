@@ -60,7 +60,7 @@ class VisibleUsersList extends StatelessWidget {
                           );
                         },
                         child: UsersRow(
-                          id: users[index].id.toString(),
+                          id: (index + 1).toString(),
                           fullName:
                               "${users[index].surname} ${users[index].name[0]}. $patronymic",
                           last: index == users.length - 1,

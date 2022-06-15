@@ -63,23 +63,6 @@ class ChooseCategory extends StatelessWidget {
                           );
                         },
                       ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
-                            ApplyFilterLabel(),
-                          ],
-                        ),
-                      ),
-                      // const SizedBox(
-                      //   height: 12,
-                      // ),
                       const CategoryForm(),
                     ],
                   ),

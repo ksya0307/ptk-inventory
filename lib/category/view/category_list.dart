@@ -105,7 +105,7 @@ class CategoriesList extends StatelessWidget {
                                           bottom: 16,
                                         ),
                                         child: Text(
-                                          "Категорий не найдено",
+                                          "Категория не найдена",
                                           style: TextStyle(
                                             color: blackLabels,
                                             fontFamily: 'Rubik',
@@ -114,53 +114,69 @@ class CategoriesList extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                        ),
-                                        child: Wrap(
-                                          crossAxisAlignment:
-                                              WrapCrossAlignment.center,
-                                          alignment: WrapAlignment.center,
-                                          // direction: Axis.vertical,
-                                          children: [
-                                            const Text(
-                                              "Используйте",
-                                              style: TextStyle(
-                                                color: blackLabels,
-                                                fontFamily: 'Rubik',
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 8,
-                                              ),
-                                              child: Container(
-                                                width: 35,
-                                                height: 35,
-                                                decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: primaryBlue,
-                                                ),
-                                                child: const Icon(
-                                                  Icons.add_rounded,
-                                                  color: Colors.white,
-                                                  size: 20,
-                                                ),
-                                              ),
-                                            ),
-                                            const Text(
-                                              "для добавления новой категории",
-                                              style: TextStyle(
-                                                color: blackLabels,
-                                                fontFamily: 'Rubik',
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      BlocBuilder<AuthenticationBloc,
+                                          AuthenticationState>(
+                                        builder: (context, state) {
+                                          return state.user.role ==
+                                                      UserRole.admin ||
+                                                  state.user.role ==
+                                                      UserRole.moderator
+                                              ? Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    horizontal: 16,
+                                                  ),
+                                                  child: Wrap(
+                                                    crossAxisAlignment:
+                                                        WrapCrossAlignment
+                                                            .center,
+                                                    alignment:
+                                                        WrapAlignment.center,
+                                                    // direction: Axis.vertical,
+                                                    children: [
+                                                      const Text(
+                                                        "Используйте",
+                                                        style: TextStyle(
+                                                          color: blackLabels,
+                                                          fontFamily: 'Rubik',
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                          horizontal: 8,
+                                                        ),
+                                                        child: Container(
+                                                          width: 35,
+                                                          height: 35,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            color: primaryBlue,
+                                                          ),
+                                                          child: const Icon(
+                                                            Icons.add_rounded,
+                                                            color: Colors.white,
+                                                            size: 20,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Text(
+                                                        "для добавления новой категории",
+                                                        style: TextStyle(
+                                                          color: blackLabels,
+                                                          fontFamily: 'Rubik',
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              : const SizedBox(height: 0);
+                                        },
                                       ),
                                     ],
                                   ),

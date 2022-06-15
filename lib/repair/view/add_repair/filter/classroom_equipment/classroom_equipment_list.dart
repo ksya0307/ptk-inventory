@@ -111,7 +111,13 @@ class _ClassroomEquipmentListState extends State<ClassroomEquipmentList> {
               builder: (context, state) {
                 print(equipment[0].isChecked);
                 if (state.visibleList.isNotEmpty) {
-                  return const VisibleClassroomEquipmentList();
+                  return VisibleClassroomEquipmentList(
+                    checkbox: widget.checkbox,
+                    firstFlex: widget.firstFlex,
+                    firstFlexRow: widget.firstFlexRow,
+                    secondFlex: widget.secondFlex,
+                    secondFlexRow: widget.secondFlexRow,
+                  );
                 }
                 if (state.searchText.isNotEmpty && state.visibleList.isEmpty) {
                   return Column(

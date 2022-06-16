@@ -29,6 +29,19 @@ class EquipmentClassroomForm extends StatelessWidget {
                 property: 'Аудитория',
                 bottomPadding: 4,
               ),
+              SearchField(
+                hintText: '102',
+                keyboardType: TextInputType.text,
+                inputFormatters: const [],
+                onChange: (classroom) {
+                  context
+                      .read<ClassroomBloc>()
+                      .add(ClassroomSearch(matchingWord: classroom));
+                },
+              ),
+              const SizedBox(
+                height: 8,
+              ),
               if (state.user.role == UserRole.teacher)
                 BlocProvider<ClassroomBloc>.value(
                   value: context.read<ClassroomBloc>()

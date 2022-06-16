@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/view/category_form.dart';
-import 'package:ptk_inventory/common/component/apply_filter_label.dart';
 import 'package:ptk_inventory/common/component/filter_scrollable_sheet.dart';
 
 import 'package:ptk_inventory/common/component/property_label.dart';
@@ -62,6 +61,42 @@ class ShowAllFilter extends StatelessWidget {
                           ? BlocProvider<CategoryBloc>.value(
                               value: context.read<CategoryBloc>()
                                 ..add(const CategoryLoadList()),
+                              child: EquipmentFilterSheet(
+                                initialChildSize: 0.7,
+                                minChildSize: 0.5,
+                                maxChildSize: 0.95,
+                                title: 'Все категории',
+                                widget: Column(
+                                  children: [
+                                    BlocBuilder<CategoryBloc, CategoryState>(
+                                      buildWhen: (previous, current) =>
+                                          previous.visibleList !=
+                                          current.visibleList,
+                                      builder: (context, state) {
+                                        return SearchField(
+                                          hintText: 'Смартфон',
+                                          keyboardType: TextInputType.text,
+                                          inputFormatters: const [],
+                                          onChange: (category) => {
+                                            context.read<CategoryBloc>().add(
+                                                  CategorySearch(
+                                                    matchingWord: category,
+                                                  ),
+                                                ),
+                                          },
+                                        );
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    const CategoryForm(
+                                      topPaddingCategoryList: 0,
+                                      topPaddingSearchCategory: 0,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             )
                           : BlocProvider<CategoryBloc>.value(
                               value: context.read<CategoryBloc>()

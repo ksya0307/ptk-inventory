@@ -47,7 +47,7 @@ class _CommonView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          "В ближайшее время здесь появится больше возможностей",
+          "Запрос на подтверждение прав отправлен",
           style: TextStyle(
             fontFamily: 'Rubik',
             fontSize: 20,

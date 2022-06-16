@@ -2,10 +2,11 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:ptk_inventory/classroom_equipment/model/equipment/model/equipment.dart';
 import 'package:ptk_inventory/classroom_equipment/model/equipment_types.dart';
 
 import 'package:ptk_inventory/classrooms/model/classroom.dart';
-import 'package:ptk_inventory/equipment/model/equipment.dart';
+
 
 part 'classroom_equipment.g.dart';
 

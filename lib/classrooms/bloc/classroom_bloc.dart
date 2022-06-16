@@ -195,7 +195,16 @@ class ClassroomBloc extends Bloc<ClassroomEvent, ClassroomState> {
     final waiting = await _classroomRepository.classrooms();
     if (waiting.isNotEmpty) {
       // filter the list by the accending id of the classroom
-      waiting.sort((a, b) => a.number.compareTo(b.number));
+      waiting.sort((a, b) {
+        if (int.tryParse(a.number) != null && int.tryParse(b.number) != null) {
+          return int.parse(a.number).compareTo(int.parse(b.number));
+        } else if (int.tryParse(a.number) == null ||
+            int.tryParse(b.number) == null) {
+          return a.number.compareTo(b.number);
+        }
+        print("${int.tryParse(a.number)} \t ${int.tryParse(b.number)}");
+        return a.number.compareTo(b.number);
+      });
     }
 
     emit(

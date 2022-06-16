@@ -51,12 +51,12 @@ class DocumentRepository {
   }
 
   Future<DocumentStatus> createDocument(
-    GeneralModelRequest categoryModelRequest,
+    GeneralModelRequest generalModelRequest,
   ) async {
     try {
       await _documentProvider.createDocument(
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
-        categoryModelRequest.toMap(),
+        generalModelRequest.toMap(),
       );
       return DocumentStatus.created;
     } on CreateDocumentRequestUnauthorized {
@@ -66,7 +66,7 @@ class DocumentRepository {
       }
       await _documentProvider.createDocument(
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
-        categoryModelRequest.toMap(),
+        generalModelRequest.toMap(),
       );
       return DocumentStatus.created;
     } on CreateDocumentRequestFailure {

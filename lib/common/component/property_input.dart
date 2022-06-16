@@ -16,6 +16,7 @@ class PropertyInput extends StatelessWidget {
     this.keyboardType,
     this.inputFormatters,
     this.prefixIcon,
+    this.suffixIcon,
   }) : super(key: key);
   final String? initialValue;
   final Function(String)? onChange;
@@ -27,6 +28,7 @@ class PropertyInput extends StatelessWidget {
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final Widget? prefixIcon;
+  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class PropertyInput extends StatelessWidget {
         color: blackInput,
       ),
       decoration: InputDecoration(
+        suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
         hintText: hintText,
         labelStyle: const TextStyle(fontFamily: 'Rubik', fontSize: 18),

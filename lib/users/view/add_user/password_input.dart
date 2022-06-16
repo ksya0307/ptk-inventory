@@ -37,7 +37,7 @@ class _PasswordInput extends State<PasswordInput> {
           decoration: InputDecoration(
             labelStyle: const TextStyle(fontFamily: 'Rubik', fontSize: 18),
             errorText: state.password.invalid
-                ? 'Длина должна быть не менее 8 символов'
+                ? 'Длина пароля должна быть не менее 8 символов'
                 : null,
             errorStyle: const TextStyle(
               color: redCustom,

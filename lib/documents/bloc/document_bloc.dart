@@ -24,11 +24,17 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     on<DocumentSelected>(_onSelected);
 
     on<DocumentDeleteFromList>(_onDeleteFromList);
-    on<DocumentAddToList>(_onAddToList);
+  //  on<DocumentAddToList>(_onAddToList);
     on<DocumentSaveToList>(_onSaveToList);
   }
 
   final DocumentRepository _documentRepository;
+
+
+  // void _onAddToList(
+  //   DocumentAddToList event,
+  //   Emitter<DocumentState> emit,
+  // ) {}
 
   void _onSaveToList(
     DocumentSaveToList event,
@@ -56,10 +62,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     emit(state.copyWith(documentActionStatus: DocumentActionStatus.pure));
   }
 
-  void _onAddToList(
-    DocumentAddToList event,
-    Emitter<DocumentState> emit,
-  ) {}
+
 
   void _onDeleteFromList(
     DocumentDeleteFromList event,

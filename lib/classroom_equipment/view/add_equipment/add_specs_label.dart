@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/classroom_equipment/view/add_equipment_specs_page.dart';
+import 'package:ptk_inventory/classroom_equipment/view/specs/add_specs/add_specs_page.dart';
 
 import 'package:ptk_inventory/config/colors.dart';
 
@@ -9,7 +10,7 @@ class AddSpecsLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(AddEquipmentSpecsPage.route()),
+      onTap: () => Navigator.of(context).push(AddSpecsPage.route()),
       child: const Padding(
         padding: EdgeInsets.only(top: 8, right: 16),
         child: Text(

@@ -21,6 +21,10 @@ class UsersNameChanged extends UsersEvent {
   List<Object> get props => [name];
 }
 
+class UsersNewPasswordSaved extends UsersEvent {
+  const UsersNewPasswordSaved();
+}
+
 class UsersPatronymicChanged extends UsersEvent {
   final String patronymic;
   const UsersPatronymicChanged(this.patronymic);

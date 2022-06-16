@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/admin_user/view/profile/admin_profile_page.dart';
 
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/category/view/category_page.dart';
 import 'package:ptk_inventory/classroom_equipment/view/equipment_classrooms_page.dart';
+import 'package:ptk_inventory/classroom_equipment/view/specs/specs_page.dart';
 import 'package:ptk_inventory/classrooms/view/classroom_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/documents/view/document_page.dart';
@@ -62,6 +64,7 @@ Widget userProfileView(BuildContext context) {
                 ),
                 usersCard(context),
                 equipmentCard(context),
+                specs(context),
                 classroomsCard(context),
                 documentsCard(context),
                 ifosCard(context),
@@ -86,6 +89,39 @@ Widget userProfileView(BuildContext context) {
           ],
         ),
       ],
+    ),
+  );
+}
+
+Widget specs(BuildContext context) {
+  return GestureDetector(
+    onTap: () => Navigator.of(context).push(SpecsPage.route()),
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.47,
+      height: MediaQuery.of(context).size.height * 0.12,
+      child: Card(
+        elevation: 2.0,
+        shadowColor: greyShadow,
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+              child: Text(
+                "Характеристики оборудования",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: blueCustom,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     ),
   );
 }
@@ -245,7 +281,7 @@ Widget categoriesCard(BuildContext context) {
 
 Widget profileCard(BuildContext context) {
   return GestureDetector(
-    onTap: () => Navigator.of(context).push(UserProfilePage.route()),
+    onTap: () => Navigator.of(context).push(AdminProfilePage.route()),
     child: SizedBox(
       width: MediaQuery.of(context).size.width * 0.47,
       height: MediaQuery.of(context).size.height * 0.1,

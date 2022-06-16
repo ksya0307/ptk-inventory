@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
+import 'package:ptk_inventory/common/model/requests/change_password_request.dart';
 import 'package:ptk_inventory/common/model/requests/change_user_request.dart';
 import 'package:ptk_inventory/common/model/user.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
@@ -33,12 +34,34 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     on<UsersDeleted>(_onDeleted);
     on<UsersSubmitted>(_onSubmitted);
     on<UsersSaved>(_onSaved);
+    on<UsersNewPasswordSaved>(_onNewPasswordSaved);
 
     on<UsersSelected>(_onSelected);
     on<UsersSearch>(_onSearch);
   }
 
   final UserRepository _userRepository;
+
+  Future<void> _onNewPasswordSaved(
+    UsersNewPasswordSaved event,
+    Emitter<UsersState> emit,
+  ) async {
+    emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
+    if (state.formStatus.isValidated) {
+      // final data = await getUserProfile();
+      //  userId: data!.id,
+      final waiting = await _userRepository.userChangePassword(
+        ChangePasswordModelRequest(
+          newPassword: state.password.value,
+        ),
+      );
+      if (waiting == UserStatus.unchanged) {
+        emit(state.copyWith(formStatus: FormzStatus.submissionFailure));
+      } else {
+        emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
+      }
+    }
+  }
 
   void _onRoleChanged(
     UsersRoleChanged event,
@@ -120,6 +143,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     emit(state.copyWith(selectedUser: event.selectedUser));
     emit(
       state.copyWith(
+        formStatus: FormzStatus.valid,
         surname: Surname.dirty(
           event.selectedUser!.surname,
         ),
@@ -130,6 +154,8 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
         password: const Password.dirty(),
       ),
     );
+    print(state.selectedUser);
+    print(state.formStatus);
   }
 
   void _onSearch(
@@ -244,13 +270,14 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     Emitter<UsersState> emit,
   ) {
     final name = Name.dirty(event.name);
+
     emit(
       state.copyWith(
         name: name,
         formStatus: Formz.validate(
           [
             state.surname,
-            name,
+            // name,
             state.username,
             state.password,
           ],
@@ -289,7 +316,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
         formStatus: Formz.validate([
           state.surname,
           state.name,
-          username,
+          // username,
           state.password,
         ]),
       ),
@@ -306,10 +333,11 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
         password: password,
         formStatus: Formz.validate(
           [
+            password,
             state.surname,
             state.name,
             state.username,
-            password,
+            // password,
           ],
         ),
       ),

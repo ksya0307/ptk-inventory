@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
+import 'package:ptk_inventory/classroom_equipment/view/specs/specs_row.dart';
+import 'package:ptk_inventory/classroom_equipment/view/specs/specs_visible_list.dart';
 
 import 'package:ptk_inventory/config/colors.dart';
-import 'package:ptk_inventory/repair/bloc/repair_bloc.dart';
-import 'package:ptk_inventory/repair/model/repair.dart';
-import 'package:ptk_inventory/repair/model/repair_equipment.dart';
-import 'package:ptk_inventory/repair/view/repair_row.dart';
-import 'package:ptk_inventory/repair/view/repair_visible_list.dart';
-import 'package:ptk_inventory/repair/view/update_repair/update_repair_page.dart';
+import 'package:ptk_inventory/ifo/bloc/ifo_bloc.dart';
+import 'package:ptk_inventory/ifo/model/ifo.dart';
+import 'package:ptk_inventory/ifo/view/ifo_row.dart';
+import 'package:ptk_inventory/ifo/view/ifo_visible_list.dart';
+import 'package:ptk_inventory/ifo/view/update_ifo/update_ifo_page.dart';
 
-class RepairList extends StatelessWidget {
-  const RepairList({Key? key}) : super(key: key);
+class SpecsList extends StatelessWidget {
+  const SpecsList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final repairs =
-        BlocProvider.of<RepairBloc>(context).state.globalRepairEquipment;
+    final specs =
+        BlocProvider.of<ClassroomEquipmentBloc>(context).state.globalSpecs;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 24),
@@ -52,11 +53,11 @@ class RepairList extends StatelessWidget {
                     ),
                   ),
                   Flexible(
-                    flex: 6,
+                    flex: 5,
                     child: Container(
                       alignment: Alignment.centerLeft,
                       child: const Text(
-                        'Инвентарный номер',
+                        'Характеристики',
                         style: TextStyle(
                           fontFamily: 'Rubik',
                           fontSize: 16,
@@ -77,10 +78,11 @@ class RepairList extends StatelessWidget {
                   bottomRight: Radius.circular(7.0),
                 ),
               ),
-              child: BlocBuilder<RepairBloc, RepairState>(
+              child:
+                  BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
                 builder: (context, state) {
                   if (state.visibleList.isNotEmpty) {
-                    return const RepairVisibleList();
+                    return const SpecsVisibleList();
                   }
                   if (state.searchText.isNotEmpty &&
                       state.visibleList.isEmpty) {
@@ -105,7 +107,7 @@ class RepairList extends StatelessWidget {
                                           bottom: 16,
                                         ),
                                         child: Text(
-                                          "Акты приема-передачи не найдены",
+                                          "Оборудование не найдено",
                                           style: TextStyle(
                                             color: blackLabels,
                                             fontFamily: 'Rubik',
@@ -152,7 +154,7 @@ class RepairList extends StatelessWidget {
                                               ),
                                             ),
                                             const Text(
-                                              "для добавления нового акта приема-передачи оборудования в ремонт",
+                                              "для добавления нового оборудования",
                                               style: TextStyle(
                                                 color: blackLabels,
                                                 fontFamily: 'Rubik',
@@ -176,39 +178,34 @@ class RepairList extends StatelessWidget {
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: repairs.length,
+                    itemCount: specs.length,
                     itemBuilder: (context, index) {
+                      print(specs[index].description.length);
                       return InkWell(
                         onTap: () {
-                          print("print");
-                          // context.read<RepairBloc>().add(
-                          //       RepairSelected(
-                          //         RepairEquipment(
-                          //           id: repairs[index].id,
-                          //           repair: repairs[index].repair,
-                          //           problem: repairs[index].problem,
-                          //           equipment: repairs[index].equipment,
+                          // context.read<IfoBloc>().add(
+                          //       IfoSelected(
+                          //         Ifo(
+                          //           id: ifos[index].id,
+                          //           name: ifos[index].name,
                           //         ),
                           //       ),
                           //     );
-                          Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                              builder: (_) => BlocProvider.value(
-                                value: context.read<RepairBloc>(),
-                                child: UpdateRepairPage(),
-                              ),
-                            ),
-                          );
+                          // Navigator.of(context).push(
+                          //   MaterialPageRoute<void>(
+                          //     builder: (_) => BlocProvider.value(
+                          //       value: context.read<IfoBloc>(),
+                          //       child: UpdateIfoPage(),
+                          //     ),
+                          //   ),
+                          // );
                         },
-                        child: RepairRow(
-                          number: (index + 1).toString(),
-                          inventoryNumber: repairs[index]
-                              .equipment
-                              .inventoryNumber
-                              .toString(),
-                          dateTime: DateFormat("dd-MM-yyyy")
-                              .format(repairs[index].repair.datetime),
-                          last: index == repairs.length - 1,
+                        child: SpecsRow(
+                          id: (index + 1).toString(),
+                          specs: specs[index].description.length <= 50
+                              ? "${specs[index].description.substring(0, 25)}..."
+                              : "${specs[index].description.substring(0, 50)}...",
+                          last: index == specs.length - 1,
                         ),
                       );
                     },

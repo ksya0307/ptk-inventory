@@ -132,10 +132,11 @@ class _ClassroomListState extends State<FilterClassroomList> {
                                   );
                             } else if (index != 0) {
                               context.read<ClassroomEquipmentBloc>().add(
-                                  ClassroomEquipmentSelectedClassroom(
-                                      classrooms[index]));
+                                    ClassroomEquipmentSelectedClassroom(
+                                      classrooms[index],
+                                    ),
+                                  );
                             }
-                            print(index);
                           },
                         ),
                       );

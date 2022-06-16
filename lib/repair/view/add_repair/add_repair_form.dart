@@ -10,7 +10,6 @@ import 'package:ptk_inventory/common/component/common_button.dart';
 import 'package:ptk_inventory/common/component/property_input.dart';
 import 'package:ptk_inventory/common/component/property_label.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_common_error.dart';
-import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/bloc/repair_bloc.dart';
 import 'package:ptk_inventory/repair/view/add_repair/choose_inventory_number_label.dart';

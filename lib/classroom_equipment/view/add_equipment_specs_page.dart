@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ptk_inventory/classroom_equipment/view/specs/add_specs/add_specs_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 
 class AddEquipmentSpecsPage extends StatelessWidget {
@@ -41,7 +42,7 @@ class AddEquipmentSpecsPage extends StatelessWidget {
                 constraints: BoxConstraints(
                   minHeight: view.maxHeight,
                 ),
-                child: addSpecsForm(context),
+                child: AddSpecsPage(),
               ),
             );
           },

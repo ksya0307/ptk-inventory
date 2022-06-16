@@ -422,6 +422,7 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
     final phone = Phone.dirty(event.phone);
     emit(
       state.copyWith(
+        
         phone: phone,
         formStatus: Formz.validate([phone, state.problem]),
       ),

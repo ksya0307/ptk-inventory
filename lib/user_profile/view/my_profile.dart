@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
+import 'package:ptk_inventory/common/component/button_in_progress.dart';
+import 'package:ptk_inventory/common/component/common_button.dart';
 import 'package:ptk_inventory/common/component/snackbar_message_common_error.dart';
 
 import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
@@ -9,6 +11,7 @@ import 'package:ptk_inventory/common/repository/user_repository.dart';
 import 'package:ptk_inventory/common_user/view.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/user_profile/bloc/new_password_bloc.dart';
+import 'package:ptk_inventory/users/bloc/users_bloc.dart';
 
 class UserProfilePage extends StatelessWidget {
   static Route route() {
@@ -18,7 +21,7 @@ class UserProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NewPasswordBloc(userRepository: UserRepository()),
+      create: (context) => UsersBloc(userRepository: UserRepository()),
       child: Scaffold(
         // resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -29,26 +32,9 @@ class UserProfilePage extends StatelessWidget {
                   constraints: BoxConstraints(
                     minHeight: view.maxHeight,
                   ),
-                  child: BlocListener<NewPasswordBloc, NewPasswordState>(
-                    listener: (context, state) {
-                      if (state.formStatus == FormzStatus.submissionSuccess) {
-                        snackbarMessage(
-                          context,
-                          "Пароль успешно изменён",
-                        );
-                        Navigator.of(context).pop();
-                      } else if (state.formStatus ==
-                          FormzStatus.submissionFailure) {
-                        snackbarMessageCommonError(
-                          context,
-                          "Пароль не удалось сохранить",
-                        );
-                      }
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                      child: const UserProfileView(),
-                    ),
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                    child: const UserProfileView(),
                   ),
                 ),
               );
@@ -90,119 +76,60 @@ class UserProfileView extends StatelessWidget {
             const UsernameField(),
             propertyLabel('Изменить пароль', 16, 16),
             const ChangePasswordField(),
-            const _SavePasswordButton()
+            BlocListener<NewPasswordBloc, NewPasswordState>(
+              listener: (context, state) {
+                if (state.formStatus == FormzStatus.submissionSuccess) {
+                  snackbarMessage(
+                    context,
+                    "Пароль успешно изменён",
+                  );
+                  Navigator.of(context).pop();
+                } else if (state.formStatus == FormzStatus.submissionFailure) {
+                  snackbarMessageCommonError(
+                    context,
+                    "Пароль не удалось сохранить",
+                  );
+                }
+              },
+              child: BlocBuilder<NewPasswordBloc, NewPasswordState>(
+                buildWhen: (previous, current) =>
+                    previous.formStatus != current.formStatus,
+                builder: (context, state) {
+                  return state.formStatus.isSubmissionInProgress
+                      ? SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: const Padding(
+                            padding: EdgeInsets.only(left: 16, top: 8),
+                            child: InProgress(
+                              inProgressText: 'Сохранение...',
+                            ),
+                          ),
+                        )
+                      : SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 16, top: 8),
+                            child: CommonButton(
+                              fontSize: 18,
+                              formValidated: state.formStatus.isValidated,
+                              buttonText: 'Сохранить',
+                              onPress: () {
+                                context
+                                    .read<UsersBloc>()
+                                    .add(const UsersNewPasswordSaved());
+                              },
+                            ),
+                          ),
+                        );
+                },
+              ),
+            ),
           ],
         ),
         Column(
           children: const [LogOutButton()],
         )
       ],
-    );
-  }
-}
-
-class _SavePasswordButton extends StatelessWidget {
-  const _SavePasswordButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<NewPasswordBloc, NewPasswordState>(
-      buildWhen: (previous, current) =>
-          previous.formStatus != current.formStatus,
-      builder: (context, state) {
-        return state.formStatus.isSubmissionInProgress
-            ? Padding(
-                padding: const EdgeInsets.only(left: 16, top: 8),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minWidth: MediaQuery.of(context).size.width * 0.5,
-                  ),
-                  child: ElevatedButton.icon(
-                    onPressed: null,
-                    icon: const CircularProgressIndicator(color: primaryBlue),
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.resolveWith((states) {
-                        if (states.contains(MaterialState.disabled)) {
-                          return const Color.fromRGBO(0, 47, 167, 0.65);
-                        }
-                        return const Color.fromRGBO(0, 47, 167, 1.0);
-                      }),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7.0),
-                        ),
-                      ),
-                    ),
-                    label: const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 12 + 3, 0, 12 + 3),
-                      child: Text(
-                        "Сохранение...",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Rubik',
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromRGBO(255, 255, 255, 0.65),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            : Padding(
-                padding: const EdgeInsets.only(left: 16, top: 16),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minWidth: MediaQuery.of(context).size.width * 0.5,
-                  ),
-                  child: ElevatedButton(
-                    key: const Key('signUpForm_signUp_raisedButton'),
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7.0),
-                        ),
-                      ),
-                      elevation: MaterialStateProperty.all(0),
-                      foregroundColor:
-                          MaterialStateProperty.resolveWith((states) {
-                        if (states.contains(MaterialState.disabled)) {
-                          return const Color.fromRGBO(255, 255, 255, 0.65);
-                        }
-                        return Colors.white;
-                      }),
-                      backgroundColor:
-                          MaterialStateProperty.resolveWith((states) {
-                        if (states.contains(MaterialState.disabled)) {
-                          return const Color.fromRGBO(0, 47, 167, 0.65);
-                        }
-                        return const Color.fromRGBO(0, 47, 167, 1.0);
-                      }),
-                    ),
-                    onPressed: state.formStatus.isValidated
-                        ? () {
-                            context
-                                .read<NewPasswordBloc>()
-                                .add(const NewPasswordSaved());
-                          }
-                        : null,
-                    child: const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 12 + 3, 0, 12 + 3),
-                      child: Text(
-                        "Сохранить",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Rubik',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-      },
     );
   }
 }
@@ -250,7 +177,7 @@ class _ChangePasswordFieldState extends State<ChangePasswordField> {
             decoration: InputDecoration(
               hintText: "Новый пароль",
               errorText: state.newPassword.invalid
-                  ? 'Длина должна быть не менее 8 символов'
+                  ? 'Длина пароля должна быть не менее 8 символов'
                   : null,
               suffixIcon: IconButton(
                 color: const Color.fromRGBO(156, 156, 156, 1.0),

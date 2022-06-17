@@ -71,7 +71,8 @@ class ClassroomEquipmentForm extends StatelessWidget {
             }
             if (state.classroomEquipmentLoadingStatus ==
                     ClassroomEquipmentLoadingStatus.loadingSuccess &&
-                state.globalEquipments.isEmpty) {
+                state.globalEquipments.isEmpty &&
+                state.visibleList.isEmpty) {
               return const Text(
                 "В выбранной аудитории ещё нет оборудования",
                 style: TextStyle(

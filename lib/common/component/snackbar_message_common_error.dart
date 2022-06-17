@@ -16,15 +16,17 @@ ScaffoldFeatureController snackbarMessageCommonError(
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: EdgeInsets.zero,
-            child: Text(
-              message,
-              style: const TextStyle(
-                color: Colors.white,
-                fontFamily: 'Rubik',
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
+          Flexible(
+            child: Padding(
+              padding: EdgeInsets.zero,
+              child: Text(
+                message,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Rubik',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
           ),

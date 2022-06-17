@@ -202,7 +202,6 @@ class ClassroomBloc extends Bloc<ClassroomEvent, ClassroomState> {
             int.tryParse(b.number) == null) {
           return a.number.compareTo(b.number);
         }
-        print("${int.tryParse(a.number)} \t ${int.tryParse(b.number)}");
         return a.number.compareTo(b.number);
       });
     }

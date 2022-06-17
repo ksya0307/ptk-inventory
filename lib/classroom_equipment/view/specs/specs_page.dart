@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/category/bloc/category_bloc.dart';
+import 'package:ptk_inventory/category/repository/category_repository.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/repository/classroom_equipment_repository.dart';
 import 'package:ptk_inventory/classroom_equipment/view/specs/add_specs/add_specs_page.dart';
 import 'package:ptk_inventory/classroom_equipment/view/specs/specs_form.dart';
-import 'package:ptk_inventory/ifo/bloc/ifo_bloc.dart';
-import 'package:ptk_inventory/ifo/repository/ifo_repository.dart';
 
 class SpecsPage extends StatelessWidget {
   static Route route() {
@@ -14,10 +14,19 @@ class SpecsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ClassroomEquipmentBloc(
-          classroomEquipmentRepository: ClassroomEquipmentRepository())
-        ..add(const ClassroomEquipmentLoadSpecs()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ClassroomEquipmentBloc(
+              classroomEquipmentRepository: ClassroomEquipmentRepository())
+            ..add(const ClassroomEquipmentLoadSpecs()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CategoryBloc(categoryRepository: CategoryRepository())
+                ..add(const CategoryLoadList()),
+        ),
+      ],
       child: Scaffold(
         floatingActionButton:
             BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
@@ -27,8 +36,15 @@ class SpecsPage extends StatelessWidget {
               child: const Icon(Icons.add_rounded),
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute<void>(
-                  builder: (_) => BlocProvider<ClassroomEquipmentBloc>.value(
-                    value: context.read<ClassroomEquipmentBloc>(),
+                  builder: (_) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider<ClassroomEquipmentBloc>.value(
+                        value: context.read<ClassroomEquipmentBloc>(),
+                      ),
+                      BlocProvider.value(
+                        value: context.read<CategoryBloc>(),
+                      ),
+                    ],
                     child: AddSpecsPage(),
                   ),
                 ),

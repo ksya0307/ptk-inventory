@@ -11,10 +11,12 @@ class CategoryForm extends StatelessWidget {
     required this.topPaddingSearchCategory,
     required this.topPaddingCategoryList,
     this.search,
+    this.categoryNotFoundWidget,
   }) : super(key: key);
   final double topPaddingSearchCategory;
   final double topPaddingCategoryList;
   final Widget? search;
+  final Widget? categoryNotFoundWidget;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -67,7 +69,7 @@ class CategoryForm extends StatelessWidget {
                         CategoryLoadingStatus.loadingSuccess &&
                     state.globalCategories.isNotEmpty) {
                   // print("${state.visibleList}");
-                  return const CategoriesList();
+                  return  CategoriesList(categoryNotFoundWidget: categoryNotFoundWidget,);
                 }
                 if (state.categoryLoadingStatus ==
                         CategoryLoadingStatus.loadingSuccess &&

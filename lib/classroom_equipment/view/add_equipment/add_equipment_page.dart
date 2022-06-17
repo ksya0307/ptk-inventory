@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ptk_inventory/classroom_equipment/view/add_equipment/add_category_text_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/category/bloc/category_bloc.dart';
+import 'package:ptk_inventory/category/view/category_form.dart';
 import 'package:ptk_inventory/classroom_equipment/view/add_equipment/add_equipment_form.dart';
+import 'package:ptk_inventory/common/component/filter_scrollable_sheet.dart';
+import 'package:ptk_inventory/common/component/search_field.dart';
 
 import 'package:ptk_inventory/config/colors.dart';
 
@@ -35,74 +39,94 @@ class AddEquipmentPage extends StatelessWidget {
             ),
             onPressed: () {
               showModalBottomSheet<void>(
-                isScrollControlled: true,
-                context: context,
-                backgroundColor: Colors.white,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(20.0),
-                  ),
-                ),
-                builder: (_) {
-                  return DraggableScrollableSheet(
-                    expand: false,
-                    builder: (context, controller) => ListView.builder(
-                      controller: controller,
-                      itemCount: 1,
-                      itemBuilder: (_, index) => Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                        child: Flex(
-                          direction: Axis.vertical,
+                  isScrollControlled: true,
+                  context: context,
+                  backgroundColor: Colors.transparent,
+                  builder: (_) {
+                    return BlocProvider.value(
+                      value: context.read<CategoryBloc>()
+                        ..add(const CategoryLoadList()),
+                      child: EquipmentFilterSheet(
+                        onTap: () => Navigator.of(context).pop(),
+                        initialChildSize: 0.7,
+                        maxChildSize: 0.9,
+                        title: 'Все категории',
+                        minChildSize: 0.3,
+                        widget: Column(
                           children: [
-                            SizedBox(
-                              width: double.infinity,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Flex(
-                                  direction: Axis.horizontal,
+                            BlocBuilder<CategoryBloc, CategoryState>(
+                              buildWhen: (previous, current) =>
+                                  previous.visibleList != current.visibleList,
+                              builder: (context, state) {
+                                return SearchField(
+                                  hintText: 'Смартфон',
+                                  keyboardType: TextInputType.text,
+                                  inputFormatters: const [],
+                                  onChange: (category) => {
+                                    context.read<CategoryBloc>().add(
+                                        CategorySearch(matchingWord: category))
+                                  },
+                                );
+                              },
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            CategoryForm(
+                              categoryNotFoundWidget: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                child: Wrap(
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  alignment: WrapAlignment.center,
+                                  // direction: Axis.vertical,
                                   children: [
-                                    GestureDetector(
-                                      onTap: () => Navigator.of(context).pop(),
-                                      child: const Icon(
-                                        Icons.arrow_back_rounded,
-                                        color: primaryBlue,
+                                    const Text(
+                                      "Используйте",
+                                      style: TextStyle(
+                                        color: blackLabels,
+                                        fontFamily: 'Rubik',
+                                        fontSize: 16,
                                       ),
                                     ),
-                                    Expanded(
-                                      child: Flex(
-                                        direction: Axis.horizontal,
-                                        children: const [
-                                          Spacer(),
-                                          Text(
-                                            "Категория",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: primaryBlue,
-                                              fontFamily: 'Rubik',
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 18,
-                                            ),
-                                          ),
-                                          Spacer(),
-                                        ],
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                      ),
+                                      child: Container(
+                                        width: 35,
+                                        height: 35,
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: primaryBlue,
+                                        ),
+                                        child: const Icon(
+                                          Icons.add_rounded,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ),
+                                    const Text(
+                                      "для добавления новой категории",
+                                      style: TextStyle(
+                                        color: blackLabels,
+                                        fontFamily: 'Rubik',
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ),
-                            const CategorySearch(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: const [AddCategory()],
+                              topPaddingCategoryList: 0,
+                              topPaddingSearchCategory: 0,
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  );
-                },
-              );
+                    );
+                  });
             },
           )
         ],
@@ -224,57 +248,6 @@ class _SearchEquipmentSpecsState extends State<SearchEquipmentSpecs> {
               color: primaryBlue,
             ),
             hintText: 'Microtik',
-            contentPadding: EdgeInsets.fromLTRB(12, 12 + 3, 12, 12 + 3),
-            hintStyle: TextStyle(
-              fontFamily: 'Rubik',
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: greyDark,
-            ),
-            border: InputBorder.none,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CategorySearch extends StatefulWidget {
-  const CategorySearch({Key? key}) : super(key: key);
-
-  @override
-  State<CategorySearch> createState() => _CategorySearchState();
-}
-
-class _CategorySearchState extends State<CategorySearch> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 24,
-      ),
-      child: Container(
-        decoration: const BoxDecoration(
-          color: greyCard,
-          borderRadius: BorderRadius.all(
-            Radius.circular(7.0),
-          ),
-        ),
-        width: MediaQuery.of(context).size.width,
-        child: TextFormField(
-          cursorColor: Theme.of(context).primaryColor,
-          minLines: 1,
-          style: const TextStyle(
-            fontFamily: 'Rubik',
-            fontSize: 18,
-            color: blackInput,
-          ),
-          decoration: const InputDecoration(
-            prefixIcon: Icon(
-              Icons.search_rounded,
-              color: primaryBlue,
-            ),
-            hintText: 'Смартфон',
             contentPadding: EdgeInsets.fromLTRB(12, 12 + 3, 12, 12 + 3),
             hintStyle: TextStyle(
               fontFamily: 'Rubik',

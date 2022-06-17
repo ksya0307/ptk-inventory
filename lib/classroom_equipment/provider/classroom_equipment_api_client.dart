@@ -31,7 +31,6 @@ class CreateEquipmentSpecsRequestFailure implements Exception {}
 
 class CreateEquipmentSpecsRequestUnauthorized implements Exception {}
 
-
 class UpdateEquipmentSpecsRequestFailure implements Exception {}
 
 class UpdateEquipmentSpecsRequestUnauthorized implements Exception {}
@@ -121,8 +120,8 @@ class ClassroomEquipmentProvider {
       ApiRoutes.baseUrl,
       "${ApiRoutes.apiRoute}${ApiRoutes.equipment}",
     );
-    final response =
-        await _httpClient.post(request, headers: header, body: body);
+    final response = await _httpClient.post(request,
+        headers: header, body: jsonEncode(body));
     if (response.statusCode != 200 && response.statusCode != 401) {
       throw CreateEquipmentSpecsRequestFailure();
     } else if (response.statusCode == 401) {
@@ -131,20 +130,21 @@ class ClassroomEquipmentProvider {
     return GeneralModelResponse(response.body, response.statusCode);
   }
 
-  Future<GeneralModelResponse> updateSpecs(  Map<String, dynamic> body,
-    Map<String, String> header,) async{
-        final request = Uri.https(
+  Future<GeneralModelResponse> updateSpecs(
+    Map<String, dynamic> body,
+    Map<String, String> header,
+  ) async {
+    final request = Uri.https(
       ApiRoutes.baseUrl,
-      "${ApiRoutes.apiRoute}${ApiRoutes.equipment}",
+      "${ApiRoutes.apiRoute}${ApiRoutes.equipment}${ApiRoutes.updSpecs}",
     );
     final response =
-        await _httpClient.put(request, headers: header, body: body);
-          if (response.statusCode != 200 && response.statusCode != 401) {
+        await _httpClient.put(request, headers: header, body: jsonEncode(body));
+    if (response.statusCode != 200 && response.statusCode != 401) {
       throw UpdateEquipmentSpecsRequestFailure();
     } else if (response.statusCode == 401) {
       throw UpdateEquipmentSpecsRequestUnauthorized();
     }
     return GeneralModelResponse(response.body, response.statusCode);
-    }
-    
+  }
 }

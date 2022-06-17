@@ -9,6 +9,7 @@ import 'package:ptk_inventory/common/component/property_label.dart';
 import 'package:ptk_inventory/common/component/search_field.dart';
 import 'package:ptk_inventory/common/component/show_all_label.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
+import 'package:ptk_inventory/config/colors.dart';
 
 class ShowAllFilter extends StatelessWidget {
   const ShowAllFilter({
@@ -90,9 +91,57 @@ class ShowAllFilter extends StatelessWidget {
                                     const SizedBox(
                                       height: 8,
                                     ),
-                                    const CategoryForm(
+                                    CategoryForm(
                                       topPaddingCategoryList: 0,
                                       topPaddingSearchCategory: 0,
+                                      categoryNotFoundWidget: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                        ),
+                                        child: Wrap(
+                                          crossAxisAlignment:
+                                              WrapCrossAlignment.center,
+                                          alignment: WrapAlignment.center,
+                                          // direction: Axis.vertical,
+                                          children: [
+                                            const Text(
+                                              "Используйте",
+                                              style: TextStyle(
+                                                color: blackLabels,
+                                                fontFamily: 'Rubik',
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 8,
+                                              ),
+                                              child: Container(
+                                                width: 35,
+                                                height: 35,
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: primaryBlue,
+                                                ),
+                                                child: const Icon(
+                                                  Icons.add_rounded,
+                                                  color: Colors.white,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                            ),
+                                            const Text(
+                                              "для добавления новой категории",
+                                              style: TextStyle(
+                                                color: blackLabels,
+                                                fontFamily: 'Rubik',
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -130,9 +179,57 @@ class ShowAllFilter extends StatelessWidget {
                                     const SizedBox(
                                       height: 8,
                                     ),
-                                    const CategoryForm(
+                                    CategoryForm(
                                       topPaddingCategoryList: 0,
                                       topPaddingSearchCategory: 0,
+                                      categoryNotFoundWidget: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                        ),
+                                        child: Wrap(
+                                          crossAxisAlignment:
+                                              WrapCrossAlignment.center,
+                                          alignment: WrapAlignment.center,
+                                          // direction: Axis.vertical,
+                                          children: [
+                                            const Text(
+                                              "Используйте",
+                                              style: TextStyle(
+                                                color: blackLabels,
+                                                fontFamily: 'Rubik',
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 8,
+                                              ),
+                                              child: Container(
+                                                width: 35,
+                                                height: 35,
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: primaryBlue,
+                                                ),
+                                                child: const Icon(
+                                                  Icons.add_rounded,
+                                                  color: Colors.white,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                            ),
+                                            const Text(
+                                              "для добавления новой категории",
+                                              style: TextStyle(
+                                                color: blackLabels,
+                                                fontFamily: 'Rubik',
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),

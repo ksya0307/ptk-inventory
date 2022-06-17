@@ -20,7 +20,10 @@ class ApiRoutes {
 
   static const comments = 'comments';
   static const documents = 'documents';
+
   static const equipment = 'equipment';
+static const updSpecs = '/update';
+
   static const ifo = 'ifo';
   static const inventory = 'inventory';
 

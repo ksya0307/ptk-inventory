@@ -76,7 +76,7 @@ class UserProfileView extends StatelessWidget {
             const UsernameField(),
             propertyLabel('Изменить пароль', 16, 16),
             const ChangePasswordField(),
-            BlocListener<NewPasswordBloc, NewPasswordState>(
+            BlocListener<UsersBloc, UsersState>(
               listener: (context, state) {
                 if (state.formStatus == FormzStatus.submissionSuccess) {
                   snackbarMessage(
@@ -91,7 +91,7 @@ class UserProfileView extends StatelessWidget {
                   );
                 }
               },
-              child: BlocBuilder<NewPasswordBloc, NewPasswordState>(
+              child: BlocBuilder<UsersBloc, UsersState>(
                 buildWhen: (previous, current) =>
                     previous.formStatus != current.formStatus,
                 builder: (context, state) {
@@ -154,18 +154,16 @@ class _ChangePasswordFieldState extends State<ChangePasswordField> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NewPasswordBloc, NewPasswordState>(
-      buildWhen: (previous, current) =>
-          previous.newPassword != current.newPassword,
+    return BlocBuilder<UsersBloc, UsersState>(
+      buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.only(left: 16, top: 8),
           child: TextFormField(
             controller: passwordController,
             key: const Key('profile_passwordInput_textField'),
-            onChanged: (password) => context
-                .read<NewPasswordBloc>()
-                .add(NewPasswordChanged(password)),
+            onChanged: (password) =>
+                context.read<UsersBloc>().add(UsersPasswordChanged(password)),
             cursorColor: Theme.of(context).primaryColor,
             minLines: 1,
             obscureText: _obscureText,
@@ -176,7 +174,7 @@ class _ChangePasswordFieldState extends State<ChangePasswordField> {
             ),
             decoration: InputDecoration(
               hintText: "Новый пароль",
-              errorText: state.newPassword.invalid
+              errorText: state.password.invalid
                   ? 'Длина пароля должна быть не менее 8 символов'
                   : null,
               suffixIcon: IconButton(

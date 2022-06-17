@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
-import 'package:ptk_inventory/classroom_equipment/view/specs/add_specs/add_specs_form.dart';
+import 'package:ptk_inventory/classroom_equipment/view/specs/update_specs/update_specs_form.dart';
 
-class AddSpecsPage extends StatelessWidget {
+class UpdateSpecsPage extends StatelessWidget {
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => AddSpecsPage());
+    return MaterialPageRoute<void>(builder: (_) => UpdateSpecsPage());
   }
 
   @override
@@ -22,7 +22,7 @@ class AddSpecsPage extends StatelessWidget {
               ),
               onPressed: () {
                 context.read<ClassroomEquipmentBloc>().add(
-                      const ClassroomEquipmentSpecsCategorySelected(
+                      const ClassroomEquipmentSpecsSelected(
                         null,
                       ),
                     );
@@ -32,7 +32,7 @@ class AddSpecsPage extends StatelessWidget {
             elevation: 0,
             centerTitle: true,
             title: const Text(
-              "Добавление оборудования",
+              "Изменение оборудования",
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'Rubik',
@@ -54,7 +54,7 @@ class AddSpecsPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
-                          AddSpecsForm(),
+                          UpdateSpecsForm(),
                         ],
                       ),
                     ),

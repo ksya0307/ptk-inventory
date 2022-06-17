@@ -78,3 +78,13 @@ class ClassroomEquipmentSpecsSaveToList extends ClassroomEquipmentEvent {
   @override
   List<Object> get props => [equipment];
 }
+
+class ClassroomEquipmentSpecsCategorySelected extends ClassroomEquipmentEvent {
+  final Category? selectedCategory;
+  const ClassroomEquipmentSpecsCategorySelected(this.selectedCategory);
+}
+
+class ClassroomEquipmentSpecsSelected extends ClassroomEquipmentEvent {
+  final Equipment? selectedSpecs;
+  const ClassroomEquipmentSpecsSelected(this.selectedSpecs);
+}

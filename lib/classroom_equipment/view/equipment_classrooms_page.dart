@@ -50,8 +50,21 @@ class _EquipmentClassroomsPageState extends State<ClassroomsEquipmentPage> {
                 ? FloatingActionButton(
                     tooltip: "Добавить оборудование",
                     child: const Icon(Icons.add_rounded),
-                    onPressed: () =>
-                        Navigator.of(context).push(AddEquipmentPage.route()),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => MultiBlocProvider(
+                          providers: [
+                            BlocProvider<ClassroomEquipmentBloc>.value(
+                              value: context.read<ClassroomEquipmentBloc>(),
+                            ),
+                            BlocProvider.value(
+                              value: context.read<CategoryBloc>(),
+                            ),
+                          ],
+                          child: AddEquipmentPage(),
+                        ),
+                      ),
+                    ),
                   )
                 : null,
             appBar: AppBar(

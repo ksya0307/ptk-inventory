@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 
+import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/model/category.dart';
 import 'package:ptk_inventory/category/view/category_row.dart';
@@ -11,7 +11,11 @@ import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/config/colors.dart';
 
 class CategoriesList extends StatelessWidget {
-  const CategoriesList({Key? key}) : super(key: key);
+  final Widget? categoryNotFoundWidget;
+  const CategoriesList({
+    Key? key,
+    this.categoryNotFoundWidget,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -121,60 +125,7 @@ class CategoriesList extends StatelessWidget {
                                                       UserRole.admin ||
                                                   state.user.role ==
                                                       UserRole.moderator
-                                              ? Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                    horizontal: 16,
-                                                  ),
-                                                  child: Wrap(
-                                                    crossAxisAlignment:
-                                                        WrapCrossAlignment
-                                                            .center,
-                                                    alignment:
-                                                        WrapAlignment.center,
-                                                    // direction: Axis.vertical,
-                                                    children: [
-                                                      const Text(
-                                                        "Используйте",
-                                                        style: TextStyle(
-                                                          color: blackLabels,
-                                                          fontFamily: 'Rubik',
-                                                          fontSize: 16,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                          horizontal: 8,
-                                                        ),
-                                                        child: Container(
-                                                          width: 35,
-                                                          height: 35,
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                            shape:
-                                                                BoxShape.circle,
-                                                            color: primaryBlue,
-                                                          ),
-                                                          child: const Icon(
-                                                            Icons.add_rounded,
-                                                            color: Colors.white,
-                                                            size: 20,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const Text(
-                                                        "для добавления новой категории",
-                                                        style: TextStyle(
-                                                          color: blackLabels,
-                                                          fontFamily: 'Rubik',
-                                                          fontSize: 16,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
+                                              ? categoryNotFoundWidget!
                                               : const SizedBox(height: 0);
                                         },
                                       ),

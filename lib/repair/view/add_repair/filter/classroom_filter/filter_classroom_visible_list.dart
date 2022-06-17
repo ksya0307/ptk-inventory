@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
@@ -18,6 +19,8 @@ class _VisibleFilterClassroomListState
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ClassroomBloc, ClassroomState>(
+      buildWhen: (previous, current) =>
+          previous.visibleList != current.visibleList,
       builder: (context, state) {
         final classrooms = state.visibleList;
         return Align(
@@ -72,23 +75,24 @@ class _VisibleFilterClassroomListState
                       setState(() {
                         selected = !selected;
                       });
+
                       context
                           .read<ClassroomBloc>()
                           .add(ClassroomSelected(classrooms[index]));
-                      if (state.user.role == UserRole.teacher) {
-                        if (index == 0) {
+
+                      if (context.read<AuthenticationBloc>().state.user.role ==
+                          UserRole.teacher) {
+                        if (classrooms[index].number == "Все") {
                           context.read<ClassroomEquipmentBloc>().add(
                                 const ClassroomEquipmentLoadUserEquipmentsList(),
                               );
-                        } else if (index != 0) {}
+                        }
                       }
                       context.read<ClassroomEquipmentBloc>().add(
                             ClassroomEquipmentSelectedClassroom(
                               classrooms[index],
                             ),
                           );
-
-                      print(index);
                     },
                   ),
                 );

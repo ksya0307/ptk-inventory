@@ -7,6 +7,7 @@ import 'package:ptk_inventory/common/component/common_button.dart';
 import 'package:ptk_inventory/common/component/property_input.dart';
 import 'package:ptk_inventory/common/component/property_label.dart';
 import 'package:ptk_inventory/config/colors.dart';
+import 'package:ptk_inventory/user_profile/view/my_profile.dart';
 import 'package:ptk_inventory/users/bloc/users_bloc.dart';
 import 'package:ptk_inventory/users/view/update_user/input/password_input.dart';
 
@@ -169,6 +170,7 @@ class AdminProfileForm extends StatelessWidget {
                       );
               },
             ),
+            const LogOutButton()
           ],
         )
       ],

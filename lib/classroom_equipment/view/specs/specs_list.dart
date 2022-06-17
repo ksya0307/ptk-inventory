@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
+import 'package:ptk_inventory/classroom_equipment/model/equipment/model/equipment.dart';
 import 'package:ptk_inventory/classroom_equipment/view/specs/specs_row.dart';
 import 'package:ptk_inventory/classroom_equipment/view/specs/specs_visible_list.dart';
+import 'package:ptk_inventory/classroom_equipment/view/specs/update_specs/update_specs_page.dart';
 
 import 'package:ptk_inventory/config/colors.dart';
-import 'package:ptk_inventory/ifo/bloc/ifo_bloc.dart';
-import 'package:ptk_inventory/ifo/model/ifo.dart';
-import 'package:ptk_inventory/ifo/view/ifo_row.dart';
-import 'package:ptk_inventory/ifo/view/ifo_visible_list.dart';
-import 'package:ptk_inventory/ifo/view/update_ifo/update_ifo_page.dart';
 
 class SpecsList extends StatelessWidget {
   const SpecsList({Key? key}) : super(key: key);
@@ -180,31 +178,40 @@ class SpecsList extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: specs.length,
                     itemBuilder: (context, index) {
-                      print(specs[index].description.length);
                       return InkWell(
                         onTap: () {
-                          // context.read<IfoBloc>().add(
-                          //       IfoSelected(
-                          //         Ifo(
-                          //           id: ifos[index].id,
-                          //           name: ifos[index].name,
-                          //         ),
-                          //       ),
-                          //     );
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute<void>(
-                          //     builder: (_) => BlocProvider.value(
-                          //       value: context.read<IfoBloc>(),
-                          //       child: UpdateIfoPage(),
-                          //     ),
-                          //   ),
-                          // );
+                          context.read<ClassroomEquipmentBloc>().add(
+                                ClassroomEquipmentSpecsSelected(
+                                  Equipment(
+                                    id: specs[index].id,
+                                    description: specs[index].description,
+                                    category: specs[index].category,
+                                  ),
+                                ),
+                              );
+                          Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) => MultiBlocProvider(
+                                providers: [
+                                  BlocProvider.value(
+                                    value:
+                                        context.read<ClassroomEquipmentBloc>(),
+                                  ),
+                                  BlocProvider.value(
+                                    value: context.read<CategoryBloc>(),
+                                  ),
+                                ],
+                                child: UpdateSpecsPage(),
+                              ),
+                            ),
+                          );
                         },
                         child: SpecsRow(
                           id: (index + 1).toString(),
-                          specs: specs[index].description.length <= 50
-                              ? "${specs[index].description.substring(0, 25)}..."
-                              : "${specs[index].description.substring(0, 50)}...",
+                          specs: specs[index].description.length >= 25 &&
+                                  specs[index].description.length >= 50
+                              ? "${specs[index].description.substring(0, 40)}..."
+                              : specs[index].description,
                           last: index == specs.length - 1,
                         ),
                       );

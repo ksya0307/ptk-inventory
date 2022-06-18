@@ -61,9 +61,8 @@ Widget userProfileView(BuildContext context) {
                 inventoryManagementCard(context),
                 equipmentCard(context),
                 specs(context),
+                commentsCard(context),
                 repairCard(context),
-                documentsCard(context),
-                ifosCard(context)
               ],
             ),
             Column(
@@ -78,11 +77,43 @@ Widget userProfileView(BuildContext context) {
                 profileCard(context),
                 classroomsCard(context),
                 categoryCard(context),
+                documentsCard(context),
+                ifosCard(context),
               ],
             ),
           ],
         ),
       ],
+    ),
+  );
+}
+
+Widget commentsCard(BuildContext context) {
+  return GestureDetector(
+    onTap: () {},
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.47,
+      height: MediaQuery.of(context).size.height * 0.12,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7.0),
+        ),
+        elevation: 7.0,
+        shadowColor: greyShadow,
+        color: orangeCustom,
+        child: const Padding(
+          padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+          child: Text(
+            "Комментарии",
+            style: TextStyle(
+              fontFamily: 'Rubik',
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
     ),
   );
 }
@@ -147,7 +178,7 @@ Widget documentsCard(BuildContext context) {
         ),
         elevation: 7.0,
         shadowColor: greyShadow,
-        color: greenCustom,
+        color: purpleCustom,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
@@ -195,7 +226,7 @@ Widget classroomsCard(BuildContext context) {
         ),
         elevation: 7.0,
         shadowColor: greyShadow,
-        color: greenCustom,
+        color: purpleCustom,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
@@ -261,7 +292,7 @@ Widget repairCard(BuildContext context) {
           Padding(
             padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
             child: Text(
-              "Составление акта приема-передачи оборудования в ремонт",
+              "Акты приема-передачи оборудования в ремонт",
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontFamily: 'Rubik',
@@ -348,7 +379,7 @@ Widget inventoryManagementCard(BuildContext context) {
         ),
         elevation: 7.0,
         shadowColor: greyShadow,
-        color: purpleCustom,
+        color: greenCustom,
         child: const Padding(
           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
           child: Text(
@@ -414,7 +445,7 @@ Widget equipmentCard(BuildContext context) {
         ),
         elevation: 7.0,
         shadowColor: greyShadow,
-        color: redCustom,
+        color: greenCustom,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [

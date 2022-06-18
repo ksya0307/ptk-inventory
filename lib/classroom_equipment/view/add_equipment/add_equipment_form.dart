@@ -77,8 +77,8 @@ class AddEquipmentForm extends StatelessWidget {
           ),
           propertyLabel(
             'Оборудование',
-            ' — Необязательно',
-            greyDark,
+            ' *',
+            redCustom,
             FontWeight.w400,
             16,
           ),

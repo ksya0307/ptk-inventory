@@ -6,6 +6,7 @@ import 'package:ptk_inventory/category/view/category_row.dart';
 import 'package:ptk_inventory/category/view/update_category/update_category_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/ifo/bloc/ifo_bloc.dart';
+import 'package:ptk_inventory/ifo/view/ifo_row.dart';
 
 class VisibleIfoList extends StatelessWidget {
   const VisibleIfoList({Key? key}) : super(key: key);
@@ -52,9 +53,9 @@ class VisibleIfoList extends StatelessWidget {
                             ),
                           );
                         },
-                        child: CategoryRow(
+                        child: IfoRow(
                           id: (index + 1).toString(),
-                          category: ifos[index].name,
+                          ifo: ifos[index].name,
                           last: index == ifos.length - 1,
                         ),
                       );

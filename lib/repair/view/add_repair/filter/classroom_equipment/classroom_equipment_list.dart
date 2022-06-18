@@ -109,7 +109,7 @@ class _ClassroomEquipmentListState extends State<ClassroomEquipmentList> {
             ),
             child: BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
               builder: (context, state) {
-                print(equipment[0].isChecked);
+              
                 if (state.visibleList.isNotEmpty) {
                   return VisibleClassroomEquipmentList(
                     checkbox: widget.checkbox,

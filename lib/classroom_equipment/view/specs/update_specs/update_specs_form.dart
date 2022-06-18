@@ -58,6 +58,7 @@ class _UpdateSpecsFormState extends State<UpdateSpecsForm> {
           ),
           BlocBuilder<CategoryBloc, CategoryState>(
             builder: (context, state) {
+  
               if (state.categoryLoadingStatus ==
                   CategoryLoadingStatus.loadingInProgress) {
                 return Column(
@@ -135,10 +136,10 @@ class _UpdateSpecsFormState extends State<UpdateSpecsForm> {
                             state.classroomEquipmentLoadingStatus ==
                                 ClassroomEquipmentLoadingStatus
                                     .loadingSuccess) {
-                          print(state.equipmentActionStatus);
+                        
                           context.read<ClassroomEquipmentBloc>().add(
                               ClassroomEquipmentSpecsSaveToList(
-                                  equipment: state.selectedSpecs!));
+                                  equipment: state.selectedSpecs!,),);
                           Navigator.of(context).pop();
                         }
                         if (state.equipmentActionStatus ==
@@ -146,7 +147,9 @@ class _UpdateSpecsFormState extends State<UpdateSpecsForm> {
                             state.classroomEquipmentLoadingStatus ==
                                 ClassroomEquipmentLoadingStatus.loadingFailed) {
                           snackbarMessageCommonError(
-                              context, "Такое оборудование уже существует",);
+                            context,
+                            "Такое оборудование уже существует",
+                          );
                         }
                       },
                       child: BlocBuilder<ClassroomEquipmentBloc,

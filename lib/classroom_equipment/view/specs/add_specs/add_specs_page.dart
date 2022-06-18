@@ -32,7 +32,7 @@ class AddSpecsPage extends StatelessWidget {
             elevation: 0,
             centerTitle: true,
             title: const Text(
-              "Добавление оборудования",
+              "Добавление характеристик",
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'Rubik',

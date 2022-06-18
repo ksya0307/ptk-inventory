@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ptk_inventory/category/view/category_page.dart';
 import 'package:ptk_inventory/classroom_equipment/view/equipment_classrooms_page.dart';
+import 'package:ptk_inventory/classroom_equipment/view/specs/specs_page.dart';
 import 'package:ptk_inventory/classrooms/view/classroom_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/documents/view/document_page.dart';
@@ -59,6 +60,7 @@ Widget userProfileView(BuildContext context) {
                 ),
                 inventoryManagementCard(context),
                 equipmentCard(context),
+                specs(context),
                 repairCard(context),
                 documentsCard(context),
                 ifosCard(context)
@@ -358,6 +360,42 @@ Widget inventoryManagementCard(BuildContext context) {
               color: Colors.white,
             ),
           ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget specs(BuildContext context) {
+  return GestureDetector(
+    onTap: () => Navigator.of(context).push(SpecsPage.route()),
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.47,
+      height: MediaQuery.of(context).size.height * 0.12,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7.0),
+        ),
+        elevation: 2.0,
+        shadowColor: greyShadow,
+        color: greenCustom,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+              child: Text(
+                "Характеристики оборудования",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     ),

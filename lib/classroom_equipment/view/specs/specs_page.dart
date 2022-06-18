@@ -18,8 +18,8 @@ class SpecsPage extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => ClassroomEquipmentBloc(
-              classroomEquipmentRepository: ClassroomEquipmentRepository())
-            ..add(const ClassroomEquipmentLoadSpecs()),
+            classroomEquipmentRepository: ClassroomEquipmentRepository(),
+          )..add(const ClassroomEquipmentLoadSpecs()),
         ),
         BlocProvider(
           create: (context) =>
@@ -42,7 +42,8 @@ class SpecsPage extends StatelessWidget {
                         value: context.read<ClassroomEquipmentBloc>(),
                       ),
                       BlocProvider.value(
-                        value: context.read<CategoryBloc>(),
+                        value: context.read<CategoryBloc>()
+                          ..add(const CategoryLoadList()),
                       ),
                     ],
                     child: AddSpecsPage(),
@@ -84,10 +85,16 @@ class SpecsPage extends StatelessWidget {
                     minHeight: view.maxHeight,
                   ),
                   child: Container(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                     child: Column(
                       children: const [
-                        SpecsForm(),
+                        SpecsForm(
+                          notFound: false,
+                          firstFlexRow: 2,
+                          secondFlexRow: 5,
+                          firstFlex: 2,
+                          secondFlex: 5,
+                        ),
                       ],
                     ),
                   ),

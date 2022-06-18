@@ -23,6 +23,7 @@ class ApiRoutes {
 
   static const equipment = 'equipment';
 static const updSpecs = '/update';
+static const sorted = '/sorted';
 
   static const ifo = 'ifo';
   static const inventory = 'inventory';

@@ -4,6 +4,9 @@ import 'package:formz/formz.dart';
 import 'package:ptk_inventory/category/model/category.dart';
 import 'package:ptk_inventory/classroom_equipment/model/classroom_equipment.dart';
 import 'package:ptk_inventory/classroom_equipment/model/equipment/model/equipment.dart';
+import 'package:ptk_inventory/classroom_equipment/model/equipment_types.dart';
+import 'package:ptk_inventory/classroom_equipment/model/inventory_number.dart';
+import 'package:ptk_inventory/classroom_equipment/model/requests/create_equipment_request.dart';
 import 'package:ptk_inventory/classroom_equipment/model/requests/create_specs_request.dart';
 import 'package:ptk_inventory/classroom_equipment/model/requests/update_specs_request.dart';
 import 'package:ptk_inventory/classroom_equipment/model/specs.dart';
@@ -24,9 +27,12 @@ class ClassroomEquipmentBloc
     on<ClassroomEquipmentUserSelected>(_onSelected);
     on<ClassroomEquipmentFilteredEquipment>(_onFiltered);
     on<ClassroomEquipmentSelectedClassroom>(_selectedClassroom);
+    on<ClassroomEquipmentCreated>(_onCreated);
 
     //Specs
     on<ClassroomEquipmentLoadSpecs>(_onLoadSpecs);
+    on<ClassroomEquipmentFilteredSpecs>(_onFilteredSpecs);
+    //on<ClassroomEquipmentSpecsByCategory>(_onLoadSpecsByCategory);
 
     on<ClassroomEquipmentSpecsSaved>(_onSavedSpecs);
     on<ClassroomEquipmentSpecsDeleted>(_onDeletedSpecs);
@@ -34,6 +40,10 @@ class ClassroomEquipmentBloc
 
     on<ClassroomEquipmentSpecsDeleteFromList>(_onDeleteFromList);
     on<ClassroomEquipmentSpecsSaveToList>(_onSaveToList);
+
+    on<ClassroomEquipmentInventoryNumberChanged>(_onInventoryNumberChanged);
+    on<ClassroomEquipmentInternalNumberChanged>(_onInternalNumberChanged);
+    on<ClassroomEquipmentTypeChanged>(_onTypeChanged);
 
     on<ClassroomEquipmentSpecsChanged>(_onSpecsChanged);
     on<ClassroomEquipmentSpecsSearch>(_onSearchSpecs);
@@ -43,11 +53,36 @@ class ClassroomEquipmentBloc
 
   final ClassroomEquipmentRepository _classroomEquipmentRepository;
 
-  void _onSelectedCategory(
+  Future<void> _onSelectedCategory(
     ClassroomEquipmentSpecsCategorySelected event,
     Emitter<ClassroomEquipmentState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        classroomEquipmentLoadingStatus:
+            ClassroomEquipmentLoadingStatus.loadingInProgress,
+      ),
+    );
+    final waiting = await _classroomEquipmentRepository.specsByCategory(
+      categoryId: event.selectedCategory!.id,
+    );
+    if (waiting.isNotEmpty) {
+      waiting.sort((a, b) => a.id.compareTo(b.id));
+    }
+    emit(
+      state.copyWith(
+        globalSpecs: waiting,
+        classroomEquipmentLoadingStatus:
+            ClassroomEquipmentLoadingStatus.loadingSuccess,
+      ),
+    );
+  }
+
+  void _onFilteredSpecs(
+    ClassroomEquipmentFilteredSpecs event,
+    Emitter<ClassroomEquipmentState> emit,
   ) {
-    emit(state.copyWith(selectedCategory: event.selectedCategory));
+    List<Equipment> newList = state.specsVisibleList;
   }
 
   void _onSelectedSpecs(
@@ -60,7 +95,25 @@ class ClassroomEquipmentBloc
   void _onSearchSpecs(
     ClassroomEquipmentSpecsSearch event,
     Emitter<ClassroomEquipmentState> emit,
-  ) {}
+  ) {
+    List<Equipment> finalList = [];
+    if (event.matchingWord.isNotEmpty) {
+      finalList = state.globalSpecs
+          .where(
+            (specs) => specs.description.toLowerCase().contains(
+                  event.matchingWord.toLowerCase(),
+                ),
+          )
+          .toList();
+    }
+
+    emit(
+      state.copyWith(
+        specsVisibleList: finalList,
+        searchText: event.matchingWord,
+      ),
+    );
+  }
 
   void _onDeleteFromList(
     ClassroomEquipmentSpecsDeleteFromList event,
@@ -97,11 +150,49 @@ class ClassroomEquipmentBloc
     Emitter<ClassroomEquipmentState> emit,
   ) {
     final specs = Specs.dirty(event.specs);
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         specs: specs,
         formStatus: Formz.validate([
           specs,
-        ])));
+        ]),
+      ),
+    );
+  }
+
+  void _onTypeChanged(
+    ClassroomEquipmentTypeChanged event,
+    Emitter<ClassroomEquipmentState> emit,
+  ) {
+    emit(state.copyWith(equipmentBelonging: event.type));
+  
+  }
+
+  void _onInventoryNumberChanged(
+    ClassroomEquipmentInventoryNumberChanged event,
+    Emitter<ClassroomEquipmentState> emit,
+  ) {
+    final inventoryNumber = InventoryNumber.dirty(event.inventoryNumber);
+    emit(
+      state.copyWith(
+        inventoryNumber: inventoryNumber,
+        formStatus: Formz.validate([inventoryNumber]),
+      ),
+    );
+
+  }
+
+  void _onInternalNumberChanged(
+    ClassroomEquipmentInternalNumberChanged event,
+    Emitter<ClassroomEquipmentState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        internalNumber: event.internalNumber,
+        formStatus: Formz.validate([state.inventoryNumber]),
+      ),
+    );
+
   }
 
   Future<void> _onLoadSpecs(
@@ -114,7 +205,7 @@ class ClassroomEquipmentBloc
             ClassroomEquipmentLoadingStatus.loadingInProgress,
       ),
     );
-    final waiting = await _classroomEquipmentRepository.allEquipment();
+    final waiting = await _classroomEquipmentRepository.allSpecs();
     if (waiting.isNotEmpty) {
       waiting.sort((a, b) => a.id.compareTo(b.id));
     }
@@ -127,6 +218,26 @@ class ClassroomEquipmentBloc
       ),
     );
   }
+
+  // Future<void> _onLoadSpecsByCategory(
+  //   ClassroomEquipmentSpecsByCategory event,
+  //   Emitter<ClassroomEquipmentState> emit,
+  // ) async {
+  //   emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
+  //   final waiting = await _classroomEquipmentRepository.specsByCategory(
+  //     categoryId: state.selectedCategory!.id,
+  //   );
+  //   if (waiting.isNotEmpty) {
+  //     waiting.sort((a, b) => a.id.compareTo(b.id));
+  //   }
+  //     emit(
+  //     state.copyWith(
+  //       globalSpecs: waiting,
+  //       classroomEquipmentLoadingStatus:
+  //           ClassroomEquipmentLoadingStatus.loadingSuccess,
+  //     ),
+  //   );
+  // }
 
   Future<void> _onSavedSpecs(
     ClassroomEquipmentSpecsSaved event,
@@ -210,11 +321,54 @@ class ClassroomEquipmentBloc
   ) async {
     emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
     if (state.formStatus.isValidated) {
-      print("bloc ${state.selectedCategory}");
       final waiting = await _classroomEquipmentRepository.createEquipmentSpecs(
         CreateSpecsModelRequest(
-            category: state.selectedCategory!.id,
-            description: state.specs.value),
+          category: state.selectedCategory!.id,
+          description: state.specs.value,
+        ),
+      );
+      if (waiting == EquipmentStatus.notCreated) {
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            equipmentActionStatus: EquipmentActionStatus.notAdded,
+          ),
+        );
+        emit(
+          state.copyWith(
+            equipmentActionStatus: EquipmentActionStatus.pure,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionSuccess,
+            equipmentActionStatus: EquipmentActionStatus.added,
+          ),
+        );
+        emit(
+          state.copyWith(
+            equipmentActionStatus: EquipmentActionStatus.pure,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _onCreated(
+    ClassroomEquipmentCreated event,
+    Emitter<ClassroomEquipmentState> emit,
+  ) async {
+    emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
+    if (state.formStatus.isValidated) {
+      final waiting = await _classroomEquipmentRepository.createEquipment(
+        CreateEquipmentModelRequest(
+          inventoryNumber: int.parse(state.inventoryNumber.value),
+          classroom: state.selectedClassroom?.number,
+          equipment: state.selectedSpecs!.id,
+          numberInClassroom: state.internalNumber,
+          type: state.equipmentBelonging,
+        ),
       );
       if (waiting == EquipmentStatus.notCreated) {
         emit(
@@ -277,13 +431,15 @@ class ClassroomEquipmentBloc
   ) async {
     emit(
       state.copyWith(
+        selectedClassroom: event.selectedClassroom,
         classroomEquipmentLoadingStatus:
             ClassroomEquipmentLoadingStatus.loadingInProgress,
       ),
     );
     final waiting =
         await _classroomEquipmentRepository.userChosenClassroomEquipment(
-            classroom: event.selectedClassroom!.number);
+      classroom: event.selectedClassroom!.number,
+    );
     if (waiting.isNotEmpty) {
       waiting.sort(
         (a, b) => a.equipment.category.name.compareTo(

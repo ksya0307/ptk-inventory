@@ -124,7 +124,9 @@ class _AddSpecsFormState extends State<AddSpecsForm> {
                             state.classroomEquipmentLoadingStatus ==
                                 ClassroomEquipmentLoadingStatus
                                     .loadingSuccess) {
-                        
+                          snackbarMessage(
+                              context, "Новое оборудование добавлено");
+
                           Navigator.of(context).pop();
                           context
                               .read<ClassroomEquipmentBloc>()

@@ -39,7 +39,7 @@ class _EquipmentClassroomsPageState extends State<ClassroomsEquipmentPage> {
         ),
         BlocProvider(
           create: (context) =>
-              CategoryBloc(categoryRepository: CategoryRepository()),
+              CategoryBloc(categoryRepository: CategoryRepository())..add(const CategoryLoadList()),
         ),
       ],
       child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
@@ -55,11 +55,21 @@ class _EquipmentClassroomsPageState extends State<ClassroomsEquipmentPage> {
                         builder: (_) => MultiBlocProvider(
                           providers: [
                             BlocProvider<ClassroomEquipmentBloc>.value(
-                              value: context.read<ClassroomEquipmentBloc>(),
+                              value: context.read<ClassroomEquipmentBloc>()
+                                ..add(
+                                  const ClassroomEquipmentSelectedClassroom(
+                                    null,
+                                  ),
+                                ),
                             ),
                             BlocProvider.value(
-                              value: context.read<CategoryBloc>(),
+                              value: context.read<CategoryBloc>()
+                                ..add(const CategorySelected(null)),
                             ),
+                            BlocProvider.value(
+                              value: context.read<ClassroomBloc>()
+                                ..add(const ClassroomSelected(null)),
+                            )
                           ],
                           child: AddEquipmentPage(),
                         ),

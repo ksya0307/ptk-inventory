@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:ptk_inventory/classroom_equipment/model/classroom_equipment_result.dart';
 import 'package:ptk_inventory/classroom_equipment/model/equipment/model/equipment_result.dart';
-import 'package:ptk_inventory/classroom_equipment/model/requests/create_specs_request.dart';
 import 'package:ptk_inventory/common/model/api_routes.dart';
 import 'package:ptk_inventory/common/model/responses/general_model_response.dart';
 
@@ -35,12 +34,36 @@ class UpdateEquipmentSpecsRequestFailure implements Exception {}
 
 class UpdateEquipmentSpecsRequestUnauthorized implements Exception {}
 
+class GetSpecsByCategoryRequestFailure implements Exception {}
+
+class GetSpecsByCategoryRequestUnauthorized implements Exception {}
+
 class ClassroomEquipmentProvider {
   final http.Client _httpClient;
 
   ClassroomEquipmentProvider({
     http.Client? httpClient,
   }) : _httpClient = httpClient ?? http.Client();
+
+  Future<EquipmentResult> specsByCategory(
+    Map<String, String> header,
+    int categoryId,
+  ) async {
+    final request = Uri.https(
+      ApiRoutes.baseUrl,
+      "${ApiRoutes.apiRoute}${ApiRoutes.equipment}${ApiRoutes.sorted}",
+      {"category-id": categoryId.toString()},
+    );
+    final response = await _httpClient.get(request, headers: header);
+    if (response.statusCode != 200 && response.statusCode != 401) {
+      throw GetSpecsByCategoryRequestFailure();
+    } else if (response.statusCode == 401) {
+      throw GetSpecsByCategoryRequestUnauthorized();
+    }
+    final Map<String, dynamic> jsonAnswer = {};
+    jsonAnswer['result'] = jsonDecode(response.body);
+    return EquipmentResult.fromJson(jsonAnswer);
+  }
 
   Future<ClassroomEquipmentResult> equipmentInUserClassroom(
     Map<String, String> header,
@@ -65,9 +88,10 @@ class ClassroomEquipmentProvider {
     String classroom,
   ) async {
     final request = Uri.https(
-        ApiRoutes.baseUrl,
-        "${ApiRoutes.apiRoute}${ApiRoutes.classroomEquipment}",
-        {'classroom': classroom});
+      ApiRoutes.baseUrl,
+      "${ApiRoutes.apiRoute}${ApiRoutes.classroomEquipment}",
+      {'classroom': classroom},
+    );
     final response = await _httpClient.get(request, headers: header);
     if (response.statusCode != 200 && response.statusCode != 401) {
       throw EquipmentInChoosenClassroomRequestFailure();
@@ -120,8 +144,11 @@ class ClassroomEquipmentProvider {
       ApiRoutes.baseUrl,
       "${ApiRoutes.apiRoute}${ApiRoutes.equipment}",
     );
-    final response = await _httpClient.post(request,
-        headers: header, body: jsonEncode(body));
+    final response = await _httpClient.post(
+      request,
+      headers: header,
+      body: jsonEncode(body),
+    );
     if (response.statusCode != 200 && response.statusCode != 401) {
       throw CreateEquipmentSpecsRequestFailure();
     } else if (response.statusCode == 401) {
@@ -147,4 +174,26 @@ class ClassroomEquipmentProvider {
     }
     return GeneralModelResponse(response.body, response.statusCode);
   }
+
+  Future<GeneralModelResponse> createEquipment(
+    Map<String, dynamic> body,
+    Map<String, String> header,
+  ) async {
+    final request = Uri.https(
+      ApiRoutes.baseUrl,
+      "${ApiRoutes.apiRoute}${ApiRoutes.classroomEquipment}",
+    );
+    final response = await _httpClient.post(request,
+        headers: header, body: jsonEncode(body));
+    if (response.statusCode != 200 && response.statusCode != 401) {
+      throw CreateEquipmentRequestFailure();
+    } else if (response.statusCode == 401) {
+      throw CreateEquipmentRequestUnauthorized();
+    }
+    return GeneralModelResponse(response.body, response.statusCode);
+  }
 }
+
+class CreateEquipmentRequestFailure implements Exception {}
+
+class CreateEquipmentRequestUnauthorized implements Exception {}

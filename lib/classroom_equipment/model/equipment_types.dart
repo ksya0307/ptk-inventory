@@ -20,4 +20,14 @@ extension EquipmentBelongingExtension on EquipmentBelonging {
         return 'Другое';
     }
   }
+  String get typeToMap {
+    switch (this) {
+      case EquipmentBelonging.lab:
+        return 'LAB';
+      case EquipmentBelonging.prod:
+        return 'PROD';
+      case EquipmentBelonging.other:
+        return 'OTHER';
+    }
+  }
 }

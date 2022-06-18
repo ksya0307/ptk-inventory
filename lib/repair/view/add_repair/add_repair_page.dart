@@ -70,20 +70,7 @@ class _AddRepairPageState extends State<AddRepairPage> {
                       },
                       widget: Column(
                         children: [
-                          // BlocProvider.value(
-                          //   value: context.read<ClassroomBloc>(),
-                          //   child: const ChooseClassroom(),
-                          // ),
-                          // const SizedBox(
-                          //   height: 8,
-                          // ),
-                          // BlocProvider.value(
-                          //   value: context.read<CategoryBloc>(),
-                          //   child: const ChooseCategory(),
-                          // ),
-                          // const SizedBox(
-                          //   height: 8,
-                          // ),
+              
                           BlocBuilder<ClassroomEquipmentBloc,
                               ClassroomEquipmentState>(
                             buildWhen: (previous, current) =>

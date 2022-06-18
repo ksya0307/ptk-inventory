@@ -12,11 +12,21 @@ class CategoryForm extends StatelessWidget {
     required this.topPaddingCategoryList,
     this.search,
     this.categoryNotFoundWidget,
+    this.widget,
+    required this.firstFlex,
+    required this.secondFlex,
+    required this.firstFlexRow,
+    required this.secondFlexRow,
   }) : super(key: key);
   final double topPaddingSearchCategory;
   final double topPaddingCategoryList;
   final Widget? search;
   final Widget? categoryNotFoundWidget;
+  final Widget? widget;
+  final int firstFlex;
+  final int secondFlex;
+  final int firstFlexRow;
+  final int secondFlexRow;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,6 +43,8 @@ class CategoryForm extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: topPaddingCategoryList),
             child: BlocBuilder<CategoryBloc, CategoryState>(
+              buildWhen: (previous, current) =>
+                  previous.globalCategories != current.globalCategories,
               builder: (context, state) {
                 if (state.categoryLoadingStatus ==
                     CategoryLoadingStatus.loadingInProgress) {
@@ -69,7 +81,14 @@ class CategoryForm extends StatelessWidget {
                         CategoryLoadingStatus.loadingSuccess &&
                     state.globalCategories.isNotEmpty) {
                   // print("${state.visibleList}");
-                  return  CategoriesList(categoryNotFoundWidget: categoryNotFoundWidget,);
+                  return CategoriesList(
+                    firstFlexRow: firstFlexRow,
+                    secondFlexRow: secondFlexRow,
+                    firstFlex: firstFlex,
+                    secondFlex: secondFlex,
+                    radioButton: widget,
+                    categoryNotFoundWidget: categoryNotFoundWidget,
+                  );
                 }
                 if (state.categoryLoadingStatus ==
                         CategoryLoadingStatus.loadingSuccess &&
@@ -77,7 +96,34 @@ class CategoryForm extends StatelessWidget {
                   return const Text("Список категорий оборудования пуст");
                 }
 
-                return const Text("Что-то пошло не так");
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      width: MediaQuery.of(context).size.width,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            CircularProgressIndicator(),
+                            Padding(
+                              padding: EdgeInsets.only(top: 16),
+                              child: Text(
+                                "Загрузка категорий...",
+                                style: TextStyle(
+                                  color: greyDark,
+                                  fontFamily: 'Rubik',
+                                  fontSize: 14,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
               },
             ),
           ),

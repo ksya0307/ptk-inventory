@@ -88,3 +88,39 @@ class ClassroomEquipmentSpecsSelected extends ClassroomEquipmentEvent {
   final Equipment? selectedSpecs;
   const ClassroomEquipmentSpecsSelected(this.selectedSpecs);
 }
+
+class ClassroomEquipmentInventoryNumberChanged extends ClassroomEquipmentEvent {
+  final String inventoryNumber;
+  const ClassroomEquipmentInventoryNumberChanged(this.inventoryNumber);
+  @override
+  List<Object> get props => [inventoryNumber];
+}
+
+class ClassroomEquipmentInternalNumberChanged extends ClassroomEquipmentEvent {
+  final String internalNumber;
+  const ClassroomEquipmentInternalNumberChanged(this.internalNumber);
+  @override
+  List<Object> get props => [internalNumber];
+}
+
+class ClassroomEquipmentTypeChanged extends ClassroomEquipmentEvent {
+  final EquipmentBelonging type;
+  const ClassroomEquipmentTypeChanged(this.type);
+  @override
+  List<Object> get props => [type];
+}
+
+class ClassroomEquipmentSpecsByCategory extends ClassroomEquipmentEvent {
+  final int categoryId;
+  const ClassroomEquipmentSpecsByCategory(this.categoryId);
+  @override
+  List<Object> get props => [categoryId];
+}
+
+class ClassroomEquipmentFilteredSpecs extends ClassroomEquipmentEvent {
+  const ClassroomEquipmentFilteredSpecs();
+}
+
+class ClassroomEquipmentCreated extends ClassroomEquipmentEvent {
+  const ClassroomEquipmentCreated();
+}

@@ -26,6 +26,8 @@ class ClassroomEquipmentForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
+          buildWhen: (previous, current) =>
+              previous.globalEquipments != current.globalEquipments,
           builder: (context, state) {
             if (state.classroomEquipmentLoadingStatus ==
                 ClassroomEquipmentLoadingStatus.loadingInProgress) {

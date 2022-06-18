@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+
 import 'package:ptk_inventory/config/colors.dart';
 
 class SpecsRow extends StatelessWidget {
   final String id;
   final String specs;
   final bool last;
+  final Widget? radio;
+    final int firstFlexRow;
+  final int secondFlexRow;
   const SpecsRow({
     Key? key,
     required this.id,
     required this.specs,
     required this.last,
+    this.radio,
+    required this.firstFlexRow,
+    required this.secondFlexRow,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -17,8 +24,29 @@ class SpecsRow extends StatelessWidget {
       children: [
         Row(
           children: [
+            if (radio == null)
+              const SizedBox(
+                height: 0,
+              )
+            else
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8 + 4,
+                    bottom: 8 + 4,
+                    left: 12,
+                  ),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: Transform.scale(
+                      scale: 1.2,
+                      child: radio,
+                    ),
+                  ),
+                ),
+              ),
             Flexible(
-              flex: 2,
+              flex:firstFlexRow,
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 8 + 4,
@@ -39,7 +67,7 @@ class SpecsRow extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 5,
+              flex: secondFlexRow,
               child: Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: Container(

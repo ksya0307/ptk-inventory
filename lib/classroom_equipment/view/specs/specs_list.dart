@@ -1,17 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/model/equipment/model/equipment.dart';
 import 'package:ptk_inventory/classroom_equipment/view/specs/specs_row.dart';
 import 'package:ptk_inventory/classroom_equipment/view/specs/specs_visible_list.dart';
 import 'package:ptk_inventory/classroom_equipment/view/specs/update_specs/update_specs_page.dart';
-
 import 'package:ptk_inventory/config/colors.dart';
 
-class SpecsList extends StatelessWidget {
-  const SpecsList({Key? key}) : super(key: key);
+class SpecsList extends StatefulWidget {
+  const SpecsList({
+    Key? key,
+    this.radioButton,
+    required this.firstFlex,
+    required this.secondFlex,
+    required this.firstFlexRow,
+    required this.secondFlexRow,
+    this.notFound,
+  }) : super(key: key);
+  final Widget? radioButton;
+  final int firstFlex;
+  final int secondFlex;
+  final int firstFlexRow;
+  final int secondFlexRow;
+  final bool? notFound;
+  @override
+  State<SpecsList> createState() => _SpecsListState();
+}
 
+class _SpecsListState extends State<SpecsList> {
+  int groupValue = -1;
   @override
   Widget build(BuildContext context) {
     final specs =
@@ -31,6 +50,23 @@ class SpecsList extends StatelessWidget {
               ),
               child: Row(
                 children: [
+                  if (widget.radioButton != null)
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 12,
+                          top: 16,
+                          bottom: 16,
+                        ),
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                        ),
+                      ),
+                    )
+                  else
+                    const SizedBox(
+                      height: 0,
+                    ),
                   Flexible(
                     flex: 2,
                     child: Padding(
@@ -79,11 +115,17 @@ class SpecsList extends StatelessWidget {
               child:
                   BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
                 builder: (context, state) {
-                  if (state.visibleList.isNotEmpty) {
-                    return const SpecsVisibleList();
+                  if (state.specsVisibleList.isNotEmpty) {
+                    return SpecsVisibleList(
+                      radioButton: widget.radioButton,
+                      firstFlex: widget.firstFlex,
+                      firstFlexRow: widget.firstFlexRow,
+                      secondFlex: widget.secondFlex,
+                      secondFlexRow: widget.secondFlexRow,
+                    );
                   }
                   if (state.searchText.isNotEmpty &&
-                      state.visibleList.isEmpty) {
+                      state.specsVisibleList.isEmpty) {
                     return Column(
                       children: [
                         Column(
@@ -114,54 +156,58 @@ class SpecsList extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                        ),
-                                        child: Wrap(
-                                          crossAxisAlignment:
-                                              WrapCrossAlignment.center,
-                                          alignment: WrapAlignment.center,
-                                          // direction: Axis.vertical,
-                                          children: [
-                                            const Text(
-                                              "Используйте",
-                                              style: TextStyle(
-                                                color: blackLabels,
-                                                fontFamily: 'Rubik',
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 8,
-                                              ),
-                                              child: Container(
-                                                width: 35,
-                                                height: 35,
-                                                decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: primaryBlue,
-                                                ),
-                                                child: const Icon(
-                                                  Icons.add_rounded,
-                                                  color: Colors.white,
-                                                  size: 20,
+                                      if (widget.notFound == false)
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                          ),
+                                          child: Wrap(
+                                            crossAxisAlignment:
+                                                WrapCrossAlignment.center,
+                                            alignment: WrapAlignment.center,
+                                            // direction: Axis.vertical,
+                                            children: [
+                                              const Text(
+                                                "Используйте",
+                                                style: TextStyle(
+                                                  color: blackLabels,
+                                                  fontFamily: 'Rubik',
+                                                  fontSize: 16,
                                                 ),
                                               ),
-                                            ),
-                                            const Text(
-                                              "для добавления нового оборудования",
-                                              style: TextStyle(
-                                                color: blackLabels,
-                                                fontFamily: 'Rubik',
-                                                fontSize: 16,
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 8,
+                                                ),
+                                                child: Container(
+                                                  width: 35,
+                                                  height: 35,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: primaryBlue,
+                                                  ),
+                                                  child: const Icon(
+                                                    Icons.add_rounded,
+                                                    color: Colors.white,
+                                                    size: 20,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                              const Text(
+                                                "для добавления нового оборудования",
+                                                style: TextStyle(
+                                                  color: blackLabels,
+                                                  fontFamily: 'Rubik',
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      else
+                                        const SizedBox(height: 0),
                                     ],
                                   ),
                                 ),
@@ -178,43 +224,102 @@ class SpecsList extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: specs.length,
                     itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          context.read<ClassroomEquipmentBloc>().add(
-                                ClassroomEquipmentSpecsSelected(
-                                  Equipment(
-                                    id: specs[index].id,
-                                    description: specs[index].description,
-                                    category: specs[index].category,
+                      return widget.radioButton == null
+                          ? InkWell(
+                              onTap: () {
+                                context.read<ClassroomEquipmentBloc>().add(
+                                      ClassroomEquipmentSpecsSelected(
+                                        Equipment(
+                                          id: specs[index].id,
+                                          description: specs[index].description,
+                                          category: specs[index].category,
+                                        ),
+                                      ),
+                                    );
+                                Navigator.of(context).push(
+                                  MaterialPageRoute<void>(
+                                    builder: (_) => MultiBlocProvider(
+                                      providers: [
+                                        BlocProvider.value(
+                                          value: context
+                                              .read<ClassroomEquipmentBloc>(),
+                                        ),
+                                        BlocProvider.value(
+                                          value: context.read<CategoryBloc>(),
+                                        ),
+                                      ],
+                                      child: UpdateSpecsPage(),
+                                    ),
                                   ),
-                                ),
-                              );
-                          Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                              builder: (_) => MultiBlocProvider(
-                                providers: [
-                                  BlocProvider.value(
-                                    value:
-                                        context.read<ClassroomEquipmentBloc>(),
-                                  ),
-                                  BlocProvider.value(
-                                    value: context.read<CategoryBloc>(),
-                                  ),
-                                ],
-                                child: UpdateSpecsPage(),
+                                );
+                              },
+                              child: SpecsRow(
+                                radio: null,
+                                firstFlexRow: widget.firstFlexRow,
+                                secondFlexRow: widget.secondFlexRow,
+                                id: (index + 1).toString(),
+                                specs: specs[index].description.length >= 25 &&
+                                        specs[index].description.length >= 50
+                                    ? "${specs[index].description.substring(0, 40)}..."
+                                    : specs[index].description,
+                                last: index == specs.length - 1,
                               ),
-                            ),
-                          );
-                        },
-                        child: SpecsRow(
-                          id: (index + 1).toString(),
-                          specs: specs[index].description.length >= 25 &&
-                                  specs[index].description.length >= 50
-                              ? "${specs[index].description.substring(0, 40)}..."
-                              : specs[index].description,
-                          last: index == specs.length - 1,
-                        ),
-                      );
+                            )
+                          : InkWell(
+                              onTap: () {
+                                context.read<ClassroomEquipmentBloc>().add(
+                                      ClassroomEquipmentSpecsSelected(
+                                        Equipment(
+                                          id: specs[index].id,
+                                          description: specs[index].description,
+                                          category: specs[index].category,
+                                        ),
+                                      ),
+                                    );
+                                Navigator.of(context).push(
+                                  MaterialPageRoute<void>(
+                                    builder: (_) => MultiBlocProvider(
+                                      providers: [
+                                        BlocProvider.value(
+                                          value: context
+                                              .read<ClassroomEquipmentBloc>(),
+                                        ),
+                                        BlocProvider.value(
+                                          value: context.read<CategoryBloc>(),
+                                        ),
+                                      ],
+                                      child: UpdateSpecsPage(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: SpecsRow(
+                                firstFlexRow: widget.firstFlexRow,
+                                secondFlexRow: widget.secondFlexRow,
+                                id: (index + 1).toString(),
+                                specs: specs[index].description.length >= 25 &&
+                                        specs[index].description.length >= 50
+                                    ? "${specs[index].description.substring(0, 40)}..."
+                                    : specs[index].description,
+                                last: index == specs.length - 1,
+                                radio: Radio<int>(
+                                  groupValue: groupValue,
+                                  value: index,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      groupValue = value!;
+                                      context
+                                          .read<ClassroomEquipmentBloc>()
+                                          .add(
+                                            ClassroomEquipmentSpecsSelected(
+                                              specs[index],
+                                            ),
+                                          );
+                                    });
+                                  },
+                                ),
+                              ),
+                            );
                     },
                   );
                 },

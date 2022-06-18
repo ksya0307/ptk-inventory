@@ -63,6 +63,7 @@ class CategoryState extends Equatable {
     List<Category>? visibleList,
     CategoryActionStatus? categoryActionStatus,
   }) {
+    print(categoryLoadingStatus);
     return CategoryState(
       formStatus: formStatus ?? this.formStatus,
       name: name ?? this.name,

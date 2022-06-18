@@ -1,10 +1,9 @@
 import 'package:ptk_inventory/classroom_equipment/model/classroom_equipment.dart';
 import 'package:ptk_inventory/classroom_equipment/model/equipment/model/equipment.dart';
-import 'package:ptk_inventory/classroom_equipment/model/equipment/model/equipment_result.dart';
+import 'package:ptk_inventory/classroom_equipment/model/requests/create_equipment_request.dart';
 import 'package:ptk_inventory/classroom_equipment/model/requests/create_specs_request.dart';
 import 'package:ptk_inventory/classroom_equipment/model/requests/update_specs_request.dart';
 import 'package:ptk_inventory/classroom_equipment/provider/classroom_equipment_api_client.dart';
-import 'package:ptk_inventory/classrooms/model/request/create_classroom_request.dart';
 import 'package:ptk_inventory/common/model/hive_model.dart';
 import 'package:ptk_inventory/common/model/requests/auth_header.dart';
 import 'package:ptk_inventory/common/provider/hive/hive_provider.dart';
@@ -79,7 +78,7 @@ class ClassroomEquipmentRepository {
     }
   }
 
-  Future<List<Equipment>> allEquipment() async {
+  Future<List<Equipment>> allSpecs() async {
     try {
       final result = await _classroomEquipmentProvider.allEquipmentSpecs(
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
@@ -94,6 +93,28 @@ class ClassroomEquipmentRepository {
       }
       final result = await _classroomEquipmentProvider.allEquipmentSpecs(
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+      );
+      return result.result;
+    }
+  }
+
+  Future<List<Equipment>> specsByCategory({required int categoryId}) async {
+    try {
+      final result = await _classroomEquipmentProvider.specsByCategory(
+        HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+        categoryId,
+      );
+      return result.result;
+    } on GetSpecsByCategoryRequestFailure {
+      return [];
+    } on GetSpecsByCategoryRequestUnauthorized {
+      final UserHiveModel? userHiveModel = await getUserProfile();
+      if (userHiveModel != null) {
+        await _authenticationRepository.refreshToken(userHiveModel);
+      }
+        final result = await _classroomEquipmentProvider.specsByCategory(
+        HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+        categoryId,
       );
       return result.result;
     }
@@ -117,6 +138,30 @@ class ClassroomEquipmentRepository {
       }
       await _classroomEquipmentProvider.createSpecs(
         createSpecsModelRequest.toMap(),
+        HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+      );
+      return EquipmentStatus.created;
+    }
+  }
+
+    Future<EquipmentStatus> createEquipment(
+    CreateEquipmentModelRequest createEquipmentModelRequest
+  ) async {
+    try {
+      await _classroomEquipmentProvider.createEquipment(
+        createEquipmentModelRequest.toMap(),
+        HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+      );
+      return EquipmentStatus.created;
+    } on CreateEquipmentRequestFailure {
+      return EquipmentStatus.notCreated;
+    } on CreateEquipmentRequestUnauthorized {
+      final UserHiveModel? userHiveModel = await getUserProfile();
+      if (userHiveModel != null) {
+        await _authenticationRepository.refreshToken(userHiveModel);
+      }
+      await _classroomEquipmentProvider.createEquipment(
+        createEquipmentModelRequest.toMap(),
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
       );
       return EquipmentStatus.created;

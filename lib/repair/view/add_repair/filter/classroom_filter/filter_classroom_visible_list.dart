@@ -26,7 +26,6 @@ class _VisibleFilterClassroomListState
         return Align(
           alignment: Alignment.centerLeft,
           child: Wrap(
-            runSpacing: 8,
             spacing: 8,
             children: List.generate(
               classrooms.length,

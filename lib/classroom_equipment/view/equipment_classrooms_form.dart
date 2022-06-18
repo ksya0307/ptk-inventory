@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
@@ -13,7 +14,9 @@ import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_equipment/
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_filter/filter_classroom_form.dart';
 
 class EquipmentClassroomForm extends StatelessWidget {
-  const EquipmentClassroomForm({Key? key}) : super(key: key);
+  const EquipmentClassroomForm({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +70,10 @@ class EquipmentClassroomForm extends StatelessWidget {
                 action: 'Показать все',
                 containerColor: greyCard,
                 property: 'Категория',
+                firstFlexRow: 2,
+                secondFlexRow: 5,
+                firstFlex: 2,
+                secondFlex: 5,
               ),
               const SizedBox(
                 height: 8,

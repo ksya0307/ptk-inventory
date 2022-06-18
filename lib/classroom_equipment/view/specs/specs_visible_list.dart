@@ -1,17 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
-import 'package:ptk_inventory/category/model/category.dart';
-import 'package:ptk_inventory/category/view/category_row.dart';
-import 'package:ptk_inventory/category/view/update_category/update_category_page.dart';
+
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
+import 'package:ptk_inventory/classroom_equipment/model/equipment/model/equipment.dart';
 import 'package:ptk_inventory/classroom_equipment/view/specs/specs_row.dart';
+import 'package:ptk_inventory/classroom_equipment/view/specs/update_specs/update_specs_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
-import 'package:ptk_inventory/ifo/bloc/ifo_bloc.dart';
 
-class SpecsVisibleList extends StatelessWidget {
-  const SpecsVisibleList({Key? key}) : super(key: key);
+class SpecsVisibleList extends StatefulWidget {
+  final Widget? radioButton;
+  final int firstFlex;
+  final int secondFlex;
+  final int firstFlexRow;
+  final int secondFlexRow;
+  const SpecsVisibleList({
+    Key? key,
+    this.radioButton,
+    required this.firstFlex,
+    required this.secondFlex,
+    required this.firstFlexRow,
+    required this.secondFlexRow,
+  }) : super(key: key);
 
+  @override
+  State<SpecsVisibleList> createState() => _SpecsVisibleListState();
+}
+
+class _SpecsVisibleListState extends State<SpecsVisibleList> {
+  int groupValue = -1;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
@@ -35,31 +52,102 @@ class SpecsVisibleList extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: specs.length,
                     itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          // context.read<CategoryBloc>().add(
-                          //       CategorySelected(
-                          //         Category(
-                          //           id: ifos[index].id,
-                          //           name: ifos[index].name,
-                          //         ),
-                          //       ),
-                          //     );
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute<void>(
-                          //     builder: (_) => BlocProvider.value(
-                          //       value: context.read<CategoryBloc>(),
-                          //       child: UpdateCategoryPage(),
-                          //     ),
-                          //   ),
-                          // );
-                        },
-                        child: SpecsRow(
-                          id: (index + 1).toString(),
-                          specs: specs[index].description,
-                          last: index == specs.length - 1,
-                        ),
-                      );
+                      return widget.radioButton == null
+                          ? InkWell(
+                              onTap: () {
+                                context.read<ClassroomEquipmentBloc>().add(
+                                      ClassroomEquipmentSpecsSelected(
+                                        Equipment(
+                                          id: specs[index].id,
+                                          description: specs[index].description,
+                                          category: specs[index].category,
+                                        ),
+                                      ),
+                                    );
+                                Navigator.of(context).push(
+                                  MaterialPageRoute<void>(
+                                    builder: (_) => MultiBlocProvider(
+                                      providers: [
+                                        BlocProvider.value(
+                                          value: context
+                                              .read<ClassroomEquipmentBloc>(),
+                                        ),
+                                        BlocProvider.value(
+                                          value: context.read<CategoryBloc>(),
+                                        ),
+                                      ],
+                                      child: UpdateSpecsPage(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: SpecsRow(
+                                radio: null,
+                                firstFlexRow: widget.firstFlexRow,
+                                secondFlexRow: widget.secondFlexRow,
+                                id: (index + 1).toString(),
+                                specs: specs[index].description.length >= 25 &&
+                                        specs[index].description.length >= 50
+                                    ? "${specs[index].description.substring(0, 40)}..."
+                                    : specs[index].description,
+                                last: index == specs.length - 1,
+                              ),
+                            )
+                          : InkWell(
+                              onTap: () {
+                                context.read<ClassroomEquipmentBloc>().add(
+                                      ClassroomEquipmentSpecsSelected(
+                                        Equipment(
+                                          id: specs[index].id,
+                                          description: specs[index].description,
+                                          category: specs[index].category,
+                                        ),
+                                      ),
+                                    );
+                                Navigator.of(context).push(
+                                  MaterialPageRoute<void>(
+                                    builder: (_) => MultiBlocProvider(
+                                      providers: [
+                                        BlocProvider.value(
+                                          value: context
+                                              .read<ClassroomEquipmentBloc>(),
+                                        ),
+                                        BlocProvider.value(
+                                          value: context.read<CategoryBloc>(),
+                                        ),
+                                      ],
+                                      child: UpdateSpecsPage(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: SpecsRow(
+                                firstFlexRow: widget.firstFlexRow,
+                                secondFlexRow: widget.secondFlexRow,
+                                id: (index + 1).toString(),
+                                specs: specs[index].description.length >= 25 &&
+                                        specs[index].description.length >= 50
+                                    ? "${specs[index].description.substring(0, 40)}..."
+                                    : specs[index].description,
+                                last: index == specs.length - 1,
+                                radio: Radio<int>(
+                                  groupValue: groupValue,
+                                  value: index,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      groupValue = value!;
+                                      context
+                                          .read<ClassroomEquipmentBloc>()
+                                          .add(
+                                            ClassroomEquipmentSpecsSelected(
+                                              specs[index],
+                                            ),
+                                          );
+                                    });
+                                  },
+                                ),
+                              ),
+                            );
                     },
                   ),
                 ),

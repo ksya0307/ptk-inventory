@@ -34,11 +34,7 @@ class _AddRepairFormState extends State<AddRepairForm> {
   Widget build(BuildContext context) {
     return BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
       builder: (context, state) {
-        final equipment = BlocProvider.of<ClassroomEquipmentBloc>(context)
-            .state
-            .filteredEquipment;
-        // print("form");
-        // print(equipment);
+        final equipment = state.filteredEquipment;
         return Form(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,55 +122,6 @@ class _AddRepairFormState extends State<AddRepairForm> {
                         );
                       },
                     ),
-
-                    // ListView.builder(
-                    //   physics: const NeverScrollableScrollPhysics(),
-                    //   scrollDirection: Axis.horizontal,
-                    //   shrinkWrap: true,
-                    //   itemCount: equipment.length,
-                    //   itemBuilder: (context, index) {
-                    //     return ChipTheme(
-                    //       data: ChipTheme.of(context).copyWith(
-                    //         checkmarkColor: Colors.white,
-                    //         elevation: 0,
-                    //         disabledColor: Colors.white,
-                    //         pressElevation: 0,
-                    //         backgroundColor: secondaryGreen,
-                    //         selectedColor: secondaryGreen,
-                    //         shape: const RoundedRectangleBorder(
-                    //           borderRadius: BorderRadius.all(
-                    //             Radius.circular(7),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       child: ChoiceChip(
-                    //         // avatar: const Icon(
-                    //         //   Icons.done_rounded,
-                    //         //   color: Colors.white,
-                    //         // ),
-                    //         selected: false,
-                    //         label: Padding(
-                    //           padding: const EdgeInsets.all(4.0),
-                    //           child: Text(
-                    //             equipment[index]
-                    //                 .inventoryNumber
-                    //                 .toString(),
-                    //             style: const TextStyle(
-                    //               fontFamily: 'Rubik',
-                    //               fontSize: 18,
-                    //               fontWeight: FontWeight.w400,
-                    //               color: Colors.white,
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         onSelected: (selected) {
-                    //           selected = !selected;
-                    //           print(equipment[index].isChecked);
-                    //         },
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
                   ),
                 ),
               ),

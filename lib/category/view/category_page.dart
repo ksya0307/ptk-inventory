@@ -71,6 +71,10 @@ class CategoryPage extends StatelessWidget {
                     child: Column(
                       children: const [
                         CategoryForm(
+                          firstFlexRow: 2,
+                          secondFlexRow: 5,
+                          firstFlex: 2,
+                          secondFlex: 5,
                           search: SearchCategory(),
                           topPaddingCategoryList: 8,
                           topPaddingSearchCategory: 16,

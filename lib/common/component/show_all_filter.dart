@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/view/category_form.dart';
 import 'package:ptk_inventory/common/component/filter_scrollable_sheet.dart';
-
 import 'package:ptk_inventory/common/component/property_label.dart';
 import 'package:ptk_inventory/common/component/search_field.dart';
 import 'package:ptk_inventory/common/component/show_all_label.dart';
@@ -14,10 +14,20 @@ import 'package:ptk_inventory/config/colors.dart';
 class ShowAllFilter extends StatelessWidget {
   const ShowAllFilter({
     Key? key,
+    this.widget,
+    required this.firstFlex,
+    required this.secondFlex,
+    required this.firstFlexRow,
+    required this.secondFlexRow,
     required this.property,
     required this.action,
     required this.containerColor,
   }) : super(key: key);
+  final Widget? widget;
+  final int firstFlex;
+  final int secondFlex;
+  final int firstFlexRow;
+  final int secondFlexRow;
   final String property;
   final String action;
   final Color containerColor;
@@ -92,6 +102,10 @@ class ShowAllFilter extends StatelessWidget {
                                       height: 8,
                                     ),
                                     CategoryForm(
+                                      firstFlexRow: firstFlexRow,
+                                      secondFlexRow: secondFlexRow,
+                                      firstFlex: firstFlex,
+                                      secondFlex: secondFlex,
                                       topPaddingCategoryList: 0,
                                       topPaddingSearchCategory: 0,
                                       categoryNotFoundWidget: Padding(
@@ -180,6 +194,10 @@ class ShowAllFilter extends StatelessWidget {
                                       height: 8,
                                     ),
                                     CategoryForm(
+                                      firstFlexRow: firstFlexRow,
+                                      secondFlexRow: secondFlexRow,
+                                      firstFlex: firstFlex,
+                                      secondFlex: secondFlex,
                                       topPaddingCategoryList: 0,
                                       topPaddingSearchCategory: 0,
                                       categoryNotFoundWidget: Padding(

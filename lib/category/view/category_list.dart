@@ -7,16 +7,33 @@ import 'package:ptk_inventory/category/model/category.dart';
 import 'package:ptk_inventory/category/view/category_row.dart';
 import 'package:ptk_inventory/category/view/update_category/update_category_page.dart';
 import 'package:ptk_inventory/category/view/visible_category_list.dart';
+import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/config/colors.dart';
 
-class CategoriesList extends StatelessWidget {
+class CategoriesList extends StatefulWidget {
   final Widget? categoryNotFoundWidget;
+  final Widget? radioButton;
+  final int firstFlex;
+  final int secondFlex;
+  final int firstFlexRow;
+  final int secondFlexRow;
   const CategoriesList({
     Key? key,
     this.categoryNotFoundWidget,
+    this.radioButton,
+    required this.firstFlex,
+    required this.secondFlex,
+    required this.firstFlexRow,
+    required this.secondFlexRow,
   }) : super(key: key);
 
+  @override
+  State<CategoriesList> createState() => _CategoriesListState();
+}
+
+class _CategoriesListState extends State<CategoriesList> {
+  int groupValue = -1;
   @override
   Widget build(BuildContext context) {
     final categories =
@@ -36,8 +53,22 @@ class CategoriesList extends StatelessWidget {
               ),
               child: Row(
                 children: [
+                  if (widget.radioButton != null)
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 12, top: 16, bottom: 16),
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                        ),
+                      ),
+                    )
+                  else
+                    const SizedBox(
+                      height: 0,
+                    ),
                   Flexible(
-                    flex: 2,
+                    flex: widget.firstFlex,
                     child: Padding(
                       padding:
                           const EdgeInsets.only(left: 12, top: 16, bottom: 16),
@@ -56,7 +87,7 @@ class CategoriesList extends StatelessWidget {
                     ),
                   ),
                   Flexible(
-                    flex: 5,
+                    flex: widget.secondFlex,
                     child: Container(
                       alignment: Alignment.centerLeft,
                       child: const Text(
@@ -84,7 +115,13 @@ class CategoriesList extends StatelessWidget {
               child: BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
                   if (state.visibleList.isNotEmpty) {
-                    return const VisibleCategoryList();
+                    return VisibleCategoryList(
+                      radioButton: widget.radioButton,
+                      firstFlex: widget.firstFlex,
+                      firstFlexRow: widget.firstFlexRow,
+                      secondFlex: widget.secondFlex,
+                      secondFlexRow: widget.secondFlexRow,
+                    );
                   }
                   if (state.searchText.isNotEmpty &&
                       state.visibleList.isEmpty) {
@@ -125,7 +162,7 @@ class CategoriesList extends StatelessWidget {
                                                       UserRole.admin ||
                                                   state.user.role ==
                                                       UserRole.moderator
-                                              ? categoryNotFoundWidget!
+                                              ? widget.categoryNotFoundWidget!
                                               : const SizedBox(height: 0);
                                         },
                                       ),
@@ -147,34 +184,89 @@ class CategoriesList extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: categories.length,
                         itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              if (state.user.role == UserRole.admin ||
-                                  state.user.role == UserRole.moderator) {
-                                context.read<CategoryBloc>().add(
-                                      CategorySelected(
-                                        Category(
-                                          id: categories[index].id,
-                                          name: categories[index].name,
+                          return widget.radioButton == null
+                              ? InkWell(
+                                  onTap: () {
+                                    if (state.user.role == UserRole.admin ||
+                                        state.user.role == UserRole.moderator) {
+                                      context.read<CategoryBloc>().add(
+                                            CategorySelected(
+                                              Category(
+                                                id: categories[index].id,
+                                                name: categories[index].name,
+                                              ),
+                                            ),
+                                          );
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute<void>(
+                                          builder: (_) => BlocProvider.value(
+                                            value: context.read<CategoryBloc>(),
+                                            child: UpdateCategoryPage(),
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                Navigator.of(context).push(
-                                  MaterialPageRoute<void>(
-                                    builder: (_) => BlocProvider.value(
-                                      value: context.read<CategoryBloc>(),
-                                      child: UpdateCategoryPage(),
+                                      );
+                                    }
+                                  },
+                                  child: CategoryRow(
+                                    radio: null,
+                                    firstFlexRow: widget.firstFlexRow,
+                                    secondFlexRow: widget.secondFlexRow,
+                                    id: (index + 1).toString(),
+                                    category: categories[index].name,
+                                    last: index == categories.length - 1,
+                                  ),
+                                )
+                              : InkWell(
+                                  onTap: () {
+                                    if (state.user.role == UserRole.admin ||
+                                        state.user.role == UserRole.moderator) {
+                                      context.read<CategoryBloc>().add(
+                                            CategorySelected(
+                                              Category(
+                                                id: categories[index].id,
+                                                name: categories[index].name,
+                                              ),
+                                            ),
+                                          );
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute<void>(
+                                          builder: (_) => BlocProvider.value(
+                                            value: context.read<CategoryBloc>(),
+                                            child: UpdateCategoryPage(),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: CategoryRow(
+                                    firstFlexRow: widget.firstFlexRow,
+                                    secondFlexRow: widget.secondFlexRow,
+                                    id: (index + 1).toString(),
+                                    category: categories[index].name,
+                                    last: index == categories.length - 1,
+                                    radio: Radio<int>(
+                                      groupValue: groupValue,
+                                      value: index,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          groupValue = value!;
+                                          context
+                                              .read<ClassroomEquipmentBloc>()
+                                              .add(
+                                                ClassroomEquipmentSpecsCategorySelected(
+                                                  categories[index],
+                                                ),
+                                              );
+                                          context.read<CategoryBloc>().add(
+                                                CategorySelected(
+                                                  categories[index],
+                                                ),
+                                              );
+                                        });
+                                      },
                                     ),
                                   ),
                                 );
-                              }
-                            },
-                            child: CategoryRow(
-                              id: (index + 1).toString(),
-                              category: categories[index].name,
-                              last: index == categories.length - 1,
-                            ),
-                          );
                         },
                       );
                     },

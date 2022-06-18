@@ -32,12 +32,20 @@ class ClassroomEquipmentState extends Equatable {
   final List<ClassroomEquipment> visibleList;
   final String searchText;
   final Specs specs;
+  final String? internalNumber;
+  final InventoryNumber inventoryNumber;
   final Category? selectedCategory;
   final Equipment? selectedSpecs;
   final List<Equipment> globalSpecs;
   final List<Equipment> specsVisibleList;
+  final EquipmentBelonging equipmentBelonging;
+  final Classroom? selectedClassroom;
 
   const ClassroomEquipmentState({
+    this.selectedClassroom,
+    this.equipmentBelonging = EquipmentBelonging.lab,
+    this.internalNumber,
+    this.inventoryNumber = const InventoryNumber.pure(),
     this.specsVisibleList = const [],
     this.globalSpecs = const [],
     this.selectedSpecs,
@@ -55,8 +63,12 @@ class ClassroomEquipmentState extends Equatable {
 
   @override
   List<Object?> get props => [
-    specsVisibleList,
-            globalSpecs,
+        selectedClassroom,
+        equipmentBelonging,
+        internalNumber,
+        inventoryNumber,
+        specsVisibleList,
+        globalSpecs,
         selectedSpecs,
         selectedCategory,
         specs,
@@ -80,25 +92,37 @@ class ClassroomEquipmentState extends Equatable {
     List<ClassroomEquipment>? visibleList,
     String? searchText,
     Specs? specs,
+    String? internalNumber,
+    InventoryNumber? inventoryNumber,
     Category? selectedCategory,
     Equipment? selectedSpecs,
     List<Equipment>? globalSpecs,
     List<Equipment>? specsVisibleList,
+    EquipmentBelonging? equipmentBelonging,
+    Classroom? selectedClassroom,
   }) {
+    print("equipment loading");
+    print(classroomEquipmentLoadingStatus);
     return ClassroomEquipmentState(
       formStatus: formStatus ?? this.formStatus,
-      equipmentActionStatus: equipmentActionStatus ?? this.equipmentActionStatus,
-      classroomEquipmentLoadingStatus: classroomEquipmentLoadingStatus ?? this.classroomEquipmentLoadingStatus,
+      equipmentActionStatus:
+          equipmentActionStatus ?? this.equipmentActionStatus,
+      classroomEquipmentLoadingStatus: classroomEquipmentLoadingStatus ??
+          this.classroomEquipmentLoadingStatus,
       selectedEquipment: selectedEquipment ?? this.selectedEquipment,
       filteredEquipment: filteredEquipment ?? this.filteredEquipment,
       globalEquipments: globalEquipments ?? this.globalEquipments,
       visibleList: visibleList ?? this.visibleList,
       searchText: searchText ?? this.searchText,
       specs: specs ?? this.specs,
+      internalNumber: internalNumber ?? this.internalNumber,
+      inventoryNumber: inventoryNumber ?? this.inventoryNumber,
       selectedCategory: selectedCategory ?? this.selectedCategory,
       selectedSpecs: selectedSpecs ?? this.selectedSpecs,
       globalSpecs: globalSpecs ?? this.globalSpecs,
       specsVisibleList: specsVisibleList ?? this.specsVisibleList,
+      equipmentBelonging: equipmentBelonging ?? this.equipmentBelonging,
+      selectedClassroom: selectedClassroom ?? this.selectedClassroom,
     );
   }
 }

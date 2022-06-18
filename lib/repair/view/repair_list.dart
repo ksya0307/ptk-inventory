@@ -180,7 +180,7 @@ class RepairList extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          print("print");
+                        
                           // context.read<RepairBloc>().add(
                           //       RepairSelected(
                           //         RepairEquipment(

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/view/category_form.dart';
+import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
+import 'package:ptk_inventory/classroom_equipment/repository/classroom_equipment_repository.dart';
 import 'package:ptk_inventory/classroom_equipment/view/add_equipment/add_equipment_form.dart';
+import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
+import 'package:ptk_inventory/classrooms/repository/classroom_repository.dart';
 import 'package:ptk_inventory/common/component/filter_scrollable_sheet.dart';
 import 'package:ptk_inventory/common/component/search_field.dart';
 
@@ -43,9 +47,15 @@ class AddEquipmentPage extends StatelessWidget {
                   context: context,
                   backgroundColor: Colors.transparent,
                   builder: (_) {
-                    return BlocProvider.value(
-                      value: context.read<CategoryBloc>()
-                        ..add(const CategoryLoadList()),
+                    return MultiBlocProvider(
+                      providers: [
+                        BlocProvider.value(
+                          value: context.read<ClassroomEquipmentBloc>(),
+                        ),
+                        BlocProvider.value(
+                          value: context.read<CategoryBloc>(),
+                        ),
+                      ],
                       child: EquipmentFilterSheet(
                         onTap: () => Navigator.of(context).pop(),
                         initialChildSize: 0.7,
@@ -55,8 +65,6 @@ class AddEquipmentPage extends StatelessWidget {
                         widget: Column(
                           children: [
                             BlocBuilder<CategoryBloc, CategoryState>(
-                              buildWhen: (previous, current) =>
-                                  previous.visibleList != current.visibleList,
                               builder: (context, state) {
                                 return SearchField(
                                   hintText: 'Смартфон',
@@ -64,7 +72,10 @@ class AddEquipmentPage extends StatelessWidget {
                                   inputFormatters: const [],
                                   onChange: (category) => {
                                     context.read<CategoryBloc>().add(
-                                        CategorySearch(matchingWord: category))
+                                          CategorySearch(
+                                            matchingWord: category,
+                                          ),
+                                        )
                                   },
                                 );
                               },
@@ -73,6 +84,11 @@ class AddEquipmentPage extends StatelessWidget {
                               height: 8,
                             ),
                             CategoryForm(
+                              firstFlexRow: 2,
+                              secondFlexRow: 5,
+                              firstFlex: 2,
+                              secondFlex: 5,
+                              widget: const SizedBox(),
                               categoryNotFoundWidget: Padding(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 16,

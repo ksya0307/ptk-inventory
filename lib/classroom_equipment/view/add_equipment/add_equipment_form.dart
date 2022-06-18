@@ -87,7 +87,8 @@ class AddEquipmentForm extends StatelessWidget {
           ),
           BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
             builder: (context, state) {
-              return const SpecsForm(
+              return  SpecsForm(
+                buildWhen: (previous, current) => previous.globalSpecs!=current.globalSpecs,
                 notFound: true,
                 firstFlex: 2,
                 secondFlex: 5,

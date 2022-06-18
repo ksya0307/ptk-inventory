@@ -3,7 +3,7 @@ import 'package:ptk_inventory/classroom_equipment/model/equipment_types.dart';
 class CreateEquipmentModelRequest {
   int inventoryNumber;
   String? classroom;
-  int equipment;
+  int? equipment;
   String? numberInClassroom;
   EquipmentBelonging type;
   CreateEquipmentModelRequest({

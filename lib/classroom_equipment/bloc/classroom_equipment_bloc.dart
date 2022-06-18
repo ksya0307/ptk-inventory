@@ -165,7 +165,6 @@ class ClassroomEquipmentBloc
     Emitter<ClassroomEquipmentState> emit,
   ) {
     emit(state.copyWith(equipmentBelonging: event.type));
-  
   }
 
   void _onInventoryNumberChanged(
@@ -179,7 +178,6 @@ class ClassroomEquipmentBloc
         formStatus: Formz.validate([inventoryNumber]),
       ),
     );
-
   }
 
   void _onInternalNumberChanged(
@@ -192,7 +190,6 @@ class ClassroomEquipmentBloc
         formStatus: Formz.validate([state.inventoryNumber]),
       ),
     );
-
   }
 
   Future<void> _onLoadSpecs(

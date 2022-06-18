@@ -14,7 +14,7 @@ class SpecsForm extends StatelessWidget {
     required this.secondFlex,
     required this.firstFlexRow,
     required this.secondFlexRow,
-    this.notFound,
+    this.notFound, this.buildWhen,
   }) : super(key: key);
   final Widget? widget;
   final int firstFlex;
@@ -22,6 +22,8 @@ class SpecsForm extends StatelessWidget {
   final int firstFlexRow;
   final int secondFlexRow;
   final bool? notFound;
+  final bool Function(ClassroomEquipmentState, ClassroomEquipmentState)?
+      buildWhen;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,8 +42,7 @@ class SpecsForm extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 8),
           child: BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
-            buildWhen: (previous, current) =>
-                previous.globalSpecs != current.globalSpecs,
+            buildWhen: buildWhen,
             builder: (context, state) {
               if (state.classroomEquipmentLoadingStatus ==
                   ClassroomEquipmentLoadingStatus.loadingInProgress) {

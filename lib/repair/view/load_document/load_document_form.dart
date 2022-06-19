@@ -8,7 +8,6 @@ import 'package:ptk_inventory/common/component/common_button.dart';
 import 'package:ptk_inventory/common/component/filter_scrollable_sheet.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/bloc/repair_bloc.dart';
-import 'package:ptk_inventory/repair/model/repair.dart';
 import 'package:share_plus/share_plus.dart';
 
 class LoadDocumentForm extends StatefulWidget {
@@ -253,7 +252,7 @@ class _LoadDocumentFormState extends State<LoadDocumentForm> {
                                         MediaQuery.of(context).size.width * 0.5,
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          vertical: 8),
+                                          vertical: 8,),
                                       child: Row(
                                         children: const [
                                           Icon(

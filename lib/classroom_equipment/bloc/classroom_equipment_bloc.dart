@@ -82,7 +82,7 @@ class ClassroomEquipmentBloc
     ClassroomEquipmentFilteredSpecs event,
     Emitter<ClassroomEquipmentState> emit,
   ) {
-    List<Equipment> newList = state.specsVisibleList;
+    
   }
 
   void _onSelectedSpecs(

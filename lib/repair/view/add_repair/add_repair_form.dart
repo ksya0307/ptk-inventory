@@ -193,7 +193,7 @@ class _AddRepairFormState extends State<AddRepairForm> {
                                 "+7",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontFamily: 'Rubik', fontSize: 18),
+                                    fontFamily: 'Rubik', fontSize: 18,),
                               ),
                             ),
                           ),

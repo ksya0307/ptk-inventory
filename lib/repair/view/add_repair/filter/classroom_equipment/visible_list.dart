@@ -99,7 +99,7 @@ class _VisibleClassroomEquipmentListState
                               //   });
                               // },
                               // value: index,
-                              widget: null,
+                            
                             )
                           : ClassroomEquipmentRow(
                               firstFlexRow: widget.firstFlexRow,

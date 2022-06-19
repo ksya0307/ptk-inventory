@@ -35,7 +35,7 @@ class ClassroomList extends StatelessWidget {
                       flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            left: 12, top: 16, bottom: 16),
+                            left: 12, top: 16, bottom: 16,),
                         child: Container(
                           alignment: Alignment.centerLeft,
                           child: const Text(
@@ -211,10 +211,6 @@ class ClassroomList extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: classrooms.length,
                       itemBuilder: (context, index) {
-                        final String patronymic =
-                            classrooms[index].user.patronymic != null
-                                ? classrooms[index].user.patronymic!
-                                : "";
                         return InkWell(
                           onTap: () {
                             context.read<ClassroomBloc>().add(

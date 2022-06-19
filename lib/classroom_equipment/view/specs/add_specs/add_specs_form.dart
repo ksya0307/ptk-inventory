@@ -125,7 +125,7 @@ class _AddSpecsFormState extends State<AddSpecsForm> {
                                 ClassroomEquipmentLoadingStatus
                                     .loadingSuccess) {
                           snackbarMessage(
-                              context, "Новое оборудование добавлено");
+                              context, "Новое оборудование добавлено",);
 
                           Navigator.of(context).pop();
                           context
@@ -137,7 +137,7 @@ class _AddSpecsFormState extends State<AddSpecsForm> {
                             state.classroomEquipmentLoadingStatus ==
                                 ClassroomEquipmentLoadingStatus.loadingFailed) {
                           snackbarMessageCommonError(
-                              context, "Такое оборудование уже существует");
+                              context, "Такое оборудование уже существует",);
                         }
                       },
                       child: BlocBuilder<ClassroomEquipmentBloc,
@@ -155,7 +155,7 @@ class _AddSpecsFormState extends State<AddSpecsForm> {
                                   buttonText: 'Добавить',
                                   onPress: () {
                                     context.read<ClassroomEquipmentBloc>().add(
-                                        const ClassroomEquipmentSpecsSubmitted());
+                                        const ClassroomEquipmentSpecsSubmitted(),);
                                   },
                                 );
                         },

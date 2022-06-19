@@ -94,7 +94,7 @@ class AddEquipmentForm extends StatelessWidget {
                 secondFlex: 5,
                 secondFlexRow: 5,
                 firstFlexRow: 2,
-                widget: SizedBox(),
+                widget: const SizedBox(),
               );
             },
           ),
@@ -140,7 +140,7 @@ class AddEquipmentForm extends StatelessWidget {
           const SizedBox(
             height: 8,
           ),
-          const FilterClassroomForm(bottomPadding: 0),
+          const FilterClassroomForm(),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 16),
             child: Divider(

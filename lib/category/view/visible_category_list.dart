@@ -84,7 +84,7 @@ class _VisibleCategoryListState extends State<VisibleCategoryList> {
                                     }
                                   },
                                   child: CategoryRow(
-                                    radio: null,
+                                  
                                     firstFlexRow: widget.firstFlexRow,
                                     secondFlexRow: widget.secondFlexRow,
                                     id: (index + 1).toString(),

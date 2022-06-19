@@ -82,7 +82,7 @@ class _SpecsVisibleListState extends State<SpecsVisibleList> {
                                 );
                               },
                               child: SpecsRow(
-                                radio: null,
+                            
                                 firstFlexRow: widget.firstFlexRow,
                                 secondFlexRow: widget.secondFlexRow,
                                 id: (index + 1).toString(),

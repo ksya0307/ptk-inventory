@@ -4,8 +4,6 @@ import 'package:intl/intl.dart';
 
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/bloc/repair_bloc.dart';
-import 'package:ptk_inventory/repair/model/repair.dart';
-import 'package:ptk_inventory/repair/model/repair_equipment.dart';
 import 'package:ptk_inventory/repair/view/repair_row.dart';
 import 'package:ptk_inventory/repair/view/repair_visible_list.dart';
 import 'package:ptk_inventory/repair/view/update_repair/update_repair_page.dart';

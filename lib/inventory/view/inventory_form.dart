@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/view/add_equipment/add_equipment_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/inventory/view/custom_stepper.dart' as c_s;

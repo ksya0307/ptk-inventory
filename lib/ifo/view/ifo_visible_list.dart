@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/model/category.dart';
-import 'package:ptk_inventory/category/view/category_row.dart';
 import 'package:ptk_inventory/category/view/update_category/update_category_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/ifo/bloc/ifo_bloc.dart';
+import 'package:ptk_inventory/ifo/model/ifo.dart';
 import 'package:ptk_inventory/ifo/view/ifo_row.dart';
 
 class VisibleIfoList extends StatelessWidget {
@@ -36,9 +36,9 @@ class VisibleIfoList extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          context.read<CategoryBloc>().add(
-                                CategorySelected(
-                                  Category(
+                          context.read<IfoBloc>().add(
+                                IfoSelected(
+                                  Ifo(
                                     id: ifos[index].id,
                                     name: ifos[index].name,
                                   ),
@@ -47,7 +47,7 @@ class VisibleIfoList extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute<void>(
                               builder: (_) => BlocProvider.value(
-                                value: context.read<CategoryBloc>(),
+                                value: context.read<IfoBloc>(),
                                 child: UpdateCategoryPage(),
                               ),
                             ),

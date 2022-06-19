@@ -179,7 +179,7 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
           .toList();
     }
     emit(
-        state.copyWith(visibleList: finalList, searchText: event.matchingWord));
+        state.copyWith(visibleList: finalList, searchText: event.matchingWord),);
   }
 
 //    Future<void> _onSaved(RepairSaved event, Emitter<RepairState> emit) {

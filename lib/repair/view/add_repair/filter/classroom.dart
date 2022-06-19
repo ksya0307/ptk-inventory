@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
-import 'package:ptk_inventory/common/component/apply_filter_label.dart';
 import 'package:ptk_inventory/common/component/filter_scrollable_sheet.dart';
 import 'package:ptk_inventory/common/component/property_label.dart';
 import 'package:ptk_inventory/common/component/show_all_label.dart';

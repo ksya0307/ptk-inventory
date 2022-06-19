@@ -211,7 +211,7 @@ class _ClassroomEquipmentListState extends State<ClassroomEquipmentList> {
                             //   });
                             // },
                             // value: index,
-                            widget: null,
+                        
                           )
                         : ClassroomEquipmentRow(
                             firstFlexRow: widget.firstFlexRow,

@@ -10,7 +10,6 @@ import 'package:ptk_inventory/common/component/snackbar_message_info.dart';
 import 'package:ptk_inventory/common/repository/user_repository.dart';
 import 'package:ptk_inventory/common_user/view.dart';
 import 'package:ptk_inventory/config/colors.dart';
-import 'package:ptk_inventory/user_profile/bloc/new_password_bloc.dart';
 import 'package:ptk_inventory/users/bloc/users_bloc.dart';
 
 class UserProfilePage extends StatelessWidget {

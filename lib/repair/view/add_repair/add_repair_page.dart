@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
-import 'package:ptk_inventory/common/component/apply_filter_label.dart';
 import 'package:ptk_inventory/common/component/filter_scrollable_sheet.dart';
 import 'package:ptk_inventory/common/component/search_field.dart';
 import 'package:ptk_inventory/config/colors.dart';

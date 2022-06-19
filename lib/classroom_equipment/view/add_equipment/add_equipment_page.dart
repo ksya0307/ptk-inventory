@@ -3,10 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/category/bloc/category_bloc.dart';
 import 'package:ptk_inventory/category/view/category_form.dart';
 import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
-import 'package:ptk_inventory/classroom_equipment/repository/classroom_equipment_repository.dart';
 import 'package:ptk_inventory/classroom_equipment/view/add_equipment/add_equipment_form.dart';
-import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
-import 'package:ptk_inventory/classrooms/repository/classroom_repository.dart';
 import 'package:ptk_inventory/common/component/filter_scrollable_sheet.dart';
 import 'package:ptk_inventory/common/component/search_field.dart';
 
@@ -142,7 +139,7 @@ class AddEquipmentPage extends StatelessWidget {
                         ),
                       ),
                     );
-                  });
+                  },);
             },
           )
         ],

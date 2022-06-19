@@ -10,7 +10,6 @@ import 'package:ptk_inventory/classrooms/view/classroom_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/documents/view/document_page.dart';
 import 'package:ptk_inventory/ifo/view/ifo_page.dart';
-import 'package:ptk_inventory/user_profile/view/my_profile.dart';
 import 'package:ptk_inventory/users/view/users_page.dart';
 
 class PortraitAdminPage extends StatelessWidget {

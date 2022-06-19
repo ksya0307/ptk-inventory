@@ -122,7 +122,7 @@ class ClassroomEquipmentProvider {
   }
 
   Future<GeneralModelResponse> deleteEquipmentSpecs(
-      Map<String, String> header, int equipmentId) async {
+      Map<String, String> header, int equipmentId,) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
       "${ApiRoutes.apiRoute}${ApiRoutes.equipment}/$equipmentId",
@@ -184,7 +184,7 @@ class ClassroomEquipmentProvider {
       "${ApiRoutes.apiRoute}${ApiRoutes.classroomEquipment}",
     );
     final response = await _httpClient.post(request,
-        headers: header, body: jsonEncode(body));
+        headers: header, body: jsonEncode(body),);
     if (response.statusCode != 200 && response.statusCode != 401) {
       throw CreateEquipmentRequestFailure();
     } else if (response.statusCode == 401) {

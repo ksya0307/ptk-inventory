@@ -145,7 +145,7 @@ class ClassroomEquipmentRepository {
   }
 
     Future<EquipmentStatus> createEquipment(
-    CreateEquipmentModelRequest createEquipmentModelRequest
+    CreateEquipmentModelRequest createEquipmentModelRequest,
   ) async {
     try {
       await _classroomEquipmentProvider.createEquipment(

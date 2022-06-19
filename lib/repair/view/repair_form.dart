@@ -110,7 +110,7 @@ class RepairForm extends StatelessWidget {
 
                                       crossAxisAlignment:
                                           WrapCrossAlignment.center,
-                                      alignment: WrapAlignment.start,
+                                    
                                       // direction: Axis.vertical,
                                       children: [
                                         const Text(
@@ -161,7 +161,7 @@ class RepairForm extends StatelessWidget {
                       )
                     ],
                   );
-                  ;
+                  
                 }
                 return const Text("Что-то пошло не так");
               },

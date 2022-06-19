@@ -57,7 +57,7 @@ class _CategoriesListState extends State<CategoriesList> {
                     Flexible(
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            left: 12, top: 16, bottom: 16),
+                            left: 12, top: 16, bottom: 16,),
                         child: Container(
                           alignment: Alignment.centerLeft,
                         ),
@@ -208,7 +208,7 @@ class _CategoriesListState extends State<CategoriesList> {
                                     }
                                   },
                                   child: CategoryRow(
-                                    radio: null,
+                                
                                     firstFlexRow: widget.firstFlexRow,
                                     secondFlexRow: widget.secondFlexRow,
                                     id: (index + 1).toString(),

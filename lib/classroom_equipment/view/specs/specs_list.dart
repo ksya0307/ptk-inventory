@@ -254,7 +254,7 @@ class _SpecsListState extends State<SpecsList> {
                                 );
                               },
                               child: SpecsRow(
-                                radio: null,
+                              
                                 firstFlexRow: widget.firstFlexRow,
                                 secondFlexRow: widget.secondFlexRow,
                                 id: (index + 1).toString(),

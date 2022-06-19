@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:ptk_inventory/authentication/bloc/authentication_bloc.dart';
-import 'package:ptk_inventory/category/bloc/category_bloc.dart';
-import 'package:ptk_inventory/category/model/category.dart';
-import 'package:ptk_inventory/category/view/category_row.dart';
-import 'package:ptk_inventory/category/view/update_category/update_category_page.dart';
-import 'package:ptk_inventory/common/model/user_roles.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/bloc/repair_bloc.dart';
 import 'package:ptk_inventory/repair/view/repair_row.dart';

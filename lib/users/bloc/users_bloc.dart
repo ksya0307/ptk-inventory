@@ -154,8 +154,6 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
         password: const Password.dirty(),
       ),
     );
-    print(state.selectedUser);
-    print(state.formStatus);
   }
 
   void _onSearch(

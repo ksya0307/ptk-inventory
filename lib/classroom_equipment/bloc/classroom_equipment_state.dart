@@ -101,8 +101,7 @@ class ClassroomEquipmentState extends Equatable {
     EquipmentBelonging? equipmentBelonging,
     Classroom? selectedClassroom,
   }) {
-    print("equipment loading");
-    print(classroomEquipmentLoadingStatus);
+
     return ClassroomEquipmentState(
       formStatus: formStatus ?? this.formStatus,
       equipmentActionStatus:

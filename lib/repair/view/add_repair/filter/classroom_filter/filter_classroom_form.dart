@@ -9,8 +9,11 @@ class FilterClassroomForm extends StatelessWidget {
   const FilterClassroomForm({
     Key? key,
     this.bottomPadding = 0,
+    required this.bloc,
   }) : super(key: key);
   final double bottomPadding;
+  final Type bloc;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -53,6 +56,7 @@ class FilterClassroomForm extends StatelessWidget {
                     ClassroomLoadingStatus.loadingSuccess &&
                 state.globalClassrooms.isNotEmpty) {
               return FilterClassroomList(
+                bloc: bloc,
                 bottomPadding: bottomPadding,
               );
             }

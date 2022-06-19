@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ptk_inventory/admin_user/view/profile/admin_profile_form.dart';
 
 import 'package:ptk_inventory/common/repository/user_repository.dart';
-import 'package:ptk_inventory/user_profile/bloc/new_password_bloc.dart';
 import 'package:ptk_inventory/users/bloc/users_bloc.dart';
 
 class AdminProfilePage extends StatelessWidget {

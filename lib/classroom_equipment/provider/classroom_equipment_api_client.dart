@@ -38,12 +38,34 @@ class GetSpecsByCategoryRequestFailure implements Exception {}
 
 class GetSpecsByCategoryRequestUnauthorized implements Exception {}
 
+class GetEquipmentNotInInventoryRequestFailure implements Exception {}
+
+class GetEquipmentNotInInventoryRequestUnauthorized implements Exception {}
+
 class ClassroomEquipmentProvider {
   final http.Client _httpClient;
 
   ClassroomEquipmentProvider({
     http.Client? httpClient,
   }) : _httpClient = httpClient ?? http.Client();
+
+  Future<ClassroomEquipmentResult> notInInventory(
+    Map<String, String> header,
+  ) async {
+    final request = Uri.https(
+      ApiRoutes.baseUrl,
+      "${ApiRoutes.apiRoute}${ApiRoutes.inventory}/${ApiRoutes.notInInventory}",
+    );
+    final response = await _httpClient.get(request, headers: header);
+    if (response.statusCode != 200 && response.statusCode != 401) {
+      throw GetEquipmentNotInInventoryRequestFailure();
+    } else if (response.statusCode == 401) {
+      throw GetEquipmentNotInInventoryRequestUnauthorized();
+    }
+    final Map<String, dynamic> jsonAnswer = {};
+    jsonAnswer['result'] = jsonDecode(response.body);
+    return ClassroomEquipmentResult.fromJson(jsonAnswer);
+  }
 
   Future<EquipmentResult> specsByCategory(
     Map<String, String> header,
@@ -122,7 +144,9 @@ class ClassroomEquipmentProvider {
   }
 
   Future<GeneralModelResponse> deleteEquipmentSpecs(
-      Map<String, String> header, int equipmentId,) async {
+    Map<String, String> header,
+    int equipmentId,
+  ) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
       "${ApiRoutes.apiRoute}${ApiRoutes.equipment}/$equipmentId",
@@ -183,8 +207,11 @@ class ClassroomEquipmentProvider {
       ApiRoutes.baseUrl,
       "${ApiRoutes.apiRoute}${ApiRoutes.classroomEquipment}",
     );
-    final response = await _httpClient.post(request,
-        headers: header, body: jsonEncode(body),);
+    final response = await _httpClient.post(
+      request,
+      headers: header,
+      body: jsonEncode(body),
+    );
     if (response.statusCode != 200 && response.statusCode != 401) {
       throw CreateEquipmentRequestFailure();
     } else if (response.statusCode == 401) {

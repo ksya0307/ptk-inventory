@@ -28,6 +28,7 @@ class ClassroomEquipmentBloc
     on<ClassroomEquipmentFilteredEquipment>(_onFiltered);
     on<ClassroomEquipmentSelectedClassroom>(_selectedClassroom);
     on<ClassroomEquipmentCreated>(_onCreated);
+    on<ClassroomEquipmentNotInInventory>(_onNotInInventory);
 
     //Specs
     on<ClassroomEquipmentLoadSpecs>(_onLoadSpecs);
@@ -78,12 +79,35 @@ class ClassroomEquipmentBloc
     );
   }
 
+  Future<void> _onNotInInventory(  ClassroomEquipmentNotInInventory event,
+    Emitter<ClassroomEquipmentState> emit,) async{
+  emit(
+      state.copyWith(
+        classroomEquipmentLoadingStatus:
+            ClassroomEquipmentLoadingStatus.loadingInProgress,
+      ),
+    );
+    final waiting = await _classroomEquipmentRepository.notInInventory();
+    if (waiting.isNotEmpty) {
+      waiting.sort(
+        (a, b) => a.equipment.category.name.compareTo(
+          b.equipment.category.name,
+        ),
+      );
+    }
+    emit(
+      state.copyWith(
+        globalEquipments: waiting,
+        classroomEquipmentLoadingStatus:
+            ClassroomEquipmentLoadingStatus.loadingSuccess,
+      ),
+    );
+    }
+
   void _onFilteredSpecs(
     ClassroomEquipmentFilteredSpecs event,
     Emitter<ClassroomEquipmentState> emit,
-  ) {
-    
-  }
+  ) {}
 
   void _onSelectedSpecs(
     ClassroomEquipmentSpecsSelected event,

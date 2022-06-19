@@ -193,7 +193,9 @@ class _AddRepairFormState extends State<AddRepairForm> {
                                 "+7",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontFamily: 'Rubik', fontSize: 18,),
+                                  fontFamily: 'Rubik',
+                                  fontSize: 18,
+                                ),
                               ),
                             ),
                           ),
@@ -307,7 +309,8 @@ class _AddRepairFormState extends State<AddRepairForm> {
                           );
                         }
                         if (state.repairActionStatus ==
-                            RepairActionStatus.notAdded) {
+                                RepairActionStatus.notAdded &&
+                            state.formStatus == FormzStatus.submissionFailure) {
                           snackbarMessageCommonError(
                             context,
                             "Что-то пошло не так",

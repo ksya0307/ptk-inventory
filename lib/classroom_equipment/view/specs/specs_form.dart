@@ -14,7 +14,8 @@ class SpecsForm extends StatelessWidget {
     required this.secondFlex,
     required this.firstFlexRow,
     required this.secondFlexRow,
-    this.notFound, this.buildWhen,
+    this.notFound,
+    this.buildWhen,
   }) : super(key: key);
   final Widget? widget;
   final int firstFlex;
@@ -90,7 +91,14 @@ class SpecsForm extends StatelessWidget {
               if (state.classroomEquipmentLoadingStatus ==
                       ClassroomEquipmentLoadingStatus.loadingSuccess &&
                   state.globalSpecs.isEmpty) {
-                return const Text("Список оборудования пуст");
+                return const Text(
+                  "Список оборудования пуст",
+                  style: TextStyle(
+                    color: greySteps,
+                    fontFamily: 'Rubik',
+                    fontSize: 14,
+                  ),
+                );
               }
 
               return const Padding(

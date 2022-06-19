@@ -7,6 +7,7 @@ import 'package:ptk_inventory/classrooms/view/classroom_page.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/documents/view/document_page.dart';
 import 'package:ptk_inventory/ifo/view/ifo_page.dart';
+import 'package:ptk_inventory/repair/view/repair_page.dart';
 import 'package:ptk_inventory/user_profile/view/my_profile.dart';
 import 'package:ptk_inventory/users/view/users_page.dart';
 
@@ -152,7 +153,7 @@ Widget inventoryManagementCard(BuildContext context) {
 
 Widget repairCard(BuildContext context) {
   return GestureDetector(
-    onTap: () {},
+  onTap: () => Navigator.of(context).push(RepairPage.route()),
     child: SizedBox(
       width: MediaQuery.of(context).size.width * 0.47,
       height: MediaQuery.of(context).size.height * 0.22,

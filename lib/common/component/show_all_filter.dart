@@ -106,7 +106,7 @@ class ShowAllFilter extends StatelessWidget {
                                       secondFlexRow: secondFlexRow,
                                       firstFlex: firstFlex,
                                       secondFlex: secondFlex,
-                                      topPaddingCategoryList: 0,
+                                      
                                       topPaddingSearchCategory: 0,
                                       categoryNotFoundWidget: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -198,7 +198,7 @@ class ShowAllFilter extends StatelessWidget {
                                       secondFlexRow: secondFlexRow,
                                       firstFlex: firstFlex,
                                       secondFlex: secondFlex,
-                                      topPaddingCategoryList: 0,
+                                    
                                       topPaddingSearchCategory: 0,
                                       categoryNotFoundWidget: Padding(
                                         padding: const EdgeInsets.symmetric(

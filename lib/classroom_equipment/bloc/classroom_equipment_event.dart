@@ -38,6 +38,10 @@ class ClassroomEquipmentLoadSpecs extends ClassroomEquipmentEvent {
   const ClassroomEquipmentLoadSpecs();
 }
 
+class ClassroomEquipmentNotInInventory extends ClassroomEquipmentEvent {
+  const ClassroomEquipmentNotInInventory();
+}
+
 class ClassroomEquipmentSpecsChanged extends ClassroomEquipmentEvent {
   final String specs;
   const ClassroomEquipmentSpecsChanged(this.specs);

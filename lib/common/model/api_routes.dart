@@ -14,19 +14,23 @@ class ApiRoutes {
   static const categoriesInClassroom = '/categories-in-classroom';
 
   static const classroomEquipment = 'classroom-equipment';
+    static const equipment = 'equipment';
+  static const updSpecs = '/update';
+  static const sorted = '/sorted';
   static const equipmentInUserClassroom = 'equipment-in-users-classrooms';
-  static const classrooms = 'classrooms';
+
   static const userClassrooms = 'user-classrooms';
 
+  static const classrooms = 'classrooms';
   static const comments = 'comments';
   static const documents = 'documents';
 
-  static const equipment = 'equipment';
-static const updSpecs = '/update';
-static const sorted = '/sorted';
+
 
   static const ifo = 'ifo';
+
   static const inventory = 'inventory';
+  static const notInInventory = '/not-in-inventory';
 
   static const repair = 'repair';
   static const repairEquipment = 'repair-equipment';

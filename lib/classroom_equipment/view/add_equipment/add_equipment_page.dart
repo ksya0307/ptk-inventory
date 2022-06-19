@@ -40,106 +40,106 @@ class AddEquipmentPage extends StatelessWidget {
             ),
             onPressed: () {
               showModalBottomSheet<void>(
-                  isScrollControlled: true,
-                  context: context,
-                  backgroundColor: Colors.transparent,
-                  builder: (_) {
-                    return MultiBlocProvider(
-                      providers: [
-                        BlocProvider.value(
-                          value: context.read<ClassroomEquipmentBloc>(),
-                        ),
-                        BlocProvider.value(
-                          value: context.read<CategoryBloc>(),
-                        ),
-                      ],
-                      child: EquipmentFilterSheet(
-                        onTap: () => Navigator.of(context).pop(),
-                        initialChildSize: 0.7,
-                        maxChildSize: 0.9,
-                        title: 'Все категории',
-                        minChildSize: 0.3,
-                        widget: Column(
-                          children: [
-                            BlocBuilder<CategoryBloc, CategoryState>(
-                              builder: (context, state) {
-                                return SearchField(
-                                  hintText: 'Смартфон',
-                                  keyboardType: TextInputType.text,
-                                  inputFormatters: const [],
-                                  onChange: (category) => {
-                                    context.read<CategoryBloc>().add(
-                                          CategorySearch(
-                                            matchingWord: category,
-                                          ),
-                                        )
-                                  },
-                                );
-                              },
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            CategoryForm(
-                              firstFlexRow: 2,
-                              secondFlexRow: 5,
-                              firstFlex: 2,
-                              secondFlex: 5,
-                              widget: const SizedBox(),
-                              categoryNotFoundWidget: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                ),
-                                child: Wrap(
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  alignment: WrapAlignment.center,
-                                  // direction: Axis.vertical,
-                                  children: [
-                                    const Text(
-                                      "Используйте",
-                                      style: TextStyle(
-                                        color: blackLabels,
-                                        fontFamily: 'Rubik',
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 8,
-                                      ),
-                                      child: Container(
-                                        width: 35,
-                                        height: 35,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: primaryBlue,
-                                        ),
-                                        child: const Icon(
-                                          Icons.add_rounded,
-                                          color: Colors.white,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ),
-                                    const Text(
-                                      "для добавления новой категории",
-                                      style: TextStyle(
-                                        color: blackLabels,
-                                        fontFamily: 'Rubik',
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              topPaddingCategoryList: 0,
-                              topPaddingSearchCategory: 0,
-                            ),
-                          ],
-                        ),
+                isScrollControlled: true,
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (_) {
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider.value(
+                        value: context.read<ClassroomEquipmentBloc>(),
                       ),
-                    );
-                  },);
+                      BlocProvider.value(
+                        value: context.read<CategoryBloc>(),
+                      ),
+                    ],
+                    child: EquipmentFilterSheet(
+                      onTap: () => Navigator.of(context).pop(),
+                      initialChildSize: 0.7,
+                      maxChildSize: 0.9,
+                      title: 'Все категории',
+                      minChildSize: 0.3,
+                      widget: Column(
+                        children: [
+                          BlocBuilder<CategoryBloc, CategoryState>(
+                            builder: (context, state) {
+                              return SearchField(
+                                hintText: 'Смартфон',
+                                keyboardType: TextInputType.text,
+                                inputFormatters: const [],
+                                onChange: (category) => {
+                                  context.read<CategoryBloc>().add(
+                                        CategorySearch(
+                                          matchingWord: category,
+                                        ),
+                                      )
+                                },
+                              );
+                            },
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          CategoryForm(
+                            firstFlexRow: 2,
+                            secondFlexRow: 5,
+                            firstFlex: 2,
+                            secondFlex: 5,
+                            widget: const SizedBox(),
+                            categoryNotFoundWidget: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                              ),
+                              child: Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                alignment: WrapAlignment.center,
+                                // direction: Axis.vertical,
+                                children: [
+                                  const Text(
+                                    "Используйте",
+                                    style: TextStyle(
+                                      color: blackLabels,
+                                      fontFamily: 'Rubik',
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                    ),
+                                    child: Container(
+                                      width: 35,
+                                      height: 35,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: primaryBlue,
+                                      ),
+                                      child: const Icon(
+                                        Icons.add_rounded,
+                                        color: Colors.white,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
+                                  const Text(
+                                    "для добавления новой категории",
+                                    style: TextStyle(
+                                      color: blackLabels,
+                                      fontFamily: 'Rubik',
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            topPaddingSearchCategory: 0,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
             },
           )
         ],

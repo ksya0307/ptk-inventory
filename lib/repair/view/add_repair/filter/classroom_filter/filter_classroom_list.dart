@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 
+import 'package:ptk_inventory/classroom_equipment/bloc/classroom_equipment_bloc.dart';
 import 'package:ptk_inventory/classrooms/bloc/classroom_bloc.dart';
 import 'package:ptk_inventory/config/colors.dart';
+import 'package:ptk_inventory/inventory/bloc/inventory_bloc.dart';
 import 'package:ptk_inventory/repair/view/add_repair/filter/classroom_filter/filter_classroom_visible_list.dart';
 
 class FilterClassroomList extends StatefulWidget {
   const FilterClassroomList({
     Key? key,
     this.bottomPadding = 0,
+    required this.bloc,
   }) : super(key: key);
   final double bottomPadding;
+  final Type bloc;
   @override
   State<FilterClassroomList> createState() => _ClassroomListState();
 }
@@ -125,19 +128,31 @@ class _ClassroomListState extends State<FilterClassroomList> {
                                 setState(() {
                                   selected = !selected;
                                 });
-                                context
-                                    .read<ClassroomBloc>()
-                                    .add(ClassroomSelected(classrooms[index]));
-                                if (classrooms[index].number == "Все") {
+                          
+                                if (widget.bloc == ClassroomEquipmentBloc) {
+                                  if (classrooms[index].number == "Все") {
+                                    context.read<ClassroomEquipmentBloc>().add(
+                                          const ClassroomEquipmentLoadUserEquipmentsList(),
+                                        );
+                                  }
                                   context.read<ClassroomEquipmentBloc>().add(
-                                        const ClassroomEquipmentLoadUserEquipmentsList(),
+                                        ClassroomEquipmentSelectedClassroom(
+                                          classrooms[index],
+                                        ),
                                       );
                                 }
-                                context.read<ClassroomEquipmentBloc>().add(
-                                      ClassroomEquipmentSelectedClassroom(
-                                        classrooms[index],
-                                      ),
+
+                                context.read<ClassroomBloc>().add(
+                                      ClassroomSelected(classrooms[index]),
                                     );
+
+                                if (widget.bloc == InventoryBloc) {
+                                  BlocProvider.of<InventoryBloc>(context).add(
+                                    InventoryClassroomSelected(
+                                      classrooms[index],
+                                    ),
+                                  );
+                                }
                               },
                             ),
                           );
@@ -154,3 +169,25 @@ class _ClassroomListState extends State<FilterClassroomList> {
     );
   }
 }
+
+
+/*
+(selected) {
+                                setState(() {
+                                  selected = !selected;
+                                });
+                                context
+                                    .read<ClassroomBloc>()
+                                    .add(ClassroomSelected(classrooms[index]));
+                                if (classrooms[index].number == "Все") {
+                                  context.read<ClassroomEquipmentBloc>().add(
+                                        const ClassroomEquipmentLoadUserEquipmentsList(),
+                                      );
+                                }
+                                context.read<ClassroomEquipmentBloc>().add(
+                                      ClassroomEquipmentSelectedClassroom(
+                                        classrooms[index],
+                                      ),
+                                    );
+                              },
+*/

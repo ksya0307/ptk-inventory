@@ -9,7 +9,6 @@ class CategoryForm extends StatelessWidget {
   const CategoryForm({
     Key? key,
     required this.topPaddingSearchCategory,
-    required this.topPaddingCategoryList,
     this.search,
     this.categoryNotFoundWidget,
     this.widget,
@@ -19,7 +18,6 @@ class CategoryForm extends StatelessWidget {
     required this.secondFlexRow,
   }) : super(key: key);
   final double topPaddingSearchCategory;
-  final double topPaddingCategoryList;
   final Widget? search;
   final Widget? categoryNotFoundWidget;
   final Widget? widget;
@@ -29,106 +27,107 @@ class CategoryForm extends StatelessWidget {
   final int secondFlexRow;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: topPaddingSearchCategory),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (search != null)
-            search!
-          else
-            const SizedBox(
-              height: 0,
-            ),
-          Padding(
-            padding: EdgeInsets.only(top: topPaddingCategoryList),
-            child: BlocBuilder<CategoryBloc, CategoryState>(
-              buildWhen: (previous, current) =>
-                  previous.globalCategories != current.globalCategories,
-              builder: (context, state) {
-                if (state.categoryLoadingStatus ==
-                    CategoryLoadingStatus.loadingInProgress) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.7,
-                        width: MediaQuery.of(context).size.width,
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              CircularProgressIndicator(),
-                              Padding(
-                                padding: EdgeInsets.only(top: 16),
-                                child: Text(
-                                  "Загрузка категорий...",
-                                  style: TextStyle(
-                                    color: greyDark,
-                                    fontFamily: 'Rubik',
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                }
-                if (state.categoryLoadingStatus ==
-                        CategoryLoadingStatus.loadingSuccess &&
-                    state.globalCategories.isNotEmpty) {
-                  // print("${state.visibleList}");
-                  return CategoriesList(
-                    firstFlexRow: firstFlexRow,
-                    secondFlexRow: secondFlexRow,
-                    firstFlex: firstFlex,
-                    secondFlex: secondFlex,
-                    radioButton: widget,
-                    categoryNotFoundWidget: categoryNotFoundWidget,
-                  );
-                }
-                if (state.categoryLoadingStatus ==
-                        CategoryLoadingStatus.loadingSuccess &&
-                    state.globalCategories.isEmpty) {
-                  return const Text("Список категорий оборудования пуст");
-                }
-
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.7,
-                      width: MediaQuery.of(context).size.width,
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            CircularProgressIndicator(),
-                            Padding(
-                              padding: EdgeInsets.only(top: 16),
-                              child: Text(
-                                "Загрузка категорий...",
-                                style: TextStyle(
-                                  color: greyDark,
-                                  fontFamily: 'Rubik',
-                                  fontSize: 14,
-                                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (search != null)
+          Column(
+            children: [
+              search!,
+              const SizedBox(
+                height: 8,
+              )
+            ],
+          )
+        else
+          const SizedBox(
+            height: 0,
+          ),
+        BlocBuilder<CategoryBloc, CategoryState>(
+          buildWhen: (previous, current) =>
+              previous.globalCategories != current.globalCategories,
+          builder: (context, state) {
+            if (state.categoryLoadingStatus ==
+                CategoryLoadingStatus.loadingInProgress) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    width: MediaQuery.of(context).size.width,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          CircularProgressIndicator(),
+                          Padding(
+                            padding: EdgeInsets.only(top: 16),
+                            child: Text(
+                              "Загрузка категорий...",
+                              style: TextStyle(
+                                color: greyDark,
+                                fontFamily: 'Rubik',
+                                fontSize: 14,
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                  ],
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+                  ),
+                ],
+              );
+            }
+            if (state.categoryLoadingStatus ==
+                    CategoryLoadingStatus.loadingSuccess &&
+                state.globalCategories.isNotEmpty) {
+              // print("${state.visibleList}");
+              return CategoriesList(
+                firstFlexRow: firstFlexRow,
+                secondFlexRow: secondFlexRow,
+                firstFlex: firstFlex,
+                secondFlex: secondFlex,
+                radioButton: widget,
+                categoryNotFoundWidget: categoryNotFoundWidget,
+              );
+            }
+            if (state.categoryLoadingStatus ==
+                    CategoryLoadingStatus.loadingSuccess &&
+                state.globalCategories.isEmpty) {
+              return const Text("Список категорий оборудования пуст");
+            }
+
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        CircularProgressIndicator(),
+                        Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text(
+                            "Загрузка категорий...",
+                            style: TextStyle(
+                              color: greyDark,
+                              fontFamily: 'Rubik',
+                              fontSize: 14,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ],
     );
   }
 }

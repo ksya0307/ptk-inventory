@@ -67,7 +67,7 @@ class CategoryPage extends StatelessWidget {
                     minHeight: view.maxHeight,
                   ),
                   child: Container(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
                     child: Column(
                       children: const [
                         CategoryForm(
@@ -76,7 +76,7 @@ class CategoryPage extends StatelessWidget {
                           firstFlex: 2,
                           secondFlex: 5,
                           search: SearchCategory(),
-                          topPaddingCategoryList: 8,
+                        
                           topPaddingSearchCategory: 16,
                         ),
                       ],

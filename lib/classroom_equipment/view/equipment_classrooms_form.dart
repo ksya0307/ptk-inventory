@@ -56,7 +56,10 @@ class EquipmentClassroomForm extends StatelessWidget {
                             .id,
                       ),
                     ),
-                  child: const FilterClassroomForm(bottomPadding: 4),
+                  child: const FilterClassroomForm(
+                    bottomPadding: 4,
+                    bloc: ClassroomEquipmentBloc,
+                  ),
                 )
               else
                 BlocProvider<ClassroomBloc>.value(
@@ -64,7 +67,10 @@ class EquipmentClassroomForm extends StatelessWidget {
                     ..add(
                       const ClassroomLoadList(),
                     ),
-                  child: const FilterClassroomForm(bottomPadding: 16),
+                  child: const FilterClassroomForm(
+                    bottomPadding: 16,
+                    bloc: ClassroomEquipmentBloc,
+                  ),
                 ),
               const ShowAllFilter(
                 action: 'Показать все',

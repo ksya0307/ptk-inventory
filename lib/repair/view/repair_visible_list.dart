@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/bloc/repair_bloc.dart';
 import 'package:ptk_inventory/repair/view/repair_row.dart';
+import 'package:ptk_inventory/repair/view/update_repair/update_repair_page.dart';
 
 class RepairVisibleList extends StatelessWidget {
   const RepairVisibleList({Key? key}) : super(key: key);
@@ -41,14 +42,14 @@ class RepairVisibleList extends StatelessWidget {
                           //         ),
                           //       ),
                           //     );
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute<void>(
-                          //     builder: (_) => BlocProvider.value(
-                          //       value: context.read<CategoryBloc>(),
-                          //       child: UpdateCategoryPage(),
-                          //     ),
-                          //   ),
-                          // );
+                          Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) => BlocProvider.value(
+                                value: context.read<RepairBloc>(),
+                                child: UpdateRepairPage(),
+                              ),
+                            ),
+                          );
                         },
                         child: RepairRow(
                           number: (index + 1).toString(),

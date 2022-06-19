@@ -52,6 +52,26 @@ class ClassroomEquipmentRepository {
     }
   }
 
+  Future<List<ClassroomEquipment>> notInInventory() async {
+    try {
+      final result = await _classroomEquipmentProvider.notInInventory(
+        HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+      );
+      return result.result;
+    } on GetEquipmentNotInInventoryRequestFailure {
+      return [];
+    } on GetEquipmentNotInInventoryRequestUnauthorized {
+      final UserHiveModel? userHiveModel = await getUserProfile();
+      if (userHiveModel != null) {
+        await _authenticationRepository.refreshToken(userHiveModel);
+      }
+        final result = await _classroomEquipmentProvider.notInInventory(
+        HeaderModel(await HeaderModel.getAccessToken()).toMap(),
+      );
+      return result.result;
+    }
+  }
+
   Future<List<ClassroomEquipment>> userChosenClassroomEquipment({
     required String classroom,
   }) async {
@@ -112,7 +132,7 @@ class ClassroomEquipmentRepository {
       if (userHiveModel != null) {
         await _authenticationRepository.refreshToken(userHiveModel);
       }
-        final result = await _classroomEquipmentProvider.specsByCategory(
+      final result = await _classroomEquipmentProvider.specsByCategory(
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
         categoryId,
       );
@@ -144,7 +164,7 @@ class ClassroomEquipmentRepository {
     }
   }
 
-    Future<EquipmentStatus> createEquipment(
+  Future<EquipmentStatus> createEquipment(
     CreateEquipmentModelRequest createEquipmentModelRequest,
   ) async {
     try {

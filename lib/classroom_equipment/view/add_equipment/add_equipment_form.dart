@@ -87,8 +87,9 @@ class AddEquipmentForm extends StatelessWidget {
           ),
           BlocBuilder<ClassroomEquipmentBloc, ClassroomEquipmentState>(
             builder: (context, state) {
-              return  SpecsForm(
-                buildWhen: (previous, current) => previous.globalSpecs!=current.globalSpecs,
+              return SpecsForm(
+                buildWhen: (previous, current) =>
+                    previous.globalSpecs != current.globalSpecs,
                 notFound: true,
                 firstFlex: 2,
                 secondFlex: 5,
@@ -140,7 +141,9 @@ class AddEquipmentForm extends StatelessWidget {
           const SizedBox(
             height: 8,
           ),
-          const FilterClassroomForm(),
+          const FilterClassroomForm(
+            bloc: ClassroomEquipmentBloc,
+          ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 16),
             child: Divider(

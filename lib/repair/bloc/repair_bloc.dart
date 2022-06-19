@@ -53,8 +53,8 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
   }
 
   final RepairRepository _repairRepository;
-  static const clientId = 'a00b2452-575b-4e55-b01b-415fb4d83319';
-  static const secret = '97ad45b81c1f33855177353e0cd8b381';
+  static const clientId = 'c4dd0216-3f24-497e-9ad0-394fe246678e';
+  static const secret = '9d205a84ca5d8085ed613808e4415328';
   final wordsApi = WordsApi(Configuration(clientId, secret));
 
   Future<void> _onShowDocument(
@@ -67,15 +67,16 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
       ),
     );
     final downloadRequest = DownloadFileRequest(
-      '${state.selectedEquipment!.inventoryNumber}${DateFormat('dd-MM-yyyy HH:mm:ss').format(state.repair!.datetime)}Акт приема-передачи оборудования в ремонт.pdf',
+      '${state.selectedEquipment!.inventoryNumber}${DateFormat('dd-MM-yyyy HH-mm-ss').format(state.repair!.datetime)}Акт приема-передачи оборудования в ремонт.pdf',
     );
 
     final newFile = await wordsApi.downloadFile(downloadRequest);
     final bytes = newFile.buffer;
+
     final dir = await getApplicationDocumentsDirectory();
 
     final f = await File(
-      '${dir.path}/Акт приема-передачи ${DateFormat('dd-MM-yyyy HH:mm:ss').format(state.repair!.datetime)}.pdf',
+      '${dir.path}/Акт приема-передачи ${DateFormat('dd-MM-yyyy HH-mm-ss').format(state.repair!.datetime)}.pdf',
     ).writeAsBytes(
       bytes.asUint8List(
         newFile.offsetInBytes,
@@ -117,7 +118,7 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
       ),
     );
     final downloadRequest = DownloadFileRequest(
-      '${state.selectedEquipment!.inventoryNumber}${DateFormat('dd-MM-yyyy HH:mm:ss').format(state.repair!.datetime)}Акт приема-передачи оборудования в ремонт.pdf',
+      '${state.selectedEquipment!.inventoryNumber}${DateFormat('dd-MM-yyyy HH-mm-ss').format(state.repair!.datetime)}Акт приема-передачи оборудования в ремонт.pdf',
     );
 
     final newFile = await wordsApi.downloadFile(downloadRequest);
@@ -133,7 +134,7 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
           ? Directory('/storage/emulated/0/Download')
           : await getApplicationSupportDirectory();
 
-      File('${tempDir.path}/Акт приема-передачи ${DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now())}.pdf')
+      File('${tempDir.path}/Акт приема-передачи ${DateFormat('dd-MM-yyyy HH-mm-ss').format(DateTime.now())}.pdf')
           .writeAsBytes(
         buffer.asUint8List(
           newFile.offsetInBytes,
@@ -179,7 +180,8 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
           .toList();
     }
     emit(
-        state.copyWith(visibleList: finalList, searchText: event.matchingWord),);
+      state.copyWith(visibleList: finalList, searchText: event.matchingWord),
+    );
   }
 
 //    Future<void> _onSaved(RepairSaved event, Emitter<RepairState> emit) {
@@ -312,9 +314,7 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
             ..add(
               TextContent(
                 "patronymic",
-                state.selectedEquipment!.classroom.user.patronymic!.isEmpty
-                    ? ""
-                    : state.selectedEquipment!.classroom.user.patronymic,
+                state.selectedEquipment!.classroom.user.patronymic ?? "",
               ),
             )
             ..add(
@@ -369,7 +369,7 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
           //Загрузка в облако
           final uploadReq = UploadFileRequest(
             newFile,
-            '${state.selectedEquipment!.inventoryNumber}${DateFormat('dd-MM-yyyy HH:mm:ss').format(state.repair!.datetime)}Акт приема-передачи оборудования в ремонт.pdf',
+            '${state.selectedEquipment!.inventoryNumber}${DateFormat('dd-MM-yyyy HH-mm-ss').format(state.repair!.datetime)}Акт приема-передачи оборудования в ремонт.pdf',
           );
           await wordsApi.uploadFile(uploadReq);
 
@@ -422,7 +422,6 @@ class RepairBloc extends Bloc<RepairEvent, RepairState> {
     final phone = Phone.dirty(event.phone);
     emit(
       state.copyWith(
-        
         phone: phone,
         formStatus: Formz.validate([phone, state.problem]),
       ),

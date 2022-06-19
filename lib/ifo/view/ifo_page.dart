@@ -64,10 +64,15 @@ class IfoPage extends StatelessWidget {
                     minHeight: view.maxHeight,
                   ),
                   child: Container(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
                     child: Column(
                       children: const [
-                        IfoForm(),
+                        IfoForm(
+                          firstFlexRow: 2,
+                          secondFlexRow: 5,
+                          firstFlex: 2,
+                          secondFlex: 5,
+                        ),
                       ],
                     ),
                   ),

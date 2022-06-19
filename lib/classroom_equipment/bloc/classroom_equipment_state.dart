@@ -20,6 +20,7 @@ enum EquipmentActionStatus {
   added,
   notAdded,
   addedToGlobal,
+  emptyFields,
 }
 
 class ClassroomEquipmentState extends Equatable {

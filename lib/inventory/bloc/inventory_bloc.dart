@@ -148,7 +148,7 @@ class InventoryBloc extends Bloc<InventoryEvent, InventoryState> {
         state.selectedClassroom == null ||
         state.selectedEquipment == null) {
       emit(state.copyWith(
-          inventoryActionStatus: InventoryActionStatus.emptyFields));
+          inventoryActionStatus: InventoryActionStatus.emptyFields,),);
       emit(
         state.copyWith(
           inventoryActionStatus: InventoryActionStatus.pure,

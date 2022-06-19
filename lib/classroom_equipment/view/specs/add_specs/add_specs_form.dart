@@ -101,10 +101,11 @@ class _AddSpecsFormState extends State<AddSpecsForm> {
                         setState(() {
                           category = value ?? "";
                         });
+
                         final Category selectedCategory = state.globalCategories
                             .where((select) => select.name == category)
                             .first;
-
+                        print(selectedCategory);
                         context.read<ClassroomEquipmentBloc>().add(
                               ClassroomEquipmentSpecsCategorySelected(
                                 selectedCategory,
@@ -125,7 +126,9 @@ class _AddSpecsFormState extends State<AddSpecsForm> {
                                 ClassroomEquipmentLoadingStatus
                                     .loadingSuccess) {
                           snackbarMessage(
-                              context, "Новое оборудование добавлено",);
+                            context,
+                            "Новое оборудование добавлено",
+                          );
 
                           Navigator.of(context).pop();
                           context
@@ -137,7 +140,16 @@ class _AddSpecsFormState extends State<AddSpecsForm> {
                             state.classroomEquipmentLoadingStatus ==
                                 ClassroomEquipmentLoadingStatus.loadingFailed) {
                           snackbarMessageCommonError(
-                              context, "Такое оборудование уже существует",);
+                            context,
+                            "Такое оборудование уже существует",
+                          );
+                        }
+                        if (state.equipmentActionStatus ==
+                            EquipmentActionStatus.emptyFields) {
+                          snackbarMessageCommonError(
+                            context,
+                            "Заоплните необходимые поля",
+                          );
                         }
                       },
                       child: BlocBuilder<ClassroomEquipmentBloc,
@@ -155,7 +167,8 @@ class _AddSpecsFormState extends State<AddSpecsForm> {
                                   buttonText: 'Добавить',
                                   onPress: () {
                                     context.read<ClassroomEquipmentBloc>().add(
-                                        const ClassroomEquipmentSpecsSubmitted(),);
+                                          const ClassroomEquipmentSpecsSubmitted(),
+                                        );
                                   },
                                 );
                         },

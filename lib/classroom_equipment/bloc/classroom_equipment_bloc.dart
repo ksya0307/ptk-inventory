@@ -64,24 +64,40 @@ class ClassroomEquipmentBloc
             ClassroomEquipmentLoadingStatus.loadingInProgress,
       ),
     );
-    final waiting = await _classroomEquipmentRepository.specsByCategory(
-      categoryId: event.selectedCategory!.id,
-    );
-    if (waiting.isNotEmpty) {
-      waiting.sort((a, b) => a.id.compareTo(b.id));
+    if (event.selectedCategory == null) {
+      emit(
+        state.copyWith(
+          equipmentActionStatus: EquipmentActionStatus.emptyFields,
+        ),
+      );
+      emit(
+        state.copyWith(
+          equipmentActionStatus: EquipmentActionStatus.pure,
+        ),
+      );
+    } else {
+      final waiting = await _classroomEquipmentRepository.specsByCategory(
+        categoryId: event.selectedCategory!.id,
+      );
+      if (waiting.isNotEmpty) {
+        waiting.sort((a, b) => a.id.compareTo(b.id));
+      }
+      emit(
+        state.copyWith(
+          selectedCategory: event.selectedCategory,
+          globalSpecs: waiting,
+          classroomEquipmentLoadingStatus:
+              ClassroomEquipmentLoadingStatus.loadingSuccess,
+        ),
+      );
     }
-    emit(
-      state.copyWith(
-        globalSpecs: waiting,
-        classroomEquipmentLoadingStatus:
-            ClassroomEquipmentLoadingStatus.loadingSuccess,
-      ),
-    );
   }
 
-  Future<void> _onNotInInventory(  ClassroomEquipmentNotInInventory event,
-    Emitter<ClassroomEquipmentState> emit,) async{
-  emit(
+  Future<void> _onNotInInventory(
+    ClassroomEquipmentNotInInventory event,
+    Emitter<ClassroomEquipmentState> emit,
+  ) async {
+    emit(
       state.copyWith(
         classroomEquipmentLoadingStatus:
             ClassroomEquipmentLoadingStatus.loadingInProgress,
@@ -102,7 +118,7 @@ class ClassroomEquipmentBloc
             ClassroomEquipmentLoadingStatus.loadingSuccess,
       ),
     );
-    }
+  }
 
   void _onFilteredSpecs(
     ClassroomEquipmentFilteredSpecs event,
@@ -340,38 +356,54 @@ class ClassroomEquipmentBloc
     ClassroomEquipmentSpecsSubmitted event,
     Emitter<ClassroomEquipmentState> emit,
   ) async {
-    emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
-    if (state.formStatus.isValidated) {
-      final waiting = await _classroomEquipmentRepository.createEquipmentSpecs(
-        CreateSpecsModelRequest(
-          category: state.selectedCategory!.id,
-          description: state.specs.value,
+    print(state.selectedCategory);
+
+    if (state.selectedCategory == null) {
+      emit(
+        state.copyWith(
+          equipmentActionStatus: EquipmentActionStatus.emptyFields,
         ),
       );
-      if (waiting == EquipmentStatus.notCreated) {
-        emit(
-          state.copyWith(
-            formStatus: FormzStatus.submissionFailure,
-            equipmentActionStatus: EquipmentActionStatus.notAdded,
+      emit(
+        state.copyWith(
+          equipmentActionStatus: EquipmentActionStatus.pure,
+        ),
+      );
+    } else {
+      emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
+      if (state.formStatus.isValidated) {
+        final waiting =
+            await _classroomEquipmentRepository.createEquipmentSpecs(
+          CreateSpecsModelRequest(
+            category: state.selectedCategory!.id,
+            description: state.specs.value,
           ),
         );
-        emit(
-          state.copyWith(
-            equipmentActionStatus: EquipmentActionStatus.pure,
-          ),
-        );
-      } else {
-        emit(
-          state.copyWith(
-            formStatus: FormzStatus.submissionSuccess,
-            equipmentActionStatus: EquipmentActionStatus.added,
-          ),
-        );
-        emit(
-          state.copyWith(
-            equipmentActionStatus: EquipmentActionStatus.pure,
-          ),
-        );
+        if (waiting == EquipmentStatus.notCreated) {
+          emit(
+            state.copyWith(
+              formStatus: FormzStatus.submissionFailure,
+              equipmentActionStatus: EquipmentActionStatus.notAdded,
+            ),
+          );
+          emit(
+            state.copyWith(
+              equipmentActionStatus: EquipmentActionStatus.pure,
+            ),
+          );
+        } else {
+          emit(
+            state.copyWith(
+              formStatus: FormzStatus.submissionSuccess,
+              equipmentActionStatus: EquipmentActionStatus.added,
+            ),
+          );
+          emit(
+            state.copyWith(
+              equipmentActionStatus: EquipmentActionStatus.pure,
+            ),
+          );
+        }
       }
     }
   }

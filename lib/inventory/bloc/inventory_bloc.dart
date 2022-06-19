@@ -64,7 +64,7 @@ class InventoryBloc extends Bloc<InventoryEvent, InventoryState> {
     );
     final waiting = await _inventoryRepository.inventory();
     if (waiting.isNotEmpty) {
-      waiting.sort((a, b) => a.getDate.compareTo(b.getDate));
+      waiting.sort((a, b) => b.getDate.compareTo(a.getDate));
     }
     emit(
       state.copyWith(
@@ -143,77 +143,90 @@ class InventoryBloc extends Bloc<InventoryEvent, InventoryState> {
         formStatus: FormzStatus.submissionInProgress,
       ),
     );
-    final inventory = await _inventoryRepository.createInventory(
-      createInventoryModelRequest: CreateInventoryModelRequest(
-        inventoryNumber: state.selectedEquipment!.id,
-        getDate: state.getDate!,
-        document: state.selectedDocument!.id,
-        ifo: state.selectedIfo!.id,
-        forClassroom: state.selectedClassroom!.number,
-        given: state.given,
-        byRequest: state.byRequest,
-      ),
-    );
-    if (inventory != null) {
-      emit(state.copyWith(inventory: inventory));
-      emit(
-        state.copyWith(
-          formStatus: FormzStatus.submissionSuccess,
-          inventoryActionStatus: InventoryActionStatus.added,
-        ),
-      );
+    if (state.selectedDocument == null ||
+        state.selectedIfo == null ||
+        state.selectedClassroom == null ||
+        state.selectedEquipment == null) {
+      emit(state.copyWith(
+          inventoryActionStatus: InventoryActionStatus.emptyFields));
       emit(
         state.copyWith(
           inventoryActionStatus: InventoryActionStatus.pure,
         ),
       );
     } else {
-      emit(
-        state.copyWith(
-          formStatus: FormzStatus.submissionFailure,
-          inventoryActionStatus: InventoryActionStatus.notAdded,
+      final inventory = await _inventoryRepository.createInventory(
+        createInventoryModelRequest: CreateInventoryModelRequest(
+          inventoryNumber: state.selectedEquipment!.id,
+          getDate: state.getDate!,
+          document: state.selectedDocument!.id,
+          ifo: state.selectedIfo!.id,
+          forClassroom: state.selectedClassroom!.number,
+          given: state.given,
+          byRequest: state.byRequest,
         ),
       );
-      emit(
-        state.copyWith(
-          inventoryActionStatus: InventoryActionStatus.pure,
-        ),
-      );
-      print(state.comment);
-      if (state.comment != null) {
-        final waiting = await _inventoryRepository.createComment(
-          createCommentModelRequest: CreateCommentModelRequest(
-            comment: state.comment!,
-            inventoryId: state.inventory!.id,
-            userId: event.user.id,
-            datetime: state.getDate!,
+      if (inventory != null) {
+        emit(state.copyWith(inventory: inventory));
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionSuccess,
+            inventoryActionStatus: InventoryActionStatus.added,
           ),
         );
+        emit(
+          state.copyWith(
+            inventoryActionStatus: InventoryActionStatus.pure,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            inventoryActionStatus: InventoryActionStatus.notAdded,
+          ),
+        );
+        emit(
+          state.copyWith(
+            inventoryActionStatus: InventoryActionStatus.pure,
+          ),
+        );
+        print(state.comment);
+        if (state.comment != null) {
+          final waiting = await _inventoryRepository.createComment(
+            createCommentModelRequest: CreateCommentModelRequest(
+              comment: state.comment!,
+              inventoryId: state.inventory!.id,
+              userId: event.user.id,
+              datetime: state.getDate!,
+            ),
+          );
 
-        if (waiting == InventoryStatus.notCreated) {
-          emit(
-            state.copyWith(
-              formStatus: FormzStatus.submissionFailure,
-              inventoryActionStatus: InventoryActionStatus.notAdded,
-            ),
-          );
-          emit(
-            state.copyWith(
-              inventoryActionStatus: InventoryActionStatus.pure,
-            ),
-          );
-        } else {
-          emit(
-            state.copyWith(
-              formStatus: FormzStatus.submissionSuccess,
-              inventoryActionStatus: InventoryActionStatus.added,
-            ),
-          );
-          emit(
-            state.copyWith(
-              inventoryActionStatus: InventoryActionStatus.pure,
-            ),
-          );
+          if (waiting == InventoryStatus.notCreated) {
+            emit(
+              state.copyWith(
+                formStatus: FormzStatus.submissionFailure,
+                inventoryActionStatus: InventoryActionStatus.notAdded,
+              ),
+            );
+            emit(
+              state.copyWith(
+                inventoryActionStatus: InventoryActionStatus.pure,
+              ),
+            );
+          } else {
+            emit(
+              state.copyWith(
+                formStatus: FormzStatus.submissionSuccess,
+                inventoryActionStatus: InventoryActionStatus.added,
+              ),
+            );
+            emit(
+              state.copyWith(
+                inventoryActionStatus: InventoryActionStatus.pure,
+              ),
+            );
+          }
         }
       }
     }

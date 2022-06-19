@@ -18,6 +18,7 @@ enum InventoryActionStatus {
   added,
   notAdded,
   addedToGlobal,
+  emptyFields
 }
 
 class InventoryState extends Equatable {

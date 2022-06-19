@@ -51,6 +51,12 @@ class AddInventoryFormState extends State<AddInventoryForm> {
             "Оборудование не принято к учету",
           );
         }
+        if (state.inventoryActionStatus == InventoryActionStatus.emptyFields) {
+          snackbarMessageCommonError(
+            context,
+            "Заполните необходимые поля",
+          );
+        }
       },
       child: c_s.CustomStepper(
         physics: const ClampingScrollPhysics(),

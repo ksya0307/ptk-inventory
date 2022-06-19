@@ -79,6 +79,7 @@ class InventoryBloc extends Bloc<InventoryEvent, InventoryState> {
     Emitter<InventoryState> emit,
   ) {
     emit(state.copyWith(selectedEquipment: event.selectedEquipment));
+    print(state.selectedEquipment);
   }
 
   void _onClassroomSelected(

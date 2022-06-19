@@ -54,7 +54,7 @@ class ClassroomEquipmentProvider {
   ) async {
     final request = Uri.https(
       ApiRoutes.baseUrl,
-      "${ApiRoutes.apiRoute}${ApiRoutes.inventory}/${ApiRoutes.notInInventory}",
+      "${ApiRoutes.apiRoute}${ApiRoutes.inventory}${ApiRoutes.notInInventory}",
     );
     final response = await _httpClient.get(request, headers: header);
     if (response.statusCode != 200 && response.statusCode != 401) {

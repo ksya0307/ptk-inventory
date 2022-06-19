@@ -11,6 +11,8 @@ import 'package:ptk_inventory/documents/repository/document_repository.dart';
 import 'package:ptk_inventory/ifo/bloc/ifo_bloc.dart';
 import 'package:ptk_inventory/ifo/repository/ifo_repository.dart';
 import 'package:ptk_inventory/inventory/view/add_inventory/add_inventory_form.dart';
+import 'package:ptk_inventory/repair/bloc/repair_bloc.dart';
+import 'package:ptk_inventory/repair/repository/repair_repository.dart';
 
 class AddInventoryPage extends StatelessWidget {
   static Route route() {
@@ -34,6 +36,9 @@ class AddInventoryPage extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               CategoryBloc(categoryRepository: CategoryRepository()),
+        ),
+        BlocProvider(
+          create: (context) => RepairBloc(repairRepository: RepairRepository()),
         ),
         BlocProvider(
           create: (context) =>

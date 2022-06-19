@@ -56,7 +56,8 @@ class InventoryRepository {
         HeaderModel(await HeaderModel.getAccessToken()).toMap(),
       );
       return inventory;
-    } on CreateInventoryRequestFailure {
+    } on CreateInventoryRequestFailure catch (e) {
+      print(e);
       return null;
     } on CreateInventoryRequestUnauthorized {
       final UserHiveModel? userHiveModel = await getUserProfile();

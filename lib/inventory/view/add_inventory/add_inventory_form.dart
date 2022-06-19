@@ -105,14 +105,14 @@ class AddInventoryFormState extends State<AddInventoryForm> {
                                     state.inventoryActionStatus ==
                                         InventoryActionStatus.added) {
                                   snackbarMessage(
-                                      context, "Оборудование принято к учету");
+                                      context, "Оборудование принято к учету",);
                                 }
                                 if (state.formStatus ==
                                         FormzStatus.submissionFailure &&
                                     state.inventoryActionStatus ==
                                         InventoryActionStatus.notAdded) {
                                   snackbarMessageCommonError(context,
-                                      "Оборудование не принято к учету");
+                                      "Оборудование не принято к учету",);
                                 }
                               },
                               child: BlocBuilder<InventoryBloc, InventoryState>(
@@ -122,10 +122,10 @@ class AddInventoryFormState extends State<AddInventoryForm> {
                                         .read<InventoryBloc>()
                                         .add(InventorySubmitted(
                                             BlocProvider.of<AuthenticationBloc>(
-                                                    context)
+                                                    context,)
                                                 .state
-                                                .user)),
-                                    child: Text(
+                                                .user,),),
+                                    child: const Text(
                                       "Принять",
                                       textAlign: TextAlign.end,
                                       style: TextStyle(

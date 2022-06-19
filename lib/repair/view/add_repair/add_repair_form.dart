@@ -13,6 +13,7 @@ import 'package:ptk_inventory/common/component/snackbar_message_common_error.dar
 import 'package:ptk_inventory/config/colors.dart';
 import 'package:ptk_inventory/repair/bloc/repair_bloc.dart';
 import 'package:ptk_inventory/repair/view/add_repair/choose_inventory_number_label.dart';
+import 'package:ptk_inventory/repair/view/add_repair/inventory_number_chips.dart';
 import 'package:ptk_inventory/repair/view/load_document/load_document_page.dart';
 
 class AddRepairForm extends StatefulWidget {
@@ -40,90 +41,8 @@ class _AddRepairFormState extends State<AddRepairForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const ChooseInventoryNumberLabel(),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                // height: 48,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Wrap(
-                    direction: Axis.vertical,
-                    spacing: 8,
-                    children: List.generate(
-                      equipment.length,
-                      (index) {
-                        // print("allly");
-                        // print(equipment[index].isChecked);
-                        if (equipment[index].isChecked == false) {
-                          // print("not checked");
-                          return const SizedBox(
-                            height: 0,
-                          );
-                        }
-
-                        return BlocBuilder<RepairBloc, RepairState>(
-                          builder: (context, state) {
-                            return ChipTheme(
-                              data: ChipTheme.of(context).copyWith(
-                                checkmarkColor: Colors.white,
-                                elevation: 0,
-                                disabledColor: Colors.white,
-                                pressElevation: 0,
-                                backgroundColor: secondaryGreen,
-                                selectedColor: secondaryGreen,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(7),
-                                  ),
-                                ),
-                              ),
-                              child: ChoiceChip(
-                                avatar: state.selectedEquipment != null &&
-                                        equipment[index].inventoryNumber ==
-                                            state.selectedEquipment!
-                                                .inventoryNumber
-                                    ? const Icon(
-                                        Icons.done_rounded,
-                                        color: Colors.white,
-                                      )
-                                    : null,
-                                selected: state.selectedEquipment != null &&
-                                    equipment[index].inventoryNumber ==
-                                        state
-                                            .selectedEquipment!.inventoryNumber,
-                                label: Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 4, bottom: 4),
-                                  child: Text(
-                                    equipment[index].inventoryNumber.toString(),
-                                    style: const TextStyle(
-                                      fontFamily: 'Rubik',
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                onSelected: (selected) {
-                                  setState(() {
-                                    // print(
-                                    //   "on select ${equipment[index].classroom}",
-                                    // );
-                                    selected = !selected;
-                                    context.read<RepairBloc>().add(
-                                          RepairEquipmentChanged(
-                                            equipment[index],
-                                          ),
-                                        );
-                                  });
-                                },
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ),
+              InventoryNumberChip(
+                equipment: equipment,
               ),
               if (equipment.isEmpty || equipment.isNotEmpty)
                 Column(

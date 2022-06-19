@@ -156,7 +156,31 @@ class InventoryBloc extends Bloc<InventoryEvent, InventoryState> {
     );
     if (inventory != null) {
       emit(state.copyWith(inventory: inventory));
-      if (state.comment!.isNotEmpty) {
+      emit(
+        state.copyWith(
+          formStatus: FormzStatus.submissionSuccess,
+          inventoryActionStatus: InventoryActionStatus.added,
+        ),
+      );
+      emit(
+        state.copyWith(
+          inventoryActionStatus: InventoryActionStatus.pure,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          formStatus: FormzStatus.submissionFailure,
+          inventoryActionStatus: InventoryActionStatus.notAdded,
+        ),
+      );
+      emit(
+        state.copyWith(
+          inventoryActionStatus: InventoryActionStatus.pure,
+        ),
+      );
+      print(state.comment);
+      if (state.comment != null) {
         final waiting = await _inventoryRepository.createComment(
           createCommentModelRequest: CreateCommentModelRequest(
             comment: state.comment!,
@@ -170,7 +194,7 @@ class InventoryBloc extends Bloc<InventoryEvent, InventoryState> {
           emit(
             state.copyWith(
               formStatus: FormzStatus.submissionFailure,
-              inventoryActionStatus: InventoryActionStatus.added,
+              inventoryActionStatus: InventoryActionStatus.notAdded,
             ),
           );
           emit(
@@ -182,7 +206,7 @@ class InventoryBloc extends Bloc<InventoryEvent, InventoryState> {
           emit(
             state.copyWith(
               formStatus: FormzStatus.submissionSuccess,
-              inventoryActionStatus: InventoryActionStatus.notAdded,
+              inventoryActionStatus: InventoryActionStatus.added,
             ),
           );
           emit(

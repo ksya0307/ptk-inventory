@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class CreateInventoryModelRequest {
   int inventoryNumber;
   DateTime getDate;
@@ -19,7 +21,7 @@ class CreateInventoryModelRequest {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'inventory_number': inventoryNumber,
-      'get_date': getDate.toIso8601String(),
+      'get_date': DateFormat("yyyy-MM-dd").format(getDate),
       'document': document,
       'ifo': ifo,
       'for_classroom': forClassroom,
